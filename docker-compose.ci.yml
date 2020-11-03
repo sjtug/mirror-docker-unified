@@ -1,0 +1,5 @@
+services:
+  lug:
+    build:
+      args:
+        - USE_SJTUG=false
