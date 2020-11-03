@@ -1,0 +1,35 @@
+version: "3"
+services:
+  caddy:
+    restart: on-failure
+    networks: 
+      - service_net
+    image: caddy:2.1.1
+    volumes:
+      - "./caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
+      - "./data/caddy/data:/data"
+      - "./data/caddy/config:/config"
+      - "/mnt:/srv"
+    ports: 
+      - 80:80
+      - 443:443
+    container_name: siyuan-caddy
+    healthcheck:
+      test: curl -f http://localhost || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  lug:
+    restart: on-failure
+    networks: 
+      - service_net
+    build:
+      context: ./lug
+      args:
+        - USE_SJTUG=true
+    container_name: siyuan-lug
+
+networks:
+  service_net:

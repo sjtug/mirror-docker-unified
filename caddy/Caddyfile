@@ -1,0 +1,9 @@
+:80 {
+    @hidden {
+        path */.*
+    }
+    encode gzip
+    respond @hidden 404
+    root * /srv
+    file_server browse
+}
