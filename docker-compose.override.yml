@@ -1,4 +1,0 @@
-services:
-    caddy:
-      volumes:
-        - "/srv:/srv"
