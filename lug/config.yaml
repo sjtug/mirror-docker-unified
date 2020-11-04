@@ -14,10 +14,123 @@ dummy:
     retry_interval: 60
 
 repos:
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://archive.ubuntu.com/ubuntu
-    interval: 3600
+  #archlinux
+  - type: shell_script 
+    source: rsync://rsync.archlinux.org/ftp_tier1/
+    interval:
+    path: /srv/archlinux
+    name: archlinux
+  #centos
+  - type: shell_script 
+    source: rsync://msync.centos.org/CentOS/
+    interval:
+    path: /srv/centos
+    name: centos
+  #csw
+  - type: shell_script 
+    source: rsync://ftp://planetmirror.com/pub/csw
+    interval:
+    path: /srv/csw
+    name: csw
+  #debian
+  - type: shell_script 
+    source: rsync://syncproxy2.wna.debian.org/debian/
+    interval:
+    path: /srv/debian
+    name: debian
+  #debian-cd
+  - type: shell_script 
+    source: rsync://mirrors.kernel.org/debian-cd/
+    interval:
+    path: /srv/debian-cd
+    name: debian-cd
+  #debian-security
+  - type: shell_script 
+    source: rsync://rsync.security.debian.org/debian-security/
+    interval:
+    path: /srv/debian-security
+    name: debian-security
+  #deepin
+  - type: shell_script 
+    source: rsync://rsync.deepin.com/deepin/
+    interval:
+    path: /srv/deepin
+    name: deepin
+  #deepin-cd
+  - type: shell_script 
+    source: https://deepin.c3sl.ufpr.br/deepin-cd/
+    interval:
+    path: /srv/deepin-cd
+    name: deepin-cd
+  #docker-ce
+  - type: shell_script 
+    source: https://download.docker.com/
+    interval:
+    path: /srv/docker-ce
+    name: docker-ce
+  #fedora
+  - type: shell_script 
+    source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/
+    interval:
+    path: /srv/fedora
+    name: fedora
+  #fedora-secondary
+  - type: shell_script 
+    source: rsync://download-ib01.fedoraproject.org/fedora-secondary/
+    interval:
+    path: /srv/fedora-secondary
+    name: fedora-secondary
+  #linuxmint
+  - type: shell_script 
+    source: rsync://mirrors.kernel.org/linuxmint-packages/
+    interval:
+    path: /srv/linuxmint
+    name: linuxmint
+  #linuxmint-cd
+  - type: shell_script 
+    source: rsync://mirrors.kernel.org/linuxmint/
+    interval:
+    path: /srv/linuxmint-cd
+    name: linuxmint-cd
+  #mageia
+  - type: shell_script 
+    source: rsync://mirrors.kernel.org/mageia/
+    interval:
+    path: /srv/mageia
+    name: mageia
+  #opensuse
+  - type: shell_script 
+    source: rsync://fr2.rpmfind.net/linux/opensuse/
+    interval:
+    path: /srv/opensuse
+    name: opensuse
+  #openvz
+  - type: shell_script 
+    source: rsync://download.openvz.org/openvz-download
+    interval:
+    path: /srv/openvz
+    name: openvz
+  #remi
+  - type: shell_script 
+    source: rsync://rpms.remirepo.net
+    interval:
+    path: /srv/remi
+    name: remi
+  #scientific
+  - type: shell_script 
+    source: rsync://mirror.aarnet.edu.au/pub/scientific/
+    interval:
+    path: /srv/scientific
+    name: scientific
+  #ubuntu
+  - type: shell_script 
+    source: rsync://archive.ubuntu.com/ubuntu/
+    interval:
     path: /srv/ubuntu
     name: ubuntu
-    <<: *oneshot_common
+  #ubuntu-cdimage
+  - type: shell_script 
+    source: rsync://cdimage.ubuntu.com/cdimage/
+    interval:
+    path: /srv/ubuntu-cdimage
+    name: ubuntu-cdimage
