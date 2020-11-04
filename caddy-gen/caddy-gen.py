@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import yaml
 import logging
 import argparse
@@ -27,7 +29,7 @@ class Node:
                    ' ' * (level * INDENT_CNT) + '}'
 
 
-def redir() -> list[Node]:
+def https_redir() -> list[Node]:
     return [
         Node(f'http://{BASE}', [
             Node('redir / https://{host}{uri} 301')
@@ -35,21 +37,25 @@ def redir() -> list[Node]:
     ]
 
 
+def repo_redir(repo: dict) -> list[Node]:
+    return [Node(f'redir /{repo["name"]} /{repo["name"]}/ 301')]
+
+
+def repo_file_server(repo: dict) -> list[Node]:
+    return [Node(f'file_server /{repo["name"]}/* browse', [
+        Node(f'root {ROOT_DIR}')
+    ])]
+
+
 def repo_subdomain(repo: dict) -> list[Node]:
     def with_proto(proto: str) -> Node:
-        return Node(f'{proto}{repo["subdomain"]}.{BASE}/', [
-            Node(f'root {ROOT_DIR}/{repo["name"]}'),
-            Node('browse'),
-        ])
+        return Node(f'{proto}{repo["subdomain"]}.{BASE}/',
+                    repo_file_server(repo))
 
     if repo.get('no_redir_http', False):
         return [with_proto('https://'), with_proto('http://')]
     else:
         return [with_proto('')]
-
-
-def repo_file_server(repo: dict) -> list[Node]:
-    return [Node(f'file_server /{repo["name"]}/* browse')]
 
 
 def repos(repos: dict) -> list[Node]:
@@ -61,6 +67,7 @@ def repos(repos: dict) -> list[Node]:
         if rtype == 'shell_script':
             if 'subdomain' in repo:
                 subdomain_nodes += repo_subdomain(repo)
+            file_server_node.children += repo_redir(repo)
             file_server_node.children += repo_file_server(repo)
 
         else:
@@ -92,7 +99,7 @@ if __name__ == "__main__":
         config_yaml = yaml.load(content, Loader=yaml.FullLoader)
 
     root = Node('',
-                redir() +
+                https_redir() +
                 repos(config_yaml['repos']))
 
     with open(args.output, 'w') as fp:
