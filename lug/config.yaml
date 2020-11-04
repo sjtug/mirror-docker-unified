@@ -6,7 +6,7 @@ exporter_address: :8081
 
 # Address where JSON API will be served
 json_api:
-    address: :7001
+  address: :7001
 
 dummy:
   oneshot_common: &oneshot_common
@@ -14,10 +14,10 @@ dummy:
     retry_interval: 60
 
 repos:
-    - type: shell_script
-      script: /worker-script/test.sh
-      source: no_source
-      interval: 3600
-      path: /srv/test
-      name: test
-      <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/test.sh
+    source: no_source
+    interval: 3600
+    path: /srv/test
+    name: test
+    <<: *oneshot_common
