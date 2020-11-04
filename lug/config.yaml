@@ -15,9 +15,9 @@ dummy:
 
 repos:
   - type: shell_script
-    script: /worker-script/test.sh
-    source: no_source
+    script: /worker-script/rsync.sh
+    source: rsync://archive.ubuntu.com/ubuntu
     interval: 3600
-    path: /srv/test
-    name: test
+    path: /srv/ubuntu
+    name: ubuntu
     <<: *oneshot_common
