@@ -1,4 +1,4 @@
 scratch/
 __pycache__/
-config.py
+config.*
 !*.example
