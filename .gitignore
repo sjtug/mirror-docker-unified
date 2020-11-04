@@ -1,2 +1,3 @@
 /data/
 docker-compose.override.yml
+.vscode
