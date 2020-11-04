@@ -6,7 +6,7 @@
     respond @hidden 404
     reverse_proxy /lug/* siyuan-lug:7001
     # TODO: block access to lug admin API
-    file_server /test/* browse {
+    file_server /ubuntu/* browse {
         root /srv
     }
     file_server /* {
