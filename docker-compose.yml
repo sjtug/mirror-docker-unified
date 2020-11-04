@@ -23,13 +23,27 @@ services:
 
   lug:
     restart: on-failure
+    command: -c /config.yaml
     networks: 
       - service_net
     build:
       context: ./lug
       args:
         - USE_SJTUG=true
+    expose:
+      - 8081
+      - 7001
     container_name: siyuan-lug
-
+    volumes:
+      - "./lug/worker-script:/worker-script:ro"
+      - "./lug/config.yaml:/config.yaml:ro"
+      - "/mnt:/srv"
+    healthcheck:
+      test: curl -f http://localhost:7001/v1/manager/summary || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+  
 networks:
   service_net:

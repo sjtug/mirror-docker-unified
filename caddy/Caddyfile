@@ -4,6 +4,8 @@
     }
     encode gzip
     respond @hidden 404
+    reverse_proxy /lug/* siyuan-lug:7001
+    # TODO: block access to lug admin API
     root * /srv
     file_server browse
 }
