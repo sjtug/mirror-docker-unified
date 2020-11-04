@@ -1,0 +1,4 @@
+scratch/
+__pycache__/
+config.py
+!*.example

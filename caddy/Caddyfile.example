@@ -1,0 +1,55 @@
+http://siyuan.sjtu.edu.cn {
+    redir / https://{host}{uri} 301
+}
+
+anaconda.siyuan.sjtu.edu.cn/ {
+    root /mnt/anaconda
+    browse
+}
+
+packagist.siyuan.sjtu.edu.cn/ {
+    root /mnt/packagist
+    browse
+}
+
+https://siyuan.sjtu.edu.cn {
+    file_server /putty/* browse
+    file_server /archlinux/* browse
+    file_server /archlinux-cn/* browse
+    file_server /archlinuxarm/* browse
+    file_server /gentoo/* browse
+    file_server /vim/* browse
+    file_server /manjaro/* browse
+    file_server /alpine/* browse
+    file_server /ctan/* browse
+    file_server /cpan/* browse
+    file_server /cran/* browse
+    file_server /ctex/* browse
+    file_server /gnu/* browse
+    file_server /cygwin/* browse
+    file_server /ros/* browse
+    file_server /kali/* browse
+    file_server /kali-images/* browse
+    file_server /anaconda/* browse
+    file_server /git/homebrew-core.git/* browse
+    file_server /git/homebrew-cask.git/* browse
+    file_server /git/brew.git/* browse
+    file_server /git/crates.io-index/* browse
+    file_server /raspbian/* browse
+    file_server /parrot/* browse
+    file_server /raspberrypi/* browse
+    file_server /mx-isos/* browse
+    file_server /mx-packages/* browse
+    file_server /packagist/* browse
+    file_server /mongodb/* browse
+    file_server /qt/* browse
+    file_server /julia/* browse
+    file_server /emacs-elpa/* browse
+    file_server /julia-releases/* browse
+    file_server /raspberry-pi-os-images/* browse
+    file_server /msys2/* browse
+    file_server /git/opam-repository.git/* browse
+    file_server /git/dpdk.git/* browse
+    file_server /git/qemu.git/* browse
+    file_server /git/linux.git/* browse
+}
