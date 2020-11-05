@@ -10,9 +10,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: use CI config for docker-compose
         run: cp docker-compose.ci.yml docker-compose.override.yml
-      - uses: actions/checkout@v2
       - name: docker-compose build
         run: docker-compose build
       - uses: actions/setup-python@v1
