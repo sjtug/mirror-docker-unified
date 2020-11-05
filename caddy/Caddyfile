@@ -8,8 +8,8 @@
     }
     encode gzip
 
-    redir /test /test/ 301
-    file_server /test/* browse {
+    redir /ubuntu /ubuntu/ 301
+    file_server /ubuntu/* browse {
         root /srv
     }
 }
