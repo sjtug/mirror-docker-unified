@@ -14,14 +14,6 @@ dummy:
     retry_interval: 60
 
 repos:
-  #archlinux
-  - type: shell_script 
-    script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/archlinux
-    interval: 3600
-    path: /srv/archlinux
-    name: archlinux
-    <<: *oneshot_common
   #centos
   - type: shell_script 
     script: /worker-script/rsync.sh
