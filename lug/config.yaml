@@ -157,11 +157,11 @@ repos:
     path: /srv/ubuntu
     name: ubuntu
     <<: *oneshot_common
-  #ubuntu-cdimage
+  #ubuntu-cd
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://cdimage.ubuntu.com/cdimage/
     interval: 24600
-    path: /srv/ubuntu-cdimage
-    name: ubuntu-cdimage
+    path: /srv/ubuntu-cd
+    name: ubuntu-cd
     <<: *oneshot_common
