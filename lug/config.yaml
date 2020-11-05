@@ -18,7 +18,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://rsync.archlinux.org/ftp_tier1/
-    interval:
+    interval: 3600
     path: /srv/archlinux
     name: archlinux
     <<: *oneshot_common
@@ -26,7 +26,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://msync.centos.org/CentOS/
-    interval:
+    interval: 21600
     path: /srv/centos
     name: centos
     <<: *oneshot_common
@@ -34,7 +34,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://ftp://planetmirror.com/pub/csw
-    interval:
+    interval: 21600
     path: /srv/csw
     name: csw
     <<: *oneshot_common
@@ -42,7 +42,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh 
     source: rsync://syncproxy2.wna.debian.org/debian/
-    interval:
+    interval: 43200
     path: /srv/debian
     name: debian
     <<: *oneshot_common
@@ -50,7 +50,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/debian-cd/
-    interval:
+    interval: 21600
     path: /srv/debian-cd
     name: debian-cd
     <<: *oneshot_common
@@ -58,7 +58,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://rsync.security.debian.org/debian-security/
-    interval:
+    interval: 21600
     path: /srv/debian-security
     name: debian-security
     <<: *oneshot_common
@@ -66,7 +66,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://rsync.deepin.com/deepin/
-    interval:
+    interval: 21600
     path: /srv/deepin
     name: deepin
     <<: *oneshot_common
@@ -74,7 +74,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: https://deepin.c3sl.ufpr.br/deepin-cd/
-    interval:
+    interval: 21600
     path: /srv/deepin-cd
     name: deepin-cd
     <<: *oneshot_common
@@ -82,7 +82,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: https://download.docker.com/
-    interval:
+    interval: 86400
     path: /srv/docker-ce
     name: docker-ce
     <<: *oneshot_common
@@ -90,14 +90,14 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/
-    interval:
+    interval: 21600
     path: /srv/fedora
     name: fedora
   #fedora-secondary
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://download-ib01.fedoraproject.org/fedora-secondary/
-    interval:
+    interval: 21600
     path: /srv/fedora-secondary
     name: fedora-secondary
     <<: *oneshot_common
@@ -105,7 +105,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/linuxmint-packages/
-    interval:
+    interval: 21600
     path: /srv/linuxmint
     name: linuxmint
     <<: *oneshot_common
@@ -113,7 +113,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/linuxmint/
-    interval:
+    interval: 21600
     path: /srv/linuxmint-cd
     name: linuxmint-cd
     <<: *oneshot_common
@@ -121,7 +121,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/mageia/
-    interval:
+    interval: 21600
     path: /srv/mageia
     name: mageia
     <<: *oneshot_common
@@ -129,7 +129,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://fr2.rpmfind.net/linux/opensuse/
-    interval:
+    interval: 43200                                       #may be wrong
     path: /srv/opensuse
     name: opensuse
     <<: *oneshot_common
@@ -137,7 +137,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://download.openvz.org/openvz-download
-    interval:
+    interval: 43200                                       #may be wrong
     path: /srv/openvz
     name: openvz
     <<: *oneshot_common
@@ -145,7 +145,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://rpms.remirepo.net
-    interval:
+    interval: 43200
     path: /srv/remi
     name: remi
     <<: *oneshot_common
@@ -153,7 +153,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://mirror.aarnet.edu.au/pub/scientific/
-    interval:
+    interval: 21600                                       #may be wrong
     path: /srv/scientific
     name: scientific
     <<: *oneshot_common
@@ -161,7 +161,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://archive.ubuntu.com/ubuntu/
-    interval:
+    interval: 21600
     path: /srv/ubuntu
     name: ubuntu
     <<: *oneshot_common
@@ -169,7 +169,7 @@ repos:
   - type: shell_script 
     script: /worker-script/rsync.sh
     source: rsync://cdimage.ubuntu.com/cdimage/
-    interval:
+    interval: 21600
     path: /srv/ubuntu-cdimage
     name: ubuntu-cdimage
     <<: *oneshot_common
