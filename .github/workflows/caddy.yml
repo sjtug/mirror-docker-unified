@@ -12,7 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: use CI config for docker-compose
-        run: cp docker-compose.ci.yml docker-compose.override.yml
+        run: |
+          cp docker-compose.ci.yml docker-compose.override.yml 
+          cp .env.ci .env
       - name: docker-compose build
         run: docker-compose build --parallel
       - uses: actions/setup-python@v1
