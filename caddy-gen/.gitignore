@@ -1,0 +1,6 @@
+scratch/
+__pycache__/
+config.*
+!*.example
+test*
+Caddyfile

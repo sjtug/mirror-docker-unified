@@ -1,0 +1,8 @@
+services:
+    caddy:
+      volumes:
+        - "/srv:/srv"
+    lug:
+      volumes:
+        - "./lug/config.local.yaml:/config.local.yaml:ro"
+      command: -c /config.local.yaml
