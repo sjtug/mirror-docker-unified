@@ -5,7 +5,7 @@ import logging
 import argparse
 import dataclasses as dc
 from pathlib import Path
-from config import BASE, LUG_ADDR, ROOT_DIR
+from config import BASE, LUG_ADDR, ROOT_DIR, FRONTEND_DIR
 
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
@@ -36,16 +36,10 @@ class Node:
 BLANK_NODE = Node()
 
 
-def https_redir() -> list[Node]:
-    return [
-        Node(f'http://{BASE}', [
-            Node('redir / https://{host}{uri} 301')
-        ])
-    ]
-
-
 def common() -> list[Node]:
-    frontend = Node('root * /mirror-frontend')
+    frontend = Node('file_server /*', [
+        Node(f'root {FRONTEND_DIR}')
+    ])
 
     # TODO: the ratelimit plugin seems to support v1 only? removed
     ratelimit = Node('ratelimit * /lug 40 80 second')
@@ -136,16 +130,14 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
 
 
 def build_root(config_yaml: dict) -> Node:
-    https_redir_nodes = https_redir()
     common_nodes = common()
     subdomain_nodes, file_server_nodes = repos(config_yaml['repos'])
 
-    main_node = Node(f'https://{BASE}',
+    main_node = Node(f'{BASE}',
                      common_nodes + [BLANK_NODE] +
                      file_server_nodes)
 
     return Node('',
-                https_redir_nodes +
                 [main_node] +
                 subdomain_nodes)
 
@@ -175,5 +167,6 @@ if __name__ == "__main__":
 
     with open(args.output, 'w') as fp:
         fp.write(str(root))
+        fp.write("\n")
 
     print(f'{args.output}: done')
