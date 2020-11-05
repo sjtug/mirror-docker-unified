@@ -1,0 +1,12 @@
+[[source]]
+url = "https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyyaml = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
