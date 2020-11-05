@@ -1,0 +1,21 @@
+interval: 10 # Interval between pollings
+loglevel: 4 # 1-5
+concurrent_limit: 5
+# Prometheus metrics are exposed at http://exporter_address/metrics
+exporter_address: :8081
+
+# Address where JSON API will be served
+json_api:
+  address: :7001
+
+dummy:
+  oneshot_common: &oneshot_common
+    retry: 5
+    retry_interval: 60
+
+repos:
+  - type: shell_script
+    script: /worker-script/test.sh
+    interval: 3600
+    name: test
+    <<: *oneshot_common
