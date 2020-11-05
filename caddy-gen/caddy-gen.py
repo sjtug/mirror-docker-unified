@@ -4,6 +4,7 @@ import yaml
 import logging
 import argparse
 import dataclasses as dc
+from pathlib import Path
 from config import BASE, LUG_ADDR, ROOT_DIR
 
 DESC = 'A simple Caddyfile generator for siyuan.'
@@ -58,21 +59,32 @@ def repo_subdomain(repo: dict) -> list[Node]:
         return [with_proto('')]
 
 
+def repo_valid(repo: dict) -> bool:
+    rtype = repo['type']
+    if repo['type'] != 'shell_script':
+        logging.warning(
+            f'repo "{repo["name"]}": type "{rtype}" is not implemented')
+        return False
+
+    path = Path(repo['path'])
+    path_should_be = Path(ROOT_DIR) / repo['name']
+    if path != path_should_be:
+        logging.error(
+            f'repo "{repo["name"]}": path should be {path_should_be}, ignored')
+        return False
+
+    return True
+
+
 def repos(repos: dict) -> list[Node]:
     subdomain_nodes = []
     file_server_node = Node(f'https://{BASE}', [])
 
-    for repo in repos:
-        rtype = repo['type']
-        if rtype == 'shell_script':
-            if 'subdomain' in repo:
-                subdomain_nodes += repo_subdomain(repo)
-            file_server_node.children += repo_redir(repo)
-            file_server_node.children += repo_file_server(repo)
-
-        else:
-            logging.warning(
-                f'type "{rtype}" of repo "{repo["name"]}" is not implemented')
+    for repo in filter(repo_valid, repos):
+        if 'subdomain' in repo:
+            subdomain_nodes += repo_subdomain(repo)
+        file_server_node.children += repo_redir(repo)
+        file_server_node.children += repo_file_server(repo)
 
     return subdomain_nodes + [file_server_node]
 
