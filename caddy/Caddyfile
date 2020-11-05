@@ -1,15 +1,87 @@
 :80 {
-	@hidden {
-		path */.*
-	}
-	encode gzip
-	respond @hidden 404
-	reverse_proxy /lug/* siyuan-lug:7001
-	# TODO: block access to lug admin API
-	file_server /ubuntu/* browse {
-		root /srv
-	}
-	file_server /* {
-		root /dists
-	}
+    file_server /* {
+        root /dists
+    }
+    reverse_proxy /lug/* siyuan-lug:7001 {
+        header_down Access-Control-Allow-Origin *
+        header_down Access-Control-Request-Method GET
+    }
+    encode gzip
+
+    redir /centos /centos/ 301
+    file_server /centos/* browse {
+        root /srv
+    }
+    redir /csw /csw/ 301
+    file_server /csw/* browse {
+        root /srv
+    }
+    redir /debian /debian/ 301
+    file_server /debian/* browse {
+        root /srv
+    }
+    redir /debian-cd /debian-cd/ 301
+    file_server /debian-cd/* browse {
+        root /srv
+    }
+    redir /debian-security /debian-security/ 301
+    file_server /debian-security/* browse {
+        root /srv
+    }
+    redir /deepin /deepin/ 301
+    file_server /deepin/* browse {
+        root /srv
+    }
+    redir /deepin-cd /deepin-cd/ 301
+    file_server /deepin-cd/* browse {
+        root /srv
+    }
+    redir /docker-ce /docker-ce/ 301
+    file_server /docker-ce/* browse {
+        root /srv
+    }
+    redir /fedora /fedora/ 301
+    file_server /fedora/* browse {
+        root /srv
+    }
+    redir /fedora-secondary /fedora-secondary/ 301
+    file_server /fedora-secondary/* browse {
+        root /srv
+    }
+    redir /linuxmint /linuxmint/ 301
+    file_server /linuxmint/* browse {
+        root /srv
+    }
+    redir /linuxmint-cd /linuxmint-cd/ 301
+    file_server /linuxmint-cd/* browse {
+        root /srv
+    }
+    redir /mageia /mageia/ 301
+    file_server /mageia/* browse {
+        root /srv
+    }
+    redir /opensuse /opensuse/ 301
+    file_server /opensuse/* browse {
+        root /srv
+    }
+    redir /openvz /openvz/ 301
+    file_server /openvz/* browse {
+        root /srv
+    }
+    redir /remi /remi/ 301
+    file_server /remi/* browse {
+        root /srv
+    }
+    redir /scientific /scientific/ 301
+    file_server /scientific/* browse {
+        root /srv
+    }
+    redir /ubuntu /ubuntu/ 301
+    file_server /ubuntu/* browse {
+        root /srv
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    file_server /ubuntu-cd/* browse {
+        root /srv
+    }
 }
