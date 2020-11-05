@@ -14,4 +14,7 @@ caddy-gen:
 caddy-gen-local:
 	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile
 
-.PHONY: caddy-gen
+integration-test:
+	cd integration-test && pipenv run pytest
+
+.PHONY: caddy-gen integration-test
