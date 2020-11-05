@@ -1,3 +1,4 @@
 BASE = 'siyuan.sjtu.edu.cn'
 LUG_ADDR = 'lug:7001'
 ROOT_DIR = '/srv'
+FRONTEND_DIR = '/mirror-frontend'

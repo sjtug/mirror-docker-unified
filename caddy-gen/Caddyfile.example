@@ -2,19 +2,14 @@ http://siyuan.sjtu.edu.cn {
     redir / https://{host}{uri} 301
 }
 
-anaconda.siyuan.sjtu.edu.cn/ {
-    file_server /anaconda/* browse {
-        root /srv
-    }
-}
-
-packagist.siyuan.sjtu.edu.cn/ {
-    file_server /packagist/* browse {
-        root /srv
-    }
-}
-
 https://siyuan.sjtu.edu.cn {
+    root * /mirror-frontend
+    reverse_proxy /lug/* lug:7001 {
+        header_down Access-Control-Allow-Origin *
+        header_down Access-Control-Request-Method GET
+    }
+    encode gzip
+
     redir /putty /putty/ 301
     file_server /putty/* browse {
         root /srv
@@ -87,22 +82,6 @@ https://siyuan.sjtu.edu.cn {
     file_server /anaconda/* browse {
         root /srv
     }
-    redir /git/homebrew-core.git /git/homebrew-core.git/ 301
-    file_server /git/homebrew-core.git/* browse {
-        root /srv
-    }
-    redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
-    file_server /git/homebrew-cask.git/* browse {
-        root /srv
-    }
-    redir /git/brew.git /git/brew.git/ 301
-    file_server /git/brew.git/* browse {
-        root /srv
-    }
-    redir /git/crates.io-index /git/crates.io-index/ 301
-    file_server /git/crates.io-index/* browse {
-        root /srv
-    }
     redir /raspbian /raspbian/ 301
     file_server /raspbian/* browse {
         root /srv
@@ -151,20 +130,16 @@ https://siyuan.sjtu.edu.cn {
     file_server /msys2/* browse {
         root /srv
     }
-    redir /git/opam-repository.git /git/opam-repository.git/ 301
-    file_server /git/opam-repository.git/* browse {
+}
+
+anaconda.siyuan.sjtu.edu.cn/ {
+    file_server /anaconda/* browse {
         root /srv
     }
-    redir /git/dpdk.git /git/dpdk.git/ 301
-    file_server /git/dpdk.git/* browse {
-        root /srv
-    }
-    redir /git/qemu.git /git/qemu.git/ 301
-    file_server /git/qemu.git/* browse {
-        root /srv
-    }
-    redir /git/linux.git /git/linux.git/ 301
-    file_server /git/linux.git/* browse {
+}
+
+packagist.siyuan.sjtu.edu.cn/ {
+    file_server /packagist/* browse {
         root /srv
     }
 }
