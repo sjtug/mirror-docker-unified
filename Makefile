@@ -9,10 +9,10 @@ caddy-format-config:
 	mv caddy/Caddyfile.new caddy/Caddyfile
 
 caddy-gen:
-	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.yaml -o ../caddy/Caddyfile
+	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.yaml -o ../caddy/Caddyfile -D
 
 caddy-gen-local:
-	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile
+	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile -D
 
 integration-test:
 	cd integration-test && pipenv run pytest
