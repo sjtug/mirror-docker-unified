@@ -1,6 +1,6 @@
 interval: 10 # Interval between pollings
 loglevel: 4 # 1-5
-concurrent_limit: 5
+concurrent_limit: 1
 # Prometheus metrics are exposed at http://exporter_address/metrics
 exporter_address: :8081
 
