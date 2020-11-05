@@ -7,3 +7,11 @@ caddy-verify-config:
 caddy-format-config:
 	docker-compose run --rm caddy caddy fmt /etc/caddy/Caddyfile > caddy/Caddyfile.new
 	mv caddy/Caddyfile.new caddy/Caddyfile
+
+caddy-gen:
+	cd caddy-gen && pipenv install && pipenv run python caddy-gen.py -i ../lug/config.yaml -o ../caddy/Caddyfile
+
+caddy-gen-local:
+	cd caddy-gen && pipenv install && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile
+
+.PHONY: caddy-gen
