@@ -9,6 +9,7 @@ from config import BASE, LUG_ADDR, ROOT_DIR, FRONTEND_DIR
 
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
+IS_LOCAL = BASE.startswith(':')
 
 
 @dc.dataclass
@@ -78,21 +79,18 @@ def repo_redir(repo: dict) -> list[Node]:
     return [Node(f'redir /{repo["name"]} /{repo["name"]}/ 301')]
 
 
-def repo_file_server(repo: dict) -> list[Node]:
-    return [Node(f'file_server /{repo["name"]}/* browse', [
+def repo_file_server(repo: dict, has_prefix: bool = True) -> list[Node]:
+    return [Node(f'file_server {"/" + repo["name"] if has_prefix else ""}/* browse', [
         Node(f'root {ROOT_DIR}')
     ])]
 
 
-def repo_subdomain(repo: dict) -> list[Node]:
-    def with_proto(proto: str) -> Node:
-        return Node(f'{proto}{repo["subdomain"]}.{BASE}/',
-                    repo_file_server(repo))
-
-    if repo.get('no_redir_http', False):
-        return [with_proto('https://'), with_proto('http://')]
-    else:
-        return [with_proto('')]
+def repo_no_redir(repo: dict) -> list[Node]:
+    return [
+        Node(f'http://{BASE}/{repo["name"]}', repo_redir(repo)),
+        Node(f'http://{BASE}/{repo["name"]}/*',
+             repo_file_server(repo, has_prefix=False))
+    ]
 
 
 def repos(repos: dict) -> tuple[list[Node], list[Node]]:
@@ -108,6 +106,11 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
                 f'repo "{repo["name"]}": "no_direct_serving" set, ignored')
             return False
 
+        if 'subdomain' in repo:
+            logging.warning(
+                f'repo "{repo["name"]}": subdomain is not supported in siyuan, ignored')
+            return False
+
         path = Path(repo['path'])
         path_should_be = Path(ROOT_DIR) / repo['name']
         if path != path_should_be:
@@ -117,29 +120,33 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
 
         return True
 
-    subdomain_nodes = []
+    no_redir_nodes = []
     file_server_nodes = []
 
+    if IS_LOCAL:
+        logging.warning(
+            f'BASE "{BASE}" might be a local url, "no_redir_http" will be ignored')
+
     for repo in filter(repo_valid, repos):
-        if 'subdomain' in repo:
-            subdomain_nodes += repo_subdomain(repo)
+        if repo.get('no_redir_http', False) and not IS_LOCAL:
+            no_redir_nodes += repo_no_redir(repo)
         file_server_nodes += repo_redir(repo)
         file_server_nodes += repo_file_server(repo)
 
-    return subdomain_nodes, file_server_nodes
+    return no_redir_nodes, file_server_nodes
 
 
 def build_root(config_yaml: dict) -> Node:
     common_nodes = common()
-    subdomain_nodes, file_server_nodes = repos(config_yaml['repos'])
+    no_redir_nodes, file_server_nodes = repos(config_yaml['repos'])
 
     main_node = Node(f'{BASE}',
                      common_nodes + [BLANK_NODE] +
                      file_server_nodes)
 
     return Node('',
-                [main_node] +
-                subdomain_nodes)
+                no_redir_nodes +
+                [main_node])
 
 
 if __name__ == "__main__":
