@@ -1,18 +1,18 @@
 :80 {
-    @hidden {
-        path */.*
-    }
-    encode gzip
-    respond @hidden 404
-    reverse_proxy /lug/* siyuan-lug:7001 {
-        header_down Access-Control-Allow-Origin *
-	    header_down Access-Control-Request-Method GET
-    }
-    # TODO: block access to lug admin API
-    file_server /ubuntu/* browse {
-        root /srv
-    }
-    file_server /* {
-        root /dists
-    }
+	@hidden {
+		path */.*
+	}
+	encode gzip
+	respond @hidden 404
+	reverse_proxy /lug/* siyuan-lug:7001 {
+		header_down Access-Control-Allow-Origin *
+		header_down Access-Control-Request-Method GET
+	}
+	# TODO: block access to lug admin API
+	file_server /ubuntu/* browse {
+		root /srv
+	}
+	file_server /* {
+		root /dists
+	}
 }
