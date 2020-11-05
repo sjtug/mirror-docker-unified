@@ -1,0 +1,27 @@
+name: Lint and Validation
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+jobs:
+  test-caddy-file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: use CI config for docker-compose
+        run: cp docker-compose.ci.yml docker-compose.override.yml
+      - name: docker-compose build
+        run: docker-compose build --parallel
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.9'
+      - uses: dschep/install-pipenv-action@v1
+      - name: setup Pipenv
+        run: cd caddy-gen && pipenv install
+      - name: check if Caddyfile is latest version
+        run: make caddy-gen && git diff --exit-code
+      - name: validate Caddyfile
+        run: make caddy-verify-config

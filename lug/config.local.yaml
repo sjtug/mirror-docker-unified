@@ -18,4 +18,5 @@ repos:
     script: /worker-script/test.sh
     interval: 3600
     name: test
+    path: /srv/test
     <<: *oneshot_common
