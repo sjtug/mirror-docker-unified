@@ -20,54 +20,63 @@ repos:
     interval:
     path: /srv/archlinux
     name: archlinux
+    <<: *oneshot_common
   #centos
   - type: shell_script 
     source: rsync://msync.centos.org/CentOS/
     interval:
     path: /srv/centos
     name: centos
+    <<: *oneshot_common
   #csw
   - type: shell_script 
     source: rsync://ftp://planetmirror.com/pub/csw
     interval:
     path: /srv/csw
     name: csw
+    <<: *oneshot_common
   #debian
   - type: shell_script 
     source: rsync://syncproxy2.wna.debian.org/debian/
     interval:
     path: /srv/debian
     name: debian
+    <<: *oneshot_common
   #debian-cd
   - type: shell_script 
     source: rsync://mirrors.kernel.org/debian-cd/
     interval:
     path: /srv/debian-cd
     name: debian-cd
+    <<: *oneshot_common
   #debian-security
   - type: shell_script 
     source: rsync://rsync.security.debian.org/debian-security/
     interval:
     path: /srv/debian-security
     name: debian-security
+    <<: *oneshot_common
   #deepin
   - type: shell_script 
     source: rsync://rsync.deepin.com/deepin/
     interval:
     path: /srv/deepin
     name: deepin
+    <<: *oneshot_common
   #deepin-cd
   - type: shell_script 
     source: https://deepin.c3sl.ufpr.br/deepin-cd/
     interval:
     path: /srv/deepin-cd
     name: deepin-cd
+    <<: *oneshot_common
   #docker-ce
   - type: shell_script 
     source: https://download.docker.com/
     interval:
     path: /srv/docker-ce
     name: docker-ce
+    <<: *oneshot_common
   #fedora
   - type: shell_script 
     source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/
@@ -80,57 +89,67 @@ repos:
     interval:
     path: /srv/fedora-secondary
     name: fedora-secondary
+    <<: *oneshot_common
   #linuxmint
   - type: shell_script 
     source: rsync://mirrors.kernel.org/linuxmint-packages/
     interval:
     path: /srv/linuxmint
     name: linuxmint
+    <<: *oneshot_common
   #linuxmint-cd
   - type: shell_script 
     source: rsync://mirrors.kernel.org/linuxmint/
     interval:
     path: /srv/linuxmint-cd
     name: linuxmint-cd
+    <<: *oneshot_common
   #mageia
   - type: shell_script 
     source: rsync://mirrors.kernel.org/mageia/
     interval:
     path: /srv/mageia
     name: mageia
+    <<: *oneshot_common
   #opensuse
   - type: shell_script 
     source: rsync://fr2.rpmfind.net/linux/opensuse/
     interval:
     path: /srv/opensuse
     name: opensuse
+    <<: *oneshot_common
   #openvz
   - type: shell_script 
     source: rsync://download.openvz.org/openvz-download
     interval:
     path: /srv/openvz
     name: openvz
+    <<: *oneshot_common
   #remi
   - type: shell_script 
     source: rsync://rpms.remirepo.net
     interval:
     path: /srv/remi
     name: remi
+    <<: *oneshot_common
   #scientific
   - type: shell_script 
     source: rsync://mirror.aarnet.edu.au/pub/scientific/
     interval:
     path: /srv/scientific
     name: scientific
+    <<: *oneshot_common
   #ubuntu
   - type: shell_script 
     source: rsync://archive.ubuntu.com/ubuntu/
     interval:
     path: /srv/ubuntu
     name: ubuntu
+    <<: *oneshot_common
   #ubuntu-cdimage
   - type: shell_script 
     source: rsync://cdimage.ubuntu.com/cdimage/
     interval:
     path: /srv/ubuntu-cdimage
     name: ubuntu-cdimage
+    <<: *oneshot_common
