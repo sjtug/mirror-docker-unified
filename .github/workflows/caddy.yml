@@ -1,4 +1,4 @@
-name: Test Caddy Config
+name: Lint and Validation
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
     branches:
     - main
 jobs:
-  test:
+  test-caddy-file:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
