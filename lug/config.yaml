@@ -150,7 +150,7 @@ repos:
     name: scientific
     <<: *oneshot_common
   #ubuntu
-  - type: shell_script 
+  - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://archive.ubuntu.com/ubuntu/
     interval: 24900
