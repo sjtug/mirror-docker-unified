@@ -37,6 +37,7 @@ repos:
     interval: 43200
     path: /srv/debian
     name: debian
+    no_redir_http: true
     <<: *oneshot_common
   # debian-cd
   - type: shell_script
@@ -156,6 +157,7 @@ repos:
     interval: 24900
     path: /srv/ubuntu
     name: ubuntu
+    no_redir_http: true
     <<: *oneshot_common
   # ubuntu-cd
   - type: shell_script
