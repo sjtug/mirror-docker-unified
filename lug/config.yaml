@@ -32,7 +32,7 @@ repos:
     <<: *oneshot_common
   # debian
   - type: shell_script
-    script: /worker-script/debian-rsync.sh 
+    script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://syncproxy2.wna.debian.org/debian/
     interval: 43200
     path: /srv/debian
@@ -151,7 +151,7 @@ repos:
     <<: *oneshot_common
   #ubuntu
   - type: shell_script 
-    script: /worker-script/ubuntu-rsync.sh
+    script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://archive.ubuntu.com/ubuntu/
     interval: 24900
     path: /srv/ubuntu

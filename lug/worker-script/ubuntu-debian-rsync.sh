@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 fatal() {
   echo "$1"
@@ -9,10 +9,11 @@ warn() {
   echo "$1"
 }
 
-RSYNCSOURCE=rsync://archive.ubuntu.com/ubuntu/
+# $LUG_source can either be <ubuntu> or <debian>
+RSYNCSOURCE=$LUG_source
 
 # Define where you want the mirror-data to be on your mirror
-BASEDIR=/srv/ubuntu
+BASEDIR=$LUG_path
 
 if [ ! -d ${BASEDIR} ]; then
   warn "${BASEDIR} does not exist yet, trying to create it..."
