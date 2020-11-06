@@ -123,13 +123,13 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
     no_redir_nodes = []
     file_server_nodes = []
 
-    if IS_LOCAL:
-        logging.warning(
-            f'BASE "{BASE}" might be a local url, "no_redir_http" will be ignored')
-
     for repo in filter(repo_valid, repos):
-        if repo.get('no_redir_http', False) and not IS_LOCAL:
-            no_redir_nodes += repo_no_redir(repo)
+        if repo.get('no_redir_http', False):
+            if IS_LOCAL:
+                logging.warning(
+                    f'repo "{repo["name"]}": BASE "{BASE}" might be a local url, "no_redir_http" will be ignored')
+            else:
+                no_redir_nodes += repo_no_redir(repo)
         file_server_nodes += repo_redir(repo)
         file_server_nodes += repo_file_server(repo)
 
