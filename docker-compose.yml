@@ -47,5 +47,13 @@ services:
       retries: 3
       start_period: 40s
   
+  logspout:
+    restart: on-failure
+    image: gliderlabs/logspout
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    container_name: logspout
+    command: syslog+tls://${ELK_ENDPOINT}
+
 networks:
   service_net:

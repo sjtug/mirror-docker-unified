@@ -9,9 +9,15 @@ caddy-format-config:
 	mv caddy/Caddyfile.new caddy/Caddyfile
 
 caddy-gen:
-	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.yaml -o ../caddy/Caddyfile
+	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.yaml -o ../caddy/Caddyfile -D
 
 caddy-gen-local:
-	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile
+	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile -D
 
-.PHONY: caddy-gen
+lug-format-config: # You need to install prettier from npm to use this functionality
+	prettier lug/config.yaml -w
+
+integration-test:
+	cd integration-test && pipenv run pytest
+
+.PHONY: caddy-gen integration-test
