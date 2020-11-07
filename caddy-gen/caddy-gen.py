@@ -37,6 +37,11 @@ class Node:
 BLANK_NODE = Node()
 
 
+def hidden() -> list[Node]:
+    return [Node('@hidden', [Node('path */.*')]),  # hide dot files
+            Node('respond @hidden 404')]
+
+
 def common() -> list[Node]:
     frontend = Node('file_server /*', [
         Node(f'root {FRONTEND_DIR}')
@@ -72,7 +77,10 @@ def common() -> list[Node]:
         Node('without /render')
     ])
 
-    return [frontend, lug, gzip]
+    reject_lug_api = Node('@reject_lug_api', [Node('path /lug/v1/admin/*')])
+    reject_lug_api_respond = Node('respond @reject_lug_api 403')
+
+    return [frontend, lug, gzip, BLANK_NODE] + hidden() + [reject_lug_api, reject_lug_api_respond]
 
 
 def repo_redir(repo: dict) -> list[Node]:
@@ -81,7 +89,8 @@ def repo_redir(repo: dict) -> list[Node]:
 
 def repo_file_server(repo: dict, has_prefix: bool = True) -> list[Node]:
     return [Node(f'file_server {"/" + repo["name"] if has_prefix else ""}/* browse', [
-        Node(f'root {ROOT_DIR}')
+        Node(f'root {ROOT_DIR}'),
+        Node(f'hide .*')
     ])]
 
 
@@ -89,7 +98,7 @@ def repo_no_redir(repo: dict) -> list[Node]:
     return [
         Node(f'http://{BASE}/{repo["name"]}', repo_redir(repo)),
         Node(f'http://{BASE}/{repo["name"]}/*',
-             repo_file_server(repo, has_prefix=False))
+             repo_file_server(repo, has_prefix=False) + hidden())
     ]
 
 
