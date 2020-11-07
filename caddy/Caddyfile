@@ -7,10 +7,15 @@
         header_down Access-Control-Request-Method GET
     }
     encode gzip
+
     @hidden {
         path */.*
     }
     respond @hidden 404
+    @reject_lug_api {
+        path /lug/v1/admin/*
+    }
+    respond @reject_lug_api 403
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
