@@ -9,7 +9,7 @@ services:
       - "./caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"
-      - "/mnt/disk1:/srv"
+      - "/mnt/disk1:/srv/disk1"
       - "./data/caddy/dists:/dists"
     ports: 
       - 80:80
@@ -39,7 +39,7 @@ services:
       - "./lug/worker-script:/worker-script:ro"
       - "./lug/config.yaml:/config.yaml:ro"
       - "./lug/config.bootstrap.yaml:/config.bootstrap.yaml:ro"
-      - "/mnt/disk1:/srv"
+      - "/mnt/disk1:/srv/disk1"
     healthcheck:
       test: curl -f http://localhost:7001/v1/manager/summary || exit 1
       interval: 1m30s

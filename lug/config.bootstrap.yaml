@@ -18,7 +18,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/centos
-    path: /srv/centos
+    path: /srv/disk1/centos
     name: centos
     <<: *oneshot_common
   # csw
@@ -26,7 +26,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/csw
     interval: 21600
-    path: /srv/csw
+    path: /srv/disk1/csw
     name: csw
     <<: *oneshot_common
   # debian
@@ -34,7 +34,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/debian
     interval: 43200
-    path: /srv/debian
+    path: /srv/disk1/debian
     name: debian
     <<: *oneshot_common
   # debian-cd
@@ -42,7 +42,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/debian-cd
     interval: 21600
-    path: /srv/debian-cd
+    path: /srv/disk1/debian-cd
     name: debian-cd
     <<: *oneshot_common
   # debian-security
@@ -50,7 +50,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/debian-security
     interval: 21600
-    path: /srv/debian-security
+    path: /srv/disk1/debian-security
     name: debian-security
     <<: *oneshot_common
   # deepin
@@ -58,7 +58,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/deepin
     interval: 21600
-    path: /srv/deepin
+    path: /srv/disk1/deepin
     name: deepin
     <<: *oneshot_common
   # deepin-cd
@@ -66,7 +66,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/deepin-cd
     interval: 21600
-    path: /srv/deepin-cd
+    path: /srv/disk1/deepin-cd
     name: deepin-cd
     <<: *oneshot_common
   # docker-ce
@@ -74,7 +74,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/docker-ce
     interval: 86400
-    path: /srv/docker-ce
+    path: /srv/disk1/docker-ce
     name: docker-ce
     <<: *oneshot_common
   # fedora
@@ -82,14 +82,14 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/fedora
     interval: 21600
-    path: /srv/fedora
+    path: /srv/disk1/fedora
     name: fedora
   # fedora-secondary
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/fedora-secondary
     interval: 21600
-    path: /srv/fedora-secondary
+    path: /srv/disk1/fedora-secondary
     name: fedora-secondary
     <<: *oneshot_common
   # linuxmint
@@ -97,7 +97,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/linuxmint
     interval: 21600
-    path: /srv/linuxmint
+    path: /srv/disk1/linuxmint
     name: linuxmint
     <<: *oneshot_common
   # linuxmint-cd
@@ -105,7 +105,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/linuxmint-cd
     interval: 21600
-    path: /srv/linuxmint-cd
+    path: /srv/disk1/linuxmint-cd
     name: linuxmint-cd
     <<: *oneshot_common
   # mageia
@@ -113,7 +113,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/mageia
     interval: 21600
-    path: /srv/mageia
+    path: /srv/disk1/mageia
     name: mageia
     <<: *oneshot_common
   # opensuse
@@ -121,7 +121,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/opensuse
     interval: 43200 # may be wrong
-    path: /srv/opensuse
+    path: /srv/disk1/opensuse
     name: opensuse
     <<: *oneshot_common
   # openvz
@@ -129,7 +129,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/openvz
     interval: 43200 # may be wrong
-    path: /srv/openvz
+    path: /srv/disk1/openvz
     name: openvz
     <<: *oneshot_common
   # remi
@@ -137,7 +137,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/remi
     interval: 43200
-    path: /srv/remi
+    path: /srv/disk1/remi
     name: remi
     <<: *oneshot_common
   # scientific
@@ -145,7 +145,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/scientific
     interval: 21600 # may be wrong
-    path: /srv/scientific
+    path: /srv/disk1/scientific
     name: scientific
     <<: *oneshot_common
   # ubuntu
@@ -153,7 +153,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/ubuntu
     interval: 21600
-    path: /srv/ubuntu
+    path: /srv/disk1/ubuntu
     name: ubuntu
     <<: *oneshot_common
   # ubuntu-cd
@@ -161,6 +161,6 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/ubuntu-cd
     interval: 21600
-    path: /srv/ubuntu-cd
+    path: /srv/disk1/ubuntu-cd
     name: ubuntu-cd
     <<: *oneshot_common
