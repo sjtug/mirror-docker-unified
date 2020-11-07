@@ -1,4 +1,5 @@
 :80 {
+    log / stdout "{common} {host}"
     file_server /* {
         root /dists
     }
