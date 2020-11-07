@@ -1,6 +1,7 @@
 :80 {
     log {
         output stdout
+        format single_field common_log
     }
     file_server /* {
         root /dists
