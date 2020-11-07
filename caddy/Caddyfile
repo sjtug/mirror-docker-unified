@@ -23,97 +23,97 @@
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /csw /csw/ 301
     file_server /csw/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /debian /debian/ 301
     file_server /debian/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /debian-cd /debian-cd/ 301
     file_server /debian-cd/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /debian-security /debian-security/ 301
     file_server /debian-security/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /deepin /deepin/ 301
     file_server /deepin/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /deepin-cd /deepin-cd/ 301
     file_server /deepin-cd/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /fedora /fedora/ 301
     file_server /fedora/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
     file_server /fedora-secondary/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /linuxmint /linuxmint/ 301
     file_server /linuxmint/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /linuxmint-cd /linuxmint-cd/ 301
     file_server /linuxmint-cd/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /mageia /mageia/ 301
     file_server /mageia/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /openvz /openvz/ 301
     file_server /openvz/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /remi /remi/ 301
     file_server /remi/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /scientific /scientific/ 301
     file_server /scientific/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /ubuntu /ubuntu/ 301
     file_server /ubuntu/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
     redir /ubuntu-cd /ubuntu-cd/ 301
     file_server /ubuntu-cd/* browse {
-        root /srv
+        root /srv/disk1
         hide .*
     }
 }
