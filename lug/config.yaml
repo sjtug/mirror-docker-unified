@@ -25,14 +25,14 @@ repos:
   # csw
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp://planetmirror.com/pub/csw
+    source: ftp://planetmirror.com/pub/csw
     interval: 20600
     path: /srv/csw
     name: csw
     <<: *oneshot_common
   # debian
   - type: shell_script
-    script: /worker-script/rsync.sh
+    script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://syncproxy2.wna.debian.org/debian/
     interval: 43200
     path: /srv/debian
@@ -150,9 +150,9 @@ repos:
     path: /srv/scientific
     name: scientific
     <<: *oneshot_common
-  # ubuntu
+  #ubuntu
   - type: shell_script
-    script: /worker-script/rsync.sh
+    script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://archive.ubuntu.com/ubuntu/
     interval: 24900
     path: /srv/ubuntu
