@@ -43,7 +43,7 @@ def hidden() -> list[Node]:
 
 
 def log() -> list[Node]:
-    return [Node('log / stdout "{common} {host}"')]
+    return [Node('log', [Node('output stdout')])]
 
 
 def common() -> list[Node]:

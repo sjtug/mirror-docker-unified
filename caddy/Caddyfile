@@ -1,5 +1,7 @@
 :80 {
-    log / stdout "{common} {host}"
+    log {
+        output stdout
+    }
     file_server /* {
         root /dists
     }
