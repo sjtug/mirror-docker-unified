@@ -69,7 +69,7 @@ def common() -> list[Node]:
         Node('header_down Access-Control-Request-Method GET'),
     ])
 
-    gzip = Node('encode gzip')
+    gzip = Node('encode gzip zstd')
 
     # removed
     crawler_rewrite = Node('rewrite', [

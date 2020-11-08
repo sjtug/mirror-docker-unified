@@ -3,7 +3,7 @@
         output stdout
         format single_field common_log  # log in v1 style
     }
-    encode gzip
+    encode gzip zstd
 
     file_server /* {
         root /dists
@@ -169,7 +169,7 @@ mirrors2.sjtug.sjtu.edu.cn {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    encode gzip
+    encode gzip zstd
 
     file_server /* {
         root /dists
