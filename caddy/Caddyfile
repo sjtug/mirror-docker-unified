@@ -1,16 +1,19 @@
 :80 {
     log {
         output stdout
-        format single_field common_log
+        format single_field common_log  # log in v1 style
     }
+    encode gzip zstd
+
     file_server /* {
         root /dists
     }
+    rewrite /docs/* /  # for react app
+
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *
         header_down Access-Control-Request-Method GET
     }
-    encode gzip
 
     @hidden {
         path */.*
@@ -130,7 +133,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/debian {
 http://mirrors2.sjtug.sjtu.edu.cn/debian/* {
     log {
         output stdout
-        format single_field common_log
+        format single_field common_log  # log in v1 style
     }
     file_server /* browse {
         root /srv/disk1
@@ -149,7 +152,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/ubuntu {
 http://mirrors2.sjtug.sjtu.edu.cn/ubuntu/* {
     log {
         output stdout
-        format single_field common_log
+        format single_field common_log  # log in v1 style
     }
     file_server /* browse {
         root /srv/disk2
@@ -164,16 +167,19 @@ http://mirrors2.sjtug.sjtu.edu.cn/ubuntu/* {
 mirrors2.sjtug.sjtu.edu.cn {
     log {
         output stdout
-        format single_field common_log
+        format single_field common_log  # log in v1 style
     }
+    encode gzip zstd
+
     file_server /* {
         root /dists
     }
+    rewrite /docs/* /  # for react app
+
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *
         header_down Access-Control-Request-Method GET
     }
-    encode gzip
 
     @hidden {
         path */.*
