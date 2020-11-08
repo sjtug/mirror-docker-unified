@@ -3,18 +3,12 @@
         output stdout
         format single_field common_log  # log in v1 style
     }
-    encode gzip
+    encode gzip zstd
 
     file_server /* {
         root /dists
     }
-    @frontend_try_files {
-        path /docs/*
-        file {
-            try_files {path} /  # rewrite to / if not exists
-        }
-    }
-    rewrite @frontend_try_files {http.matchers.file.relative}
+    rewrite /docs/* /  # for react app
 
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *
@@ -175,18 +169,12 @@ mirrors2.sjtug.sjtu.edu.cn {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    encode gzip
+    encode gzip zstd
 
     file_server /* {
         root /dists
     }
-    @frontend_try_files {
-        path /docs/*
-        file {
-            try_files {path} /  # rewrite to / if not exists
-        }
-    }
-    rewrite @frontend_try_files {http.matchers.file.relative}
+    rewrite /docs/* /  # for react app
 
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *

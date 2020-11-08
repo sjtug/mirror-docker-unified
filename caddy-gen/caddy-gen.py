@@ -61,12 +61,7 @@ def common() -> list[Node]:
         Node('file_server /*', [
             Node(f'root {FRONTEND_DIR}')
         ]),
-
-        Node('@frontend_try_files', [
-            Node('path /docs/*'),
-            Node('file', [Node('try_files {path} /', comment='rewrite to / if not exists')])
-        ]),
-        Node('rewrite @frontend_try_files {http.matchers.file.relative}'),
+        Node('rewrite /docs/* /', comment='for react app'),
     ]
 
     lug = Node(f'reverse_proxy /lug/* {LUG_ADDR}', [
@@ -74,7 +69,7 @@ def common() -> list[Node]:
         Node('header_down Access-Control-Request-Method GET'),
     ])
 
-    gzip = Node('encode gzip')
+    gzip = Node('encode gzip zstd')
 
     # removed
     crawler_rewrite = Node('rewrite', [
