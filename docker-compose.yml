@@ -1,9 +1,11 @@
 version: "3"
 services:
   caddy:
+    container_name: siyuan-caddy
     restart: on-failure
     networks: 
-      - monitor_network
+      - service-net
+      - monitor-net
     image: caddy:2.1.1
     volumes:
       - "./caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
@@ -14,7 +16,6 @@ services:
     ports: 
       - 80:80
       - 443:443
-    container_name: siyuan-caddy
     healthcheck:
       test: curl -f http://localhost || exit 1
       interval: 1m30s
@@ -23,10 +24,11 @@ services:
       start_period: 40s
 
   lug:
+    container_name: siyuan-lug
     restart: on-failure
     command: -c /config.bootstrap.yaml
     networks: 
-      - service_net
+      - service-net
     build:
       context: ./lug
       args:
@@ -34,7 +36,6 @@ services:
     expose:
       - 8081
       - 7001
-    container_name: siyuan-lug
     volumes:
       - "./lug/worker-script:/worker-script:ro"
       - "./lug/config.yaml:/config.yaml:ro"
@@ -48,27 +49,30 @@ services:
       start_period: 40s
   
   logspout:
+    container_name: logspout
     restart: on-failure
     image: gliderlabs/logspout
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    container_name: logspout
     command: syslog+tls://${ELK_ENDPOINT}
   
   cadvisor:
+    container_name: siyuan-cadvisor
     restart: on-failure
-    image: gcr.io/google-containers/cadvisor:latest
-    ports:
-      - 8080:8080
+    networks: 
+      - monitor-net
+    image: gcr-io.mirrors.sjtug.sjtu.edu.cn
+    expose:
+      - 8080
     volumes:
       - "/:/rootfs:ro"
       - "/var/run:/var/run:rw"
       - "/sys:/sys:ro"
       - "/var/lib/docker/:/var/lib/docker:ro"
-    networks: 
-      - monitor_network
+
 
   nodeexporter:
+    container_name: siyuan-nodeexporter
     restart: on-failure
     image: prom/node-exporter:latest
     volumes:
@@ -86,5 +90,5 @@ services:
       - monitor-net
 
 networks:
-  service_net:
-  monitor_network:
+  service-net:
+  monitor-net:
