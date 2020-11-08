@@ -135,7 +135,7 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
         name = repo['name']
         if not path.endswith(name):
             logging.error(
-                f'repo "{name}": should have the same suffix as {name}, ignored')
+                f'repo "{name}": {path} should have the same suffix as {name}, ignored')
             return False
 
         return True
