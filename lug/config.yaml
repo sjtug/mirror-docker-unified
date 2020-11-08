@@ -86,6 +86,7 @@ repos:
     interval: 21600
     path: /srv/disk1/fedora/linux
     name: fedora/linux
+    rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     <<: *oneshot_common
   # fedora/epel
   - type: shell_script
@@ -94,6 +95,7 @@ repos:
     interval: 22600
     path: /srv/disk1/fedora/epel
     name: fedora/epel
+    rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     <<: *oneshot_common
   # fedora-secondary
   - type: shell_script
