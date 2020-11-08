@@ -77,18 +77,27 @@ repos:
     path: /srv/disk1/docker-ce
     name: docker-ce
     <<: *oneshot_common
-  # fedora
+  # fedora/linux
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/fedora
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/fedora/
     interval: 21600
-    path: /srv/disk1/fedora
-    name: fedora
+    path: /srv/disk1/fedora/linux
+    name: fedora/linux
+    <<: *oneshot_common
+  # fedora/epel
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.kernel.org/fedora-epel/
+    interval: 22600
+    path: /srv/disk1/fedora/epel
+    name: fedora/epel
+    <<: *oneshot_common
   # fedora-secondary
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/fedora-secondary
-    interval: 21600
+    source: rsync://mirrors.ustc.edu.cn/fedora-altarch/
+    interval: 23600
     path: /srv/disk1/fedora-secondary
     name: fedora-secondary
     <<: *oneshot_common

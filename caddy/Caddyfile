@@ -66,6 +66,11 @@
         root /srv/disk1
         hide .*
     }
+    redir /fedora/epel /fedora/epel/ 301
+    file_server /fedora/epel/* browse {
+        root /srv/disk1
+        hide .*
+    }
     redir /fedora-secondary /fedora-secondary/ 301
     file_server /fedora-secondary/* browse {
         root /srv/disk1
