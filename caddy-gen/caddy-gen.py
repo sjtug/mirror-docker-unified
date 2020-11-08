@@ -10,6 +10,7 @@ from config import BASE, LUG_ADDR, FRONTEND_DIR
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
 
+
 def is_local(base: str):
     return base.startswith(':')
 
@@ -18,6 +19,7 @@ def is_local(base: str):
 class Node:
     name: str = ''
     children: list['Node'] = dc.field(default_factory=list)
+    comment: str = ''
 
     def __str__(self, level: int = 0):
         if self.name == '' and len(self.children) == 0:
@@ -27,13 +29,16 @@ class Node:
                 [child.__str__(level=level) for child in self.children])
         elif len(self.children) == 0:
             lines = self.name.split('\n')
-            return '\n'.join([' ' * (level * INDENT_CNT) + line for line in lines])
+            return '\n'.join([' ' * (level * INDENT_CNT) + line for line in lines]) + self.comment_str()
         else:
             children_str = '\n'.join(
                 [child.__str__(level=level + 1) for child in self.children])
-            return ' ' * (level * INDENT_CNT) + self.name + ' {\n' + \
+            return ' ' * (level * INDENT_CNT) + self.name + ' {' + self.comment_str() + '\n' + \
                 children_str + '\n' + \
                 ' ' * (level * INDENT_CNT) + '}'
+
+    def comment_str(self):
+        return '' if len(self.comment) == 0 else f'  # {self.comment}'
 
 
 BLANK_NODE = Node()
@@ -47,22 +52,24 @@ def hidden() -> list[Node]:
 def log() -> list[Node]:
     return [Node('log', [
         Node('output stdout'),
-        Node('format single_field common_log')  # v1 style logging
+        Node('format single_field common_log', comment='log in v1 style')
     ])]
 
 
 def common() -> list[Node]:
-    frontend = Node('file_server /*', [
-        Node(f'root {FRONTEND_DIR}')
-    ])
+    frontends = [
+        Node('file_server /*', [
+            Node(f'root {FRONTEND_DIR}')
+        ]),
 
-    # TODO: the ratelimit plugin seems to support v1 only? removed
-    ratelimit = Node('ratelimit * /lug 40 80 second')
+        Node('@frontend_try_files', [
+            Node('path /docs/*'),
+            Node('file', [Node('try_files {path} /', comment='rewrite to / if not exists')])
+        ]),
+        Node('rewrite @frontend_try_files {http.matchers.file.relative}'),
+    ]
 
     lug = Node(f'reverse_proxy /lug/* {LUG_ADDR}', [
-        # Node('max_conns 500'),
-        # Node('max_fails 9999'),
-        # Node('fail_timeout 0'),
         Node('header_down Access-Control-Allow-Origin *'),
         Node('header_down Access-Control-Request-Method GET'),
     ])
@@ -89,8 +96,10 @@ def common() -> list[Node]:
     reject_lug_api = Node('@reject_lug_api', [Node('path /lug/v1/admin/*')])
     reject_lug_api_respond = Node('respond @reject_lug_api 403')
 
-    return log() + \
-        [frontend, lug, gzip, BLANK_NODE] + \
+    return \
+        log() + [gzip] + [BLANK_NODE] + \
+        frontends + [BLANK_NODE] + \
+        [lug] + [BLANK_NODE] + \
         hidden() + \
         [reject_lug_api, reject_lug_api_respond]
 
