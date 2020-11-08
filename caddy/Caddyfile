@@ -83,37 +83,37 @@
     }
     redir /mageia /mageia/ 301
     file_server /mageia/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /openvz /openvz/ 301
     file_server /openvz/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /remi /remi/ 301
     file_server /remi/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /scientific /scientific/ 301
     file_server /scientific/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /ubuntu /ubuntu/ 301
     file_server /ubuntu/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /ubuntu-cd /ubuntu-cd/ 301
     file_server /ubuntu-cd/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
 }

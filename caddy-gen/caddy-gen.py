@@ -5,7 +5,7 @@ import logging
 import argparse
 import dataclasses as dc
 from pathlib import Path
-from config import BASE, LUG_ADDR, ROOT_DIR, FRONTEND_DIR
+from config import BASE, LUG_ADDR, FRONTEND_DIR
 
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
@@ -98,8 +98,9 @@ def repo_redir(repo: dict) -> list[Node]:
 
 
 def repo_file_server(repo: dict, has_prefix: bool = True) -> list[Node]:
+    real_root = "/".join(repo["path"].split("/")[:-1])
     return [Node(f'file_server {"/" + repo["name"] if has_prefix else ""}/* browse', [
-        Node(f'root {ROOT_DIR}'),
+        Node(f'root {real_root}'),
         Node(f'hide .*')
     ])]
 
@@ -131,11 +132,6 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
             return False
 
         path = Path(repo['path'])
-        path_should_be = Path(ROOT_DIR) / repo['name']
-        if path != path_should_be:
-            logging.error(
-                f'repo "{repo["name"]}": path should be {path_should_be}, ignored')
-            return False
 
         return True
 
