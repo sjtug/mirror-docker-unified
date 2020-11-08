@@ -3,7 +3,7 @@ services:
   caddy:
     restart: on-failure
     networks: 
-      - service_net
+      - monitor_network
     image: caddy:2.1.1
     volumes:
       - "./caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
@@ -54,6 +54,37 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     container_name: logspout
     command: syslog+tls://${ELK_ENDPOINT}
+  
+  cadvisor:
+    restart: on-failure
+    image: gcr.io/google-containers/cadvisor:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:rw"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+    networks: 
+      - monitor_network
+
+  nodeexporter:
+    restart: on-failure
+    image: prom/node-exporter:latest
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    expose:
+      - 9100
+    networks:
+      - monitor-net
 
 networks:
   service_net:
+  monitor_network:
