@@ -61,8 +61,8 @@
         root /srv/disk1
         hide .*
     }
-    redir /fedora /fedora/ 301
-    file_server /fedora/* browse {
+    redir /fedora/linux /fedora/linux/ 301
+    file_server /fedora/linux/* browse {
         root /srv/disk1
         hide .*
     }

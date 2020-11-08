@@ -84,8 +84,8 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/
     interval: 22000
-    path: /srv/disk1/fedora
-    name: fedora
+    path: /srv/disk1/fedora/linux
+    name: fedora/linux
   # fedora-secondary
   - type: shell_script
     script: /worker-script/rsync.sh

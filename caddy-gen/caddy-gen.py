@@ -98,7 +98,7 @@ def repo_redir(repo: dict) -> list[Node]:
 
 
 def repo_file_server(repo: dict, has_prefix: bool = True) -> list[Node]:
-    real_root = "/".join(repo["path"].split("/")[:-1])
+    real_root = repo["path"][:-len(repo["name"])][:-1]
     return [Node(f'file_server {"/" + repo["name"] if has_prefix else ""}/* browse', [
         Node(f'root {real_root}'),
         Node(f'hide .*')
@@ -129,6 +129,13 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
         if 'subdomain' in repo:
             logging.warning(
                 f'repo "{repo["name"]}": subdomain is not supported in siyuan, ignored')
+            return False
+
+        path = repo['path']
+        name = repo['name']
+        if not path.endswith(name):
+            logging.error(
+                f'repo "{name}": should have the same suffix as {name}, ignored')
             return False
 
         return True
