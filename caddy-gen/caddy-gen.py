@@ -9,7 +9,9 @@ from config import BASE, LUG_ADDR, FRONTEND_DIR
 
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
-IS_LOCAL = BASE.startswith(':')
+
+def is_local(base: str):
+    return base.startswith(':')
 
 
 @dc.dataclass
@@ -105,15 +107,15 @@ def repo_file_server(repo: dict, has_prefix: bool = True) -> list[Node]:
     ])]
 
 
-def repo_no_redir(repo: dict) -> list[Node]:
+def repo_no_redir(base: str, repo: dict) -> list[Node]:
     return [
-        Node(f'http://{BASE}/{repo["name"]}', repo_redir(repo)),
-        Node(f'http://{BASE}/{repo["name"]}/*',
+        Node(f'http://{base}/{repo["name"]}', repo_redir(repo)),
+        Node(f'http://{base}/{repo["name"]}/*',
              log() + repo_file_server(repo, has_prefix=False) + hidden())
     ]
 
 
-def repos(repos: dict) -> tuple[list[Node], list[Node]]:
+def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
     def repo_valid(repo: dict) -> bool:
         rtype = repo['type']
         if repo['type'] != 'shell_script':
@@ -145,22 +147,22 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
 
     for repo in filter(repo_valid, repos):
         if repo.get('no_redir_http', False):
-            if IS_LOCAL:
+            if is_local(base):
                 logging.warning(
-                    f'repo "{repo["name"]}": BASE "{BASE}" might be a local url, "no_redir_http" will be ignored')
+                    f'repo "{repo["name"]}": BASE "{base}" might be a local url, "no_redir_http" will be ignored')
             else:
-                no_redir_nodes += repo_no_redir(repo)
+                no_redir_nodes += repo_no_redir(base, repo)
         file_server_nodes += repo_redir(repo)
         file_server_nodes += repo_file_server(repo)
 
     return no_redir_nodes, file_server_nodes
 
 
-def build_root(config_yaml: dict) -> Node:
+def build_root(base, config_yaml: dict) -> Node:
     common_nodes = common()
-    no_redir_nodes, file_server_nodes = repos(config_yaml['repos'])
+    no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'])
 
-    main_node = Node(f'{BASE}',
+    main_node = Node(f'{base}',
                      common_nodes + [BLANK_NODE] +
                      file_server_nodes)
 
@@ -190,10 +192,13 @@ if __name__ == "__main__":
         content = fp.read().replace('\t', '')
         config_yaml = yaml.load(content, Loader=yaml.FullLoader)
 
-    root = build_root(config_yaml)
+    roots = []
+    for base in BASE:
+        roots.append(build_root(base, config_yaml))
 
     with open(args.output, 'w') as fp:
-        fp.write(str(root))
-        fp.write("\n")
+        for root in roots:
+            fp.write(str(root))
+            fp.write("\n\n")
 
     print(f'{args.output}: done')
