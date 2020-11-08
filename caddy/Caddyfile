@@ -1,7 +1,7 @@
 :80 {
     log {
         output stdout
-        format single_field common_log
+        format single_field common_log  # log in v1 style
     }
     encode gzip
 
@@ -11,7 +11,7 @@
     @frontend_try_files {
         path /docs/*
         file {
-            try_files {path} /
+            try_files {path} /  # rewrite to / if not exists
         }
     }
     rewrite @frontend_try_files {http.matchers.file.relative}
@@ -139,7 +139,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/debian {
 http://mirrors2.sjtug.sjtu.edu.cn/debian/* {
     log {
         output stdout
-        format single_field common_log
+        format single_field common_log  # log in v1 style
     }
     file_server /* browse {
         root /srv/disk1
@@ -158,7 +158,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/ubuntu {
 http://mirrors2.sjtug.sjtu.edu.cn/ubuntu/* {
     log {
         output stdout
-        format single_field common_log
+        format single_field common_log  # log in v1 style
     }
     file_server /* browse {
         root /srv/disk2
@@ -173,7 +173,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/ubuntu/* {
 mirrors2.sjtug.sjtu.edu.cn {
     log {
         output stdout
-        format single_field common_log
+        format single_field common_log  # log in v1 style
     }
     encode gzip
 
@@ -183,7 +183,7 @@ mirrors2.sjtug.sjtu.edu.cn {
     @frontend_try_files {
         path /docs/*
         file {
-            try_files {path} /
+            try_files {path} /  # rewrite to / if not exists
         }
     }
     rewrite @frontend_try_files {http.matchers.file.relative}
