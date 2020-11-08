@@ -1,6 +1,6 @@
 interval: 10 # Interval between pollings
 loglevel: 4 # 1-5
-concurrent_limit: 1
+concurrent_limit: 3
 # Prometheus metrics are exposed at http://exporter_address/metrics
 exporter_address: :8081
 
@@ -14,65 +14,59 @@ dummy:
     retry_interval: 60
 
 repos:
-  # centos
+ # centos
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/centos
+    source: rsync://msync.centos.org/CentOS/
+    interval: 25600
     path: /srv/disk1/centos
     name: centos
     <<: *oneshot_common
-  # csw
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/csw
-    interval: 21600
-    path: /srv/disk1/csw
-    name: csw
-    <<: *oneshot_common
   # debian
   - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/debian
+    script: /worker-script/ubuntu-debian-rsync.sh
+    source: rsync://syncproxy2.wna.debian.org/debian/
     interval: 43200
     path: /srv/disk1/debian
     name: debian
+    no_redir_http: true
     <<: *oneshot_common
   # debian-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/debian-cd
-    interval: 21600
+    source: rsync://mirrors.kernel.org/debian-cd/
+    interval: 23600
     path: /srv/disk1/debian-cd
     name: debian-cd
     <<: *oneshot_common
   # debian-security
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/debian-security
-    interval: 21600
+    source: rsync://rsync.security.debian.org/debian-security/
+    interval: 21100
     path: /srv/disk1/debian-security
     name: debian-security
     <<: *oneshot_common
   # deepin
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/deepin
-    interval: 21600
+    source: rsync://rsync.deepin.com/deepin/
+    interval: 21900
     path: /srv/disk1/deepin
     name: deepin
     <<: *oneshot_common
   # deepin-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/deepin-cd
-    interval: 21600
+    source: rsync://rsync.deepin.com/cdimage/
+    interval: 22900
     path: /srv/disk1/deepin-cd
     name: deepin-cd
     <<: *oneshot_common
   # docker-ce
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/docker-ce
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce
     interval: 86400
     path: /srv/disk1/docker-ce
     name: docker-ce
@@ -80,10 +74,11 @@ repos:
   # fedora/linux
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/fedora/
+    source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/
     interval: 21600
     path: /srv/disk1/fedora/linux
     name: fedora/linux
+    rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     <<: *oneshot_common
   # fedora/epel
   - type: shell_script
@@ -92,11 +87,12 @@ repos:
     interval: 22600
     path: /srv/disk1/fedora/epel
     name: fedora/epel
+    rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     <<: *oneshot_common
   # fedora-secondary
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.ustc.edu.cn/fedora-altarch/
+    source: rsync://mirrors.kernel.org/fedora-secondary/
     interval: 23600
     path: /srv/disk1/fedora-secondary
     name: fedora-secondary
@@ -104,32 +100,32 @@ repos:
   # linuxmint
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/linuxmint
-    interval: 21600
+    source: rsync://mirrors.kernel.org/linuxmint-packages/
+    interval: 22600
     path: /srv/disk1/linuxmint
     name: linuxmint
     <<: *oneshot_common
   # linuxmint-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/linuxmint-cd
-    interval: 21600
+    source: rsync://mirrors.kernel.org/linuxmint/
+    interval: 21000
     path: /srv/disk1/linuxmint-cd
     name: linuxmint-cd
     <<: *oneshot_common
   # mageia
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/mageia
-    interval: 21600
+    source: rsync://mirrors.kernel.org/mageia/
+    interval: 21200
     path: /srv/disk1/mageia
     name: mageia
     <<: *oneshot_common
   # opensuse
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/opensuse
-    interval: 43200 # may be wrong
+    source: rsync://fr2.rpmfind.net/linux/opensuse/
+    interval: 44200 # may be wrong
     path: /srv/disk1/opensuse
     name: opensuse
     <<: *oneshot_common

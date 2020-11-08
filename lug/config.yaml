@@ -22,14 +22,6 @@ repos:
     path: /srv/disk1/centos
     name: centos
     <<: *oneshot_common
-  # csw
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: ftp://planetmirror.com/pub/csw
-    interval: 20600
-    path: /srv/disk1/csw
-    name: csw
-    <<: *oneshot_common
   # debian
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh

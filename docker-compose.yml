@@ -53,7 +53,7 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     container_name: logspout
-    command: syslog+tls://${ELK_ENDPOINT}
+    command: syslog+tcp://${ELK_ENDPOINT}
 
 networks:
   service_net:
