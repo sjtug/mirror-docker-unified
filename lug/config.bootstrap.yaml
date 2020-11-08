@@ -96,6 +96,7 @@ repos:
     interval: 23600
     path: /srv/disk1/fedora-secondary
     name: fedora-secondary
+    rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     <<: *oneshot_common
   # linuxmint
   - type: shell_script
