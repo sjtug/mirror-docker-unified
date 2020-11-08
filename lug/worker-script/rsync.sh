@@ -7,7 +7,7 @@ fi
 
 tmp_stderr=$(mktemp "/tmp/rsync-$LUG_name.XXX")
 
-rsync -aHvh --no-o --no-g --stats --delete --delete-delay --safe-links --exclude '.~tmp~' --partial-dir=.rsync-partial --timeout=600 "$LUG_source" "$LUG_path" 2> "$tmp_stderr"
+eval rsync -aHvh --no-o --no-g --stats --delete --delete-delay --safe-links --exclude '.~tmp~' --partial-dir=.rsync-partial --timeout=600 $LUG_rsync_extra_flags "$LUG_source" "$LUG_path" 2> "$tmp_stderr"
 retcode="$?"
 
 cat "$tmp_stderr" >&2
