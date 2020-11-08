@@ -8,13 +8,7 @@
     file_server /* {
         root /dists
     }
-    @frontend_try_files {
-        path /docs/*
-        file {
-            try_files {path} /  # rewrite to / if not exists
-        }
-    }
-    rewrite @frontend_try_files {http.matchers.file.relative}
+    rewrite /docs/* /  # for react app
 
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *
@@ -180,13 +174,7 @@ mirrors2.sjtug.sjtu.edu.cn {
     file_server /* {
         root /dists
     }
-    @frontend_try_files {
-        path /docs/*
-        file {
-            try_files {path} /  # rewrite to / if not exists
-        }
-    }
-    rewrite @frontend_try_files {http.matchers.file.relative}
+    rewrite /docs/* /  # for react app
 
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *
