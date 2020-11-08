@@ -122,7 +122,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/mageia
     interval: 21600
-    path: /srv/disk1/mageia
+    path: /srv/disk2/mageia
     name: mageia
     <<: *oneshot_common
   # opensuse
@@ -130,7 +130,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/opensuse
     interval: 43200 # may be wrong
-    path: /srv/disk1/opensuse
+    path: /srv/disk2/opensuse
     name: opensuse
     <<: *oneshot_common
   # openvz
@@ -138,7 +138,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/openvz
     interval: 43200 # may be wrong
-    path: /srv/disk1/openvz
+    path: /srv/disk2/openvz
     name: openvz
     <<: *oneshot_common
   # remi
@@ -146,7 +146,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/remi
     interval: 43200
-    path: /srv/disk1/remi
+    path: /srv/disk2/remi
     name: remi
     <<: *oneshot_common
   # scientific
@@ -154,7 +154,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/scientific
     interval: 21600 # may be wrong
-    path: /srv/disk1/scientific
+    path: /srv/disk2/scientific
     name: scientific
     <<: *oneshot_common
   # ubuntu
@@ -162,7 +162,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/ubuntu
     interval: 21600
-    path: /srv/disk1/ubuntu
+    path: /srv/disk2/ubuntu
     name: ubuntu
     <<: *oneshot_common
   # ubuntu-cd
@@ -170,6 +170,6 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/ubuntu-cd
     interval: 21600
-    path: /srv/disk1/ubuntu-cd
+    path: /srv/disk2/ubuntu-cd
     name: ubuntu-cd
     <<: *oneshot_common
