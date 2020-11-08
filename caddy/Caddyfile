@@ -3,14 +3,23 @@
         output stdout
         format single_field common_log
     }
+    encode gzip
+
     file_server /* {
         root /dists
     }
+    @frontend_try_files {
+        path /docs/*
+        file {
+            try_files {path} /
+        }
+    }
+    rewrite @frontend_try_files {http.matchers.file.relative}
+
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *
         header_down Access-Control-Request-Method GET
     }
-    encode gzip
 
     @hidden {
         path */.*
@@ -166,14 +175,23 @@ mirrors2.sjtug.sjtu.edu.cn {
         output stdout
         format single_field common_log
     }
+    encode gzip
+
     file_server /* {
         root /dists
     }
+    @frontend_try_files {
+        path /docs/*
+        file {
+            try_files {path} /
+        }
+    }
+    rewrite @frontend_try_files {http.matchers.file.relative}
+
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *
         header_down Access-Control-Request-Method GET
     }
-    encode gzip
 
     @hidden {
         path */.*

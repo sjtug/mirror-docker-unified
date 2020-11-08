@@ -10,6 +10,7 @@ from config import BASE, LUG_ADDR, FRONTEND_DIR
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
 
+
 def is_local(base: str):
     return base.startswith(':')
 
@@ -52,17 +53,19 @@ def log() -> list[Node]:
 
 
 def common() -> list[Node]:
-    frontend = Node('file_server /*', [
-        Node(f'root {FRONTEND_DIR}')
-    ])
+    frontends = [
+        Node('file_server /*', [
+            Node(f'root {FRONTEND_DIR}')
+        ]),
 
-    # TODO: the ratelimit plugin seems to support v1 only? removed
-    ratelimit = Node('ratelimit * /lug 40 80 second')
+        Node('@frontend_try_files', [
+            Node('path /docs/*'),
+            Node('file', [Node('try_files {path} /')])
+        ]),
+        Node('rewrite @frontend_try_files {http.matchers.file.relative}'),
+    ]
 
     lug = Node(f'reverse_proxy /lug/* {LUG_ADDR}', [
-        # Node('max_conns 500'),
-        # Node('max_fails 9999'),
-        # Node('fail_timeout 0'),
         Node('header_down Access-Control-Allow-Origin *'),
         Node('header_down Access-Control-Request-Method GET'),
     ])
@@ -89,8 +92,10 @@ def common() -> list[Node]:
     reject_lug_api = Node('@reject_lug_api', [Node('path /lug/v1/admin/*')])
     reject_lug_api_respond = Node('respond @reject_lug_api 403')
 
-    return log() + \
-        [frontend, lug, gzip, BLANK_NODE] + \
+    return \
+        log() + [gzip] + [BLANK_NODE] + \
+        frontends + [BLANK_NODE] + \
+        [lug] + [BLANK_NODE] + \
         hidden() + \
         [reject_lug_api, reject_lug_api_respond]
 
