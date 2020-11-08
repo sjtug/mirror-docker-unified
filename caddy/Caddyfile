@@ -88,12 +88,12 @@
     }
     redir /mageia /mageia/ 301
     file_server /mageia/* browse {
-        root /srv/disk2
+        root /srv/disk1
         hide .*
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
-        root /srv/disk2
+        root /srv/disk1
         hide .*
     }
     redir /openvz /openvz/ 301
