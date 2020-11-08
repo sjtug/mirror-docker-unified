@@ -122,3 +122,167 @@
         hide .*
     }
 }
+
+http://mirrors2.sjtug.sjtu.edu.cn/debian {
+    redir /debian /debian/ 301
+}
+
+http://mirrors2.sjtug.sjtu.edu.cn/debian/* {
+    log {
+        output stdout
+        format single_field common_log
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirrors2.sjtug.sjtu.edu.cn/ubuntu {
+    redir /ubuntu /ubuntu/ 301
+}
+
+http://mirrors2.sjtug.sjtu.edu.cn/ubuntu/* {
+    log {
+        output stdout
+        format single_field common_log
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+mirrors2.sjtug.sjtu.edu.cn {
+    log {
+        output stdout
+        format single_field common_log
+    }
+    file_server /* {
+        root /dists
+    }
+    reverse_proxy /lug/* siyuan-lug:7001 {
+        header_down Access-Control-Allow-Origin *
+        header_down Access-Control-Request-Method GET
+    }
+    encode gzip
+
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    @reject_lug_api {
+        path /lug/v1/admin/*
+    }
+    respond @reject_lug_api 403
+
+    redir /centos /centos/ 301
+    file_server /centos/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /csw /csw/ 301
+    file_server /csw/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian /debian/ 301
+    file_server /debian/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian-cd /debian-cd/ 301
+    file_server /debian-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian-security /debian-security/ 301
+    file_server /debian-security/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /deepin /deepin/ 301
+    file_server /deepin/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /deepin-cd /deepin-cd/ 301
+    file_server /deepin-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /docker-ce /docker-ce/ 301
+    file_server /docker-ce/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora/linux /fedora/linux/ 301
+    file_server /fedora/linux/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora/epel /fedora/epel/ 301
+    file_server /fedora/epel/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora-secondary /fedora-secondary/ 301
+    file_server /fedora-secondary/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /linuxmint /linuxmint/ 301
+    file_server /linuxmint/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /linuxmint-cd /linuxmint-cd/ 301
+    file_server /linuxmint-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /mageia /mageia/ 301
+    file_server /mageia/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /opensuse /opensuse/ 301
+    file_server /opensuse/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /openvz /openvz/ 301
+    file_server /openvz/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /remi /remi/ 301
+    file_server /remi/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /scientific /scientific/ 301
+    file_server /scientific/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu /ubuntu/ 301
+    file_server /ubuntu/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    file_server /ubuntu-cd/* browse {
+        root /srv/disk2
+        hide .*
+    }
+}
+
