@@ -122,7 +122,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/mageia
     interval: 21600
-    path: /srv/disk2/mageia
+    path: /srv/disk1/mageia
     name: mageia
     <<: *oneshot_common
   # opensuse
@@ -130,7 +130,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.sjtu.edu.cn/opensuse
     interval: 43200 # may be wrong
-    path: /srv/disk2/opensuse
+    path: /srv/disk1/opensuse
     name: opensuse
     <<: *oneshot_common
   # openvz

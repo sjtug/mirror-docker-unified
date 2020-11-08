@@ -126,7 +126,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/mageia/
     interval: 21200
-    path: /srv/disk2/mageia
+    path: /srv/disk1/mageia
     name: mageia
     <<: *oneshot_common
   # opensuse
@@ -134,7 +134,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://fr2.rpmfind.net/linux/opensuse/
     interval: 44200 # may be wrong
-    path: /srv/disk2/opensuse
+    path: /srv/disk1/opensuse
     name: opensuse
     <<: *oneshot_common
   # openvz
