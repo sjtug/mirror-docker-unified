@@ -131,8 +131,6 @@ def repos(repos: dict) -> tuple[list[Node], list[Node]]:
                 f'repo "{repo["name"]}": subdomain is not supported in siyuan, ignored')
             return False
 
-        path = Path(repo['path'])
-
         return True
 
     no_redir_nodes = []
