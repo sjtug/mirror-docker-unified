@@ -17,7 +17,8 @@ repos:
   # centos
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://msync.centos.org/CentOS/
+    # not available yet -> rsync://msync.centos.org/CentOS/
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/centos/
     interval: 25600
     path: /srv/disk1/centos
     name: centos
@@ -25,7 +26,7 @@ repos:
   # debian
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
-    source: rsync://syncproxy2.wna.debian.org/debian/
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/debian/ #check passed
     interval: 43200
     path: /srv/disk1/debian
     name: debian
@@ -34,7 +35,7 @@ repos:
   # debian-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/debian-cd/
+    source: rsync://mirrors.kernel.org/debian-cd/ #check passed
     interval: 23600
     path: /srv/disk1/debian-cd
     name: debian-cd
@@ -42,7 +43,8 @@ repos:
   # debian-security
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://rsync.security.debian.org/debian-security/
+    #check passed
+    source: rsync://rsync.security.debian.org/debian-security/ #check passed
     interval: 21100
     path: /srv/disk1/debian-security
     name: debian-security
@@ -50,7 +52,7 @@ repos:
   # deepin
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://rsync.deepin.com/deepin/
+    source: rsync://rsync.deepin.com/deepin/ #check passed
     interval: 21900
     path: /srv/disk1/deepin
     name: deepin
@@ -58,7 +60,7 @@ repos:
   # deepin-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://rsync.deepin.com/cdimage/
+    source: rsync://rsync.deepin.com/cdimage/ #check passed 
     interval: 22900
     path: /srv/disk1/deepin-cd
     name: deepin-cd
@@ -66,7 +68,7 @@ repos:
   # docker-ce
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce #check passed
     interval: 86400
     path: /srv/disk1/docker-ce
     name: docker-ce
@@ -74,7 +76,7 @@ repos:
   # fedora/linux
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/
+    source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/ #check passed
     interval: 21600
     path: /srv/disk1/fedora/linux
     name: fedora/linux
@@ -92,7 +94,7 @@ repos:
   # fedora-secondary
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/fedora-secondary/
+    source: rsync://mirrors.kernel.org/fedora-secondary/ #check passed
     interval: 23600
     path: /srv/disk1/fedora-secondary
     name: fedora-secondary
@@ -101,7 +103,7 @@ repos:
   # linuxmint
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/linuxmint-packages/
+    source: rsync://mirrors.kernel.org/linuxmint-packages/ #check passed
     interval: 22600
     path: /srv/disk1/linuxmint
     name: linuxmint
@@ -109,7 +111,7 @@ repos:
   # linuxmint-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/linuxmint/
+    source: rsync://mirrors.kernel.org/linuxmint/ #check passed
     interval: 21000
     path: /srv/disk1/linuxmint-cd
     name: linuxmint-cd
@@ -117,7 +119,7 @@ repos:
   # mageia
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/mageia/
+    source: rsync://mirrors.kernel.org/mageia/ #check passed
     interval: 21200
     path: /srv/disk1/mageia
     name: mageia
@@ -125,7 +127,7 @@ repos:
   # opensuse
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://fr2.rpmfind.net/linux/opensuse/
+    source: rsync://fr2.rpmfind.net/linux/opensuse/ #check passed
     interval: 44200 # may be wrong
     path: /srv/disk1/opensuse
     name: opensuse
@@ -133,7 +135,7 @@ repos:
   # openvz
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/openvz
+    source: rsync://ftp.sjtu.edu.cn/openvz #check passed
     interval: 43200 # may be wrong
     path: /srv/disk2/openvz
     name: openvz
@@ -141,7 +143,7 @@ repos:
   # remi
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/remi
+    source: rsync://ftp.sjtu.edu.cn/remi #check passed
     interval: 43200
     path: /srv/disk2/remi
     name: remi
@@ -149,7 +151,7 @@ repos:
   # scientific
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/scientific
+    source: rsync://ftp.sjtu.edu.cn/scientific #check not passed (num of IP?)
     interval: 21600 # may be wrong
     path: /srv/disk2/scientific
     name: scientific
@@ -157,7 +159,7 @@ repos:
   # ubuntu
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/ubuntu
+    source: rsync://ftp.sjtu.edu.cn/ubuntu #check not passed (num of IP?)
     interval: 21600
     path: /srv/disk2/ubuntu
     name: ubuntu
@@ -165,7 +167,7 @@ repos:
   # ubuntu-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.sjtu.edu.cn/ubuntu-cd
+    source: rsync://ftp.sjtu.edu.cn/ubuntu-cd #check not passed (num of IP?)
     interval: 21600
     path: /srv/disk2/ubuntu-cd
     name: ubuntu-cd
