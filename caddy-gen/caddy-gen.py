@@ -55,10 +55,12 @@ def log() -> list[Node]:
         Node('format single_field common_log', comment='log in v1 style')
     ])]
 
+
 def auth_guard(matcher: str, username: str, password: str):
     return Node(f'basicauth {matcher}', [
         Node(f'{username} {password}')
     ])
+
 
 def reverse_proxy(prefix: str, target: str):
     return Node(f'route /{prefix}/*', [
@@ -81,7 +83,8 @@ def common() -> list[Node]:
     ])
 
     monitors = [
-        auth_guard('/monitor/*', '{$MONITOR_USER}', '{$MONITOR_PASSWORD_HASHED}'),
+        auth_guard('/monitor/*', '{$MONITOR_USER}',
+                   '{$MONITOR_PASSWORD_HASHED}'),
         reverse_proxy('monitor/node_exporter', NODE_EXPORTER_ADDR),
         reverse_proxy('monitor/cadvisor', CADVISOR_ADDR)
     ]
