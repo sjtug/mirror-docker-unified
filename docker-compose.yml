@@ -104,18 +104,10 @@ services:
   nodeexporter:
     container_name: siyuan-node_exporter
     restart: on-failure
-    image: prom/node-exporter:latest
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    image: caddy:latest
+    command: caddy reverse-proxy --from :9109 --to ${DOCKER_HOST_ADDR}:9100
     expose:
-      - 9100
+      - 9109
     networks:
       - monitor-net
 
