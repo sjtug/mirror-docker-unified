@@ -29,11 +29,6 @@
         root /srv/disk1
         hide .*
     }
-    redir /csw /csw/ 301
-    file_server /csw/* browse {
-        root /srv/disk1
-        hide .*
-    }
     redir /debian /debian/ 301
     file_server /debian/* browse {
         root /srv/disk1
@@ -192,11 +187,6 @@ mirrors2.sjtug.sjtu.edu.cn {
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    redir /csw /csw/ 301
-    file_server /csw/* browse {
         root /srv/disk1
         hide .*
     }
