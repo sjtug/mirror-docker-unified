@@ -2,10 +2,10 @@ name: Lint and Validation
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
+      - main
 jobs:
   test-lug:
     runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
         run: docker-compose build --parallel
       - uses: actions/setup-python@v1
         with:
-          python-version: '3.9'
+          python-version: "3.9"
       - uses: dschep/install-pipenv-action@v1
       - name: setup Pipenv
         run: cd caddy-gen && pipenv install
