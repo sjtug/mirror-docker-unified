@@ -2,6 +2,7 @@ version: "3"
 services:
   caddy:
     container_name: siyuan-caddy
+    command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
     restart: on-failure
     networks: 
       - service-net
