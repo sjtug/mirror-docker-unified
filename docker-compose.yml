@@ -61,7 +61,7 @@ services:
     restart: on-failure
     networks: 
       - monitor-net
-    image: gcr-io.mirrors.sjtug.sjtu.edu.cn
+    image: gcr-io.mirrors.sjtug.sjtu.edu.cn/google-containers/cadvisor:latest
     expose:
       - 8080
     volumes:
@@ -72,7 +72,7 @@ services:
 
 
   nodeexporter:
-    container_name: siyuan-nodeexporter
+    container_name: siyuan-node_exporter
     restart: on-failure
     image: prom/node-exporter:latest
     volumes:
