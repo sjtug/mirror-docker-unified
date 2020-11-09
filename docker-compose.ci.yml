@@ -3,3 +3,7 @@ services:
     build:
       args:
         - USE_SJTUG=false
+  caddy:
+    build:
+      args:
+        - USE_SJTUG=false
