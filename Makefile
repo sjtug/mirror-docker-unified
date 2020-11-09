@@ -11,6 +11,9 @@ caddy-format-config:
 caddy-gen:
 	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.yaml -o ../caddy/Caddyfile -D
 
+caddy-hash-password:
+	docker-compose run --rm caddy caddy hash-password
+
 caddy-gen-local:
 	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile -D
 

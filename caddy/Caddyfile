@@ -15,6 +15,18 @@
         header_down Access-Control-Request-Method GET
     }
 
+    basicauth /monitor/* {
+        {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
+    }
+    route /monitor/node_exporter/* {
+        uri strip_prefix /monitor/node_exporter
+        reverse_proxy siyuan-node_exporter:9100
+    }
+    route /monitor/cadvisor/* {
+        uri strip_prefix /monitor/cadvisor
+        reverse_proxy siyuan-cadvisor:8080
+    }
+
     @hidden {
         path */.*
     }
@@ -174,6 +186,18 @@ mirrors2.sjtug.sjtu.edu.cn {
     reverse_proxy /lug/* siyuan-lug:7001 {
         header_down Access-Control-Allow-Origin *
         header_down Access-Control-Request-Method GET
+    }
+
+    basicauth /monitor/* {
+        {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
+    }
+    route /monitor/node_exporter/* {
+        uri strip_prefix /monitor/node_exporter
+        reverse_proxy siyuan-node_exporter:9100
+    }
+    route /monitor/cadvisor/* {
+        uri strip_prefix /monitor/cadvisor
+        reverse_proxy siyuan-cadvisor:8080
     }
 
     @hidden {
