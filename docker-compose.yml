@@ -6,6 +6,8 @@ services:
     networks: 
       - service-net
       - monitor-net
+    env_file:
+      - './secrets/caddy.env'
     image: caddy:2.1.1
     volumes:
       - "./caddy/Caddyfile:/etc/caddy/Caddyfile:ro"

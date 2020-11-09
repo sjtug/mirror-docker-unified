@@ -27,6 +27,7 @@ jobs:
         run: |
           cp docker-compose.ci.yml docker-compose.override.yml 
           cp .env.ci .env
+          cp ./secrets/caddy.env.example ./secrets/caddy.env
       - name: docker-compose build
         run: docker-compose build --parallel
       - uses: actions/setup-python@v1

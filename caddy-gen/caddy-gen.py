@@ -5,7 +5,7 @@ import logging
 import argparse
 import dataclasses as dc
 from pathlib import Path
-from config import BASE, LUG_ADDR, FRONTEND_DIR
+from config import BASE, LUG_ADDR, FRONTEND_DIR, NODE_EXPORTER_ADDR, CADVISOR_ADDR
 
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
@@ -56,6 +56,19 @@ def log() -> list[Node]:
     ])]
 
 
+def auth_guard(matcher: str, username: str, password: str):
+    return Node(f'basicauth {matcher}', [
+        Node(f'{username} {password}')
+    ])
+
+
+def reverse_proxy(prefix: str, target: str):
+    return Node(f'route /{prefix}/*', [
+        Node(f'uri strip_prefix /{prefix}'),
+        Node(f'reverse_proxy {target}')
+    ])
+
+
 def common() -> list[Node]:
     frontends = [
         Node('file_server /*', [
@@ -68,6 +81,13 @@ def common() -> list[Node]:
         Node('header_down Access-Control-Allow-Origin *'),
         Node('header_down Access-Control-Request-Method GET'),
     ])
+
+    monitors = [
+        auth_guard('/monitor/*', '{$MONITOR_USER}',
+                   '{$MONITOR_PASSWORD_HASHED}'),
+        reverse_proxy('monitor/node_exporter', NODE_EXPORTER_ADDR),
+        reverse_proxy('monitor/cadvisor', CADVISOR_ADDR)
+    ]
 
     gzip = Node('encode gzip zstd')
 
@@ -95,6 +115,7 @@ def common() -> list[Node]:
         log() + [gzip] + [BLANK_NODE] + \
         frontends + [BLANK_NODE] + \
         [lug] + [BLANK_NODE] + \
+        monitors + [BLANK_NODE] + \
         hidden() + \
         [reject_lug_api, reject_lug_api_respond]
 
