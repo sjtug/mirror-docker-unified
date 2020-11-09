@@ -14,7 +14,7 @@ dummy:
     retry_interval: 60
 
 repos:
- # centos
+  # centos
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://msync.centos.org/CentOS/
