@@ -54,14 +54,15 @@ services:
     image: gliderlabs/logspout
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    command: syslog+tls://${ELK_ENDPOINT}
+    container_name: logspout
+    command: syslog+tcp://${ELK_ENDPOINT}
   
   cadvisor:
     container_name: siyuan-cadvisor
     restart: on-failure
     networks: 
       - monitor-net
-    image: gcr-io.mirrors.sjtug.sjtu.edu.cn/google-containers/cadvisor:latest
+    image: google/cadvisor:latest
     expose:
       - 8080
     volumes:
