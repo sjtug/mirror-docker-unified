@@ -62,7 +62,7 @@ services:
     restart: on-failure
     networks: 
       - monitor-net
-    image: gcr-io.mirrors.sjtug.sjtu.edu.cn/google-containers/cadvisor:latest
+    image: google/cadvisor:latest
     expose:
       - 8080
     volumes:
