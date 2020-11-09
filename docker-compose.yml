@@ -25,6 +25,16 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 10G
+    memswap_limit: 10G
 
   lug:
     container_name: siyuan-lug
@@ -51,6 +61,16 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 10G
+    memswap_limit: 10G
   
   logspout:
     container_name: logspout
