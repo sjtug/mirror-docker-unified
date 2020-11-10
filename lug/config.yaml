@@ -17,7 +17,7 @@ repos:
   # centos
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://msync.centos.org/CentOS/
+    source: rsync://mirrors.kernel.org/centos/
     interval: 25600
     path: /srv/disk1/centos
     name: centos
@@ -25,7 +25,7 @@ repos:
   # debian
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
-    source: rsync://syncproxy2.wna.debian.org/debian/
+    source: rsync://mirrors.kernel.org/debian/
     interval: 43200
     path: /srv/disk1/debian
     name: debian
@@ -58,7 +58,7 @@ repos:
   # deepin-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: https://deepin.c3sl.ufpr.br/deepin-cd/
+    source: https://rsync.deepin.com/deepin-cd/
     interval: 22900
     path: /srv/disk1/deepin-cd
     name: deepin-cd
@@ -66,7 +66,7 @@ repos:
   # docker-ce
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: https://download.docker.com/
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce/
     interval: 86400
     path: /srv/disk1/docker-ce
     name: docker-ce
@@ -96,6 +96,7 @@ repos:
     interval: 23600
     path: /srv/disk1/fedora-secondary
     name: fedora-secondary
+    rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     <<: *oneshot_common
   # linuxmint
   - type: shell_script
@@ -118,7 +119,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/mageia/
     interval: 21200
-    path: /srv/disk1/mageia
+    path: /srv/disk2/mageia
     name: mageia
     <<: *oneshot_common
   # opensuse
@@ -140,7 +141,7 @@ repos:
   # remi
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://rpms.remirepo.net
+    source: rsync://remi.mirror.karneval.cz/remi
     interval: 43000
     path: /srv/disk2/remi
     name: remi

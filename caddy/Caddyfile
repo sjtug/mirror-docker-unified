@@ -26,6 +26,10 @@
         uri strip_prefix /monitor/cadvisor
         reverse_proxy siyuan-cadvisor:8080
     }
+    route /monitor/lug/* {
+        uri strip_prefix /monitor/lug
+        reverse_proxy siyuan-lug:8081
+    }
 
     @hidden {
         path */.*
@@ -98,7 +102,7 @@
     }
     redir /mageia /mageia/ 301
     file_server /mageia/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /opensuse /opensuse/ 301
@@ -199,6 +203,10 @@ mirrors2.sjtug.sjtu.edu.cn {
         uri strip_prefix /monitor/cadvisor
         reverse_proxy siyuan-cadvisor:8080
     }
+    route /monitor/lug/* {
+        uri strip_prefix /monitor/lug
+        reverse_proxy siyuan-lug:8081
+    }
 
     @hidden {
         path */.*
@@ -271,7 +279,7 @@ mirrors2.sjtug.sjtu.edu.cn {
     }
     redir /mageia /mageia/ 301
     file_server /mageia/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /opensuse /opensuse/ 301
