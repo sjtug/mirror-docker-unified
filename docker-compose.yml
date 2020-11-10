@@ -43,7 +43,7 @@ services:
   lug:
     container_name: siyuan-lug
     restart: on-failure
-    command: -c /config.bootstrap.yaml
+    command: -c /config.yaml
     networks: 
       - service-net
     build:
@@ -56,7 +56,6 @@ services:
     volumes:
       - "./lug/worker-script:/worker-script:ro"
       - "./lug/config.yaml:/config.yaml:ro"
-      - "./lug/config.bootstrap.yaml:/config.bootstrap.yaml:ro"
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
     healthcheck:

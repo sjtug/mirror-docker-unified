@@ -5,7 +5,7 @@ import logging
 import argparse
 import dataclasses as dc
 from pathlib import Path
-from config import BASE, LUG_ADDR, FRONTEND_DIR, NODE_EXPORTER_ADDR, CADVISOR_ADDR
+from config import BASE, LUG_ADDR, FRONTEND_DIR, NODE_EXPORTER_ADDR, CADVISOR_ADDR, LUG_EXPORTER_ADDR
 
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
@@ -86,7 +86,8 @@ def common() -> list[Node]:
         auth_guard('/monitor/*', '{$MONITOR_USER}',
                    '{$MONITOR_PASSWORD_HASHED}'),
         reverse_proxy('monitor/node_exporter', NODE_EXPORTER_ADDR),
-        reverse_proxy('monitor/cadvisor', CADVISOR_ADDR)
+        reverse_proxy('monitor/cadvisor', CADVISOR_ADDR),
+        reverse_proxy('monitor/lug', LUG_EXPORTER_ADDR)
     ]
 
     gzip = Node('encode gzip zstd')
