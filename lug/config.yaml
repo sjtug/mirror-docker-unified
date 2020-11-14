@@ -156,6 +156,7 @@ repos:
     path: /srv/disk2/scientific
     name: scientific
     rsync_extra_flags: --exclude "*/obsolete/*" --exclude "obsolete"
+    ignore_vanish: true
     <<: *oneshot_common
   #ubuntu
   - type: shell_script
