@@ -58,7 +58,7 @@ repos:
   # deepin-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: https://rsync.deepin.com/deepin-cd/
+    source: rsync://rsync.deepin.com/cdimage/
     interval: 22900
     path: /srv/disk1/deepin-cd
     name: deepin-cd
@@ -121,6 +121,7 @@ repos:
     interval: 21200
     path: /srv/disk2/mageia
     name: mageia
+    rsync_extra_flags: --exclude "*/devel/*"
     <<: *oneshot_common
   # opensuse
   - type: shell_script
@@ -153,6 +154,7 @@ repos:
     interval: 21600 # may be wrong
     path: /srv/disk2/scientific
     name: scientific
+    rsync_extra_flags: --exclude "*/obsolete/*" --exclude "obsolete"
     <<: *oneshot_common
   #ubuntu
   - type: shell_script
@@ -166,8 +168,24 @@ repos:
   # ubuntu-cd
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://cdimage.ubuntu.com/cdimage/
+    source: rsync://rsync.releases.ubuntu.com/releases/
     interval: 24600
     path: /srv/disk2/ubuntu-cd
     name: ubuntu-cd
+    <<: *oneshot_common
+  # ubuntu-cdimage
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://cdimage.ubuntu.com/cdimage/
+    interval: 24900
+    path: /srv/disk2/ubuntu-cdimage
+    name: ubuntu-cdimage
+    <<: *oneshot_common
+  # ubuntu-ports
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports
+    interval: 31000
+    path: /srv/disk2/ubuntu-ports
+    name: ubuntu-ports
     <<: *oneshot_common
