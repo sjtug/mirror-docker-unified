@@ -135,6 +135,16 @@
         root /srv/disk2
         hide .*
     }
+    redir /ubuntu-cdimage /ubuntu-cdimage/ 301
+    file_server /ubuntu-cdimage/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-ports /ubuntu-ports/ 301
+    file_server /ubuntu-ports/* browse {
+        root /srv/disk2
+        hide .*
+    }
 }
 
 http://mirrors2.sjtug.sjtu.edu.cn/debian {
@@ -309,6 +319,16 @@ mirrors2.sjtug.sjtu.edu.cn {
     }
     redir /ubuntu-cd /ubuntu-cd/ 301
     file_server /ubuntu-cd/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cdimage /ubuntu-cdimage/ 301
+    file_server /ubuntu-cdimage/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-ports /ubuntu-ports/ 301
+    file_server /ubuntu-ports/* browse {
         root /srv/disk2
         hide .*
     }
