@@ -21,6 +21,7 @@ repos:
     interval: 25600
     path: /srv/disk1/centos
     name: centos
+    no_redir_http: true
     <<: *oneshot_common
   # debian
   - type: shell_script
@@ -46,6 +47,7 @@ repos:
     interval: 21100
     path: /srv/disk1/debian-security
     name: debian-security
+    no_redir_http: true
     <<: *oneshot_common
   # deepin
   - type: shell_script
@@ -54,6 +56,7 @@ repos:
     interval: 21900
     path: /srv/disk1/deepin
     name: deepin
+    no_redir_http: true
     <<: *oneshot_common
   # deepin-cd
   - type: shell_script
@@ -70,6 +73,7 @@ repos:
     interval: 86400
     path: /srv/disk1/docker-ce
     name: docker-ce
+    no_redir_http: true
     <<: *oneshot_common
   # fedora/linux
   - type: shell_script
@@ -79,6 +83,7 @@ repos:
     path: /srv/disk1/fedora/linux
     name: fedora/linux
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
+    no_redir_http: true
     <<: *oneshot_common
   # fedora/epel
   - type: shell_script
@@ -88,6 +93,7 @@ repos:
     path: /srv/disk1/fedora/epel
     name: fedora/epel
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
+    no_redir_http: true
     <<: *oneshot_common
   # fedora-secondary
   - type: shell_script
@@ -97,6 +103,7 @@ repos:
     path: /srv/disk1/fedora-secondary
     name: fedora-secondary
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
+    no_redir_http: true
     <<: *oneshot_common
   # linuxmint
   - type: shell_script
@@ -131,6 +138,7 @@ repos:
     rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*"
     path: /srv/disk1/opensuse
     name: opensuse
+    no_redir_http: true
     <<: *oneshot_common
   # openvz
   - type: shell_script
@@ -147,6 +155,7 @@ repos:
     interval: 43000
     path: /srv/disk2/remi
     name: remi
+    no_redir_http: true
     <<: *oneshot_common
   # scientific
   - type: shell_script
@@ -185,9 +194,28 @@ repos:
     <<: *oneshot_common
   # ubuntu-ports
   - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports
+    script: /worker-script/ubuntu-debian-rsync.sh
+    source: rsync://ports.ubuntu.com/ubuntu-ports/
     interval: 31000
     path: /srv/disk2/ubuntu-ports
     name: ubuntu-ports
+    no_redir_http: true
+    <<: *oneshot_common
+  # openwrt
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/openwrt
+    interval: 24900
+    path: /srv/disk1/openwrt
+    name: openwrt
+    no_redir_http: true
+    <<: *oneshot_common
+  # ubuntu-cdimage
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/rpmfusion
+    interval: 32000
+    path: /srv/disk1/rpmfusion
+    name: rpmfusion
+    no_redir_http: true
     <<: *oneshot_common
