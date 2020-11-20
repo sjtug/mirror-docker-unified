@@ -204,16 +204,17 @@ repos:
   # openwrt
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/openwrt
+    source: rsync://downloads.openwrt.org/downloads/
     interval: 24900
     path: /srv/disk1/openwrt
+    rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
     name: openwrt
     no_redir_http: true
     <<: *oneshot_common
-  # ubuntu-cdimage
+  # rpmfusion
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/rpmfusion
+    source: rsync://mirror.de.leaseweb.net/rpmfusion/
     interval: 32000
     path: /srv/disk1/rpmfusion
     name: rpmfusion
