@@ -147,7 +147,7 @@
     }
     redir /openwrt /openwrt/ 301
     file_server /openwrt/* browse {
-        root /srv/disk2
+        root /srv/disk1
         hide .*
     }
     redir /rpmfusion /rpmfusion/ 301
@@ -395,7 +395,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/openwrt/* {
         format single_field common_log  # log in v1 style
     }
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk1
         hide .*
     }
     @hidden {
@@ -572,7 +572,7 @@ mirrors2.sjtug.sjtu.edu.cn {
     }
     redir /openwrt /openwrt/ 301
     file_server /openwrt/* browse {
-        root /srv/disk2
+        root /srv/disk1
         hide .*
     }
     redir /rpmfusion /rpmfusion/ 301
