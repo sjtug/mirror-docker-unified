@@ -72,7 +72,7 @@
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /fedora/linux /fedora/linux/ 301
@@ -147,7 +147,7 @@
     }
     redir /openwrt /openwrt/ 301
     file_server /openwrt/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /rpmfusion /rpmfusion/ 301
@@ -243,7 +243,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/docker-ce/* {
         format single_field common_log  # log in v1 style
     }
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -395,7 +395,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/openwrt/* {
         format single_field common_log  # log in v1 style
     }
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -497,7 +497,7 @@ mirrors2.sjtug.sjtu.edu.cn {
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /fedora/linux /fedora/linux/ 301
@@ -572,7 +572,7 @@ mirrors2.sjtug.sjtu.edu.cn {
     }
     redir /openwrt /openwrt/ 301
     file_server /openwrt/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /rpmfusion /rpmfusion/ 301
