@@ -72,7 +72,7 @@
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /fedora/linux /fedora/linux/ 301
@@ -243,7 +243,7 @@ http://mirrors2.sjtug.sjtu.edu.cn/docker-ce/* {
         format single_field common_log  # log in v1 style
     }
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -497,7 +497,7 @@ mirrors2.sjtug.sjtu.edu.cn {
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /fedora/linux /fedora/linux/ 301

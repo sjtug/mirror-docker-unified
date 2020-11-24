@@ -71,7 +71,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce/
     interval: 86400
-    path: /srv/disk1/docker-ce
+    path: /srv/disk2/docker-ce
     name: docker-ce
     no_redir_http: true
     <<: *oneshot_common
@@ -207,7 +207,7 @@ repos:
     source: rsync://downloads.openwrt.org/downloads/
     interval: 24900
     path: /srv/disk1/openwrt
-    rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
+    rsync_extra_flags: --exclude "index.html"
     name: openwrt
     no_redir_http: true
     <<: *oneshot_common
