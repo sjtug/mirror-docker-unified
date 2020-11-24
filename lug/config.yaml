@@ -135,7 +135,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://fr2.rpmfind.net/linux/opensuse/
     interval: 44200 # may be wrong
-    rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*"
+    rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*" --exclude "ports/zsystems/*" --exclude "ports/riscv/*"
     path: /srv/disk1/opensuse
     name: opensuse
     no_redir_http: true
