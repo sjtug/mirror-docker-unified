@@ -20,7 +20,7 @@
     }
     route /monitor/node_exporter/* {
         uri strip_prefix /monitor/node_exporter
-        reverse_proxy siyuan-node_exporter:9109
+        reverse_proxy 172.17.0.1:9100
     }
     route /monitor/cadvisor/* {
         uri strip_prefix /monitor/cadvisor
@@ -445,7 +445,7 @@ mirrors2.sjtug.sjtu.edu.cn {
     }
     route /monitor/node_exporter/* {
         uri strip_prefix /monitor/node_exporter
-        reverse_proxy siyuan-node_exporter:9109
+        reverse_proxy 172.17.0.1:9100
     }
     route /monitor/cadvisor/* {
         uri strip_prefix /monitor/cadvisor
