@@ -83,7 +83,9 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     container_name: logspout
-    command: syslog+tcp://${ELK_ENDPOINT}
+    command: syslog+tcp://siyuan-tunnel:5003
+    networks:
+      - tunnel-net
   
   cadvisor:
     container_name: siyuan-cadvisor
@@ -98,18 +100,21 @@ services:
       - "/var/run:/var/run:rw"
       - "/sys:/sys:ro"
       - "/var/lib/docker/:/var/lib/docker:ro"
-
-
-  nodeexporter:
-    container_name: siyuan-node_exporter
+  
+  tunnel:
+    container_name: siyuan-tunnel
     restart: on-failure
-    image: caddy:latest
-    command: caddy reverse-proxy --from :9109 --to ${DOCKER_HOST_ADDR}:9100
+    image: v2ray/official
     expose:
-      - 9109
+      - 5003
+      - 5004
+      - 5005
     networks:
-      - monitor-net
+      - tunnel-net
+    volumes: 
+      - "./secrets/v2ray.json:/etc/v2ray/config.json:z,ro"
 
 networks:
   service-net:
   monitor-net:
+  tunnel-net:
