@@ -87,7 +87,8 @@ def common() -> list[Node]:
                    '{$MONITOR_PASSWORD_HASHED}'),
         reverse_proxy('monitor/node_exporter', NODE_EXPORTER_ADDR),
         reverse_proxy('monitor/cadvisor', CADVISOR_ADDR),
-        reverse_proxy('monitor/lug', LUG_EXPORTER_ADDR)
+        reverse_proxy('monitor/lug', LUG_EXPORTER_ADDR),
+        reverse_proxy('monitor/docker-gcr', 'siyuan-gcr-registry:5001')
     ]
 
     gzip = Node('encode gzip zstd')
@@ -184,6 +185,10 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
     return no_redir_nodes, file_server_nodes
 
 
+def reverse_proxy_site(base, target) -> Node:
+    return Node(f'{base}', [Node(f'reverse_proxy {target}')])
+
+
 def build_root(base, config_yaml: dict) -> Node:
     common_nodes = common()
     no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'])
@@ -221,6 +226,7 @@ if __name__ == "__main__":
     roots = []
     for base in BASE:
         roots.append(build_root(base, config_yaml))
+    roots.append(reverse_proxy_site('docker.mirrors.internal.skyzh.xyz', 'siyuan-gcr-registry:80'))
 
     with open(args.output, 'w') as fp:
         for root in roots:
