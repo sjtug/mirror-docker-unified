@@ -6,7 +6,9 @@ RUN if [ "$USE_SJTUG" = "TRUE" ] ; then sed -i 's/http:\/\/deb.debian.org/http:\
 WORKDIR /app
 
 RUN apt-get update -y -qq && apt-get install wget -y -qq
-RUN wget https://github.com/sjtug/mirror-intel/suites/1602727150/artifacts/29249350
+RUN wget https://github.com/sjtug/mirror-intel/releases/download/untagged-c6c672ee0cf402269042746cb53dab94eaebcc53/mirror-intel.tar.gz \
+    && tar -xvf mirror-intel.tar.gz \
+    && rm mirror-intel.tar.gz
 
 COPY Rocket.toml /app
 

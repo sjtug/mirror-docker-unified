@@ -156,8 +156,6 @@ services:
       - 8000
     container_name: siyuan-mirror-intel
     restart: always
-    ports:
-      - 8000:8000
     env_file:
       - './secrets/mirror-intel.env'
 
