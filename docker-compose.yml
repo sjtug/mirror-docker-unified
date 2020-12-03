@@ -154,7 +154,7 @@ services:
       - service-net
     expose:
       - 8000
-    container_name: siyuan_mirror_intel
+    container_name: siyuan-mirror-intel
     restart: always
     ports:
       - 8000:8000
