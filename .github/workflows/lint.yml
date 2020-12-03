@@ -40,6 +40,8 @@ jobs:
           cp docker-compose.ci.yml docker-compose.override.yml 
           cp .env.ci .env
           cp ./secrets/caddy.env.example ./secrets/caddy.env
+          cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
+          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.ym
       - name: docker-compose build
         run: docker-compose build caddy
       - uses: actions/setup-python@v1
