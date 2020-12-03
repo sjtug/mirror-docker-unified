@@ -118,13 +118,35 @@ services:
     container_name: siyuan-gcr-registry
     restart: always
     image: registry:2
+    networks:
+      - service-net
+      - proxy-net
     expose:
       - 80
       - 5001
     volumes:
-    - "./secrets/gcr-registry.yml:/etc/docker/registry/config.yml"
+      - "./secrets/gcr-registry.yml:/etc/docker/registry/config.yml"
+    environment:
+      http_proxy: http://siyuan-clash:8080
+      https_proxy: http://siyuan-clash:8080
+      HTTP_PROXY: http://siyuan-clash:8080
+      HTTPS_PROXY: http://siyuan-clash:8080
+
+  clash:
+    build:
+      context: ./clash
+    command: -d /etc/clash
+    volumes:
+      - ./secrets/clash_config.yaml:/etc/clash/config.yaml:z,ro
+    networks:
+      - proxy-net
+    expose:
+      - 8080
+    container_name: siyuan-clash
+    restart: always
 
 networks:
   service-net:
   monitor-net:
   tunnel-net:
+  proxy-net:
