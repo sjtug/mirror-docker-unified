@@ -30,6 +30,10 @@
         uri strip_prefix /monitor/lug
         reverse_proxy siyuan-lug:8081
     }
+    route /monitor/docker-gcr/* {
+        uri strip_prefix /monitor/docker-gcr
+        reverse_proxy siyuan-gcr-registry:5001
+    }
 
     @hidden {
         path */.*
@@ -455,6 +459,10 @@ mirrors2.sjtug.sjtu.edu.cn {
         uri strip_prefix /monitor/lug
         reverse_proxy siyuan-lug:8081
     }
+    route /monitor/docker-gcr/* {
+        uri strip_prefix /monitor/docker-gcr
+        reverse_proxy siyuan-gcr-registry:5001
+    }
 
     @hidden {
         path */.*
@@ -580,5 +588,9 @@ mirrors2.sjtug.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+}
+
+docker.mirrors.internal.skyzh.xyz {
+    reverse_proxy siyuan-gcr-registry:80
 }
 
