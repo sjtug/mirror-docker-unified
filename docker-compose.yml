@@ -1,9 +1,9 @@
-version: "3"
+version: "2"
 services:
   caddy:
     container_name: siyuan-caddy
     command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
-    restart: on-failure
+    restart: unless-stopped
     networks: 
       - service-net
       - monitor-net
@@ -20,6 +20,7 @@ services:
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
       - "./data/caddy/dists:/dists"
+      - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
     ports: 
       - 80:80
       - 443:443
@@ -42,7 +43,7 @@ services:
 
   lug:
     container_name: siyuan-lug
-    restart: on-failure
+    restart: unless-stopped
     command: -c /config.yaml
     networks: 
       - service-net
@@ -50,8 +51,6 @@ services:
       context: ./lug
       args:
         - USE_SJTUG=true
-    environment:
-      - "RUST_LOG=warn"
     expose:
       - 8081
       - 7001
@@ -60,6 +59,8 @@ services:
       - "./lug/config.yaml:/config.yaml:ro"
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
+    environment:
+      - "RUST_LOG=warn"
     healthcheck:
       test: curl -f http://localhost:7001/lug/v1/manager/summary || exit 1
       interval: 1m30s
@@ -74,24 +75,34 @@ services:
       nofile:
         soft: 80000
         hard: 120000
-    mem_limit: 10G
-    memswap_limit: 10G
+    mem_limit: 20G
+    memswap_limit: 20G
   
   logspout:
     container_name: logspout
-    restart: on-failure
+    restart: unless-stopped
     image: gliderlabs/logspout
     container_name: siyuan-logspout
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     container_name: logspout
-    command: syslog+tcp://siyuan-tunnel:5003
+    command: syslog+tcp://siyuan-tunnel:5004
     networks:
       - tunnel-net
-  
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 2G
+    memswap_limit: 2G
+
   cadvisor:
     container_name: siyuan-cadvisor
-    restart: on-failure
+    restart: unless-stopped
     networks: 
       - monitor-net
     image: google/cadvisor:latest
@@ -102,10 +113,20 @@ services:
       - "/var/run:/var/run:rw"
       - "/sys:/sys:ro"
       - "/var/lib/docker/:/var/lib/docker:ro"
-  
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 2G
+    memswap_limit: 2G
+    
   tunnel:
     container_name: siyuan-tunnel
-    restart: on-failure
+    restart: unless-stopped
     image: v2ray/official
     expose:
       - 5003
@@ -115,11 +136,21 @@ services:
       - tunnel-net
     volumes: 
       - "./secrets/v2ray.json:/etc/v2ray/config.json:z,ro"
-
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 2G
+    memswap_limit: 2G
+    
   gcr-registry:
     container_name: siyuan-gcr-registry
-    restart: always
-    image: registry:2
+    restart: unless-stopped
+    image: registry:2.6
     networks:
       - service-net
       - proxy-net
@@ -133,7 +164,45 @@ services:
       https_proxy: http://siyuan-clash:8080
       HTTP_PROXY: http://siyuan-clash:8080
       HTTPS_PROXY: http://siyuan-clash:8080
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 5G
+    memswap_limit: 5G
 
+  docker-registry:
+    container_name: siyuan-docker-registry
+    restart: unless-stopped
+    image: registry:2.6
+    networks:
+      - service-net
+      - proxy-net
+    expose:
+      - 80
+      - 5001
+    volumes:
+      - "./secrets/docker-registry.yml:/etc/docker/registry/config.yml"
+    environment:
+      http_proxy: http://siyuan-clash:8080
+      https_proxy: http://siyuan-clash:8080
+      HTTP_PROXY: http://siyuan-clash:8080
+      HTTPS_PROXY: http://siyuan-clash:8080
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 5G
+    memswap_limit: 5G
+      
   clash:
     build:
       context: ./clash
@@ -145,7 +214,17 @@ services:
     expose:
       - 8080
     container_name: siyuan-clash
-    restart: always
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 5G
+    memswap_limit: 5G
 
   mirror-intel:
     build:
@@ -177,7 +256,7 @@ services:
         hard: 120000
     volumes:
       - "/mnt/disk2/mirror-intel-cache:/mnt/cache"
-
+    
 networks:
   service-net:
   monitor-net:
