@@ -5,7 +5,7 @@ import logging
 import argparse
 import dataclasses as dc
 from pathlib import Path
-from config import BASE, LUG_ADDR, FRONTEND_DIR, NODE_EXPORTER_ADDR, CADVISOR_ADDR, LUG_EXPORTER_ADDR, MIRROR_INTEL_LIST
+from config import BASE, LUG_ADDR, FRONTEND_DIR, NODE_EXPORTER_ADDR, CADVISOR_ADDR, LUG_EXPORTER_ADDR, MIRROR_INTEL_LIST, MIRROR_INTEL_ADDR
 
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
@@ -71,6 +71,10 @@ def reverse_proxy(prefix: str, target: str, strip_prifix=True):
     return Node(f'route /{prefix}/*', node_list)
 
 
+def gzip():
+    return Node('encode gzip zstd')
+
+
 def common() -> list[Node]:
     frontends = [
         Node('file_server /*', [
@@ -90,14 +94,14 @@ def common() -> list[Node]:
         reverse_proxy('monitor/node_exporter', NODE_EXPORTER_ADDR),
         reverse_proxy('monitor/cadvisor', CADVISOR_ADDR),
         reverse_proxy('monitor/lug', LUG_EXPORTER_ADDR),
-        reverse_proxy('monitor/docker-gcr', 'siyuan-gcr-registry:5001')
+        reverse_proxy('monitor/mirror-intel', MIRROR_INTEL_ADDR),
+        reverse_proxy('monitor/docker-gcr', 'siyuan-gcr-registry:5001'),
+        reverse_proxy('monitor/docker-registry', 'siyuan-docker-registry:5001')
     ]
 
     mirror_intel = [
-        reverse_proxy(prefix, 'siyuan-mirror-intel:8000', False) for prefix in MIRROR_INTEL_LIST
+        reverse_proxy(prefix, MIRROR_INTEL_ADDR, False) for prefix in MIRROR_INTEL_LIST
     ]
-
-    gzip = Node('encode gzip zstd')
 
     # removed
     crawler_rewrite = Node('rewrite', [
@@ -120,7 +124,7 @@ def common() -> list[Node]:
     reject_lug_api_respond = Node('respond @reject_lug_api 403')
 
     return \
-        log() + [gzip] + [BLANK_NODE] + \
+        log() + [gzip()] + [BLANK_NODE] + \
         frontends + [BLANK_NODE] + \
         [lug] + [BLANK_NODE] + \
         monitors + [BLANK_NODE] + \
@@ -198,7 +202,7 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
 
 
 def reverse_proxy_site(base, target) -> Node:
-    return Node(f'{base}', [Node(f'reverse_proxy {target}')])
+    return Node(f'{base}', [gzip(), BLANK_NODE, Node(f'reverse_proxy {target}')])
 
 
 def build_root(base, config_yaml: dict) -> Node:
@@ -236,10 +240,13 @@ if __name__ == "__main__":
         config_yaml = yaml.load(content, Loader=yaml.FullLoader)
 
     roots = []
+
     for base in BASE:
         roots.append(build_root(base, config_yaml))
     roots.append(reverse_proxy_site(
-        'docker.mirrors.internal.skyzh.xyz', 'siyuan-gcr-registry:80'))
+        'k8s-gcr-io.siyuan.internal.sjtug.org', 'siyuan-gcr-registry:80'))
+    roots.append(reverse_proxy_site(
+        'docker.siyuan.internal.sjtug.org', 'siyuan-docker-registry:80'))
 
     with open(args.output, 'w') as fp:
         for root in roots:
