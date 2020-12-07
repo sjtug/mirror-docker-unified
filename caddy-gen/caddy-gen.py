@@ -167,6 +167,11 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
                 f'repo "{repo["name"]}": subdomain is not supported in siyuan, ignored')
             return False
 
+        if 'mirror_intel' in repo:
+            logging.warning(
+                f'repo "{repo["name"]}": mirror-intel should be configured manually, ignored')
+            return False
+
         path = repo['path']
         name = repo['name']
         if not path.endswith(name):

@@ -50,6 +50,8 @@ services:
       context: ./lug
       args:
         - USE_SJTUG=true
+    environment:
+      - "RUST_LOG=warn"
     expose:
       - 8081
       - 7001
@@ -155,9 +157,26 @@ services:
     expose:
       - 8000
     container_name: siyuan-mirror-intel
-    restart: always
+    restart: unless-stopped
     env_file:
       - './secrets/mirror-intel.env'
+    environment:
+      RUST_LOG: warn
+      http_proxy: http://172.17.0.1:8080
+      https_proxy: http://172.17.0.1:8080
+      HTTP_PROXY: http://172.17.0.1:8080
+      HTTPS_PROXY: http://172.17.0.1:8080
+      NO_PROXY: s3.jcloud.sjtu.edu.cn
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    volumes:
+      - "/mnt/disk2/mirror-intel-cache:/mnt/cache"
 
 networks:
   service-net:

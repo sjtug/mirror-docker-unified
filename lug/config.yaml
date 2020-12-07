@@ -135,7 +135,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://fr2.rpmfind.net/linux/opensuse/
     interval: 44200 # may be wrong
-    rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*" --exclude "ports/zsystems/*" --exclude "ports/riscv/*"
+    rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*" --exclude "ports/zsystems/*" --exclude "ports/riscv/*" --exclude "ports/update/*"
     path: /srv/disk1/opensuse
     name: opensuse
     no_redir_http: true
@@ -219,4 +219,18 @@ repos:
     path: /srv/disk1/rpmfusion
     name: rpmfusion
     no_redir_http: true
+    <<: *oneshot_common
+  # homebrew-bottles
+  - type: shell_script
+    script: /app/mirror-clone homebrew_bottles --target http://siyuan-mirror-intel:8000/homebrew-bottles
+    mirror_intel: true
+    interval: 4800
+    name: homebrew-bottles
+    <<: *oneshot_common
+  # rust-static
+  - type: shell_script
+    script: /app/mirror-clone rustup --target http://siyuan-mirror-intel:8000/rust-static
+    mirror_intel: true
+    interval: 4800
+    name: rust-static
     <<: *oneshot_common
