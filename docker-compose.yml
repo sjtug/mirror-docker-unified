@@ -61,6 +61,8 @@ services:
       - "/mnt/disk2:/srv/disk2"
     environment:
       - "RUST_LOG=warn"
+    env_file:
+      - './common/host-proxy.env'
     healthcheck:
       test: curl -f http://localhost:7001/lug/v1/manager/summary || exit 1
       interval: 1m30s
@@ -239,13 +241,9 @@ services:
     restart: unless-stopped
     env_file:
       - './secrets/mirror-intel.env'
+      - './common/host-proxy.env'
     environment:
       RUST_LOG: warn
-      http_proxy: http://172.17.0.1:8080
-      https_proxy: http://172.17.0.1:8080
-      HTTP_PROXY: http://172.17.0.1:8080
-      HTTPS_PROXY: http://172.17.0.1:8080
-      NO_PROXY: s3.jcloud.sjtu.edu.cn
     logging:
       options:
         max-size: "4M"
