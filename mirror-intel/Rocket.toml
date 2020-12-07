@@ -1,2 +1,16 @@
 [default]
 address = "0.0.0.0"
+concurrent_download = 256
+max_pending_task = 2048
+user_agent = "mirror-intel / 0.1 (siyuan.internal.sjtug.org)"
+file_threshold_mb = 30
+ignore_threshold_mb = 1024
+
+[default.endpoints]
+rustup = "https://static.rust-lang.org"
+homebrew_bottles = "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+pypi_packages = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages"
+fedora_iot = "https://d2ju0wfl996cmc.cloudfront.net"
+fedora_ostree = "https://d2uk5hbyrobdzx.cloudfront.net"
+flathub = "https://dl.flathub.org/repo"
+crates_io = "https://static.crates.io"

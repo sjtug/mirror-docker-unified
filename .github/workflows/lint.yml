@@ -29,6 +29,7 @@ jobs:
           cp ./secrets/caddy.env.example ./secrets/caddy.env
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
+          cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
       - name: docker-compose build
         run: docker-compose build --parallel
   test-caddy-file:
@@ -41,7 +42,8 @@ jobs:
           cp .env.ci .env
           cp ./secrets/caddy.env.example ./secrets/caddy.env
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
-          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.ym
+          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
+          cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
       - name: docker-compose build
         run: docker-compose build caddy
       - uses: actions/setup-python@v1

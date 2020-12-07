@@ -47,6 +47,15 @@
     route /fedora-ostree/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
+    route /fedora-iot/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /rust-static/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /homebrew-bottles/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
 
     @hidden {
         path */.*
@@ -487,6 +496,15 @@ mirrors2.sjtug.sjtu.edu.cn {
         reverse_proxy siyuan-mirror-intel:8000
     }
     route /fedora-ostree/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /fedora-iot/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /rust-static/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /homebrew-bottles/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
 
