@@ -119,7 +119,7 @@ services:
   gcr-registry:
     container_name: siyuan-gcr-registry
     restart: always
-    image: registry:2
+    image: registry:2.6
     networks:
       - service-net
       - proxy-net
