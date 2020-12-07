@@ -18,7 +18,19 @@ jobs:
           node-version: 14
       - run: npm i -g prettier
       - run: prettier -c lug/*.yaml
-
+  test-docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: use CI config for docker-compose
+        run: |
+          cp docker-compose.ci.yml docker-compose.override.yml 
+          cp .env.ci .env
+          cp ./secrets/caddy.env.example ./secrets/caddy.env
+          cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
+          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
+      - name: docker-compose build
+        run: docker-compose build --parallel
   test-caddy-file:
     runs-on: ubuntu-latest
     steps:
@@ -28,9 +40,10 @@ jobs:
           cp docker-compose.ci.yml docker-compose.override.yml 
           cp .env.ci .env
           cp ./secrets/caddy.env.example ./secrets/caddy.env
-          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
+          cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
+          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.ym
       - name: docker-compose build
-        run: docker-compose build --parallel
+        run: docker-compose build caddy
       - uses: actions/setup-python@v1
         with:
           python-version: "3.9"
