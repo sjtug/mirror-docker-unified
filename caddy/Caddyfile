@@ -30,9 +30,17 @@
         uri strip_prefix /monitor/lug
         reverse_proxy siyuan-lug:8081
     }
+    route /monitor/mirror-intel/* {
+        uri strip_prefix /monitor/mirror-intel
+        reverse_proxy siyuan-mirror-intel:8000
+    }
     route /monitor/docker-gcr/* {
         uri strip_prefix /monitor/docker-gcr
         reverse_proxy siyuan-gcr-registry:5001
+    }
+    route /monitor/docker-registry/* {
+        uri strip_prefix /monitor/docker-registry
+        reverse_proxy siyuan-docker-registry:5001
     }
 
     route /crates.io/* {
@@ -481,9 +489,17 @@ mirrors2.sjtug.sjtu.edu.cn {
         uri strip_prefix /monitor/lug
         reverse_proxy siyuan-lug:8081
     }
+    route /monitor/mirror-intel/* {
+        uri strip_prefix /monitor/mirror-intel
+        reverse_proxy siyuan-mirror-intel:8000
+    }
     route /monitor/docker-gcr/* {
         uri strip_prefix /monitor/docker-gcr
         reverse_proxy siyuan-gcr-registry:5001
+    }
+    route /monitor/docker-registry/* {
+        uri strip_prefix /monitor/docker-registry
+        reverse_proxy siyuan-docker-registry:5001
     }
 
     route /crates.io/* {
@@ -634,7 +650,15 @@ mirrors2.sjtug.sjtu.edu.cn {
     }
 }
 
-docker.mirrors.internal.skyzh.xyz {
+k8s-gcr-io.siyuan.internal.sjtug.org {
+    encode gzip zstd
+
     reverse_proxy siyuan-gcr-registry:80
+}
+
+docker.siyuan.internal.sjtug.org {
+    encode gzip zstd
+
+    reverse_proxy siyuan-docker-registry:80
 }
 
