@@ -60,7 +60,7 @@ services:
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
     environment:
-      - "RUST_LOG=warn"
+      RUST_LOG: info
     env_file:
       - './common/host-proxy.env'
     healthcheck:
