@@ -35,6 +35,19 @@
         reverse_proxy siyuan-gcr-registry:5001
     }
 
+    route /crates.io/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /pypi-packages/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /flathub/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /fedora-ostree/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+
     @hidden {
         path */.*
     }
@@ -462,6 +475,19 @@ mirrors2.sjtug.sjtu.edu.cn {
     route /monitor/docker-gcr/* {
         uri strip_prefix /monitor/docker-gcr
         reverse_proxy siyuan-gcr-registry:5001
+    }
+
+    route /crates.io/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /pypi-packages/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /flathub/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /fedora-ostree/* {
+        reverse_proxy siyuan-mirror-intel:8000
     }
 
     @hidden {

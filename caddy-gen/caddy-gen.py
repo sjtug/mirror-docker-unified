@@ -5,7 +5,7 @@ import logging
 import argparse
 import dataclasses as dc
 from pathlib import Path
-from config import BASE, LUG_ADDR, FRONTEND_DIR, NODE_EXPORTER_ADDR, CADVISOR_ADDR, LUG_EXPORTER_ADDR
+from config import BASE, LUG_ADDR, FRONTEND_DIR, NODE_EXPORTER_ADDR, CADVISOR_ADDR, LUG_EXPORTER_ADDR, MIRROR_INTEL_LIST
 
 DESC = 'A simple Caddyfile generator for siyuan.'
 INDENT_CNT = 4
@@ -62,11 +62,13 @@ def auth_guard(matcher: str, username: str, password: str):
     ])
 
 
-def reverse_proxy(prefix: str, target: str):
-    return Node(f'route /{prefix}/*', [
-        Node(f'uri strip_prefix /{prefix}'),
-        Node(f'reverse_proxy {target}')
-    ])
+def reverse_proxy(prefix: str, target: str, strip_prifix=True):
+    node_list = []
+    if strip_prifix:
+        node_list.append(Node(f'uri strip_prefix /{prefix}'))
+    node_list.append(Node(f'reverse_proxy {target}'))
+
+    return Node(f'route /{prefix}/*', node_list)
 
 
 def common() -> list[Node]:
@@ -89,6 +91,10 @@ def common() -> list[Node]:
         reverse_proxy('monitor/cadvisor', CADVISOR_ADDR),
         reverse_proxy('monitor/lug', LUG_EXPORTER_ADDR),
         reverse_proxy('monitor/docker-gcr', 'siyuan-gcr-registry:5001')
+    ]
+
+    mirror_intel = [
+        reverse_proxy(prefix, 'siyuan-mirror-intel:8000', False) for prefix in MIRROR_INTEL_LIST
     ]
 
     gzip = Node('encode gzip zstd')
@@ -118,6 +124,7 @@ def common() -> list[Node]:
         frontends + [BLANK_NODE] + \
         [lug] + [BLANK_NODE] + \
         monitors + [BLANK_NODE] + \
+        mirror_intel + [BLANK_NODE] + \
         hidden() + \
         [reject_lug_api, reject_lug_api_respond]
 
@@ -226,7 +233,8 @@ if __name__ == "__main__":
     roots = []
     for base in BASE:
         roots.append(build_root(base, config_yaml))
-    roots.append(reverse_proxy_site('docker.mirrors.internal.skyzh.xyz', 'siyuan-gcr-registry:80'))
+    roots.append(reverse_proxy_site(
+        'docker.mirrors.internal.skyzh.xyz', 'siyuan-gcr-registry:80'))
 
     with open(args.output, 'w') as fp:
         for root in roots:

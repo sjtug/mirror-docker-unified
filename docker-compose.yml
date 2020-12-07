@@ -145,6 +145,20 @@ services:
     container_name: siyuan-clash
     restart: always
 
+  mirror-intel:
+    build:
+      context: ./mirror-intel
+      args:
+        - USE_SJTUG=true
+    networks:
+      - service-net
+    expose:
+      - 8000
+    container_name: siyuan-mirror-intel
+    restart: always
+    env_file:
+      - './secrets/mirror-intel.env'
+
 networks:
   service-net:
   monitor-net:
