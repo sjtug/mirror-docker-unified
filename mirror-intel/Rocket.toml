@@ -5,6 +5,7 @@ max_pending_task = 65536
 user_agent = "mirror-intel / 0.1 (siyuan.internal.sjtug.org)"
 file_threshold_mb = 10
 ignore_threshold_mb = 4096
+base_url = "https://mirrors.sjtug.sjtu.edu.cn"
 
 [default.endpoints]
 rustup = "https://static.rust-lang.org"
@@ -14,3 +15,4 @@ fedora_iot = "https://d2ju0wfl996cmc.cloudfront.net"
 fedora_ostree = "https://d2uk5hbyrobdzx.cloudfront.net"
 flathub = "https://dl.flathub.org/repo"
 crates_io = "https://static.crates.io"
+dart_pub = "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
