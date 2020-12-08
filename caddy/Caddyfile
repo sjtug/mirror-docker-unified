@@ -64,6 +64,9 @@
     route /homebrew-bottles/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
+    route /dart-pub/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
 
     @hidden {
         path */.*
@@ -521,6 +524,9 @@ mirrors2.sjtug.sjtu.edu.cn {
         reverse_proxy siyuan-mirror-intel:8000
     }
     route /homebrew-bottles/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /dart-pub/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
 
