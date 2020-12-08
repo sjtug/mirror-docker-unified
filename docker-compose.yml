@@ -254,6 +254,8 @@ services:
         hard: 120000
     volumes:
       - "/mnt/disk2/mirror-intel-cache:/mnt/cache"
+    mem_limit: 15G
+    memswap_limit: 15G
     
 networks:
   service-net:
