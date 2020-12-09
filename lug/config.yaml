@@ -234,3 +234,17 @@ repos:
     interval: 4800
     name: rust-static
     <<: *oneshot_common
+  # pypi
+  - type: shell_script
+    script: /app/mirror-clone pypi --target http://siyuan-mirror-intel:8000/pypi-packages
+    mirror_intel: true
+    interval: 86400
+    name: pypi-packages
+    <<: *oneshot_common
+  # dart-pub
+  - type: shell_script
+    script: /app/mirror-clone dart_pub --target http://siyuan-mirror-intel:8000/dart-pub
+    mirror_intel: true
+    interval: 4800
+    name: dart-pub
+    <<: *oneshot_common
