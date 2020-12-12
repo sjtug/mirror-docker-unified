@@ -5,7 +5,7 @@ services:
     command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
     restart: unless-stopped
     networks: 
-      - service-net
+      - ipv6-service-net
       - monitor-net
     env_file:
       - './secrets/caddy.env'
@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
     command: -c /config.yaml
     networks: 
-      - service-net
+      - ipv6-service-net
     build:
       context: ./lug
       args:
@@ -61,8 +61,6 @@ services:
       - "/mnt/disk2:/srv/disk2"
     environment:
       RUST_LOG: info
-    env_file:
-      - './common/host-proxy.env'
     healthcheck:
       test: curl -f http://localhost:7001/lug/v1/manager/summary || exit 1
       interval: 1m30s
@@ -154,7 +152,7 @@ services:
     restart: unless-stopped
     image: registry:2.6
     networks:
-      - service-net
+      - ipv6-service-net
       - proxy-net
     expose:
       - 80
@@ -182,7 +180,7 @@ services:
     restart: unless-stopped
     image: registry:2.6
     networks:
-      - service-net
+      - ipv6-service-net
       - proxy-net
     expose:
       - 80
@@ -234,14 +232,13 @@ services:
       args:
         - USE_SJTUG=true
     networks:
-      - service-net
+      - ipv6-service-net
     expose:
       - 8000
     container_name: siyuan-mirror-intel
     restart: unless-stopped
     env_file:
       - './secrets/mirror-intel.env'
-      - './common/host-proxy.env'
     environment:
       RUST_LOG: warn
     logging:
@@ -256,9 +253,27 @@ services:
       - "/mnt/disk2/mirror-intel-cache:/mnt/cache"
     mem_limit: 15G
     memswap_limit: 15G
-    
+  
+  ipv6nat:
+    image: robbertkl/ipv6nat
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    - "/lib/modules:/lib/modules:ro"
+    cap_add:
+    - SYS_MODULE
+    - NET_ADMIN
+    - NET_RAW
+
 networks:
-  service-net:
   monitor-net:
   tunnel-net:
   proxy-net:
+  ipv6-service-net:
+    enable_ipv6: true
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -  subnet: fd00::/80
