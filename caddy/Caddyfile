@@ -70,6 +70,12 @@
     route /guix/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
+    route /pytorch-wheels/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /sjtug-internal/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
 
     @hidden {
         path */.*
@@ -533,6 +539,12 @@ mirrors2.sjtug.sjtu.edu.cn {
         reverse_proxy siyuan-mirror-intel:8000
     }
     route /guix/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /pytorch-wheels/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /sjtug-internal/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
 

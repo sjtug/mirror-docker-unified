@@ -6,4 +6,5 @@ CADVISOR_ADDR = 'siyuan-cadvisor:8080'
 MIRROR_INTEL_ADDR = 'siyuan-mirror-intel:8000'
 LUG_EXPORTER_ADDR = 'siyuan-lug:8081'
 MIRROR_INTEL_LIST = ['crates.io', 'pypi-packages', 'flathub', 'fedora-ostree',
-                     'fedora-iot', 'rust-static', 'homebrew-bottles', 'dart-pub', 'guix']
+                     'fedora-iot', 'rust-static', 'homebrew-bottles', 'dart-pub', 'guix',
+                     'pytorch-wheels', 'sjtug-internal']
