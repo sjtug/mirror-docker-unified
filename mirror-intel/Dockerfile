@@ -6,7 +6,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\
 WORKDIR /app
 
 RUN apt-get update -y -qq && apt-get install wget -y -qq
-RUN wget https://github.com/sjtug/mirror-intel/releases/download/v0.1.2/mirror-intel.tar.gz \
+RUN wget https://github.com/sjtug/mirror-intel/releases/download/v0.1.5/mirror-intel.tar.gz \
     && tar -xvf mirror-intel.tar.gz \
     && rm mirror-intel.tar.gz
 

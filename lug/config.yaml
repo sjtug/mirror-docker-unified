@@ -243,8 +243,15 @@ repos:
     <<: *oneshot_common
   # dart-pub
   - type: shell_script
-    script: /app/mirror-clone dart-pub --target http://siyuan-mirror-intel:8000/dart-pub
+    script: /app/mirror-clone dart_pub --target http://siyuan-mirror-intel:8000/dart-pub
     mirror_intel: true
     interval: 4800
     name: dart-pub
+    <<: *oneshot_common
+  # pytorch-wheels
+  - type: shell_script
+    script: /app/mirror-clone pytorch_wheels --target http://siyuan-mirror-intel:8000/pytorch-wheels
+    mirror_intel: true
+    interval: 4900
+    name: pytorch-wheels
     <<: *oneshot_common
