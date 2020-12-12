@@ -61,7 +61,6 @@ services:
       - "/mnt/disk2:/srv/disk2"
     environment:
       RUST_LOG: info
-    env_file:
     healthcheck:
       test: curl -f http://localhost:7001/lug/v1/manager/summary || exit 1
       interval: 1m30s
