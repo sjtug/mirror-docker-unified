@@ -255,7 +255,7 @@ repos:
     interval: 4900
     name: pytorch-wheels
     <<: *oneshot_common
-  # pytorch-wheels
+  # crates.io
   - type: shell_script
     script: /app/mirror-clone crates_io --target http://siyuan-mirror-intel:8000/crates.io/crates
     mirror_intel: true
