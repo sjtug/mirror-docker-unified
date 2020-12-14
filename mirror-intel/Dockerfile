@@ -6,7 +6,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\
 
 WORKDIR /app
 
-RUN apt-get update -y -qq && apt-get install wget -y -qq
+RUN apt-get update -y -qq && apt-get install wget curl -y -qq
 
 ARG INTEL_VERSION
 
