@@ -1,4 +1,4 @@
-BASE = [':80', 'mirrors2.sjtug.sjtu.edu.cn']
+BASE = ['ftp.sjtu.edu.cn', 'siyuan.internal.sjtug.org', ':80']
 LUG_ADDR = 'siyuan-lug:7001'
 FRONTEND_DIR = '/dists'
 NODE_EXPORTER_ADDR = '172.17.0.1:9100'
