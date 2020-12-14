@@ -1,4 +1,270 @@
-:80 {
+http://ftp.sjtu.edu.cn/centos {
+    redir /centos /centos/ 301
+}
+
+http://ftp.sjtu.edu.cn/centos/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/debian {
+    redir /debian /debian/ 301
+}
+
+http://ftp.sjtu.edu.cn/debian/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/debian-security {
+    redir /debian-security /debian-security/ 301
+}
+
+http://ftp.sjtu.edu.cn/debian-security/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/deepin {
+    redir /deepin /deepin/ 301
+}
+
+http://ftp.sjtu.edu.cn/deepin/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/docker-ce {
+    redir /docker-ce /docker-ce/ 301
+}
+
+http://ftp.sjtu.edu.cn/docker-ce/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/fedora/linux {
+    redir /fedora/linux /fedora/linux/ 301
+}
+
+http://ftp.sjtu.edu.cn/fedora/linux/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/fedora/epel {
+    redir /fedora/epel /fedora/epel/ 301
+}
+
+http://ftp.sjtu.edu.cn/fedora/epel/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/fedora-secondary {
+    redir /fedora-secondary /fedora-secondary/ 301
+}
+
+http://ftp.sjtu.edu.cn/fedora-secondary/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/opensuse {
+    redir /opensuse /opensuse/ 301
+}
+
+http://ftp.sjtu.edu.cn/opensuse/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/remi {
+    redir /remi /remi/ 301
+}
+
+http://ftp.sjtu.edu.cn/remi/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/ubuntu {
+    redir /ubuntu /ubuntu/ 301
+}
+
+http://ftp.sjtu.edu.cn/ubuntu/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/ubuntu-ports {
+    redir /ubuntu-ports /ubuntu-ports/ 301
+}
+
+http://ftp.sjtu.edu.cn/ubuntu-ports/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/openwrt {
+    redir /openwrt /openwrt/ 301
+}
+
+http://ftp.sjtu.edu.cn/openwrt/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp.sjtu.edu.cn/rpmfusion {
+    redir /rpmfusion /rpmfusion/ 301
+}
+
+http://ftp.sjtu.edu.cn/rpmfusion/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+ftp.sjtu.edu.cn {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -203,11 +469,11 @@
     }
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/centos {
+http://siyuan.internal.sjtug.org/centos {
     redir /centos /centos/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/centos/* {
+http://siyuan.internal.sjtug.org/centos/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -222,11 +488,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/centos/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/debian {
+http://siyuan.internal.sjtug.org/debian {
     redir /debian /debian/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/debian/* {
+http://siyuan.internal.sjtug.org/debian/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -241,11 +507,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/debian/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/debian-security {
+http://siyuan.internal.sjtug.org/debian-security {
     redir /debian-security /debian-security/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/debian-security/* {
+http://siyuan.internal.sjtug.org/debian-security/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -260,11 +526,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/debian-security/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/deepin {
+http://siyuan.internal.sjtug.org/deepin {
     redir /deepin /deepin/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/deepin/* {
+http://siyuan.internal.sjtug.org/deepin/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -279,11 +545,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/deepin/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/docker-ce {
+http://siyuan.internal.sjtug.org/docker-ce {
     redir /docker-ce /docker-ce/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/docker-ce/* {
+http://siyuan.internal.sjtug.org/docker-ce/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -298,11 +564,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/docker-ce/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/fedora/linux {
+http://siyuan.internal.sjtug.org/fedora/linux {
     redir /fedora/linux /fedora/linux/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/fedora/linux/* {
+http://siyuan.internal.sjtug.org/fedora/linux/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -317,11 +583,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/fedora/linux/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/fedora/epel {
+http://siyuan.internal.sjtug.org/fedora/epel {
     redir /fedora/epel /fedora/epel/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/fedora/epel/* {
+http://siyuan.internal.sjtug.org/fedora/epel/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -336,11 +602,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/fedora/epel/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/fedora-secondary {
+http://siyuan.internal.sjtug.org/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/fedora-secondary/* {
+http://siyuan.internal.sjtug.org/fedora-secondary/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -355,11 +621,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/fedora-secondary/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/opensuse {
+http://siyuan.internal.sjtug.org/opensuse {
     redir /opensuse /opensuse/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/opensuse/* {
+http://siyuan.internal.sjtug.org/opensuse/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -374,11 +640,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/opensuse/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/remi {
+http://siyuan.internal.sjtug.org/remi {
     redir /remi /remi/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/remi/* {
+http://siyuan.internal.sjtug.org/remi/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -393,11 +659,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/remi/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/ubuntu {
+http://siyuan.internal.sjtug.org/ubuntu {
     redir /ubuntu /ubuntu/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/ubuntu/* {
+http://siyuan.internal.sjtug.org/ubuntu/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -412,11 +678,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/ubuntu/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/ubuntu-ports {
+http://siyuan.internal.sjtug.org/ubuntu-ports {
     redir /ubuntu-ports /ubuntu-ports/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/ubuntu-ports/* {
+http://siyuan.internal.sjtug.org/ubuntu-ports/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -431,11 +697,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/ubuntu-ports/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/openwrt {
+http://siyuan.internal.sjtug.org/openwrt {
     redir /openwrt /openwrt/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/openwrt/* {
+http://siyuan.internal.sjtug.org/openwrt/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -450,11 +716,11 @@ http://mirrors2.sjtug.sjtu.edu.cn/openwrt/* {
     respond @hidden 404
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/rpmfusion {
+http://siyuan.internal.sjtug.org/rpmfusion {
     redir /rpmfusion /rpmfusion/ 301
 }
 
-http://mirrors2.sjtug.sjtu.edu.cn/rpmfusion/* {
+http://siyuan.internal.sjtug.org/rpmfusion/* {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -469,7 +735,212 @@ http://mirrors2.sjtug.sjtu.edu.cn/rpmfusion/* {
     respond @hidden 404
 }
 
-mirrors2.sjtug.sjtu.edu.cn {
+siyuan.internal.sjtug.org {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    encode gzip zstd
+
+    file_server /* {
+        root /dists
+    }
+    rewrite /docs/* /  # for react app
+
+    reverse_proxy /lug/* siyuan-lug:7001 {
+        header_down Access-Control-Allow-Origin *
+        header_down Access-Control-Request-Method GET
+    }
+
+    basicauth /monitor/* {
+        {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
+    }
+    route /monitor/node_exporter/* {
+        uri strip_prefix /monitor/node_exporter
+        reverse_proxy 172.17.0.1:9100
+    }
+    route /monitor/cadvisor/* {
+        uri strip_prefix /monitor/cadvisor
+        reverse_proxy siyuan-cadvisor:8080
+    }
+    route /monitor/lug/* {
+        uri strip_prefix /monitor/lug
+        reverse_proxy siyuan-lug:8081
+    }
+    route /monitor/mirror-intel/* {
+        uri strip_prefix /monitor/mirror-intel
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /monitor/docker-gcr/* {
+        uri strip_prefix /monitor/docker-gcr
+        reverse_proxy siyuan-gcr-registry:5001
+    }
+    route /monitor/docker-registry/* {
+        uri strip_prefix /monitor/docker-registry
+        reverse_proxy siyuan-docker-registry:5001
+    }
+
+    route /crates.io/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /pypi-packages/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /flathub/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /fedora-ostree/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /fedora-iot/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /rust-static/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /homebrew-bottles/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /dart-pub/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /guix/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /pytorch-wheels/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /sjtug-internal/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    @reject_lug_api {
+        path /lug/v1/admin/*
+    }
+    respond @reject_lug_api 403
+
+    redir /centos /centos/ 301
+    file_server /centos/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian /debian/ 301
+    file_server /debian/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian-cd /debian-cd/ 301
+    file_server /debian-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian-security /debian-security/ 301
+    file_server /debian-security/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /deepin /deepin/ 301
+    file_server /deepin/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /deepin-cd /deepin-cd/ 301
+    file_server /deepin-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /docker-ce /docker-ce/ 301
+    file_server /docker-ce/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /fedora/linux /fedora/linux/ 301
+    file_server /fedora/linux/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora/epel /fedora/epel/ 301
+    file_server /fedora/epel/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora-secondary /fedora-secondary/ 301
+    file_server /fedora-secondary/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /linuxmint /linuxmint/ 301
+    file_server /linuxmint/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /linuxmint-cd /linuxmint-cd/ 301
+    file_server /linuxmint-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /mageia /mageia/ 301
+    file_server /mageia/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /opensuse /opensuse/ 301
+    file_server /opensuse/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /openvz /openvz/ 301
+    file_server /openvz/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /remi /remi/ 301
+    file_server /remi/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /scientific /scientific/ 301
+    file_server /scientific/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu /ubuntu/ 301
+    file_server /ubuntu/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    file_server /ubuntu-cd/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cdimage /ubuntu-cdimage/ 301
+    file_server /ubuntu-cdimage/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-ports /ubuntu-ports/ 301
+    file_server /ubuntu-ports/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /openwrt /openwrt/ 301
+    file_server /openwrt/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /rpmfusion /rpmfusion/ 301
+    file_server /rpmfusion/* browse {
+        root /srv/disk1
+        hide .*
+    }
+}
+
+:80 {
     log {
         output stdout
         format single_field common_log  # log in v1 style
