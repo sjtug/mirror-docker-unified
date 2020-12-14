@@ -342,6 +342,9 @@ ftp.sjtu.edu.cn {
     route /sjtug-internal/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
+    route /flutter_infra/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
 
     @hidden {
         path */.*
@@ -813,6 +816,9 @@ siyuan.internal.sjtug.org {
     route /sjtug-internal/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
+    route /flutter_infra/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
 
     @hidden {
         path */.*
@@ -1016,6 +1022,9 @@ siyuan.internal.sjtug.org {
         reverse_proxy siyuan-mirror-intel:8000
     }
     route /sjtug-internal/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
+    route /flutter_infra/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
 
