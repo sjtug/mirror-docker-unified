@@ -1,14 +1,23 @@
 FROM debian:buster
 
 ARG USE_SJTUG
+
 RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list ; fi
 
 WORKDIR /app
 
 RUN apt-get update -y -qq && apt-get install wget -y -qq
-RUN wget https://github.com/sjtug/mirror-intel/releases/download/v0.1.7/mirror-intel.tar.gz \
-    && tar -xvf mirror-intel.tar.gz \
-    && rm mirror-intel.tar.gz
+
+ARG INTEL_VERSION
+
+RUN if [ "$USE_SJTUG" = true ] ; then \
+        wget -O tmp.tar.gz https://siyuan.internal.sjtug.org/sjtug-internal/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz || \
+        wget -O tmp.tar.gz https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz || \
+        wget -O tmp.tar.gz https://github.com/sjtug/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz ; \
+    else \
+        curl -v https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz && \
+        wget -O tmp.tar.gz https://github.com/sjtug/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz ; \
+    fi && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
 COPY Rocket.toml /app
 
