@@ -262,3 +262,10 @@ repos:
     interval: 3700
     name: crates.io
     <<: *oneshot_common
+  # flutter_infra
+  - type: shell_script
+    script: /app/mirror-clone flutter_infra --target http://siyuan-mirror-intel:8000/flutter_infra
+    mirror_intel: true
+    interval: 4000
+    name: flutter_infra
+    <<: *oneshot_common

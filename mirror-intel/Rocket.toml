@@ -11,7 +11,7 @@ direct_stream_size_kb = 4
 read_only = false
 
 [default.endpoints]
-rustup = "https://static.rust-lang.org"
+rust_static = "https://static.rust-lang.org"
 homebrew_bottles = "https://homebrew.bintray.com"
 linuxbrew_bottles = "https://linuxbrew.bintray.com"
 pypi_packages = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages"
@@ -22,3 +22,9 @@ crates_io = "https://static.crates.io"
 dart_pub = "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
 guix = "https://ci.guix.gnu.org"
 pytorch_wheels = "https://download.pytorch.org/whl"
+sjtug_internal = "https://github.com/sjtug"
+flutter_infra = "https://storage.googleapis.com/flutter_infra"
+
+[default.s3]
+endpoint = "https://s3.jcloud.sjtu.edu.cn"
+bucket = "899a892efef34b1b944a19981040f55b-oss01"
