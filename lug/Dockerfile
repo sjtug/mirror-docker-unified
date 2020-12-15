@@ -15,7 +15,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then \
         wget -O tmp.zip https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.zip || \
         wget -O tmp.zip https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.zip ; \
     else \
-        curl -v https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.zip && \
+        curl -v -I https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.zip && \
         wget -O tmp.zip https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.zip ; \
     fi && unzip tmp.zip && rm tmp.zip && chmod +x ./lug
 
@@ -24,7 +24,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then \
         wget -O tmp.tar.gz https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz || \
         wget -O tmp.tar.gz https://github.com/sjtug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz ; \
     else \
-        curl -v https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz && \
+        curl -v -I https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz && \
         wget -O tmp.tar.gz https://github.com/sjtug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz ; \
     fi && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 

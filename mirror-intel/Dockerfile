@@ -15,7 +15,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then \
         wget -O tmp.tar.gz https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz || \
         wget -O tmp.tar.gz https://github.com/sjtug/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz ; \
     else \
-        curl -v https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz && \
+        curl -v -I https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz && \
         wget -O tmp.tar.gz https://github.com/sjtug/mirror-intel/releases/download/${INTEL_VERSION}/mirror-intel.tar.gz ; \
     fi && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
