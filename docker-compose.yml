@@ -61,6 +61,7 @@ services:
       - "./lug/config.yaml:/config.yaml:ro"
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
+      - "./secrets/git-credentials:/root/.git-credentials:ro"
     environment:
       RUST_LOG: info
     healthcheck:

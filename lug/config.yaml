@@ -269,3 +269,36 @@ repos:
     interval: 4000
     name: flutter_infra
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/crates.io-index.git
+    source: https://github.com/rust-lang/crates.io-index.git
+    path: /srv/disk1/git/crates.io-index.git
+    target: https://git.sjtu.edu.cn/iskyzh/crates.io-index.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/dpdk.git
+    source: http://dpdk.org/git/dpdk
+    path: /srv/disk1/git/dpdk.git
+    target: https://git.sjtu.edu.cn/iskyzh/dpdk.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/qemu.git
+    source: https://git.qemu.org/git/qemu.git
+    path: /srv/disk1/git/qemu.git
+    target: https://git.sjtu.edu.cn/iskyzh/qemu.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/linux.git
+    source: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+    path: /srv/disk1/git/linux.git
+    target: https://git.sjtu.edu.cn/iskyzh/linux.git
+    <<: *oneshot_common
+  
