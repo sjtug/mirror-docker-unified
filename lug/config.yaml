@@ -269,3 +269,10 @@ repos:
     interval: 4000
     name: flutter_infra
     <<: *oneshot_common
+  # dart_pub
+  - type: shell_script
+    script: /app/mirror-clone dart_pub --target http://siyuan-mirror-intel:8000/dart-pub
+    mirror_intel: true
+    interval: 4500
+    name: dart-pub
+    <<: *oneshot_common
