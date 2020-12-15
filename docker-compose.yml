@@ -51,7 +51,7 @@ services:
       context: ./lug
       args:
         - USE_SJTUG=true
-        - CLONE_VERSION=v0.1.9
+        - CLONE_VERSION=v0.1.10
         - LUG_VERSION=0.12.2
     expose:
       - 8081
