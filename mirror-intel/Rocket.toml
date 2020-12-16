@@ -9,6 +9,7 @@ base_url = "https://mirrors.sjtug.sjtu.edu.cn"
 ttl = 3
 direct_stream_size_kb = 4
 read_only = false
+log_level = "off"
 
 [default.endpoints]
 rust_static = "https://static.rust-lang.org"
@@ -19,11 +20,11 @@ fedora_iot = "https://d2ju0wfl996cmc.cloudfront.net"
 fedora_ostree = "https://d2uk5hbyrobdzx.cloudfront.net"
 flathub = "https://dl.flathub.org/repo"
 crates_io = "https://static.crates.io"
-dart_pub = "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
+dart_pub = "https://pub.flutter-io.cn"
 guix = "https://ci.guix.gnu.org"
 pytorch_wheels = "https://download.pytorch.org/whl"
 sjtug_internal = "https://github.com/sjtug"
-flutter_infra = "https://storage.googleapis.com/flutter_infra"
+flutter_infra = "https://storage.flutter-io.cn/flutter_infra"
 
 [default.s3]
 endpoint = "https://s3.jcloud.sjtu.edu.cn"
