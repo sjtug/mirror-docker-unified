@@ -28,4 +28,6 @@ RUN if [ "$USE_SJTUG" = true ] ; then \
         wget -O tmp.tar.gz https://github.com/sjtug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz ; \
     fi && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
+RUN git config --global credential.helper store
+
 ENTRYPOINT ["./lug"]
