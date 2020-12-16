@@ -195,8 +195,9 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
                     f'repo "{repo["name"]}": BASE "{base}" might be a local url, "no_redir_http" will be ignored')
             else:
                 no_redir_nodes += repo_no_redir(base, repo)
-        file_server_nodes += repo_redir(repo)
-        file_server_nodes += repo_file_server(repo)
+        if not repo.get('no_direct_serve', False):
+            file_server_nodes += repo_redir(repo)
+            file_server_nodes += repo_file_server(repo)
 
     return no_redir_nodes, file_server_nodes
 

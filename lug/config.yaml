@@ -272,33 +272,45 @@ repos:
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
-    name: git/crates.io-index.git
-    source: https://github.com/rust-lang/crates.io-index.git
-    path: /srv/disk1/git/crates.io-index.git
-    target: https://git.sjtu.edu.cn/iskyzh/crates.io-index.git
+    name: git/linuxbrew-core.git
+    source: https://github.com/Homebrew/linuxbrew-core.git
+    path: /srv/disk2/git/linuxbrew-core.git
+    target: https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git
+    no_direct_serve: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
-    interval: 3600
-    name: git/dpdk.git
-    source: http://dpdk.org/git/dpdk
-    path: /srv/disk1/git/dpdk.git
-    target: https://git.sjtu.edu.cn/iskyzh/dpdk.git
+    interval: 3601
+    name: git/homebrew-services.git
+    source: https://github.com/Homebrew/homebrew-services.git
+    path: /srv/disk2/git/homebrew-services.git
+    target: https://git.sjtu.edu.cn/sjtug/homebrew-services.git
+    no_direct_serve: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
-    interval: 3600
-    name: git/qemu.git
-    source: https://git.qemu.org/git/qemu.git
-    path: /srv/disk1/git/qemu.git
-    target: https://git.sjtu.edu.cn/iskyzh/qemu.git
+    interval: 3602
+    name: git/homebrew-cask-drivers.git
+    source: https://github.com/Homebrew/homebrew-cask-drivers.git
+    path: /srv/disk2/git/homebrew-cask-drivers.git
+    target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git
+    no_direct_serve: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
-    interval: 3600
-    name: git/linux.git
-    source: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-    path: /srv/disk1/git/linux.git
-    target: https://git.sjtu.edu.cn/iskyzh/linux.git
+    interval: 3603
+    name: git/homebrew-cask-fonts.git
+    source: https://github.com/Homebrew/homebrew-cask-fonts.git
+    path: /srv/disk2/git/homebrew-cask-fonts.git
+    target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git
+    no_direct_serve: true
     <<: *oneshot_common
-  
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3604
+    name: git/homebrew-cask-versions.git
+    source: https://github.com/Homebrew/homebrew-cask-versions.git
+    path: /srv/disk2/git/homebrew-cask-versions.git
+    target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
+    no_direct_serve: true
+    <<: *oneshot_common
