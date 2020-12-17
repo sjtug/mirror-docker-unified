@@ -269,7 +269,21 @@ ftp.sjtu.edu.cn {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    encode gzip zstd
+    @not_mirror_intel_repo {
+        not path /crates.io/*
+        not path /pypi-packages/*
+        not path /flathub/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /rust-static/*
+        not path /homebrew-bottles/*
+        not path /dart-pub/*
+        not path /guix/*
+        not path /pytorch-wheels/*
+        not path /sjtug-internal/*
+        not path /flutter_infra/*
+    }
+    encode @not_mirror_intel_repo gzip zstd
 
     file_server /* {
         root /dists
@@ -469,6 +483,31 @@ ftp.sjtu.edu.cn {
     file_server /rpmfusion/* browse {
         root /srv/disk1
         hide .*
+    }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    route /git/linuxbrew-core.git/* {
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
+    }
+    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
+    route /git/homebrew-services.git/* {
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
+    }
+    redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
+    route /git/homebrew-cask-drivers.git/* {
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
+    }
+    redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
+    route /git/homebrew-cask-fonts.git/* {
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
+    }
+    redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
+    route /git/homebrew-cask-versions.git/* {
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
     }
 }
 
@@ -743,7 +782,21 @@ siyuan.internal.sjtug.org {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    encode gzip zstd
+    @not_mirror_intel_repo {
+        not path /crates.io/*
+        not path /pypi-packages/*
+        not path /flathub/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /rust-static/*
+        not path /homebrew-bottles/*
+        not path /dart-pub/*
+        not path /guix/*
+        not path /pytorch-wheels/*
+        not path /sjtug-internal/*
+        not path /flutter_infra/*
+    }
+    encode @not_mirror_intel_repo gzip zstd
 
     file_server /* {
         root /dists
@@ -943,6 +996,31 @@ siyuan.internal.sjtug.org {
     file_server /rpmfusion/* browse {
         root /srv/disk1
         hide .*
+    }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    route /git/linuxbrew-core.git/* {
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
+    }
+    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
+    route /git/homebrew-services.git/* {
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
+    }
+    redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
+    route /git/homebrew-cask-drivers.git/* {
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
+    }
+    redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
+    route /git/homebrew-cask-fonts.git/* {
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
+    }
+    redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
+    route /git/homebrew-cask-versions.git/* {
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
     }
 }
 
@@ -951,7 +1029,21 @@ siyuan.internal.sjtug.org {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    encode gzip zstd
+    @not_mirror_intel_repo {
+        not path /crates.io/*
+        not path /pypi-packages/*
+        not path /flathub/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /rust-static/*
+        not path /homebrew-bottles/*
+        not path /dart-pub/*
+        not path /guix/*
+        not path /pytorch-wheels/*
+        not path /sjtug-internal/*
+        not path /flutter_infra/*
+    }
+    encode @not_mirror_intel_repo gzip zstd
 
     file_server /* {
         root /dists
@@ -1152,16 +1244,41 @@ siyuan.internal.sjtug.org {
         root /srv/disk1
         hide .*
     }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    route /git/linuxbrew-core.git/* {
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
+    }
+    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
+    route /git/homebrew-services.git/* {
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
+    }
+    redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
+    route /git/homebrew-cask-drivers.git/* {
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
+    }
+    redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
+    route /git/homebrew-cask-fonts.git/* {
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
+    }
+    redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
+    route /git/homebrew-cask-versions.git/* {
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
+    }
 }
 
 k8s-gcr-io.siyuan.internal.sjtug.org {
-    encode gzip zstd
+    encode  gzip zstd
 
     reverse_proxy siyuan-gcr-registry:80
 }
 
 docker.siyuan.internal.sjtug.org {
-    encode gzip zstd
+    encode  gzip zstd
 
     reverse_proxy siyuan-docker-registry:80
 }
