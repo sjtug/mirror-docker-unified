@@ -315,3 +315,11 @@ repos:
     interval: 4800
     name: linuxbrew-bottles
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3608
+    name: git/guix.git
+    source: https://git.savannah.gnu.org/git/guix.git
+    path: /srv/disk2/git/guix.git
+    target: https://git.sjtu.edu.cn/sjtug/guix.git
+    <<: *oneshot_common

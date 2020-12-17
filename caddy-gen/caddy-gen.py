@@ -142,7 +142,7 @@ def repo_redir(repo: dict) -> list[Node]:
 
 def repo_redirect(repo: dict) -> list[Node]:
     return [Node(f'route /{repo["name"]}/*', [
-            Node(f'uri strip_prefix /{repo["name"]}'),
+            Node(f'uri strip_prefix /{repo["name"]}/'),
             Node(f'redir * {repo["target"]}/{{uri}} 302')
             ])]
 
