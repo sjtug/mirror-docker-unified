@@ -486,27 +486,27 @@ ftp.sjtu.edu.cn {
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
-        uri strip_prefix /git/linuxbrew-core.git
+        uri strip_prefix /git/linuxbrew-core.git/
         redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
     }
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     route /git/homebrew-services.git/* {
-        uri strip_prefix /git/homebrew-services.git
+        uri strip_prefix /git/homebrew-services.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
     }
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
     route /git/homebrew-cask-drivers.git/* {
-        uri strip_prefix /git/homebrew-cask-drivers.git
+        uri strip_prefix /git/homebrew-cask-drivers.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
     }
     redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
     route /git/homebrew-cask-fonts.git/* {
-        uri strip_prefix /git/homebrew-cask-fonts.git
+        uri strip_prefix /git/homebrew-cask-fonts.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
     }
     redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
     route /git/homebrew-cask-versions.git/* {
-        uri strip_prefix /git/homebrew-cask-versions.git
+        uri strip_prefix /git/homebrew-cask-versions.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
     }
 }
@@ -999,27 +999,27 @@ siyuan.internal.sjtug.org {
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
-        uri strip_prefix /git/linuxbrew-core.git
+        uri strip_prefix /git/linuxbrew-core.git/
         redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
     }
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     route /git/homebrew-services.git/* {
-        uri strip_prefix /git/homebrew-services.git
+        uri strip_prefix /git/homebrew-services.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
     }
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
     route /git/homebrew-cask-drivers.git/* {
-        uri strip_prefix /git/homebrew-cask-drivers.git
+        uri strip_prefix /git/homebrew-cask-drivers.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
     }
     redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
     route /git/homebrew-cask-fonts.git/* {
-        uri strip_prefix /git/homebrew-cask-fonts.git
+        uri strip_prefix /git/homebrew-cask-fonts.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
     }
     redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
     route /git/homebrew-cask-versions.git/* {
-        uri strip_prefix /git/homebrew-cask-versions.git
+        uri strip_prefix /git/homebrew-cask-versions.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
     }
 }
@@ -1246,27 +1246,27 @@ siyuan.internal.sjtug.org {
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
-        uri strip_prefix /git/linuxbrew-core.git
+        uri strip_prefix /git/linuxbrew-core.git/
         redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
     }
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     route /git/homebrew-services.git/* {
-        uri strip_prefix /git/homebrew-services.git
+        uri strip_prefix /git/homebrew-services.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
     }
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
     route /git/homebrew-cask-drivers.git/* {
-        uri strip_prefix /git/homebrew-cask-drivers.git
+        uri strip_prefix /git/homebrew-cask-drivers.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
     }
     redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
     route /git/homebrew-cask-fonts.git/* {
-        uri strip_prefix /git/homebrew-cask-fonts.git
+        uri strip_prefix /git/homebrew-cask-fonts.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
     }
     redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
     route /git/homebrew-cask-versions.git/* {
-        uri strip_prefix /git/homebrew-cask-versions.git
+        uri strip_prefix /git/homebrew-cask-versions.git/
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
     }
 }
