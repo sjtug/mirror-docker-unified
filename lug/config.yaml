@@ -314,3 +314,9 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     no_direct_serve: true
     <<: *oneshot_common
+  - type: shell_script
+    script: /app/mirror-clone homebrew_bottles --api_base https://formulae.brew.sh/api/formula-linux.json --target http://siyuan-mirror-intel:8000/linuxbrew-bottles
+    mirror_intel: true
+    interval: 4800
+    name: linuxbrew-bottles
+    <<: *oneshot_common
