@@ -276,7 +276,6 @@ repos:
     source: https://github.com/Homebrew/linuxbrew-core.git
     path: /srv/disk2/git/linuxbrew-core.git
     target: https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git
-    no_direct_serve: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
@@ -285,7 +284,6 @@ repos:
     source: https://github.com/Homebrew/homebrew-services.git
     path: /srv/disk2/git/homebrew-services.git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-services.git
-    no_direct_serve: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
@@ -294,7 +292,6 @@ repos:
     source: https://github.com/Homebrew/homebrew-cask-drivers.git
     path: /srv/disk2/git/homebrew-cask-drivers.git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git
-    no_direct_serve: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
@@ -303,7 +300,6 @@ repos:
     source: https://github.com/Homebrew/homebrew-cask-fonts.git
     path: /srv/disk2/git/homebrew-cask-fonts.git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git
-    no_direct_serve: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
@@ -312,5 +308,4 @@ repos:
     source: https://github.com/Homebrew/homebrew-cask-versions.git
     path: /srv/disk2/git/homebrew-cask-versions.git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
-    no_direct_serve: true
     <<: *oneshot_common

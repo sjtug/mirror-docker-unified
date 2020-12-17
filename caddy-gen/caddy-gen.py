@@ -71,8 +71,8 @@ def reverse_proxy(prefix: str, target: str, strip_prifix=True):
     return Node(f'route /{prefix}/*', node_list)
 
 
-def gzip():
-    return Node('encode gzip zstd')
+def gzip(matcher):
+    return Node(f'encode {matcher} gzip zstd')
 
 
 def common() -> list[Node]:
@@ -103,6 +103,9 @@ def common() -> list[Node]:
         reverse_proxy(prefix, MIRROR_INTEL_ADDR, False) for prefix in MIRROR_INTEL_LIST
     ]
 
+    not_mirror_intel_repo = Node(
+        '@not_mirror_intel_repo', [Node(f'not path /{prefix}/*') for prefix in MIRROR_INTEL_LIST])
+
     # removed
     crawler_rewrite = Node('rewrite', [
         Node('if_op or'),
@@ -124,7 +127,7 @@ def common() -> list[Node]:
     reject_lug_api_respond = Node('respond @reject_lug_api 403')
 
     return \
-        log() + [gzip()] + [BLANK_NODE] + \
+        log() + [not_mirror_intel_repo, gzip("@not_mirror_intel_repo")] + [BLANK_NODE] + \
         frontends + [BLANK_NODE] + \
         [lug] + [BLANK_NODE] + \
         monitors + [BLANK_NODE] + \
@@ -135,6 +138,13 @@ def common() -> list[Node]:
 
 def repo_redir(repo: dict) -> list[Node]:
     return [Node(f'redir /{repo["name"]} /{repo["name"]}/ 301')]
+
+
+def repo_redirect(repo: dict) -> list[Node]:
+    return [Node(f'route /{repo["name"]}/*', [
+            Node(f'uri strip_prefix /{repo["name"]}'),
+            Node(f'redir * {repo["target"]}/{{uri}} 302')
+            ])]
 
 
 def repo_file_server(repo: dict, has_prefix: bool = True) -> list[Node]:
@@ -195,7 +205,12 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
                     f'repo "{repo["name"]}": BASE "{base}" might be a local url, "no_redir_http" will be ignored')
             else:
                 no_redir_nodes += repo_no_redir(base, repo)
-        if not repo.get('no_direct_serve', False):
+        if repo.get('no_direct_serve', False):
+            pass
+        elif "target" in repo:
+            file_server_nodes += repo_redir(repo)
+            file_server_nodes += repo_redirect(repo)
+        else:
             file_server_nodes += repo_redir(repo)
             file_server_nodes += repo_file_server(repo)
 
@@ -203,7 +218,7 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
 
 
 def reverse_proxy_site(base, target) -> Node:
-    return Node(f'{base}', [gzip(), BLANK_NODE, Node(f'reverse_proxy {target}')])
+    return Node(f'{base}', [gzip(""), BLANK_NODE, Node(f'reverse_proxy {target}')])
 
 
 def build_root(base, config_yaml: dict) -> Node:
