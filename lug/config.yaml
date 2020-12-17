@@ -323,3 +323,19 @@ repos:
     path: /srv/disk2/git/guix.git
     target: https://git.sjtu.edu.cn/sjtug/guix.git
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3700
+    name: git/llvm-project.git
+    source: https://github.com/llvm/llvm-project.git
+    path: /srv/disk2/git/guix.git
+    target: https://git.sjtu.edu.cn/sjtug/llvm-project.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3650
+    name: git/flutter-sdk.git
+    source: https://github.com/flutter/flutter.git
+    path: /srv/disk2/git/flutter-sdk.git
+    target: https://git.sjtu.edu.cn/sjtug/flutter-sdk.git
+    <<: *oneshot_common
