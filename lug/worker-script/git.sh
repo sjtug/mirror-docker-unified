@@ -4,14 +4,12 @@ set -e
 
 if [[ ! -d $LUG_path ]]; then
     git clone --mirror $LUG_source $LUG_path
-    cd $LUG_path
-    git remote add upstream $LUG_target
 fi
 
 cd $LUG_path
 
 git remote set-url origin $LUG_source
-git remote set-url upstream $LUG_target
+git remote add upstream $LUG_target || git remote set-url upstream $LUG_target
 
 git config --unset-all remote.origin.fetch
 git config --add remote.origin.fetch "+refs/heads/*:refs/heads/*"

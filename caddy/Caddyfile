@@ -282,6 +282,7 @@ ftp.sjtu.edu.cn {
         not path /pytorch-wheels/*
         not path /sjtug-internal/*
         not path /flutter_infra/*
+        not path /linuxbrew-bottles/*
     }
     encode @not_mirror_intel_repo gzip zstd
 
@@ -359,6 +360,9 @@ ftp.sjtu.edu.cn {
     route /flutter_infra/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
+    route /linuxbrew-bottles/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
 
     @hidden {
         path */.*
@@ -368,6 +372,8 @@ ftp.sjtu.edu.cn {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
+
+    header * x-sjtug-mirror-id siyuan
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
@@ -486,38 +492,43 @@ ftp.sjtu.edu.cn {
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
-        uri strip_prefix /git/linuxbrew-core.git/
-        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
     }
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     route /git/homebrew-services.git/* {
-        uri strip_prefix /git/homebrew-services.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
     }
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
     route /git/homebrew-cask-drivers.git/* {
-        uri strip_prefix /git/homebrew-cask-drivers.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
     }
     redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
     route /git/homebrew-cask-fonts.git/* {
-        uri strip_prefix /git/homebrew-cask-fonts.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
     }
     redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
     route /git/homebrew-cask-versions.git/* {
-        uri strip_prefix /git/homebrew-cask-versions.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
     }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
-        uri strip_prefix /git/guix.git/
-        redir * https://git.sjtu.edu.cn/sjtug/guix.git/{uri} 302
+        uri strip_prefix /git/guix.git
+        redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
+    }
+    redir /git/llvm-project.git /git/llvm-project.git/ 301
+    route /git/llvm-project.git/* {
+        uri strip_prefix /git/llvm-project.git
+        redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
     }
     redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
     route /git/flutter-sdk.git/* {
-        uri strip_prefix /git/flutter-sdk.git/
-        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git/{uri} 302
+        uri strip_prefix /git/flutter-sdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
 }
 
@@ -805,6 +816,7 @@ siyuan.internal.sjtug.org {
         not path /pytorch-wheels/*
         not path /sjtug-internal/*
         not path /flutter_infra/*
+        not path /linuxbrew-bottles/*
     }
     encode @not_mirror_intel_repo gzip zstd
 
@@ -882,6 +894,9 @@ siyuan.internal.sjtug.org {
     route /flutter_infra/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
+    route /linuxbrew-bottles/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
 
     @hidden {
         path */.*
@@ -891,6 +906,8 @@ siyuan.internal.sjtug.org {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
+
+    header * x-sjtug-mirror-id siyuan
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
@@ -1009,38 +1026,43 @@ siyuan.internal.sjtug.org {
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
-        uri strip_prefix /git/linuxbrew-core.git/
-        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
     }
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     route /git/homebrew-services.git/* {
-        uri strip_prefix /git/homebrew-services.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
     }
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
     route /git/homebrew-cask-drivers.git/* {
-        uri strip_prefix /git/homebrew-cask-drivers.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
     }
     redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
     route /git/homebrew-cask-fonts.git/* {
-        uri strip_prefix /git/homebrew-cask-fonts.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
     }
     redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
     route /git/homebrew-cask-versions.git/* {
-        uri strip_prefix /git/homebrew-cask-versions.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
     }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
-        uri strip_prefix /git/guix.git/
-        redir * https://git.sjtu.edu.cn/sjtug/guix.git/{uri} 302
+        uri strip_prefix /git/guix.git
+        redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
+    }
+    redir /git/llvm-project.git /git/llvm-project.git/ 301
+    route /git/llvm-project.git/* {
+        uri strip_prefix /git/llvm-project.git
+        redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
     }
     redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
     route /git/flutter-sdk.git/* {
-        uri strip_prefix /git/flutter-sdk.git/
-        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git/{uri} 302
+        uri strip_prefix /git/flutter-sdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
 }
 
@@ -1062,6 +1084,7 @@ siyuan.internal.sjtug.org {
         not path /pytorch-wheels/*
         not path /sjtug-internal/*
         not path /flutter_infra/*
+        not path /linuxbrew-bottles/*
     }
     encode @not_mirror_intel_repo gzip zstd
 
@@ -1139,6 +1162,9 @@ siyuan.internal.sjtug.org {
     route /flutter_infra/* {
         reverse_proxy siyuan-mirror-intel:8000
     }
+    route /linuxbrew-bottles/* {
+        reverse_proxy siyuan-mirror-intel:8000
+    }
 
     @hidden {
         path */.*
@@ -1148,6 +1174,8 @@ siyuan.internal.sjtug.org {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
+
+    header * x-sjtug-mirror-id siyuan
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
@@ -1266,38 +1294,43 @@ siyuan.internal.sjtug.org {
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
-        uri strip_prefix /git/linuxbrew-core.git/
-        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git/{uri} 302
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
     }
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     route /git/homebrew-services.git/* {
-        uri strip_prefix /git/homebrew-services.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git/{uri} 302
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
     }
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
     route /git/homebrew-cask-drivers.git/* {
-        uri strip_prefix /git/homebrew-cask-drivers.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
     }
     redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
     route /git/homebrew-cask-fonts.git/* {
-        uri strip_prefix /git/homebrew-cask-fonts.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
     }
     redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
     route /git/homebrew-cask-versions.git/* {
-        uri strip_prefix /git/homebrew-cask-versions.git/
-        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git/{uri} 302
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
     }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
-        uri strip_prefix /git/guix.git/
-        redir * https://git.sjtu.edu.cn/sjtug/guix.git/{uri} 302
+        uri strip_prefix /git/guix.git
+        redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
+    }
+    redir /git/llvm-project.git /git/llvm-project.git/ 301
+    route /git/llvm-project.git/* {
+        uri strip_prefix /git/llvm-project.git
+        redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
     }
     redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
     route /git/flutter-sdk.git/* {
-        uri strip_prefix /git/flutter-sdk.git/
-        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git/{uri} 302
+        uri strip_prefix /git/flutter-sdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
 }
 
@@ -1305,11 +1338,13 @@ k8s-gcr-io.siyuan.internal.sjtug.org {
     encode  gzip zstd
 
     reverse_proxy siyuan-gcr-registry:80
+    header * x-sjtug-mirror-id siyuan
 }
 
 docker.siyuan.internal.sjtug.org {
     encode  gzip zstd
 
     reverse_proxy siyuan-docker-registry:80
+    header * x-sjtug-mirror-id siyuan
 }
 

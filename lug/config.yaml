@@ -328,7 +328,7 @@ repos:
     interval: 3700
     name: git/llvm-project.git
     source: https://github.com/llvm/llvm-project.git
-    path: /srv/disk2/git/guix.git
+    path: /srv/disk2/git/llvm-project.git
     target: https://git.sjtu.edu.cn/sjtug/llvm-project.git
     <<: *oneshot_common
   - type: shell_script

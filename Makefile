@@ -17,6 +17,9 @@ caddy-hash-password:
 caddy-gen-local:
 	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile -D
 
+caddy-reload:
+	docker-compose exec -w /etc/caddy caddy caddy reload
+
 lug-format-config: # You need to install prettier from npm to use this functionality
 	prettier lug/*.yaml -w
 
