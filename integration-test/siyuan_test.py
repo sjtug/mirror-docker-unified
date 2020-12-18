@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "mirrors.internal.skyzh.xyz"
+BASE_URL = "siyuan.internal.sjtug.org"
 
 """
 Here we take Debian repo as an example. It should be served on both http
@@ -92,3 +92,18 @@ Also an edge case, we should never concat two directories
 def test_debian_concat():
     response = requests.get(f"http://{BASE_URL}/debiandoc/source-unpack.txt")
     assert response.status_code == 404
+
+"""
+For git repos, should redirect to git.sjtu
+"""
+
+def test_git_redirect():
+    response = requests.get(f"http://{BASE_URL}/git/llvm-project.git")
+    assert response.url == f"https://git.sjtu.edu.cn/sjtug/llvm-project.git"
+
+"""
+We should return x-sjtug-mirror-id in header
+"""
+def test_mirror_id():
+    response = requests.get(f"http://{BASE_URL}")
+    assert response.headers["x-sjtug-mirror-id"] == "siyuan"

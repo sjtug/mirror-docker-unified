@@ -142,8 +142,8 @@ def repo_redir(repo: dict) -> list[Node]:
 
 def repo_redirect(repo: dict) -> list[Node]:
     return [Node(f'route /{repo["name"]}/*', [
-            Node(f'uri strip_prefix /{repo["name"]}/'),
-            Node(f'redir * {repo["target"]}/{{uri}} 302')
+            Node(f'uri strip_prefix /{repo["name"]}'),
+            Node(f'redir * {repo["target"]}{{uri}} 302')
             ])]
 
 
@@ -182,8 +182,9 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
             return False
 
         if 'mirror_intel' in repo:
-            logging.warning(
-                f'repo "{repo["name"]}": mirror-intel should be configured manually, ignored')
+            if repo["name"] not in MIRROR_INTEL_LIST:
+                logging.warning(
+                    f'repo "{repo["name"]}": mirror-intel should be configured manually, ignored')
             return False
 
         path = repo['path']
@@ -217,8 +218,12 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
     return no_redir_nodes, file_server_nodes
 
 
+def sjtug_mirror_id() -> Node:
+    return Node("header * x-sjtug-mirror-id siyuan")
+
+
 def reverse_proxy_site(base, target) -> Node:
-    return Node(f'{base}', [gzip(""), BLANK_NODE, Node(f'reverse_proxy {target}')])
+    return Node(f'{base}', [gzip(""), BLANK_NODE, Node(f'reverse_proxy {target}'), sjtug_mirror_id()])
 
 
 def build_root(base, config_yaml: dict) -> Node:
@@ -226,7 +231,7 @@ def build_root(base, config_yaml: dict) -> Node:
     no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'])
 
     main_node = Node(f'{base}',
-                     common_nodes + [BLANK_NODE] +
+                     common_nodes + [BLANK_NODE] + [sjtug_mirror_id()] + [BLANK_NODE] +
                      file_server_nodes)
 
     return Node('',
