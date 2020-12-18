@@ -207,7 +207,7 @@ repos:
     source: rsync://downloads.openwrt.org/downloads/
     interval: 24900
     path: /srv/disk1/openwrt
-    rsync_extra_flags: --exclude "index.html"
+    rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
     name: openwrt
     no_redir_http: true
     <<: *oneshot_common
@@ -338,4 +338,11 @@ repos:
     source: https://github.com/flutter/flutter.git
     path: /srv/disk2/git/flutter-sdk.git
     target: https://git.sjtu.edu.cn/sjtug/flutter-sdk.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.apache.org/apache-dist/
+    interval: 7200
+    path: /srv/disk2/apache
+    name: apache
     <<: *oneshot_common
