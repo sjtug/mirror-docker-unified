@@ -1,10 +1,8 @@
 # mirror-docker-siyuan
 
 Dockerfile for the new SJTUG mirror server.
+## Docs
 
-(A side note: another mirror server may be named as zhiyuan)
+The Siyuan mirror is the single point for SJTUG mirrors and SJTU services.
 
-## Motivation
-
-* Serve the same functionality as ftp.sjtu.edu.cn (ftp.sjtu will be deprecated later)
-* Add new repos not available on SJTUG mirror main site
+![New Architecture](docs/images/new-arch.png)
