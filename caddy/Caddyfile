@@ -535,6 +535,21 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
+    route /git/ohmyzsh.git/* {
+        uri strip_prefix /git/ohmyzsh.git
+        redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
+    }
+    redir /git/spacemacs.git /git/spacemacs.git/ 301
+    route /git/spacemacs.git/* {
+        uri strip_prefix /git/spacemacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
+    }
+    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
+    route /git/doom-emacs.git/* {
+        uri strip_prefix /git/doom-emacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
+    }
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -1074,6 +1089,21 @@ siyuan.internal.sjtug.org {
         root /srv/disk2
         hide .*
     }
+    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
+    route /git/ohmyzsh.git/* {
+        uri strip_prefix /git/ohmyzsh.git
+        redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
+    }
+    redir /git/spacemacs.git /git/spacemacs.git/ 301
+    route /git/spacemacs.git/* {
+        uri strip_prefix /git/spacemacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
+    }
+    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
+    route /git/doom-emacs.git/* {
+        uri strip_prefix /git/doom-emacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
+    }
 }
 
 :80 {
@@ -1346,6 +1376,21 @@ siyuan.internal.sjtug.org {
     file_server /apache/* browse {
         root /srv/disk2
         hide .*
+    }
+    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
+    route /git/ohmyzsh.git/* {
+        uri strip_prefix /git/ohmyzsh.git
+        redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
+    }
+    redir /git/spacemacs.git /git/spacemacs.git/ 301
+    route /git/spacemacs.git/* {
+        uri strip_prefix /git/spacemacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
+    }
+    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
+    route /git/doom-emacs.git/* {
+        uri strip_prefix /git/doom-emacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
 }
 
