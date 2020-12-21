@@ -346,3 +346,24 @@ repos:
     path: /srv/disk2/apache
     name: apache
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 1800
+    name: git/ohmyzsh.git
+    source: https://github.com/ohmyzsh/ohmyzsh.git
+    path: /srv/disk2/git/ohmyzsh.git
+    target: https://git.sjtu.edu.cn/sjtug/ohmyzsh.git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 1900
+    name: git/spacemacs.git
+    source: https://github.com/syl20bnr/spacemacs.git
+    path: /srv/disk2/git/spacemacs.git
+    target: https://git.sjtu.edu.cn/sjtug/spacemacs.git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 2000
+    name: git/doom-emacs.git
+    source: https://github.com/hlissner/doom-emacs.git
+    path: /srv/disk2/git/doom-emacs.git
+    target: https://git.sjtu.edu.cn/sjtug/doom-emacs.git
