@@ -222,49 +222,49 @@ repos:
     <<: *oneshot_common
   # homebrew-bottles
   - type: shell_script
-    script: /app/mirror-clone homebrew_bottles --target http://siyuan-mirror-intel:8000/homebrew-bottles
+    script: /app/mirror-clone --concurrent_resolve 64 homebrew_bottles --target http://siyuan-mirror-intel:8000/homebrew-bottles
     mirror_intel: true
     interval: 4800
     name: homebrew-bottles
     <<: *oneshot_common
   # rust-static
   - type: shell_script
-    script: /app/mirror-clone rustup --target http://siyuan-mirror-intel:8000/rust-static
+    script: /app/mirror-clone --concurrent_resolve 64 rustup --target http://siyuan-mirror-intel:8000/rust-static
     mirror_intel: true
     interval: 4800
     name: rust-static
     <<: *oneshot_common
   # pypi
   - type: shell_script
-    script: /app/mirror-clone pypi --target http://siyuan-mirror-intel:8000/pypi-packages
+    script: /app/mirror-clone --concurrent_resolve 64 pypi --target http://siyuan-mirror-intel:8000/pypi-packages
     mirror_intel: true
     interval: 86400
     name: pypi-packages
     <<: *oneshot_common
   # dart-pub
   - type: shell_script
-    script: /app/mirror-clone dart_pub --target http://siyuan-mirror-intel:8000/dart-pub
+    script: /app/mirror-clone --concurrent_resolve 64 dart_pub --target http://siyuan-mirror-intel:8000/dart-pub
     mirror_intel: true
     interval: 4800
     name: dart-pub
     <<: *oneshot_common
   # pytorch-wheels
   - type: shell_script
-    script: /app/mirror-clone pytorch_wheels --target http://siyuan-mirror-intel:8000/pytorch-wheels
+    script: /app/mirror-clone --concurrent_resolve 64 pytorch_wheels --target http://siyuan-mirror-intel:8000/pytorch-wheels
     mirror_intel: true
     interval: 4900
     name: pytorch-wheels
     <<: *oneshot_common
   # crates.io
   - type: shell_script
-    script: /app/mirror-clone crates_io --target http://siyuan-mirror-intel:8000/crates.io/crates
+    script: /app/mirror-clone --concurrent_resolve 64 crates_io --target http://siyuan-mirror-intel:8000/crates.io/crates
     mirror_intel: true
     interval: 3700
     name: crates.io
     <<: *oneshot_common
   # flutter_infra
   - type: shell_script
-    script: /app/mirror-clone flutter_infra --target http://siyuan-mirror-intel:8000/flutter_infra
+    script: /app/mirror-clone --concurrent_resolve 64 flutter_infra --target http://siyuan-mirror-intel:8000/flutter_infra
     mirror_intel: true
     interval: 4000
     name: flutter_infra
@@ -310,7 +310,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone homebrew_bottles --api_base https://formulae.brew.sh/api/formula-linux.json --target http://siyuan-mirror-intel:8000/linuxbrew-bottles
+    script: /app/mirror-clone --concurrent_resolve 64 homebrew_bottles --api_base https://formulae.brew.sh/api/formula-linux.json --target http://siyuan-mirror-intel:8000/linuxbrew-bottles
     mirror_intel: true
     interval: 4800
     name: linuxbrew-bottles
