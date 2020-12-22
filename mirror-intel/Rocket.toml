@@ -11,6 +11,7 @@ direct_stream_size_kb = 4
 read_only = false
 log_level = "off"
 download_timeout = 60
+workers = 8
 
 [default.endpoints]
 rust_static = "https://static.rust-lang.org"
