@@ -367,3 +367,19 @@ repos:
     source: https://github.com/hlissner/doom-emacs.git
     path: /srv/disk2/git/doom-emacs.git
     target: https://git.sjtu.edu.cn/sjtug/doom-emacs.git
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://avalon.dragonflybsd.org/iso-images/
+    interval: 25600
+    path: /srv/disk2/dragonflybsd/iso-images
+    name: dragonflybsd/iso-images
+    rsync_extra_flags: -6
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://avalon.dragonflybsd.org/dports/
+    interval: 25600
+    path: /srv/disk2/dragonflybsd/dports
+    name: dragonflybsd/dports
+    rsync_extra_flags: -6
+    <<: *oneshot_common
