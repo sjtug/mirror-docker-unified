@@ -62,6 +62,7 @@ services:
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
       - "./secrets/git-credentials:/root/.git-credentials:ro"
+      - "./common/gai.conf:/etc/gai.conf:ro"
     environment:
       RUST_LOG: info
     healthcheck:
@@ -234,7 +235,7 @@ services:
       context: ./mirror-intel
       args:
         - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.12
+        - INTEL_VERSION=v0.1.13
     networks:
       - ipv6-service-net
     expose:
@@ -255,6 +256,7 @@ services:
         hard: 120000
     volumes:
       - "/mnt/disk2/mirror-intel-cache:/mnt/cache"
+      - "./common/gai.conf:/etc/gai.conf:ro"
     mem_limit: 15G
     memswap_limit: 15G
   
