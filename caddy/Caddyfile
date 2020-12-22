@@ -550,6 +550,16 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
+    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
+    file_server /dragonflybsd/iso-images/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
+    file_server /dragonflybsd/dports/* browse {
+        root /srv/disk2
+        hide .*
+    }
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -1104,6 +1114,16 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
+    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
+    file_server /dragonflybsd/iso-images/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
+    file_server /dragonflybsd/dports/* browse {
+        root /srv/disk2
+        hide .*
+    }
 }
 
 :80 {
@@ -1391,6 +1411,16 @@ siyuan.internal.sjtug.org {
     route /git/doom-emacs.git/* {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
+    }
+    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
+    file_server /dragonflybsd/iso-images/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
+    file_server /dragonflybsd/dports/* browse {
+        root /srv/disk2
+        hide .*
     }
 }
 
