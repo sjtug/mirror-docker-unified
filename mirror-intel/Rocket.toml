@@ -16,7 +16,7 @@ workers = 8
 [default.endpoints]
 rust_static = "https://static.rust-lang.org"
 homebrew_bottles = "https://homebrew.bintray.com"
-linuxbrew_bottles = "https://mirrors.tuna.tsinghua.edu.cn/linuxbrew-bottles"
+linuxbrew_bottles = "https://linuxbrew.bintray.com"
 pypi_packages = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages"
 fedora_iot = "https://d2ju0wfl996cmc.cloudfront.net"
 fedora_ostree = "https://d2uk5hbyrobdzx.cloudfront.net"
