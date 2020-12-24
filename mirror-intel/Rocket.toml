@@ -26,7 +26,10 @@ dart_pub = "https://pub.dartlang.org"
 guix = "https://ci.guix.gnu.org"
 pytorch_wheels = "https://download.pytorch.org/whl"
 sjtug_internal = "https://github.com/sjtug"
-flutter_infra = "https://storage.googleapis.com/flutter_infra"
+flutter_infra = "https://storage.flutter-io.cn/flutter_infra"
+overrides = [
+    { name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/" }
+]
 
 [default.s3]
 endpoint = "https://s3.jcloud.sjtu.edu.cn"
