@@ -224,7 +224,7 @@ repos:
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 homebrew_bottles --target http://siyuan-mirror-intel:8000/homebrew-bottles
     mirror_intel: true
-    interval: 4800
+    interval: 10800
     name: homebrew-bottles
     <<: *oneshot_common
   # rust-static
@@ -259,7 +259,7 @@ repos:
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 crates_io --target http://siyuan-mirror-intel:8000/crates.io/crates
     mirror_intel: true
-    interval: 3700
+    interval: 7200
     name: crates.io
     <<: *oneshot_common
   # flutter_infra
@@ -312,7 +312,7 @@ repos:
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 homebrew_bottles --api_base https://formulae.brew.sh/api/formula-linux.json --target http://siyuan-mirror-intel:8000/linuxbrew-bottles
     mirror_intel: true
-    interval: 4800
+    interval: 10800
     name: linuxbrew-bottles
     <<: *oneshot_common
   - type: shell_script
@@ -373,7 +373,7 @@ repos:
     interval: 25600
     path: /srv/disk2/dragonflybsd/iso-images
     name: dragonflybsd/iso-images
-    rsync_extra_flags: -6
+    rsync_extra_flags: --exclude "tmp/*"
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -381,5 +381,4 @@ repos:
     interval: 25600
     path: /srv/disk2/dragonflybsd/dports
     name: dragonflybsd/dports
-    rsync_extra_flags: -6
     <<: *oneshot_common
