@@ -17,7 +17,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then \
     else \
         curl -v -I https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz && \
         wget -O tmp.tar.gz https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.tar.gz ; \
-    fi && unzip tmp.tar.gz && rm tmp.tar.gz && chmod +x ./lug
+    fi && tar -xvf tmp.tar.gz && rm tmp.tar.gz && chmod +x ./lug
 
 RUN if [ "$USE_SJTUG" = true ] ; then \
         wget -O tmp.tar.gz https://siyuan.internal.sjtug.org/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz || \
