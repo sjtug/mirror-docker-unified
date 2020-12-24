@@ -11,13 +11,13 @@ ARG CLONE_VERSION
 ARG LUG_VERSION
 
 RUN if [ "$USE_SJTUG" = true ] ; then \
-        wget -O tmp.zip https://siyuan.internal.sjtug.org/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.zip || \
-        wget -O tmp.zip https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.zip || \
-        wget -O tmp.zip https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.zip ; \
+        wget -O tmp.tar.gz https://siyuan.internal.sjtug.org/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz || \
+        wget -O tmp.tar.gz https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz || \
+        wget -O tmp.tar.gz https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.tar.gz ; \
     else \
-        curl -v -I https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.zip && \
-        wget -O tmp.zip https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.zip ; \
-    fi && unzip tmp.zip && rm tmp.zip && chmod +x ./lug
+        curl -v -I https://mirrors.sjtug.sjtu.edu.cn/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz && \
+        wget -O tmp.tar.gz https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.tar.gz ; \
+    fi && unzip tmp.tar.gz && rm tmp.tar.gz && chmod +x ./lug
 
 RUN if [ "$USE_SJTUG" = true ] ; then \
         wget -O tmp.tar.gz https://siyuan.internal.sjtug.org/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz || \
