@@ -222,7 +222,7 @@ repos:
     <<: *oneshot_common
   # homebrew-bottles
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 homebrew_bottles --target http://siyuan-mirror-intel:8000/homebrew-bottles
+    script: /app/mirror-clone --concurrent_resolve 128 homebrew_bottles --target http://siyuan-mirror-intel:8000/homebrew-bottles
     mirror_intel: true
     interval: 10800
     name: homebrew-bottles
@@ -310,7 +310,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 homebrew_bottles --api_base https://formulae.brew.sh/api/formula-linux.json --target http://siyuan-mirror-intel:8000/linuxbrew-bottles
+    script: /app/mirror-clone --concurrent_resolve 128 homebrew_bottles --arch x86_64_linux --api_base https://formulae.brew.sh/api/formula-linux.json --target http://siyuan-mirror-intel:8000/linuxbrew-bottles
     mirror_intel: true
     interval: 10800
     name: linuxbrew-bottles
