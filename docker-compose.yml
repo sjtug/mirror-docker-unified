@@ -274,8 +274,14 @@ services:
 
 networks:
   monitor-net:
+    driver_opts:                         
+      com.docker.network.driver.mtu: 1450
   tunnel-net:
+    driver_opts:                         
+      com.docker.network.driver.mtu: 1450
   proxy-net:
+    driver_opts:                         
+      com.docker.network.driver.mtu: 1450
   ipv6-service-net:
     enable_ipv6: true
     driver: bridge
@@ -283,3 +289,5 @@ networks:
       driver: default
       config:
       -  subnet: fd00::/80
+    driver_opts:                         
+      com.docker.network.driver.mtu: 1450
