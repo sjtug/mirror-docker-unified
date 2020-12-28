@@ -7,7 +7,7 @@ services:
     networks: 
       - ipv6-service-net
       - monitor-net
-      - host-bridge-net
+      - host-monitor-net
     env_file:
       - './secrets/caddy.env'
     build:
@@ -274,12 +274,12 @@ services:
     - NET_RAW
 
 networks:
-  host-bridge-net:
+  host-monitor-net:
     driver: bridge
     ipam:
       driver: default
       config:
-      -  subnet: 172.233.0.0/16
+      -  subnet: 172.31.0.0/16
     driver_opts:
       com.docker.network.driver.mtu: 1450
   monitor-net:
