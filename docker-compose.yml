@@ -274,6 +274,14 @@ services:
     - NET_RAW
 
 networks:
+  host-monitor-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -  subnet: 172.20.0.0/16
+    driver_opts:                         
+      com.docker.network.driver.mtu: 1450
   monitor-net:
     driver_opts:                         
       com.docker.network.driver.mtu: 1450
@@ -290,13 +298,5 @@ networks:
       driver: default
       config:
       -  subnet: fd01::/80
-    driver_opts:                         
-      com.docker.network.driver.mtu: 1450
-  host-monitor-net:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-      -  subnet: 172.20.0.0/16
     driver_opts:                         
       com.docker.network.driver.mtu: 1450
