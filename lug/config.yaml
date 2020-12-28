@@ -382,3 +382,8 @@ repos:
     path: /srv/disk2/dragonflybsd/dports
     name: dragonflybsd/dports
     <<: *oneshot_common
+  - type: shell_script
+    name: archlinux
+    path: /srv/disk2/archlinux
+    target: https://mirrors.sjtug.sjtu.edu.cn/archlinux
+    <<: *oneshot_common
