@@ -373,7 +373,7 @@ repos:
     interval: 25600
     path: /srv/disk2/dragonflybsd/iso-images
     name: dragonflybsd/iso-images
-    rsync_extra_flags: --exclude "tmp/*"
+    rsync_extra_flags: --exclude "tmp"
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
