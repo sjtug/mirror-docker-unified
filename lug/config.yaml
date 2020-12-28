@@ -385,5 +385,8 @@ repos:
   - type: shell_script
     name: archlinux
     path: /srv/disk2/archlinux
+    interval: 3600
+    disabled: true
+    script: "true"
     target: https://mirrors.sjtug.sjtu.edu.cn/archlinux
     <<: *oneshot_common
