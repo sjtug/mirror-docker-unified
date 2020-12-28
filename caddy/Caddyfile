@@ -560,6 +560,11 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /archlinux /archlinux/ 301
+    route /archlinux/* {
+        uri strip_prefix /archlinux
+        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
+    }
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -1124,6 +1129,11 @@ siyuan.internal.sjtug.org {
         root /srv/disk2
         hide .*
     }
+    redir /archlinux /archlinux/ 301
+    route /archlinux/* {
+        uri strip_prefix /archlinux
+        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
+    }
 }
 
 :80 {
@@ -1421,6 +1431,11 @@ siyuan.internal.sjtug.org {
     file_server /dragonflybsd/dports/* browse {
         root /srv/disk2
         hide .*
+    }
+    redir /archlinux /archlinux/ 301
+    route /archlinux/* {
+        uri strip_prefix /archlinux
+        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
     }
 }
 
