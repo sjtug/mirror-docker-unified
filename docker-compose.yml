@@ -137,6 +137,8 @@ services:
       - 5003
       - 5004
       - 5005
+    ports:
+      - "127.0.0.1:5005:5005"
     networks:
       - tunnel-net
     volumes: 
