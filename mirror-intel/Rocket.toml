@@ -10,8 +10,11 @@ ttl = 3
 direct_stream_size_kb = 4
 read_only = false
 log_level = "off"
-download_timeout = 60
+download_timeout = 300
 workers = 8
+
+[default.github_release]
+allow = ["FreeCAD/FreeCAD/"]
 
 [default.endpoints]
 rust_static = "https://static.rust-lang.org"
@@ -27,6 +30,7 @@ guix = "https://ci.guix.gnu.org"
 pytorch_wheels = "https://download.pytorch.org/whl"
 sjtug_internal = "https://github.com/sjtug"
 flutter_infra = "https://storage.flutter-io.cn/flutter_infra"
+github_release = "https://github.com"
 overrides = [
     { name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/" }
 ]
