@@ -10,7 +10,7 @@ ttl = 3
 direct_stream_size_kb = 4
 read_only = false
 log_level = "off"
-download_timeout = 60
+download_timeout = 300
 workers = 8
 
 [default.github_release]
