@@ -571,6 +571,1152 @@ ftp.sjtu.edu.cn {
     }
 }
 
+http://ftp6.sjtu.edu.cn/centos {
+    redir /centos /centos/ 301
+}
+
+http://ftp6.sjtu.edu.cn/centos/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/debian {
+    redir /debian /debian/ 301
+}
+
+http://ftp6.sjtu.edu.cn/debian/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/debian-security {
+    redir /debian-security /debian-security/ 301
+}
+
+http://ftp6.sjtu.edu.cn/debian-security/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/deepin {
+    redir /deepin /deepin/ 301
+}
+
+http://ftp6.sjtu.edu.cn/deepin/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/docker-ce {
+    redir /docker-ce /docker-ce/ 301
+}
+
+http://ftp6.sjtu.edu.cn/docker-ce/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/fedora/linux {
+    redir /fedora/linux /fedora/linux/ 301
+}
+
+http://ftp6.sjtu.edu.cn/fedora/linux/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/fedora/epel {
+    redir /fedora/epel /fedora/epel/ 301
+}
+
+http://ftp6.sjtu.edu.cn/fedora/epel/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/fedora-secondary {
+    redir /fedora-secondary /fedora-secondary/ 301
+}
+
+http://ftp6.sjtu.edu.cn/fedora-secondary/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/opensuse {
+    redir /opensuse /opensuse/ 301
+}
+
+http://ftp6.sjtu.edu.cn/opensuse/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/remi {
+    redir /remi /remi/ 301
+}
+
+http://ftp6.sjtu.edu.cn/remi/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/ubuntu {
+    redir /ubuntu /ubuntu/ 301
+}
+
+http://ftp6.sjtu.edu.cn/ubuntu/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/ubuntu-ports {
+    redir /ubuntu-ports /ubuntu-ports/ 301
+}
+
+http://ftp6.sjtu.edu.cn/ubuntu-ports/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/openwrt {
+    redir /openwrt /openwrt/ 301
+}
+
+http://ftp6.sjtu.edu.cn/openwrt/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://ftp6.sjtu.edu.cn/rpmfusion {
+    redir /rpmfusion /rpmfusion/ 301
+}
+
+http://ftp6.sjtu.edu.cn/rpmfusion/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+ftp6.sjtu.edu.cn {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    @not_mirror_intel_repo {
+        not path /crates.io/*
+        not path /pypi-packages/*
+        not path /flathub/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /rust-static/*
+        not path /homebrew-bottles/*
+        not path /dart-pub/*
+        not path /guix/*
+        not path /pytorch-wheels/*
+        not path /sjtug-internal/*
+        not path /flutter_infra/*
+        not path /linuxbrew-bottles/*
+        not path /github-release/*
+    }
+    encode @not_mirror_intel_repo gzip zstd
+
+    file_server /* {
+        root /dists
+    }
+    rewrite /docs/* /  # for react app
+
+    reverse_proxy /lug/* lug:7001 {
+        header_down Access-Control-Allow-Origin *
+        header_down Access-Control-Request-Method GET
+    }
+
+    basicauth /monitor/* {
+        {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
+    }
+    route /monitor/node_exporter/* {
+        uri strip_prefix /monitor/node_exporter
+        reverse_proxy 172.31.0.1:9100
+    }
+    route /monitor/cadvisor/* {
+        uri strip_prefix /monitor/cadvisor
+        reverse_proxy cadvisor:8080
+    }
+    route /monitor/lug/* {
+        uri strip_prefix /monitor/lug
+        reverse_proxy lug:8081
+    }
+    route /monitor/mirror-intel/* {
+        uri strip_prefix /monitor/mirror-intel
+        reverse_proxy mirror-intel:8000
+    }
+    route /monitor/docker-gcr/* {
+        uri strip_prefix /monitor/docker-gcr
+        reverse_proxy siyuan-gcr-registry:5001
+    }
+    route /monitor/docker-registry/* {
+        uri strip_prefix /monitor/docker-registry
+        reverse_proxy siyuan-docker-registry:5001
+    }
+
+    route /crates.io/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /pypi-packages/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /flathub/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /fedora-ostree/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /fedora-iot/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /rust-static/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /homebrew-bottles/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /dart-pub/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /guix/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /pytorch-wheels/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /sjtug-internal/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /flutter_infra/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /linuxbrew-bottles/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /github-release/* {
+        reverse_proxy mirror-intel:8000
+    }
+
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    @reject_lug_api {
+        path /lug/v1/admin/*
+    }
+    respond @reject_lug_api 403
+
+    header * x-sjtug-mirror-id siyuan
+
+    redir /centos /centos/ 301
+    file_server /centos/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian /debian/ 301
+    file_server /debian/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian-cd /debian-cd/ 301
+    file_server /debian-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian-security /debian-security/ 301
+    file_server /debian-security/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /deepin /deepin/ 301
+    file_server /deepin/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /deepin-cd /deepin-cd/ 301
+    file_server /deepin-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /docker-ce /docker-ce/ 301
+    file_server /docker-ce/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /fedora/linux /fedora/linux/ 301
+    file_server /fedora/linux/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora/epel /fedora/epel/ 301
+    file_server /fedora/epel/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora-secondary /fedora-secondary/ 301
+    file_server /fedora-secondary/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /linuxmint /linuxmint/ 301
+    file_server /linuxmint/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /linuxmint-cd /linuxmint-cd/ 301
+    file_server /linuxmint-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /mageia /mageia/ 301
+    file_server /mageia/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /opensuse /opensuse/ 301
+    file_server /opensuse/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /openvz /openvz/ 301
+    file_server /openvz/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /remi /remi/ 301
+    file_server /remi/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /scientific /scientific/ 301
+    file_server /scientific/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu /ubuntu/ 301
+    file_server /ubuntu/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    file_server /ubuntu-cd/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cdimage /ubuntu-cdimage/ 301
+    file_server /ubuntu-cdimage/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-ports /ubuntu-ports/ 301
+    file_server /ubuntu-ports/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /openwrt /openwrt/ 301
+    file_server /openwrt/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /rpmfusion /rpmfusion/ 301
+    file_server /rpmfusion/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    route /git/linuxbrew-core.git/* {
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
+    }
+    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
+    route /git/homebrew-services.git/* {
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
+    }
+    redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
+    route /git/homebrew-cask-drivers.git/* {
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
+    }
+    redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
+    route /git/homebrew-cask-fonts.git/* {
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
+    }
+    redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
+    route /git/homebrew-cask-versions.git/* {
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
+    }
+    redir /git/guix.git /git/guix.git/ 301
+    route /git/guix.git/* {
+        uri strip_prefix /git/guix.git
+        redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
+    }
+    redir /git/llvm-project.git /git/llvm-project.git/ 301
+    route /git/llvm-project.git/* {
+        uri strip_prefix /git/llvm-project.git
+        redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
+    }
+    redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
+    route /git/flutter-sdk.git/* {
+        uri strip_prefix /git/flutter-sdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
+    }
+    redir /apache /apache/ 301
+    file_server /apache/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
+    route /git/ohmyzsh.git/* {
+        uri strip_prefix /git/ohmyzsh.git
+        redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
+    }
+    redir /git/spacemacs.git /git/spacemacs.git/ 301
+    route /git/spacemacs.git/* {
+        uri strip_prefix /git/spacemacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
+    }
+    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
+    route /git/doom-emacs.git/* {
+        uri strip_prefix /git/doom-emacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
+    }
+    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
+    file_server /dragonflybsd/iso-images/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
+    file_server /dragonflybsd/dports/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /archlinux /archlinux/ 301
+    route /archlinux/* {
+        uri strip_prefix /archlinux
+        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/centos {
+    redir /centos /centos/ 301
+}
+
+http://mirror.sjtu.edu.cn/centos/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/debian {
+    redir /debian /debian/ 301
+}
+
+http://mirror.sjtu.edu.cn/debian/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/debian-security {
+    redir /debian-security /debian-security/ 301
+}
+
+http://mirror.sjtu.edu.cn/debian-security/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/deepin {
+    redir /deepin /deepin/ 301
+}
+
+http://mirror.sjtu.edu.cn/deepin/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/docker-ce {
+    redir /docker-ce /docker-ce/ 301
+}
+
+http://mirror.sjtu.edu.cn/docker-ce/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/fedora/linux {
+    redir /fedora/linux /fedora/linux/ 301
+}
+
+http://mirror.sjtu.edu.cn/fedora/linux/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/fedora/epel {
+    redir /fedora/epel /fedora/epel/ 301
+}
+
+http://mirror.sjtu.edu.cn/fedora/epel/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/fedora-secondary {
+    redir /fedora-secondary /fedora-secondary/ 301
+}
+
+http://mirror.sjtu.edu.cn/fedora-secondary/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/opensuse {
+    redir /opensuse /opensuse/ 301
+}
+
+http://mirror.sjtu.edu.cn/opensuse/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/remi {
+    redir /remi /remi/ 301
+}
+
+http://mirror.sjtu.edu.cn/remi/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/ubuntu {
+    redir /ubuntu /ubuntu/ 301
+}
+
+http://mirror.sjtu.edu.cn/ubuntu/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/ubuntu-ports {
+    redir /ubuntu-ports /ubuntu-ports/ 301
+}
+
+http://mirror.sjtu.edu.cn/ubuntu-ports/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/openwrt {
+    redir /openwrt /openwrt/ 301
+}
+
+http://mirror.sjtu.edu.cn/openwrt/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+http://mirror.sjtu.edu.cn/rpmfusion {
+    redir /rpmfusion /rpmfusion/ 301
+}
+
+http://mirror.sjtu.edu.cn/rpmfusion/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+}
+
+mirror.sjtu.edu.cn {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    @not_mirror_intel_repo {
+        not path /crates.io/*
+        not path /pypi-packages/*
+        not path /flathub/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /rust-static/*
+        not path /homebrew-bottles/*
+        not path /dart-pub/*
+        not path /guix/*
+        not path /pytorch-wheels/*
+        not path /sjtug-internal/*
+        not path /flutter_infra/*
+        not path /linuxbrew-bottles/*
+        not path /github-release/*
+    }
+    encode @not_mirror_intel_repo gzip zstd
+
+    file_server /* {
+        root /dists
+    }
+    rewrite /docs/* /  # for react app
+
+    reverse_proxy /lug/* lug:7001 {
+        header_down Access-Control-Allow-Origin *
+        header_down Access-Control-Request-Method GET
+    }
+
+    basicauth /monitor/* {
+        {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
+    }
+    route /monitor/node_exporter/* {
+        uri strip_prefix /monitor/node_exporter
+        reverse_proxy 172.31.0.1:9100
+    }
+    route /monitor/cadvisor/* {
+        uri strip_prefix /monitor/cadvisor
+        reverse_proxy cadvisor:8080
+    }
+    route /monitor/lug/* {
+        uri strip_prefix /monitor/lug
+        reverse_proxy lug:8081
+    }
+    route /monitor/mirror-intel/* {
+        uri strip_prefix /monitor/mirror-intel
+        reverse_proxy mirror-intel:8000
+    }
+    route /monitor/docker-gcr/* {
+        uri strip_prefix /monitor/docker-gcr
+        reverse_proxy siyuan-gcr-registry:5001
+    }
+    route /monitor/docker-registry/* {
+        uri strip_prefix /monitor/docker-registry
+        reverse_proxy siyuan-docker-registry:5001
+    }
+
+    route /crates.io/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /pypi-packages/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /flathub/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /fedora-ostree/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /fedora-iot/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /rust-static/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /homebrew-bottles/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /dart-pub/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /guix/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /pytorch-wheels/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /sjtug-internal/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /flutter_infra/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /linuxbrew-bottles/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /github-release/* {
+        reverse_proxy mirror-intel:8000
+    }
+
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    @reject_lug_api {
+        path /lug/v1/admin/*
+    }
+    respond @reject_lug_api 403
+
+    header * x-sjtug-mirror-id siyuan
+
+    redir /centos /centos/ 301
+    file_server /centos/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian /debian/ 301
+    file_server /debian/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian-cd /debian-cd/ 301
+    file_server /debian-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /debian-security /debian-security/ 301
+    file_server /debian-security/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /deepin /deepin/ 301
+    file_server /deepin/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /deepin-cd /deepin-cd/ 301
+    file_server /deepin-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /docker-ce /docker-ce/ 301
+    file_server /docker-ce/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /fedora/linux /fedora/linux/ 301
+    file_server /fedora/linux/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora/epel /fedora/epel/ 301
+    file_server /fedora/epel/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora-secondary /fedora-secondary/ 301
+    file_server /fedora-secondary/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /linuxmint /linuxmint/ 301
+    file_server /linuxmint/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /linuxmint-cd /linuxmint-cd/ 301
+    file_server /linuxmint-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /mageia /mageia/ 301
+    file_server /mageia/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /opensuse /opensuse/ 301
+    file_server /opensuse/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /openvz /openvz/ 301
+    file_server /openvz/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /remi /remi/ 301
+    file_server /remi/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /scientific /scientific/ 301
+    file_server /scientific/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu /ubuntu/ 301
+    file_server /ubuntu/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    file_server /ubuntu-cd/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cdimage /ubuntu-cdimage/ 301
+    file_server /ubuntu-cdimage/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-ports /ubuntu-ports/ 301
+    file_server /ubuntu-ports/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /openwrt /openwrt/ 301
+    file_server /openwrt/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /rpmfusion /rpmfusion/ 301
+    file_server /rpmfusion/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    route /git/linuxbrew-core.git/* {
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
+    }
+    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
+    route /git/homebrew-services.git/* {
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
+    }
+    redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
+    route /git/homebrew-cask-drivers.git/* {
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
+    }
+    redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
+    route /git/homebrew-cask-fonts.git/* {
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
+    }
+    redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
+    route /git/homebrew-cask-versions.git/* {
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
+    }
+    redir /git/guix.git /git/guix.git/ 301
+    route /git/guix.git/* {
+        uri strip_prefix /git/guix.git
+        redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
+    }
+    redir /git/llvm-project.git /git/llvm-project.git/ 301
+    route /git/llvm-project.git/* {
+        uri strip_prefix /git/llvm-project.git
+        redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
+    }
+    redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
+    route /git/flutter-sdk.git/* {
+        uri strip_prefix /git/flutter-sdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
+    }
+    redir /apache /apache/ 301
+    file_server /apache/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
+    route /git/ohmyzsh.git/* {
+        uri strip_prefix /git/ohmyzsh.git
+        redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
+    }
+    redir /git/spacemacs.git /git/spacemacs.git/ 301
+    route /git/spacemacs.git/* {
+        uri strip_prefix /git/spacemacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
+    }
+    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
+    route /git/doom-emacs.git/* {
+        uri strip_prefix /git/doom-emacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
+    }
+    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
+    file_server /dragonflybsd/iso-images/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
+    file_server /dragonflybsd/dports/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /archlinux /archlinux/ 301
+    route /archlinux/* {
+        uri strip_prefix /archlinux
+        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
+    }
+}
+
 http://siyuan.internal.sjtug.org/centos {
     redir /centos /centos/ 301
 }
