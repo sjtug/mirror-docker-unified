@@ -36,7 +36,7 @@ jobs:
       - name: verify config
         run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
       - name: docker-compose build
-        run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml build --parallel
+        run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml -f docker-compose.ci.yml build --parallel
       - name: validate Caddyfile
         run: make caddy-verify-config
   test-caddy-file:
