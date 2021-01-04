@@ -26,4 +26,7 @@ lug-format-config: # You need to install prettier from npm to use this functiona
 integration-test:
 	cd integration-test && pipenv run pytest
 
+up:
+	docker-compose up -d --build
+
 .PHONY: caddy-gen integration-test
