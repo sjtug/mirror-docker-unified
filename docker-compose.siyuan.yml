@@ -115,3 +115,20 @@ services:
         hard: 120000
     mem_limit: 2G
     memswap_limit: 2G
+
+networks:
+  host-monitor-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+  monitor-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+  tunnel-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+  proxy-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+  ipv6-service-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450

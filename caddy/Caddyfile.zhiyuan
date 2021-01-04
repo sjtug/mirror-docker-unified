@@ -26,7 +26,7 @@ ftp.sjtu.edu.cn {
     }
     rewrite /docs/* /  # for react app
 
-    reverse_proxy /lug/* siyuan-lug:7001 {
+    reverse_proxy /lug/* lug:7001 {
         header_down Access-Control-Allow-Origin *
         header_down Access-Control-Request-Method GET
     }
@@ -40,15 +40,15 @@ ftp.sjtu.edu.cn {
     }
     route /monitor/cadvisor/* {
         uri strip_prefix /monitor/cadvisor
-        reverse_proxy siyuan-cadvisor:8080
+        reverse_proxy cadvisor:8080
     }
     route /monitor/lug/* {
         uri strip_prefix /monitor/lug
-        reverse_proxy siyuan-lug:8081
+        reverse_proxy lug:8081
     }
     route /monitor/mirror-intel/* {
         uri strip_prefix /monitor/mirror-intel
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /monitor/docker-gcr/* {
         uri strip_prefix /monitor/docker-gcr
@@ -60,46 +60,46 @@ ftp.sjtu.edu.cn {
     }
 
     route /crates.io/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /pypi-packages/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /flathub/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /fedora-ostree/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /fedora-iot/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /rust-static/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /homebrew-bottles/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /dart-pub/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /guix/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /pytorch-wheels/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /sjtug-internal/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /flutter_infra/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /linuxbrew-bottles/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /github-release/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
 
     @hidden {
@@ -148,7 +148,7 @@ siyuan.internal.sjtug.org {
     }
     rewrite /docs/* /  # for react app
 
-    reverse_proxy /lug/* siyuan-lug:7001 {
+    reverse_proxy /lug/* lug:7001 {
         header_down Access-Control-Allow-Origin *
         header_down Access-Control-Request-Method GET
     }
@@ -162,15 +162,15 @@ siyuan.internal.sjtug.org {
     }
     route /monitor/cadvisor/* {
         uri strip_prefix /monitor/cadvisor
-        reverse_proxy siyuan-cadvisor:8080
+        reverse_proxy cadvisor:8080
     }
     route /monitor/lug/* {
         uri strip_prefix /monitor/lug
-        reverse_proxy siyuan-lug:8081
+        reverse_proxy lug:8081
     }
     route /monitor/mirror-intel/* {
         uri strip_prefix /monitor/mirror-intel
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /monitor/docker-gcr/* {
         uri strip_prefix /monitor/docker-gcr
@@ -182,46 +182,46 @@ siyuan.internal.sjtug.org {
     }
 
     route /crates.io/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /pypi-packages/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /flathub/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /fedora-ostree/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /fedora-iot/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /rust-static/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /homebrew-bottles/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /dart-pub/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /guix/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /pytorch-wheels/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /sjtug-internal/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /flutter_infra/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /linuxbrew-bottles/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     route /github-release/* {
-        reverse_proxy siyuan-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
 
     @hidden {
