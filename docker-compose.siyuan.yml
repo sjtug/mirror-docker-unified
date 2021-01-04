@@ -38,10 +38,10 @@ services:
     volumes:
       - "./secrets/gcr-registry.yml:/etc/docker/registry/config.yml"
     environment:
-      http_proxy: http://siyuan-clash:8080
-      https_proxy: http://siyuan-clash:8080
-      HTTP_PROXY: http://siyuan-clash:8080
-      HTTPS_PROXY: http://siyuan-clash:8080
+      http_proxy: http://clash:8080
+      https_proxy: http://clash:8080
+      HTTP_PROXY: http://clash:8080
+      HTTPS_PROXY: http://clash:8080
     logging:
       options:
         max-size: "4M"
@@ -66,10 +66,10 @@ services:
     volumes:
       - "./secrets/docker-registry.yml:/etc/docker/registry/config.yml"
     environment:
-      http_proxy: http://siyuan-clash:8080
-      https_proxy: http://siyuan-clash:8080
-      HTTP_PROXY: http://siyuan-clash:8080
-      HTTPS_PROXY: http://siyuan-clash:8080
+      http_proxy: http://clash:8080
+      https_proxy: http://clash:8080
+      HTTP_PROXY: http://clash:8080
+      HTTPS_PROXY: http://clash:8080
     logging:
       options:
         max-size: "4M"
