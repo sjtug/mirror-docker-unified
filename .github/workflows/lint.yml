@@ -30,22 +30,22 @@ jobs:
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
-      - name: docker-compose build
-        run: docker-compose build --parallel
+      - name: verify Siyuan config
+        run: |
+          docker-compose -f docker-compose.yml -f docker-compose.siyuan.yml config
+      - name: verify Zhiyuan config
+        run: |
+          docker-compose -f docker-compose.yml -f docker-compose.zhiyuan.yml config
+      - name: build Siyuan
+        run: docker-compose build -f docker-compose.yml -f docker-compose.siyuan.yml --parallel
+      - name: build Zhiyuan
+        run: docker-compose build -f docker-compose.yml -f docker-compose.zhiyuan.yml --parallel
+      - name: validate Caddyfile
+        run: make caddy-verify-config
   test-caddy-file:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: use CI config for docker-compose
-        run: |
-          cp docker-compose.ci.yml docker-compose.override.yml 
-          cp .env.ci .env
-          cp ./secrets/caddy.env.example ./secrets/caddy.env
-          cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
-          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
-          cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
-      - name: docker-compose build
-        run: docker-compose build caddy
       - uses: actions/setup-python@v1
         with:
           python-version: "3.9"
@@ -54,5 +54,3 @@ jobs:
         run: cd caddy-gen && pipenv install
       - name: check if Caddyfile is latest version
         run: make caddy-gen && git diff --exit-code
-      - name: validate Caddyfile
-        run: docker-compose down && make caddy-verify-config

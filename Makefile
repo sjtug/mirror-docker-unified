@@ -2,14 +2,10 @@ caddy-update-dist:
 	./scripts/download_latest_frontend.sh
 
 caddy-verify-config:
-	docker-compose run --rm caddy caddy validate --config /etc/caddy/Caddyfile
-
-caddy-format-config:
-	docker-compose run --rm caddy caddy fmt /etc/caddy/Caddyfile > caddy/Caddyfile.new
-	mv caddy/Caddyfile.new caddy/Caddyfile
+	docker-compose run --rm caddy caddy validate --config /etc/caddy/Caddyfile.siyuan
 
 caddy-gen:
-	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.yaml -o ../caddy/Caddyfile -D
+	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.siyuan.yaml -o ../caddy/Caddyfile.siyuan -D
 
 caddy-hash-password:
 	docker-compose run --rm caddy caddy hash-password
@@ -28,5 +24,20 @@ integration-test:
 
 up:
 	docker-compose up -d --build
+
+up-siyuan:
+	docker-compose -f docker-compose.yml -f docker-compose.siyuan.yml up -d --build
+
+up-zhiyuan:
+	docker-compose -f docker-compose.yml -f docker-compose.zhiyuan.yml up -d --build
+
+build-siyuan:
+	docker-compose -f docker-compose.yml -f docker-compose.siyuan.yml build
+
+build-zhiyuan:
+	docker-compose -f docker-compose.yml -f docker-compose.zhiyuan.yml build
+
+build:
+	docker-compose build
 
 .PHONY: caddy-gen integration-test

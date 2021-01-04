@@ -69,11 +69,6 @@ def test_frontend_base():
     assert response.history
     assert response.url == f"https://{BASE_URL}/"
 
-def test_frontend_index():
-    response = requests.get(f"http://{BASE_URL}/index.html")
-    assert response.history
-    assert response.url == f"https://{BASE_URL}/"
-
 def test_frontend_docs():
     response = requests.get(f"http://{BASE_URL}/docs/anaconda")
     assert response.history
@@ -99,7 +94,7 @@ For git repos, should redirect to git.sjtu
 
 def test_git_redirect():
     response = requests.get(f"http://{BASE_URL}/git/llvm-project.git")
-    assert response.url == f"https://git.sjtu.edu.cn/sjtug/llvm-project.git"
+    assert response.url == f"https://git.sjtu.edu.cn/sjtug/llvm-project"
 
 """
 We should return x-sjtug-mirror-id in header
