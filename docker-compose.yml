@@ -47,7 +47,7 @@ services:
       args:
         - USE_SJTUG=true
         - CLONE_VERSION=v0.1.16
-        - LUG_VERSION=v0.12.5
+        - LUG_VERSION=v0.12.5-hotfix
     expose:
       - 8081
       - 7001
