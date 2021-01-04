@@ -116,6 +116,9 @@ services:
     mem_limit: 2G
     memswap_limit: 2G
 
+  rsyncd:
+    container_name: siyuan-rsyncd
+
 networks:
   host-monitor-net:
     driver: bridge
