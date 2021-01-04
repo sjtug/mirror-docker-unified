@@ -20,6 +20,9 @@ jobs:
       - run: prettier -c lug/*.yaml
   test-docker-build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mirror: ["siyuan", "zhiyuan"]
     steps:
       - uses: actions/checkout@v2
       - name: use CI config for docker-compose
@@ -30,14 +33,10 @@ jobs:
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
-      - name: verify Siyuan config
-        run: |
-          docker-compose -f docker-compose.yml -f docker-compose.siyuan.yml config
-      - name: verify Zhiyuan config
-        run: |
-          docker-compose -f docker-compose.yml -f docker-compose.zhiyuan.yml config
+      - name: verify config
+        run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
       - name: docker-compose build
-        run: docker-compose build --parallel
+        run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml build --parallel
       - name: validate Caddyfile
         run: make caddy-verify-config
   test-caddy-file:
