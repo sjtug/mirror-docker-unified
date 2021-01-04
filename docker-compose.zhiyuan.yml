@@ -1,0 +1,7 @@
+services:
+  caddy:
+    container_name: zhiyuan-caddy
+    volumes:
+      - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile:ro"
+    mem_limit: 10G
+    memswap_limit: 10G
