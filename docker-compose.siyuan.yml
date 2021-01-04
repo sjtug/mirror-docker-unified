@@ -1,0 +1,134 @@
+services:
+  caddy:
+    container_name: siyuan-caddy
+    volumes:
+      - "/mnt/disk1:/srv/disk1"
+      - "/mnt/disk2:/srv/disk2"
+      - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile:ro"
+      - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
+    mem_limit: 10G
+    memswap_limit: 10G
+
+  lug:
+    container_name: siyuan-lug
+    volumes:
+      - "/mnt/disk1:/srv/disk1"
+      - "/mnt/disk2:/srv/disk2"
+      - "./lug/config.yaml:/config.yaml:ro"
+    mem_limit: 20G
+    memswap_limit: 20G
+
+  logspout:
+    container_name: siyuan-logspout
+    command: syslog+tcp://siyuan-tunnel:5004
+
+  cadvisor:
+    container_name: siyuan-cadvisor
+
+  gcr-registry:
+    container_name: siyuan-gcr-registry
+    restart: unless-stopped
+    image: registry:2.6
+    networks:
+      - ipv6-service-net
+      - proxy-net
+    expose:
+      - 80
+      - 5001
+    volumes:
+      - "./secrets/gcr-registry.yml:/etc/docker/registry/config.yml"
+    environment:
+      http_proxy: http://siyuan-clash:8080
+      https_proxy: http://siyuan-clash:8080
+      HTTP_PROXY: http://siyuan-clash:8080
+      HTTPS_PROXY: http://siyuan-clash:8080
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 5G
+    memswap_limit: 5G
+
+  docker-registry:
+    container_name: siyuan-docker-registry
+    restart: unless-stopped
+    image: registry:2.6
+    networks:
+      - ipv6-service-net
+      - proxy-net
+    expose:
+      - 80
+      - 5001
+    volumes:
+      - "./secrets/docker-registry.yml:/etc/docker/registry/config.yml"
+    environment:
+      http_proxy: http://siyuan-clash:8080
+      https_proxy: http://siyuan-clash:8080
+      HTTP_PROXY: http://siyuan-clash:8080
+      HTTPS_PROXY: http://siyuan-clash:8080
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 5G
+    memswap_limit: 5G
+
+  clash:
+    container_name: siyuan-clash
+
+  mirror-intel:
+    container_name: siyuan-mirror-intel
+    volumes:
+      - "/mnt/disk2/mirror-intel-cache:/mnt/cache"
+    mem_limit: 15G
+    memswap_limit: 15G
+
+  tunnel:
+    container_name: siyuan-tunnel
+    restart: unless-stopped
+    image: v2ray/official
+    expose:
+      - 5003
+      - 5004
+      - 5005
+    ports:
+      - "127.0.0.1:5005:5005"
+    networks:
+      - tunnel-net
+    volumes: 
+      - "./secrets/v2ray.json:/etc/v2ray/config.json:z,ro"
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 2G
+    memswap_limit: 2G
+
+networks:
+  host-monitor-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+  monitor-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+  tunnel-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+  proxy-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+  ipv6-service-net:
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
