@@ -12,5 +12,5 @@ services:
         - USE_SJTUG=false
   mirror-intel:
     build:
-        args:
-          - USE_SJTUG=false
+      args:
+        - USE_SJTUG=false

@@ -36,10 +36,8 @@ jobs:
       - name: verify Zhiyuan config
         run: |
           docker-compose -f docker-compose.yml -f docker-compose.zhiyuan.yml config
-      - name: build Siyuan
-        run: docker-compose build -f docker-compose.yml -f docker-compose.siyuan.yml --parallel
-      - name: build Zhiyuan
-        run: docker-compose build -f docker-compose.yml -f docker-compose.zhiyuan.yml --parallel
+      - name: docker-compose build
+        run: docker-compose build --parallel
       - name: validate Caddyfile
         run: make caddy-verify-config
   test-caddy-file:
