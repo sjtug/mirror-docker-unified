@@ -14,13 +14,13 @@ services:
     volumes:
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
-      - "./lug/config.yaml:/config.yaml:ro"
+      - "./lug/config.siyuan.yaml:/config.yaml:ro"
     mem_limit: 20G
     memswap_limit: 20G
 
   logspout:
     container_name: siyuan-logspout
-    command: syslog+tcp://siyuan-tunnel:5004
+    command: syslog+tcp://tunnel:5004
 
   cadvisor:
     container_name: siyuan-cadvisor
