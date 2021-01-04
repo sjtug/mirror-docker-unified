@@ -118,6 +118,11 @@ services:
 
 networks:
   host-monitor-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -  subnet: 172.31.0.0/16
     driver_opts:
       com.docker.network.driver.mtu: 1450
   monitor-net:
@@ -130,5 +135,11 @@ networks:
     driver_opts:
       com.docker.network.driver.mtu: 1450
   ipv6-service-net:
+    enable_ipv6: true
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -  subnet: fd01::/80
     driver_opts:
       com.docker.network.driver.mtu: 1450
