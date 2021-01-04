@@ -8,6 +8,8 @@ exporter_address: :8081
 json_api:
   address: :7001
 
+checkpoint: /data/checkpoint.json
+
 dummy:
   oneshot_common: &oneshot_common
     retry: 5

@@ -4,6 +4,8 @@ concurrent_limit: 5
 # Prometheus metrics are exposed at http://exporter_address/metrics
 exporter_address: :8081
 
+checkpoint: /data/checkpoint.json
+
 # Address where JSON API will be served
 json_api:
   address: :7001
