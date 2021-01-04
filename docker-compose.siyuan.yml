@@ -14,13 +14,13 @@ services:
     volumes:
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
-      - "./lug/config.yaml:/config.yaml:ro"
+      - "./lug/config.siyuan.yaml:/config.yaml:ro"
     mem_limit: 20G
     memswap_limit: 20G
 
   logspout:
     container_name: siyuan-logspout
-    command: syslog+tcp://siyuan-tunnel:5004
+    command: syslog+tcp://tunnel:5004
 
   cadvisor:
     container_name: siyuan-cadvisor
@@ -38,10 +38,10 @@ services:
     volumes:
       - "./secrets/gcr-registry.yml:/etc/docker/registry/config.yml"
     environment:
-      http_proxy: http://siyuan-clash:8080
-      https_proxy: http://siyuan-clash:8080
-      HTTP_PROXY: http://siyuan-clash:8080
-      HTTPS_PROXY: http://siyuan-clash:8080
+      http_proxy: http://clash:8080
+      https_proxy: http://clash:8080
+      HTTP_PROXY: http://clash:8080
+      HTTPS_PROXY: http://clash:8080
     logging:
       options:
         max-size: "4M"
@@ -66,10 +66,10 @@ services:
     volumes:
       - "./secrets/docker-registry.yml:/etc/docker/registry/config.yml"
     environment:
-      http_proxy: http://siyuan-clash:8080
-      https_proxy: http://siyuan-clash:8080
-      HTTP_PROXY: http://siyuan-clash:8080
-      HTTPS_PROXY: http://siyuan-clash:8080
+      http_proxy: http://clash:8080
+      https_proxy: http://clash:8080
+      HTTP_PROXY: http://clash:8080
+      HTTPS_PROXY: http://clash:8080
     logging:
       options:
         max-size: "4M"
