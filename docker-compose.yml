@@ -18,6 +18,7 @@ services:
       - "./data/caddy/config:/config"
       - "./data/caddy/dists:/dists"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile.siyuan:ro"
+      - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile.zhiyuan:ro"
     ports:
       - 80:80
       - 443:443

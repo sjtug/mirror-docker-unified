@@ -3,9 +3,11 @@ caddy-update-dist:
 
 caddy-verify-config:
 	docker-compose run --rm caddy caddy validate --config /etc/caddy/Caddyfile.siyuan
+	docker-compose run --rm caddy caddy validate --config /etc/caddy/Caddyfile.zhiyuan
 
 caddy-gen:
 	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.siyuan.yaml -o ../caddy/Caddyfile.siyuan -D
+	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.zhiyuan.yaml -o ../caddy/Caddyfile.zhiyuan -D
 
 caddy-hash-password:
 	docker-compose run --rm caddy caddy hash-password
