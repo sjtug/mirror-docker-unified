@@ -119,7 +119,8 @@ services:
   apache:
     container_name: siyuan-apache
     restart: unless-stopped
-    image: httpd:2.4
+    build:
+      context: ./apache 
     networks:
       - ipv6-service-net
     expose:

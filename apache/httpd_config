@@ -1,0 +1,8 @@
+<Directory /usr/local/apache2/htdocs>
+  IndexOptions FancyIndexing NameWidth=* FoldersFirst ScanHTMLTitles DescriptionWidth=*
+  HeaderName HEADER.html
+  ReadmeName README.html
+  AllowOverride FileInfo Indexes
+  Options Indexes SymLinksIfOwnerMatch FollowSymLinks
+  ErrorDocument 404 default
+</Directory>
