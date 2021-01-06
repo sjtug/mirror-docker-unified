@@ -206,6 +206,8 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
                     f'repo "{repo["name"]}": BASE "{base}" might be a local url, "no_redir_http" will be ignored')
             else:
                 no_redir_nodes += repo_no_redir(base, repo)
+        if repo.get('name', '') == 'apache':
+            file_server_nodes += [Node('reverse_proxy /apache/ apache:80')]
         if repo.get('no_direct_serve', False):
             pass
         elif "target" in repo:
@@ -214,6 +216,7 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
         else:
             file_server_nodes += repo_redir(repo)
             file_server_nodes += repo_file_server(repo)
+
 
     return no_redir_nodes, file_server_nodes
 
