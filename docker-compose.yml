@@ -174,6 +174,21 @@ services:
     - NET_ADMIN
     - NET_RAW
 
+  rsyncd:
+    build:
+      context: ./rsyncd
+      args:
+        - USE_SJTUG=true
+    logging:
+      options:
+        max-size: "2M"
+        max-file: "10"
+    volumes:
+      - ./rsync/rsyncd.conf:/etc/rsyncd.conf:ro
+    ports:
+      - "873:873"
+    restart: unless-stopped
+
 networks:
   host-monitor-net:
     driver: bridge
