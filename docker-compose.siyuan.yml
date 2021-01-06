@@ -116,6 +116,27 @@ services:
     mem_limit: 2G
     memswap_limit: 2G
 
+  apache:
+    container_name: siyuan-apache
+    restart: unless-stopped
+    image: httpd:2.4
+    networks:
+      - ipv6-service-net
+    expose:
+      - 80
+    volumes:
+      - "/mnt/disk2:/usr/local/apache2/htdocs:ro"
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 1G
+    memswap_limit: 1G
+
   rsyncd:
     container_name: siyuan-rsyncd
 

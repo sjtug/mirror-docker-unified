@@ -534,6 +534,7 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /git/flutter-sdk.git
         redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
+    reverse_proxy /apache/ apache:80
     redir /apache /apache/ 301
     file_server /apache/* browse {
         root /srv/disk2
@@ -1107,6 +1108,7 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /git/flutter-sdk.git
         redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
+    reverse_proxy /apache/ apache:80
     redir /apache /apache/ 301
     file_server /apache/* browse {
         root /srv/disk2
@@ -1680,6 +1682,7 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /git/flutter-sdk.git
         redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
+    reverse_proxy /apache/ apache:80
     redir /apache /apache/ 301
     file_server /apache/* browse {
         root /srv/disk2
@@ -2253,6 +2256,7 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /git/flutter-sdk.git
         redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
+    reverse_proxy /apache/ apache:80
     redir /apache /apache/ 301
     file_server /apache/* browse {
         root /srv/disk2
