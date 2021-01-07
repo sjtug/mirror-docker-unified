@@ -570,6 +570,11 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /archlinux
         redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
     }
+    redir /blackarch /blackarch/ 301
+    file_server /blackarch/* browse {
+        root /srv/disk2
+        hide .*
+    }
 }
 
 http://ftp6.sjtu.edu.cn/centos {
@@ -1143,6 +1148,11 @@ ftp6.sjtu.edu.cn {
     route /archlinux/* {
         uri strip_prefix /archlinux
         redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
+    }
+    redir /blackarch /blackarch/ 301
+    file_server /blackarch/* browse {
+        root /srv/disk2
+        hide .*
     }
 }
 
@@ -1718,6 +1728,11 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /archlinux
         redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
     }
+    redir /blackarch /blackarch/ 301
+    file_server /blackarch/* browse {
+        root /srv/disk2
+        hide .*
+    }
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -2291,6 +2306,11 @@ siyuan.internal.sjtug.org {
     route /archlinux/* {
         uri strip_prefix /archlinux
         redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
+    }
+    redir /blackarch /blackarch/ 301
+    file_server /blackarch/* browse {
+        root /srv/disk2
+        hide .*
     }
 }
 

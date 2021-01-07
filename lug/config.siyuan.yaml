@@ -399,3 +399,10 @@ repos:
     interval: 3600
     name: github-release
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://www.blackarch.org/blackarch/
+    interval: 20000
+    path: /srv/disk2/blackarch
+    name: blackarch
+    <<: *oneshot_common
