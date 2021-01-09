@@ -187,6 +187,9 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
                     f'repo "{repo["name"]}": mirror-intel should be configured manually, ignored')
             return False
 
+        if 'target' in repo:
+            return True
+
         path = repo['path']
         name = repo['name']
         if not path.endswith(name):
