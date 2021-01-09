@@ -412,3 +412,4 @@ repos:
     interval: 3600
     name: FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
+    only_target: true

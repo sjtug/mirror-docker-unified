@@ -143,7 +143,8 @@ def repo_redir(repo: dict) -> list[Node]:
 def repo_redirect(repo: dict) -> list[Node]:
     return [Node(f'route /{repo["name"]}/*', [
             Node(f'uri strip_prefix /{repo["name"]}'),
-            Node(f'redir * {repo["target"]}{{uri}} 302')
+            Node(f'redir * {repo["target"]} 302') if repo.get('only_target',
+                                                              False) else Node(f'redir * {repo["target"]}{{uri}} 302')
             ])]
 
 
@@ -219,7 +220,6 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
         else:
             file_server_nodes += repo_redir(repo)
             file_server_nodes += repo_file_server(repo)
-
 
     return no_redir_nodes, file_server_nodes
 
