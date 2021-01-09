@@ -398,6 +398,7 @@ repos:
     mirror_intel: true
     interval: 3600
     name: github-release
+    disabled: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -406,3 +407,8 @@ repos:
     path: /srv/disk2/blackarch
     name: blackarch
     <<: *oneshot_common
+  - type: shell_script
+    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 github_release --target http://siyuan-mirror-intel:8000/github-release
+    interval: 3600
+    name: FreeCAD
+    target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
