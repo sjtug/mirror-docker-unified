@@ -578,7 +578,7 @@ ftp.sjtu.edu.cn {
     redir /FreeCAD /FreeCAD/ 301
     route /FreeCAD/* {
         uri strip_prefix /FreeCAD
-        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list{uri} 302
+        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
 }
 
@@ -1162,7 +1162,7 @@ ftp6.sjtu.edu.cn {
     redir /FreeCAD /FreeCAD/ 301
     route /FreeCAD/* {
         uri strip_prefix /FreeCAD
-        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list{uri} 302
+        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
 }
 
@@ -1746,7 +1746,7 @@ mirror.sjtu.edu.cn {
     redir /FreeCAD /FreeCAD/ 301
     route /FreeCAD/* {
         uri strip_prefix /FreeCAD
-        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list{uri} 302
+        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
 }
 
@@ -2330,7 +2330,7 @@ siyuan.internal.sjtug.org {
     redir /FreeCAD /FreeCAD/ 301
     route /FreeCAD/* {
         uri strip_prefix /FreeCAD
-        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list{uri} 302
+        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
 }
 
