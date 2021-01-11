@@ -148,12 +148,22 @@ def repo_redirect(repo: dict) -> list[Node]:
             ])]
 
 
+def cors(matcher: str) -> list[Node]:
+    return [
+        Node(f'header {matcher} Access-Control-Allow-Origin *'),
+        Node(f'header {matcher} Access-Control-Request-Method GET')
+    ]
+
+
 def repo_file_server(repo: dict, has_prefix: bool = True) -> list[Node]:
     real_root = repo["path"][:-len(repo["name"])][:-1]
-    return [Node(f'file_server {"/" + repo["name"] if has_prefix else ""}/* browse', [
-        Node(f'root {real_root}'),
-        Node(f'hide .*')
-    ])]
+    cors_node = cors(f"/{repo['name']}/*") if repo.get("cors", False) else []
+    return [
+        Node(f'file_server {"/" + repo["name"] if has_prefix else ""}/* browse', [
+            Node(f'root {real_root}'),
+            Node(f'hide .*')
+        ])] \
+        + cors_node
 
 
 def repo_no_redir(base: str, repo: dict) -> list[Node]:

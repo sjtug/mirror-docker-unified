@@ -580,6 +580,13 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
+    redir /.mirrorz /.mirrorz/ 301
+    file_server /.mirrorz/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    header /.mirrorz/* Access-Control-Allow-Origin *
+    header /.mirrorz/* Access-Control-Request-Method GET
 }
 
 http://ftp6.sjtu.edu.cn/centos {
@@ -1164,6 +1171,13 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
+    redir /.mirrorz /.mirrorz/ 301
+    file_server /.mirrorz/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    header /.mirrorz/* Access-Control-Allow-Origin *
+    header /.mirrorz/* Access-Control-Request-Method GET
 }
 
 http://mirror.sjtu.edu.cn/centos {
@@ -1748,6 +1762,13 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
+    redir /.mirrorz /.mirrorz/ 301
+    file_server /.mirrorz/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    header /.mirrorz/* Access-Control-Allow-Origin *
+    header /.mirrorz/* Access-Control-Request-Method GET
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -2332,6 +2353,13 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
+    redir /.mirrorz /.mirrorz/ 301
+    file_server /.mirrorz/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    header /.mirrorz/* Access-Control-Allow-Origin *
+    header /.mirrorz/* Access-Control-Request-Method GET
 }
 
 k8s-gcr-io.siyuan.internal.sjtug.org {
