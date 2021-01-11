@@ -183,8 +183,6 @@ services:
       options:
         max-size: "2M"
         max-file: "10"
-    volumes:
-      - ./rsync/rsyncd.conf:/etc/rsyncd.conf:ro
     ports:
       - "873:873"
     restart: unless-stopped
