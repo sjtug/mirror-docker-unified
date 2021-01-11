@@ -580,6 +580,11 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
+    redir /prometheus /prometheus/ 301
+    route /prometheus/* {
+        uri strip_prefix /prometheus
+        redir * /github-release/prometheus/?mirror_intel_list 302
+    }
 }
 
 http://ftp6.sjtu.edu.cn/centos {
@@ -1163,6 +1168,11 @@ ftp6.sjtu.edu.cn {
     route /FreeCAD/* {
         uri strip_prefix /FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
+    }
+    redir /prometheus /prometheus/ 301
+    route /prometheus/* {
+        uri strip_prefix /prometheus
+        redir * /github-release/prometheus/?mirror_intel_list 302
     }
 }
 
@@ -1748,6 +1758,11 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
+    redir /prometheus /prometheus/ 301
+    route /prometheus/* {
+        uri strip_prefix /prometheus
+        redir * /github-release/prometheus/?mirror_intel_list 302
+    }
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -2331,6 +2346,11 @@ siyuan.internal.sjtug.org {
     route /FreeCAD/* {
         uri strip_prefix /FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
+    }
+    redir /prometheus /prometheus/ 301
+    route /prometheus/* {
+        uri strip_prefix /prometheus
+        redir * /github-release/prometheus/?mirror_intel_list 302
     }
 }
 
