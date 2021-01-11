@@ -141,8 +141,8 @@ services:
   rsyncd:
     container_name: siyuan-rsyncd
     volumes:
-      - ./rsync/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
-      - ./rsync/rsyncd.siyuan.secrets:/etc/rsyncd.secrets:ro
+      - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
+      - ./secrets/rsyncd.siyuan.secrets:/etc/rsyncd.secrets:ro
 
 networks:
   host-monitor-net:
