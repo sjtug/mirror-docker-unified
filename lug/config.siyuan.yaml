@@ -413,3 +413,9 @@ repos:
     name: FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
     only_target: true
+  - type: shell_script
+    script: /worker-script/prometheus.sh
+    interval: 7200
+    name: prometheus
+    target: /github-release/prometheus/?mirror_intel_list
+    only_target: true
