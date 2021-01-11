@@ -20,7 +20,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/centos/
-    interval: 25600
+    interval: 5800
     path: /srv/disk1/centos
     name: centos
     no_redir_http: true
@@ -29,7 +29,7 @@ repos:
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://mirrors.kernel.org/debian/
-    interval: 43200
+    interval: 5400
     path: /srv/disk1/debian
     name: debian
     no_redir_http: true
@@ -46,7 +46,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.security.debian.org/debian-security/
-    interval: 21100
+    interval: 6700
     path: /srv/disk1/debian-security
     name: debian-security
     no_redir_http: true
@@ -55,7 +55,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.deepin.com/deepin/
-    interval: 21900
+    interval: 6200
     path: /srv/disk1/deepin
     name: deepin
     no_redir_http: true
@@ -64,7 +64,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.deepin.com/cdimage/
-    interval: 22900
+    interval: 6000
     path: /srv/disk1/deepin-cd
     name: deepin-cd
     <<: *oneshot_common
@@ -72,7 +72,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce/
-    interval: 86400
+    interval: 4900
     path: /srv/disk2/docker-ce
     name: docker-ce
     no_redir_http: true
@@ -81,7 +81,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/
-    interval: 21600
+    interval: 5000
     path: /srv/disk1/fedora/linux
     name: fedora/linux
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
@@ -91,7 +91,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/fedora-epel/
-    interval: 22600
+    interval: 5000
     path: /srv/disk1/fedora/epel
     name: fedora/epel
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
@@ -101,7 +101,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/fedora-secondary/
-    interval: 23600
+    interval: 5000
     path: /srv/disk1/fedora-secondary
     name: fedora-secondary
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
@@ -111,7 +111,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/linuxmint-packages/
-    interval: 22600
+    interval: 6500
     path: /srv/disk1/linuxmint
     name: linuxmint
     <<: *oneshot_common
@@ -136,7 +136,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://fr2.rpmfind.net/linux/opensuse/
-    interval: 44200 # may be wrong
+    interval: 8000
     rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*" --exclude "ports/zsystems/*" --exclude "ports/riscv/*" --exclude "ports/update/*"
     path: /srv/disk1/opensuse
     name: opensuse
@@ -173,7 +173,7 @@ repos:
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://archive.ubuntu.com/ubuntu/
-    interval: 24900
+    interval: 4500
     path: /srv/disk2/ubuntu
     name: ubuntu
     no_redir_http: true
@@ -198,7 +198,7 @@ repos:
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://ports.ubuntu.com/ubuntu-ports/
-    interval: 31000
+    interval: 7800
     path: /srv/disk2/ubuntu-ports
     name: ubuntu-ports
     no_redir_http: true
@@ -207,7 +207,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://downloads.openwrt.org/downloads/
-    interval: 24900
+    interval: 6900
     path: /srv/disk1/openwrt
     rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
     name: openwrt
@@ -217,7 +217,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirror.de.leaseweb.net/rpmfusion/
-    interval: 32000
+    interval: 5500
     path: /srv/disk1/rpmfusion
     name: rpmfusion
     no_redir_http: true
@@ -380,7 +380,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.jaist.ac.jp/pub/DragonFly/dports/
-    interval: 25600
+    interval: 9800
     path: /srv/disk2/dragonflybsd/dports
     name: dragonflybsd/dports
     <<: *oneshot_common
