@@ -1,40 +1,53 @@
 [default]
 address = "0.0.0.0"
+base_url = "https://mirrors.sjtug.sjtu.edu.cn"
 concurrent_download = 16
-max_pending_task = 65536
-user_agent = "mirror-intel / 0.1 (siyuan.internal.sjtug.org)"
+direct_stream_size_kb = 4
+download_timeout = 300
 file_threshold_mb = 20
 ignore_threshold_mb = 4096
-base_url = "https://mirrors.sjtug.sjtu.edu.cn"
-ttl = 3
-direct_stream_size_kb = 4
-read_only = false
 log_level = "off"
-download_timeout = 300
+max_pending_task = 65536
+read_only = false
+ttl = 3
+user_agent = "mirror-intel / 0.1 (mirror.sjtu.edu.cn)"
 workers = 8
 
 [default.github_release]
-allow = ["FreeCAD/FreeCAD/"]
+allow = [
+  "FreeCAD/FreeCAD/",
+  "prometheus/prometheus/",
+  "prometheus/node_exporter/",
+  "prometheus/alertmanager/",
+  "prometheus/blackbox_exporter/",
+  "prometheus/consul_exporter/",
+  "prometheus/graphite_exporter/",
+  "prometheus/haproxy_exporter/",
+  "prometheus/memcached_exporter/",
+  "prometheus/mysqld_exporter/",
+  "prometheus/pushgateway/",
+  "prometheus/statsd_exporter/",
+]
 
 [default.endpoints]
-rust_static = "https://static.rust-lang.org"
-homebrew_bottles = "https://homebrew.bintray.com"
-linuxbrew_bottles = "https://linuxbrew.bintray.com"
-pypi_packages = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages"
+crates_io = "https://static.crates.io"
+dart_pub = "https://pub.dartlang.org"
 fedora_iot = "https://d2ju0wfl996cmc.cloudfront.net"
 fedora_ostree = "https://d2uk5hbyrobdzx.cloudfront.net"
 flathub = "https://dl.flathub.org/repo"
-crates_io = "https://static.crates.io"
-dart_pub = "https://pub.dartlang.org"
-guix = "https://ci.guix.gnu.org"
-pytorch_wheels = "https://download.pytorch.org/whl"
-sjtug_internal = "https://github.com/sjtug"
 flutter_infra = "https://storage.flutter-io.cn/flutter_infra"
 github_release = "https://github.com"
+guix = "https://ci.guix.gnu.org"
+homebrew_bottles = "https://homebrew.bintray.com"
+linuxbrew_bottles = "https://linuxbrew.bintray.com"
 overrides = [
-    { name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/" }
+  {name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/"},
 ]
+pypi_packages = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages"
+pytorch_wheels = "https://download.pytorch.org/whl"
+rust_static = "https://static.rust-lang.org"
+sjtug_internal = "https://github.com/sjtug"
 
 [default.s3]
-endpoint = "https://s3.jcloud.sjtu.edu.cn"
 bucket = "899a892efef34b1b944a19981040f55b-oss01"
+endpoint = "https://s3.jcloud.sjtu.edu.cn"
