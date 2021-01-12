@@ -143,6 +143,7 @@ services:
     volumes:
       - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
       - ./secrets/rsyncd.siyuan.secrets:/etc/rsyncd.secrets:ro
+      - /mnt/disk1:/srv/disk1:ro
 
 networks:
   host-monitor-net:
