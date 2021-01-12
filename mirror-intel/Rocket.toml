@@ -27,6 +27,7 @@ allow = [
   "prometheus/mysqld_exporter/",
   "prometheus/pushgateway/",
   "prometheus/statsd_exporter/",
+  "GNS3/gns3-gui/"
 ]
 
 [default.endpoints]

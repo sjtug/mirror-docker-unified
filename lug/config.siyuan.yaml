@@ -392,11 +392,10 @@ repos:
     script: "true"
     target: https://mirrors.sjtug.sjtu.edu.cn/archlinux
     <<: *oneshot_common
-  # GitHub Release (which only include FreeCAD for now)
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 github_release --target http://siyuan-mirror-intel:8000/github-release
+    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo GNS3/gns3-gui --target http://mirror-intel:8000/github-release
     mirror_intel: true
-    interval: 3600
+    interval: 4800
     name: github-release
     disabled: true
     <<: *oneshot_common
@@ -408,8 +407,8 @@ repos:
     name: blackarch
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 github_release --target http://siyuan-mirror-intel:8000/github-release
-    interval: 3600
+    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo FreeCAD/FreeCAD --target http://mirror-intel:8000/github-release
+    interval: 4800
     name: FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
     only_target: true
