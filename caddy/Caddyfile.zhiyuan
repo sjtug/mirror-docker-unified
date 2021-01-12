@@ -112,6 +112,8 @@ ftp.sjtu.edu.cn {
     respond @reject_lug_api 403
 
     header * x-sjtug-mirror-id siyuan
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
 
     redir /putty /putty/ 301
     file_server /putty/* browse {
@@ -234,6 +236,8 @@ ftp6.sjtu.edu.cn {
     respond @reject_lug_api 403
 
     header * x-sjtug-mirror-id siyuan
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
 
     redir /putty /putty/ 301
     file_server /putty/* browse {
@@ -356,6 +360,8 @@ mirror.sjtu.edu.cn {
     respond @reject_lug_api 403
 
     header * x-sjtug-mirror-id siyuan
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
 
     redir /putty /putty/ 301
     file_server /putty/* browse {
@@ -478,6 +484,8 @@ siyuan.internal.sjtug.org {
     respond @reject_lug_api 403
 
     header * x-sjtug-mirror-id siyuan
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
 
     redir /putty /putty/ 301
     file_server /putty/* browse {

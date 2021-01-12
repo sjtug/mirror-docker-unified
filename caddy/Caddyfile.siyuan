@@ -378,6 +378,8 @@ ftp.sjtu.edu.cn {
     respond @reject_lug_api 403
 
     header * x-sjtug-mirror-id siyuan
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
@@ -585,13 +587,6 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /prometheus
         redir * /github-release/prometheus/?mirror_intel_list 302
     }
-    redir /.mirrorz /.mirrorz/ 301
-    file_server /.mirrorz/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    header /.mirrorz/* Access-Control-Allow-Origin *
-    header /.mirrorz/* Access-Control-Request-Method GET
 }
 
 http://ftp6.sjtu.edu.cn/centos {
@@ -974,6 +969,8 @@ ftp6.sjtu.edu.cn {
     respond @reject_lug_api 403
 
     header * x-sjtug-mirror-id siyuan
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
@@ -1181,13 +1178,6 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /prometheus
         redir * /github-release/prometheus/?mirror_intel_list 302
     }
-    redir /.mirrorz /.mirrorz/ 301
-    file_server /.mirrorz/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    header /.mirrorz/* Access-Control-Allow-Origin *
-    header /.mirrorz/* Access-Control-Request-Method GET
 }
 
 http://mirror.sjtu.edu.cn/centos {
@@ -1570,6 +1560,8 @@ mirror.sjtu.edu.cn {
     respond @reject_lug_api 403
 
     header * x-sjtug-mirror-id siyuan
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
@@ -1777,13 +1769,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /prometheus
         redir * /github-release/prometheus/?mirror_intel_list 302
     }
-    redir /.mirrorz /.mirrorz/ 301
-    file_server /.mirrorz/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    header /.mirrorz/* Access-Control-Allow-Origin *
-    header /.mirrorz/* Access-Control-Request-Method GET
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -2166,6 +2151,8 @@ siyuan.internal.sjtug.org {
     respond @reject_lug_api 403
 
     header * x-sjtug-mirror-id siyuan
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
@@ -2373,13 +2360,6 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /prometheus
         redir * /github-release/prometheus/?mirror_intel_list 302
     }
-    redir /.mirrorz /.mirrorz/ 301
-    file_server /.mirrorz/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    header /.mirrorz/* Access-Control-Allow-Origin *
-    header /.mirrorz/* Access-Control-Request-Method GET
 }
 
 k8s-gcr-io.siyuan.internal.sjtug.org {

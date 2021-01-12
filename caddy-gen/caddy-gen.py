@@ -247,7 +247,7 @@ def build_root(base, config_yaml: dict) -> Node:
     no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'])
 
     main_node = Node(f'{base}',
-                     common_nodes + [BLANK_NODE] + [sjtug_mirror_id()] + [BLANK_NODE] +
+                     common_nodes + [BLANK_NODE] + [sjtug_mirror_id()] + cors("/mirrorz/*") + [BLANK_NODE] +
                      file_server_nodes)
 
     return Node('',

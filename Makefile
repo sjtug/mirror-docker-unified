@@ -42,4 +42,8 @@ build-zhiyuan:
 build:
 	docker-compose build
 
+update-mirrorz:
+	docker-compose exec lug /worker-script/mirrorz.sh /srv/disk1/.mirrorz
+	cp /mnt/disk1/.mirrorz/* ./data/caddy/dists/mirrorz/
+
 .PHONY: caddy-gen integration-test
