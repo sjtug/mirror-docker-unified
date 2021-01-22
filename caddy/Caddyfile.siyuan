@@ -577,15 +577,25 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /FreeCAD /FreeCAD/ 301
-    route /FreeCAD/* {
-        uri strip_prefix /FreeCAD
+    redir /github/FreeCAD /github/FreeCAD/ 301
+    route /github/FreeCAD/* {
+        uri strip_prefix /github/FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
-    redir /prometheus /prometheus/ 301
-    route /prometheus/* {
-        uri strip_prefix /prometheus
+    redir /github/prometheus /github/prometheus/ 301
+    route /github/prometheus/* {
+        uri strip_prefix /github/prometheus
         redir * /github-release/prometheus/?mirror_intel_list 302
+    }
+    redir /github/rubyinstaller2 /github/rubyinstaller2/ 301
+    route /github/rubyinstaller2/* {
+        uri strip_prefix /github/rubyinstaller2
+        redir * /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list 302
+    }
+    redir /github/PowerShell /github/PowerShell/ 301
+    route /github/PowerShell/* {
+        uri strip_prefix /github/PowerShell
+        redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
     }
 }
 
@@ -1168,15 +1178,25 @@ ftp6.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /FreeCAD /FreeCAD/ 301
-    route /FreeCAD/* {
-        uri strip_prefix /FreeCAD
+    redir /github/FreeCAD /github/FreeCAD/ 301
+    route /github/FreeCAD/* {
+        uri strip_prefix /github/FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
-    redir /prometheus /prometheus/ 301
-    route /prometheus/* {
-        uri strip_prefix /prometheus
+    redir /github/prometheus /github/prometheus/ 301
+    route /github/prometheus/* {
+        uri strip_prefix /github/prometheus
         redir * /github-release/prometheus/?mirror_intel_list 302
+    }
+    redir /github/rubyinstaller2 /github/rubyinstaller2/ 301
+    route /github/rubyinstaller2/* {
+        uri strip_prefix /github/rubyinstaller2
+        redir * /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list 302
+    }
+    redir /github/PowerShell /github/PowerShell/ 301
+    route /github/PowerShell/* {
+        uri strip_prefix /github/PowerShell
+        redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
     }
 }
 
@@ -1759,15 +1779,25 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /FreeCAD /FreeCAD/ 301
-    route /FreeCAD/* {
-        uri strip_prefix /FreeCAD
+    redir /github/FreeCAD /github/FreeCAD/ 301
+    route /github/FreeCAD/* {
+        uri strip_prefix /github/FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
-    redir /prometheus /prometheus/ 301
-    route /prometheus/* {
-        uri strip_prefix /prometheus
+    redir /github/prometheus /github/prometheus/ 301
+    route /github/prometheus/* {
+        uri strip_prefix /github/prometheus
         redir * /github-release/prometheus/?mirror_intel_list 302
+    }
+    redir /github/rubyinstaller2 /github/rubyinstaller2/ 301
+    route /github/rubyinstaller2/* {
+        uri strip_prefix /github/rubyinstaller2
+        redir * /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list 302
+    }
+    redir /github/PowerShell /github/PowerShell/ 301
+    route /github/PowerShell/* {
+        uri strip_prefix /github/PowerShell
+        redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
     }
 }
 
@@ -2350,15 +2380,25 @@ siyuan.internal.sjtug.org {
         root /srv/disk2
         hide .*
     }
-    redir /FreeCAD /FreeCAD/ 301
-    route /FreeCAD/* {
-        uri strip_prefix /FreeCAD
+    redir /github/FreeCAD /github/FreeCAD/ 301
+    route /github/FreeCAD/* {
+        uri strip_prefix /github/FreeCAD
         redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
     }
-    redir /prometheus /prometheus/ 301
-    route /prometheus/* {
-        uri strip_prefix /prometheus
+    redir /github/prometheus /github/prometheus/ 301
+    route /github/prometheus/* {
+        uri strip_prefix /github/prometheus
         redir * /github-release/prometheus/?mirror_intel_list 302
+    }
+    redir /github/rubyinstaller2 /github/rubyinstaller2/ 301
+    route /github/rubyinstaller2/* {
+        uri strip_prefix /github/rubyinstaller2
+        redir * /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list 302
+    }
+    redir /github/PowerShell /github/PowerShell/ 301
+    route /github/PowerShell/* {
+        uri strip_prefix /github/PowerShell
+        redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
     }
 }
 
