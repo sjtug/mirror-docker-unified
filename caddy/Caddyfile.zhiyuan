@@ -18,6 +18,7 @@ ftp.sjtu.edu.cn {
         not path /flutter_infra/*
         not path /linuxbrew-bottles/*
         not path /github-release/*
+        not path /nix-channels/*
     }
     encode @not_mirror_intel_repo gzip zstd
 
@@ -99,6 +100,9 @@ ftp.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     route /github-release/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /nix-channels/* {
         reverse_proxy mirror-intel:8000
     }
 
@@ -142,6 +146,7 @@ ftp6.sjtu.edu.cn {
         not path /flutter_infra/*
         not path /linuxbrew-bottles/*
         not path /github-release/*
+        not path /nix-channels/*
     }
     encode @not_mirror_intel_repo gzip zstd
 
@@ -223,6 +228,9 @@ ftp6.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     route /github-release/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /nix-channels/* {
         reverse_proxy mirror-intel:8000
     }
 
@@ -266,6 +274,7 @@ mirror.sjtu.edu.cn {
         not path /flutter_infra/*
         not path /linuxbrew-bottles/*
         not path /github-release/*
+        not path /nix-channels/*
     }
     encode @not_mirror_intel_repo gzip zstd
 
@@ -347,6 +356,9 @@ mirror.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     route /github-release/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /nix-channels/* {
         reverse_proxy mirror-intel:8000
     }
 
@@ -390,6 +402,7 @@ siyuan.internal.sjtug.org {
         not path /flutter_infra/*
         not path /linuxbrew-bottles/*
         not path /github-release/*
+        not path /nix-channels/*
     }
     encode @not_mirror_intel_repo gzip zstd
 
@@ -471,6 +484,9 @@ siyuan.internal.sjtug.org {
         reverse_proxy mirror-intel:8000
     }
     route /github-release/* {
+        reverse_proxy mirror-intel:8000
+    }
+    route /nix-channels/* {
         reverse_proxy mirror-intel:8000
     }
 

@@ -43,13 +43,15 @@ github_release = "https://github.com"
 guix = "https://ci.guix.gnu.org"
 homebrew_bottles = "https://homebrew.bintray.com"
 linuxbrew_bottles = "https://linuxbrew.bintray.com"
-overrides = [
-  {name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/"},
-]
+nix_channels_store = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
 pypi_packages = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages"
 pytorch_wheels = "https://download.pytorch.org/whl"
 rust_static = "https://static.rust-lang.org"
 sjtug_internal = "https://github.com/sjtug"
+overrides = [
+  { name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/" },
+  { name = "tuna", pattern = "https://mirrors.tuna.tsinghua.edu.cn/", replace = "https://nanomirrors.tuna.tsinghua.edu.cn/" }
+]
 
 [default.s3]
 bucket = "899a892efef34b1b944a19981040f55b-oss01"
