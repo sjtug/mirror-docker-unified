@@ -434,3 +434,9 @@ repos:
     target: /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list
     only_target: true
     <<: *oneshot_common
+  - type: external
+    name: nix-channels/store
+    mirror_intel: true
+  - type: external
+    name: guix
+    mirror_intel: true

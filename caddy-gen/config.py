@@ -8,4 +8,4 @@ LUG_EXPORTER_ADDR = 'lug:8081'
 MIRROR_INTEL_LIST = ['crates.io', 'pypi-packages', 'flathub', 'fedora-ostree',
                      'fedora-iot', 'rust-static', 'homebrew-bottles', 'dart-pub', 'guix',
                      'pytorch-wheels', 'sjtug-internal', 'flutter_infra', 'linuxbrew-bottles',
-                     'github-release']
+                     'github-release', 'nix-channels']
