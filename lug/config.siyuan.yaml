@@ -409,14 +409,28 @@ repos:
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo FreeCAD/FreeCAD --target http://mirror-intel:8000/github-release
     interval: 4800
-    name: FreeCAD
+    name: github/FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
     only_target: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/prometheus.sh
     interval: 7200
-    name: prometheus
+    name: github/prometheus
     target: /github-release/prometheus/?mirror_intel_list
+    only_target: true
+    <<: *oneshot_common
+  - type: shell_script
+    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo oneclick/rubyinstaller2 --target http://mirror-intel:8000/github-release
+    interval: 86400
+    name: github/rubyinstaller2
+    target: /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list
+    only_target: true
+    <<: *oneshot_common
+  - type: shell_script
+    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo PowerShell/PowerShell --target http://mirror-intel:8000/github-release
+    interval: 86400
+    name: github/PowerShell
+    target: /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list
     only_target: true
     <<: *oneshot_common
