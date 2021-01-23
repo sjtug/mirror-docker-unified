@@ -601,6 +601,11 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /github/PowerShell
         redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
     }
+    redir /sites/tldp.org /sites/tldp.org/ 301
+    file_server /sites/tldp.org/* browse {
+        root /srv/disk1
+        hide .*
+    }
 }
 
 http://ftp6.sjtu.edu.cn/centos {
@@ -1205,6 +1210,11 @@ ftp6.sjtu.edu.cn {
     route /github/PowerShell/* {
         uri strip_prefix /github/PowerShell
         redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
+    }
+    redir /sites/tldp.org /sites/tldp.org/ 301
+    file_server /sites/tldp.org/* browse {
+        root /srv/disk1
+        hide .*
     }
 }
 
@@ -1811,6 +1821,11 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /github/PowerShell
         redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
     }
+    redir /sites/tldp.org /sites/tldp.org/ 301
+    file_server /sites/tldp.org/* browse {
+        root /srv/disk1
+        hide .*
+    }
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -2415,6 +2430,11 @@ siyuan.internal.sjtug.org {
     route /github/PowerShell/* {
         uri strip_prefix /github/PowerShell
         redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
+    }
+    redir /sites/tldp.org /sites/tldp.org/ 301
+    file_server /sites/tldp.org/* browse {
+        root /srv/disk1
+        hide .*
     }
 }
 

@@ -440,3 +440,10 @@ repos:
   - type: external
     name: guix
     mirror_intel: true
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: ftp.ibiblio.org::ldp_mirror
+    interval: 5800
+    path: /srv/disk1/sites/tldp.org
+    name: sites/tldp.org
+    <<: *oneshot_common
