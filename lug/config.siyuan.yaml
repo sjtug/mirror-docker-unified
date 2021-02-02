@@ -447,3 +447,8 @@ repos:
     path: /srv/disk1/sites/tldp.org
     name: sites/tldp.org
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/mirrorz.sh
+    interval: 300
+    target: https://mirrorz.org/
+    name: .mirrorz

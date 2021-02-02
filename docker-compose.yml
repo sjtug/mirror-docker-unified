@@ -16,7 +16,7 @@ services:
     volumes:
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"
-      - "./data/caddy/dists:/dists"
+      - "./data/caddy/dists:/dists:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile.siyuan:ro"
       - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile.zhiyuan:ro"
     ports:
@@ -54,6 +54,7 @@ services:
     volumes:
       - "./lug/worker-script:/worker-script:ro"
       - "./data/lug:/data"
+      - "./data/caddy/dists/mirrorz:/mirrorz"
       - "./secrets/git-credentials:/root/.git-credentials:ro"
       - "./common/gai.conf:/etc/gai.conf:ro"
     environment:
