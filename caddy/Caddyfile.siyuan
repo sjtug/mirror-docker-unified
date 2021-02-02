@@ -606,6 +606,11 @@ ftp.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /.mirrorz /.mirrorz/ 301
+    route /.mirrorz/* {
+        uri strip_prefix /.mirrorz
+        redir * https://mirrorz.org/{uri} 302
+    }
 }
 
 http://ftp6.sjtu.edu.cn/centos {
@@ -1215,6 +1220,11 @@ ftp6.sjtu.edu.cn {
     file_server /sites/tldp.org/* browse {
         root /srv/disk1
         hide .*
+    }
+    redir /.mirrorz /.mirrorz/ 301
+    route /.mirrorz/* {
+        uri strip_prefix /.mirrorz
+        redir * https://mirrorz.org/{uri} 302
     }
 }
 
@@ -1826,6 +1836,11 @@ mirror.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /.mirrorz /.mirrorz/ 301
+    route /.mirrorz/* {
+        uri strip_prefix /.mirrorz
+        redir * https://mirrorz.org/{uri} 302
+    }
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -2435,6 +2450,11 @@ siyuan.internal.sjtug.org {
     file_server /sites/tldp.org/* browse {
         root /srv/disk1
         hide .*
+    }
+    redir /.mirrorz /.mirrorz/ 301
+    route /.mirrorz/* {
+        uri strip_prefix /.mirrorz
+        redir * https://mirrorz.org/{uri} 302
     }
 }
 
