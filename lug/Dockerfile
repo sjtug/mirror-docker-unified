@@ -25,7 +25,8 @@ RUN /app/build-script/from-cache.sh \
         https://github.com/sjtug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
             && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
-RUN apt-get install python3 -y
+RUN apt-get install python3 python3-pip -y
+RUN if [ "$USE_SJTUG" = true ] ; then pip3 install python-dateutil -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple; else pip3 install python-dateutil ; fi
 
 RUN git config --global credential.helper store
 
