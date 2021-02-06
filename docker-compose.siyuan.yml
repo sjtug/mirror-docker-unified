@@ -144,6 +144,18 @@ services:
       - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
       - ./secrets/rsyncd.siyuan.secrets:/etc/rsyncd.secrets:ro
       - /mnt/disk1:/srv/disk1:ro
+    blkio_config:
+      weight: 10
+      device_read_bps:
+        - path: /dev/vdb1
+          rate: '1mb'
+        - path: /dev/vdc1
+          rate: '1mb'
+      device_read_iops:
+        - path: /dev/vdb1
+          rate: 24
+        - path: /dev/vdc1
+          rate: 24
 
 networks:
   host-monitor-net:
