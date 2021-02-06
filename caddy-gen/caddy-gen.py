@@ -280,10 +280,6 @@ if __name__ == "__main__":
 
     for base in BASE:
         roots.append(build_root(base, config_yaml))
-    roots.append(reverse_proxy_site(
-        'k8s-gcr-io.siyuan.internal.sjtug.org', 'siyuan-gcr-registry:80'))
-    roots.append(reverse_proxy_site(
-        'docker.siyuan.internal.sjtug.org', 'siyuan-docker-registry:80'))
 
     with open(args.output, 'w') as fp:
         for root in roots:

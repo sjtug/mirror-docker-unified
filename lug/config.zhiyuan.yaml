@@ -20,6 +20,386 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.chiark.greenend.org.uk/ftp/users/sgtatham/putty-website-mirror/
     interval: 3600
-    path: /srv/putty
+    path: /mnt/putty
     name: putty
     <<: *oneshot_common
+  - type: shell_script
+    name: archlinux
+    interval: 5300
+    path: /mnt/archlinux
+    script: /worker-script/archlinux.sh
+    source: rsync://mirrors.kernel.org/archlinux/
+    lastupdate: https://mirrors.edge.kernel.org/archlinux/lastupdate
+    <<: *oneshot_common
+  - type: shell_script
+    name: archlinux-cn
+    interval: 6000
+    path: /mnt/archlinux-cn
+    script: /worker-script/archlinux-cn.sh
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.dotsrc.org/archlinuxarm/
+    interval: 3900
+    path: /mnt/archlinuxarm
+    name: archlinuxarm
+    exclude_hidden: true
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync11.us.gentoo.org/gentoo-portage/
+    interval: 3600
+    path: /mnt/gentoo
+    name: gentoo
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://ftp.ca.vim.org/vim
+    interval: 3600
+    path: /mnt/vim
+    name: vim
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirror.yandex.ru/mirrors/manjaro/
+    interval: 3600
+    path: /mnt/manjaro
+    name: manjaro
+    exclude_hidden: true
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.alpinelinux.org/alpine/
+    interval: 3600
+    path: /mnt/alpine
+    name: alpine
+    no_redir_http: true
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.dante.ctan.org/CTAN
+    interval: 23020
+    path: /mnt/ctan
+    no_redir_http: true
+    name: ctan
+    exclude_hidden: true
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: cpan-rsync.perl.org::CPAN
+    interval: 3600
+    path: /mnt/cpan
+    name: cpan
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync_ssh.sh
+    source: "cran-rsync@cran.r-project.org:"
+    interval: 43200
+    path: /mnt/cran
+    name: cran
+    ignore_vanish: true
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/ctex/
+    interval: 3600
+    path: /mnt/ctex
+    name: ctex
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.ocf.berkeley.edu/gnu/
+    interval: 43200
+    path: /mnt/gnu
+    name: gnu
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirror.steadfast.net/cygwin/
+    interval: 3600
+    path: /mnt/cygwin
+    name: cygwin
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync.osuosl.org::ros-main
+    interval: 3600
+    path: /mnt/ros
+    mirror_path: /mnt/ros/ubuntu
+    name: ros
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://ftp.nluug.nl/kali/
+    interval: 10800
+    path: /mnt/kali
+    name: kali
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://ftp.nluug.nl/kali-images/
+    interval: 10800
+    path: /mnt/kali-images
+    name: kali-images
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/anaconda.py
+    path: /mnt/anaconda/
+    name: anaconda
+    subdomain: anaconda.mirrors.sjtug.sjtu.edu.cn
+    interval: 6000
+    thread_num: 80
+    pkgs/main/linux-64: https://repo.anaconda.com/pkgs/main/linux-64/
+    pkgs/main/linux-32: https://repo.anaconda.com/pkgs/main/linux-32/
+    pkgs/main/linux-ppc64le: https://repo.anaconda.com/pkgs/main/linux-ppc64le/
+    pkgs/main/osx-64: https://repo.anaconda.com/pkgs/main/osx-64/
+    pkgs/main/win-64: https://repo.anaconda.com/pkgs/main/win-64/
+    pkgs/main/win-32: https://repo.anaconda.com/pkgs/main/win-32/
+    pkgs/main/noarch: https://repo.anaconda.com/pkgs/main/noarch/
+    pkgs/free/linux-64: https://repo.anaconda.com/pkgs/free/linux-64/
+    pkgs/free/linux-32: https://repo.anaconda.com/pkgs/free/linux-32/
+    pkgs/free/linux-armv6l: https://repo.anaconda.com/pkgs/free/linux-armv6l/
+    pkgs/free/linux-armv7l: https://repo.anaconda.com/pkgs/free/linux-armv7l/
+    pkgs/free/linux-ppc64le: https://repo.anaconda.com/pkgs/free/linux-ppc64le/
+    pkgs/free/osx-64: https://repo.anaconda.com/pkgs/free/osx-64/
+    pkgs/free/osx-32: https://repo.anaconda.com/pkgs/free/osx-32/
+    pkgs/free/win-64: https://repo.anaconda.com/pkgs/free/win-64/
+    pkgs/free/win-32: https://repo.anaconda.com/pkgs/free/win-32/
+    pkgs/free/noarch: https://repo.anaconda.com/pkgs/free/noarch/
+    pkgs/r/linux-64: https://repo.anaconda.com/pkgs/r/linux-64/
+    pkgs/r/linux-32: https://repo.anaconda.com/pkgs/r/linux-32/
+    pkgs/r/linux-armv6l: https://repo.anaconda.com/pkgs/r/linux-armv6l/
+    pkgs/r/linux-armv7l: https://repo.anaconda.com/pkgs/r/linux-armv7l/
+    pkgs/r/linux-ppc64le: https://repo.anaconda.com/pkgs/r/linux-ppc64le/
+    pkgs/r/osx-64: https://repo.anaconda.com/pkgs/r/osx-64/
+    pkgs/r/osx-32: https://repo.anaconda.com/pkgs/r/osx-32/
+    pkgs/r/win-64: https://repo.anaconda.com/pkgs/r/win-64/
+    pkgs/r/win-32: https://repo.anaconda.com/pkgs/r/win-32/
+    pkgs/r/noarch: https://repo.anaconda.com/pkgs/r/noarch/
+    pkgs/pro/linux-64: https://repo.anaconda.com/pkgs/pro/linux-64/
+    pkgs/pro/linux-32: https://repo.anaconda.com/pkgs/pro/linux-32/
+    pkgs/pro/linux-armv6l: https://repo.anaconda.com/pkgs/pro/linux-armv6l/
+    pkgs/pro/linux-armv7l: https://repo.anaconda.com/pkgs/pro/linux-armv7l/
+    pkgs/pro/linux-ppc64le: https://repo.anaconda.com/pkgs/pro/linux-ppc64le/
+    pkgs/pro/osx-64: https://repo.anaconda.com/pkgs/pro/osx-64/
+    pkgs/pro/osx-32: https://repo.anaconda.com/pkgs/pro/osx-32/
+    pkgs/pro/win-64: https://repo.anaconda.com/pkgs/pro/win-64/
+    pkgs/pro/win-32: https://repo.anaconda.com/pkgs/pro/win-32/
+    pkgs/pro/noarch: https://repo.anaconda.com/pkgs/pro/noarch/
+    pkgs/mro/linux-64: https://repo.anaconda.com/pkgs/mro/linux-64/
+    pkgs/mro/linux-32: https://repo.anaconda.com/pkgs/mro/linux-32/
+    pkgs/mro/linux-armv6l: https://repo.anaconda.com/pkgs/mro/linux-armv6l/
+    pkgs/mro/linux-armv7l: https://repo.anaconda.com/pkgs/mro/linux-armv7l/
+    pkgs/mro/linux-ppc64le: https://repo.anaconda.com/pkgs/mro/linux-ppc64le/
+    pkgs/mro/osx-64: https://repo.anaconda.com/pkgs/mro/osx-64/
+    pkgs/mro/osx-32: https://repo.anaconda.com/pkgs/mro/osx-32/
+    pkgs/mro/win-64: https://repo.anaconda.com/pkgs/mro/win-64/
+    pkgs/mro/win-32: https://repo.anaconda.com/pkgs/mro/win-32/
+    pkgs/mro/noarch: https://repo.anaconda.com/pkgs/mro/noarch/
+    pkgs/msys2/win-64: https://repo.anaconda.com/pkgs/msys2/win-64/
+    pkgs/msys2/win-32: https://repo.anaconda.com/pkgs/msys2/win-32/
+    pkgs/msys2/noarch: https://repo.anaconda.com/pkgs/msys2/noarch/
+    cloud/conda-forge/noarch: https://conda.anaconda.org/conda-forge/noarch/
+    cloud/conda-forge/linux-64: https://conda.anaconda.org/conda-forge/linux-64/
+    cloud/conda-forge/osx-64: https://conda.anaconda.org/conda-forge/osx-64/
+    cloud/conda-forge/win-64: https://conda.anaconda.org/conda-forge/win-64/
+    cloud/bioconda/noarch: https://conda.anaconda.org/bioconda/noarch/
+    cloud/bioconda/linux-64: https://conda.anaconda.org/bioconda/linux-64/
+    cloud/bioconda/osx-64: https://conda.anaconda.org/bioconda/osx-64/
+    cloud/menpo/noarch: https://conda.anaconda.org/menpo/noarch/
+    cloud/menpo/linux-64: https://conda.anaconda.org/menpo/linux-64/
+    cloud/menpo/osx-64: https://conda.anaconda.org/menpo/osx-64/
+    cloud/menpo/win-64: https://conda.anaconda.org/menpo/win-64/
+    cloud/matsci/noarch: https://conda.anaconda.org/matsci/noarch/
+    cloud/matsci/linux-64: https://conda.anaconda.org/matsci/linux-64/
+    cloud/matsci/osx-64: https://conda.anaconda.org/matsci/osx-64/
+    cloud/matsci/win-64: https://conda.anaconda.org/matsci/win-64/
+    cloud/soumith/linux-64: https://conda.anaconda.org/soumith/linux-64/
+    cloud/soumith/osx-64: https://conda.anaconda.org/soumith/osx-64/
+    cloud/soumith/noarch: https://conda.anaconda.org/soumith/noarch/
+    cloud/viscid-hub/noarch: https://conda.anaconda.org/viscid-hub/noarch/
+    cloud/viscid-hub/linux-64: https://conda.anaconda.org/viscid-hub/linux-64/
+    cloud/viscid-hub/osx-64: https://conda.anaconda.org/viscid-hub/osx-64/
+    cloud/viscid-hub/win-64: https://conda.anaconda.org/viscid-hub/win-64/
+    cloud/atztogo/linux-64: https://conda.anaconda.org/atztogo/linux-64/
+    cloud/pytorch/linux-64: https://conda.anaconda.org/pytorch/linux-64/
+    cloud/pytorch/osx-64: https://conda.anaconda.org/pytorch/osx-64/
+    cloud/pytorch/win-64: https://conda.anaconda.org/pytorch/win-64/
+    cloud/pytorch/win-32: https://conda.anaconda.org/pytorch/win-32/
+    cloud/pytorch/noarch: https://conda.anaconda.org/pytorch/noarch/
+    cloud/pytorch-test/linux-64: https://conda.anaconda.org/pytorch-test/linux-64/
+    cloud/pytorch-test/osx-64: https://conda.anaconda.org/pytorch-test/osx-64/
+    cloud/pytorch-test/win-64: https://conda.anaconda.org/pytorch-test/win-64/
+    cloud/pytorch-test/win-32: https://conda.anaconda.org/pytorch-test/win-32/
+    cloud/pytorch-test/noarch: https://conda.anaconda.org/pytorch-test/noarch/
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    name: git/homebrew-core.git
+    origin: https://github.com/Homebrew/homebrew-core.git
+    interval: 3801
+    path: /mnt/git/homebrew-core.git
+    target: https://git.sjtu.edu.cn/sjtug/homebrew-core.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    name: git/homebrew-cask.git
+    interval: 3801
+    path: /mnt/git/homebrew-cask.git
+    origin: https://github.com/Homebrew/homebrew-cask.git
+    target: https://git.sjtu.edu.cn/sjtug/homebrew-cask.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    name: git/brew.git
+    interval: 3927
+    path: /mnt/git/brew.git
+    origin: https://github.com/Homebrew/brew.git
+    target: https://git.sjtu.edu.cn/sjtug/brew.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/crates-io.sh
+    name: git/crates.io-index
+    interval: 3601
+    path: /mnt/git/crates.io-index
+    origin: https://github.com/rust-lang/crates.io-index.git
+    target: https://git.sjtu.edu.cn/sjtug/crates.io-index.git
+    <<: *oneshot_common
+  - type: shell_script
+    name: raspbian
+    script: /worker-script/rsync.sh
+    path: /mnt/raspbian
+    interval: 10801
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/raspbian/
+    no_redir_http: true
+    <<: *oneshot_common
+  - type: shell_script
+    name: parrot
+    script: /worker-script/rsync.sh
+    path: /mnt/parrot
+    interval: 3802
+    source: rsync://archive.parrotsec.org:/parrot
+    <<: *oneshot_common
+  - type: shell_script
+    name: raspberrypi
+    script: /worker-script/rsync.sh
+    path: /mnt/raspberrypi
+    interval: 10801
+    source: apt-repo.raspberrypi.org::archive
+    <<: *oneshot_common
+  - type: shell_script
+    name: mx-isos
+    script: /worker-script/mxlinux.sh
+    path: /mnt/mx-isos
+    interval: 43301
+    source: downstreamtestuser@rsync-mxlinux.org::MX-Linux/
+    <<: *oneshot_common
+  - type: shell_script
+    name: mx-packages
+    script: /worker-script/mxlinux.sh
+    path: /mnt/mx-packages
+    interval: 9602
+    source: rsuser@iso.mxrepo.com::workspace
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/packagist.sh
+    interval: 4800
+    path: /mnt/packagist
+    name: packagist
+    subdomain: packagist.mirrors.sjtug.sjtu.edu.cn
+    upstream: https://repo.packagist.org
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/mongodb.sh
+    source: s3://repo.mongodb.org/
+    interval: 4600
+    path: /mnt/mongodb
+    name: mongodb
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: master.qt.io::qt-all
+    interval: 6000
+    path: /mnt/qt
+    name: qt
+    no_redir_http: true
+  - type: shell_script
+    script: julia -t auto /worker-script/julia.jl
+    interval: 8000
+    path: /mnt/julia
+    name: julia
+  - type: shell_script
+    name: emacs-elpa
+    script: /worker-script/emacs-elpa.sh
+    path: /mnt/emacs-elpa
+    interval: 5000
+    source: rsync://elpa.emacs-china.org/elpa/
+  - type: shell_script
+    script: /worker-script/julia-releases.sh
+    source: s3://julialang2/
+    interval: 9200
+    path: /mnt/julia-releases
+    name: julia-releases
+    <<: *oneshot_common
+  - type: shell_script
+    name: raspberry-pi-os-images
+    script: /worker-script/rsync.sh
+    path: /mnt/raspbian-images
+    interval: 10801
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/raspberry-pi-os-images/
+    <<: *oneshot_common
+  - type: shell_script
+    name: msys2
+    script: /worker-script/rsync.sh
+    path: /mnt/msys2
+    interval: 12001
+    source: rsync://repo.msys2.org/builds
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/opam.sh
+    name: git/opam-repository.git
+    interval: 4623
+    path: /mnt/git/opam-repository.git
+    origin: https://github.com/ocaml/opam-repository.git
+    target: https://git.sjtu.edu.cn/sjtug/opam-repository.git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    name: git/dpdk.git
+    origin: http://dpdk.org/git/dpdk
+    interval: 4900
+    path: /mnt/git/dpdk.git
+    target: https://git.sjtu.edu.cn/sjtug/dpdk.git
+  - type: shell_script
+    script: /worker-script/git.sh
+    name: git/qemu.git
+    origin: https://git.qemu.org/git/qemu.git
+    interval: 4300
+    path: /mnt/git/qemu.git
+    target: https://git.sjtu.edu.cn/sjtug/qemu.git
+  - type: shell_script
+    script: /worker-script/git.sh
+    name: git/linux.git
+    origin: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+    interval: 4700
+    path: /mnt/git/linux.git
+    target: https://git.sjtu.edu.cn/sjtug/linux.git
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://repo.linuxliteos.com/repo
+    interval: 7200
+    path: /mnt/linuxliteos
+    name: linuxliteos
+  - type: shell_script
+    name: download.flutter.io
+    script: /worker-script/rsync.sh
+    path: /mnt/download.flutter.io
+    interval: 7200
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/
+  - type: external
+    name: k8s.gcr.io
+    proxy_to: https://k8s-gcr-io.siyuan.internal.sjtug.org/
+    subdomain: k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn
+  - type: external
+    name: docker-registry
+    proxy_to: https://docker.siyuan.internal.sjtug.org/
+    subdomain: docker.mirrors.sjtug.sjtu.edu.cn

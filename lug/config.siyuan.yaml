@@ -224,49 +224,49 @@ repos:
     <<: *oneshot_common
   # homebrew-bottles
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 homebrew_bottles --target http://siyuan-mirror-intel:8000/homebrew-bottles
+    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 homebrew_bottles --target http://mirror-intel:8000/homebrew-bottles
     mirror_intel: true
     interval: 10800
     name: homebrew-bottles
     <<: *oneshot_common
   # rust-static
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 rustup --target http://siyuan-mirror-intel:8000/rust-static
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 rustup --target http://mirror-intel:8000/rust-static
     mirror_intel: true
     interval: 4800
     name: rust-static
     <<: *oneshot_common
   # pypi
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 16 pypi --target http://siyuan-mirror-intel:8000/pypi-packages
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 16 pypi --target http://mirror-intel:8000/pypi-packages
     mirror_intel: true
     interval: 86400
     name: pypi-packages
     <<: *oneshot_common
   # dart-pub
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 dart_pub --target http://siyuan-mirror-intel:8000/dart-pub
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 dart_pub --target http://mirror-intel:8000/dart-pub
     mirror_intel: true
     interval: 4800
     name: dart-pub
     <<: *oneshot_common
   # pytorch-wheels
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 pytorch_wheels --target http://siyuan-mirror-intel:8000/pytorch-wheels
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 pytorch_wheels --target http://mirror-intel:8000/pytorch-wheels
     mirror_intel: true
     interval: 4900
     name: pytorch-wheels
     <<: *oneshot_common
   # crates.io
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 crates_io --target http://siyuan-mirror-intel:8000/crates.io/crates
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 crates_io --target http://mirror-intel:8000/crates.io/crates
     mirror_intel: true
     interval: 7200
     name: crates.io
     <<: *oneshot_common
   # flutter_infra
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 flutter_infra --target http://siyuan-mirror-intel:8000/flutter_infra
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 flutter_infra --target http://mirror-intel:8000/flutter_infra
     mirror_intel: true
     interval: 4000
     name: flutter_infra
@@ -312,7 +312,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 homebrew_bottles --arch x86_64_linux --api_base https://formulae.brew.sh/api/formula-linux.json --target http://siyuan-mirror-intel:8000/linuxbrew-bottles
+    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 homebrew_bottles --arch x86_64_linux --api_base https://formulae.brew.sh/api/formula-linux.json --target http://mirror-intel:8000/linuxbrew-bottles
     mirror_intel: true
     interval: 10800
     name: linuxbrew-bottles
@@ -385,26 +385,18 @@ repos:
     name: dragonflybsd/dports
     <<: *oneshot_common
   - type: shell_script
-    name: archlinux
-    path: /srv/disk2/archlinux
-    interval: 3600
-    disabled: true
-    script: "true"
-    target: https://mirrors.sjtug.sjtu.edu.cn/archlinux
-    <<: *oneshot_common
-  - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo GNS3/gns3-gui --target http://mirror-intel:8000/github-release
-    mirror_intel: true
-    interval: 4800
-    name: github-release
-    disabled: true
-    <<: *oneshot_common
-  - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://www.blackarch.org/blackarch/
     interval: 20000
     path: /srv/disk2/blackarch
     name: blackarch
+    <<: *oneshot_common
+  - type: shell_script
+    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo GNS3/gns3-gui --target http://mirror-intel:8000/github-release
+    interval: 4800
+    name: github/GNS3
+    target: /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list
+    only_target: true
     <<: *oneshot_common
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo FreeCAD/FreeCAD --target http://mirror-intel:8000/github-release
@@ -434,12 +426,6 @@ repos:
     target: /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list
     only_target: true
     <<: *oneshot_common
-  - type: external
-    name: nix-channels/store
-    mirror_intel: true
-  - type: external
-    name: guix
-    mirror_intel: true
   - type: shell_script
     script: /worker-script/rsync.sh
     source: ftp.ibiblio.org::ldp_mirror
@@ -452,3 +438,61 @@ repos:
     interval: 300
     target: https://mirrorz.org/
     name: .mirrorz
+  - type: external
+    name: nix-channels/store
+    mirror_intel: true
+  - type: external
+    name: guix
+    mirror_intel: true
+  - type: external
+    name: sjtug-internal
+    mirror_intel: true
+  - type: external
+    name: fedora-ostree
+    mirror_intel: true
+  - type: external
+    name: fedora-iot
+    mirror_intel: true
+  - type: external
+    name: flathub
+    mirror_intel: true
+  - type: external
+    name: github-release
+    mirror_intel: true
+  - type: external
+    name: npm-registry
+    target: https://registry.npmjs.org/
+  - type: external
+    name: nodejs-release
+    target: https://nodejs.org/dist/
+  - type: external
+    name: maven-central
+    target: https://repo.maven.apache.org/maven2/
+  - type: external
+    name: manjarostable
+    target: https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable/
+    disabled: true
+  - type: external
+    name: k8s.gcr.io
+    proxy_to: https://k8s-gcr-io.siyuan.internal.sjtug.org/
+    subdomain: k8s-gcr-io
+  - type: external
+    name: gcr-registry-siyuan
+    proxy_to: siyuan-gcr-registry:80
+    disabled: true
+    subdomain: k8s-gcr-io.siyuan.internal.sjtug.org
+  - type: external
+    name: docker-registry-siyuan
+    proxy_to: siyuan-docker-registry:80
+    disabled: true
+    subdomain: docker.siyuan.internal.sjtug.org
+  - type: external
+    name: google-fonts
+    subdomain: google-fonts.mirrors.sjtug.sjtu.edu.cn
+    mirror_intel: true
+  - type: external
+    name: opam-cache
+    mirror_intel: true
+  - type: external
+    name: pypi/web/simple
+    mirror_intel: true
