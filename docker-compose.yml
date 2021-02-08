@@ -76,7 +76,7 @@ services:
 
   logspout:
     restart: unless-stopped
-    image: gliderlabs/logspout
+    image: skyzh/logspout:v3.2.13
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
