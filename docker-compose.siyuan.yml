@@ -2,8 +2,8 @@ services:
   caddy:
     container_name: siyuan-caddy
     volumes:
-      - "/mnt/disk1:/srv/disk1"
-      - "/mnt/disk2:/srv/disk2"
+      - "/mnt/disk1:/srv/disk1:ro"
+      - "/mnt/disk2:/srv/disk2:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile:ro"
       - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
     mem_limit: 10G

@@ -28,7 +28,7 @@ RUN /app/build-script/setup-julia.sh
 ENV PATH="/app/julia-1.5.0/bin:${PATH}"
 
 # Python packages
-RUN if [ "$USE_SJTUG" = true ] ; then pip3 install python-dateutil -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple; else pip3 install python-dateutil ; fi
+RUN if [ "$USE_SJTUG" = true ] ; then pip3 install python-dateutil -i https://mirror.sjtu.edu.cn/pypi/web/simple; else pip3 install python-dateutil ; fi
 
 # StorageMirrorServer.jl
 COPY build-script/setup-julia-mirror.sh build-script/setup-julia-mirror.sh
@@ -41,7 +41,7 @@ COPY build-script/from-cache.sh build-script/from-cache.sh
 
 # yq
 RUN /app/build-script/from-cache.sh \
-    https://mirror.sjtu.edu.cn/github-release/mikefarah/yq/download/3.4.0/yq_linux_amd64 \
+    https://mirror.sjtu.edu.cn/github-release/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 \
     https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/github-release/yq/releases/download/3.4.0/yq_linux_amd64 \
     https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 \
     /usr/local/bin/yq \

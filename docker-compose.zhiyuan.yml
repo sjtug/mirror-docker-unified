@@ -2,6 +2,86 @@ services:
   caddy:
     container_name: zhiyuan-caddy
     volumes:
+      - "/mnt/data12T:/mnt:ro"
       - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile:ro"
     mem_limit: 10G
     memswap_limit: 10G
+
+  lug:
+    container_name: zhiyuan-lug
+    volumes:
+      - "/mnt/data12T:/mnt:ro"
+      - "./lug/config.zhiyuan.yaml:/config.yaml:ro"
+    mem_limit: 10G
+    memswap_limit: 10G
+
+  cadvisor:
+    container_name: zhiyuan-cadvisor
+
+  clash:
+    container_name: zhiyuan-clash
+
+  mirror-intel:
+    container_name: zhiyuan-mirror-intel
+    volumes:
+      - "/mnt/cache:/mnt/cache"
+    mem_limit: 10G
+    memswap_limit: 10G
+
+  tunnel:
+    container_name: zhiyuan-tunnel
+    restart: unless-stopped
+    image: v2ray/official
+    expose:
+      - 5000
+      - 5001
+      - 5002
+    ports:
+      - "127.0.0.1:5003:5003"
+    networks:
+      - tunnel-net
+    volumes: 
+      - "./secrets/v2ray.json:/etc/v2ray/config.json:z,ro"
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 2G
+    memswap_limit: 2G
+
+  rsyncd:
+    container_name: zhiyuan-rsyncd
+    volumes:
+      - ./rsyncd/rsyncd.zhiyuan.conf:/etc/rsyncd.conf:ro
+      - ./secrets/rsyncd.zhiyuan.secrets:/etc/rsyncd.secrets:ro
+      - /mnt/data12T:/mnt:ro
+    blkio_config:
+      weight: 10
+      device_read_bps:
+        - path: /dev/mapper/vg0-mirror.sjtug
+          rate: '1mb'
+      device_read_iops:
+        - path: /dev/mapper/vg0-mirror.sjtug
+          rate: 24
+
+networks:
+  host-monitor-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -  subnet: 172.31.0.0/16
+  monitor-net:
+  tunnel-net:
+  proxy-net:
+  ipv6-service-net:
+    enable_ipv6: true
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -  subnet: fd01::/80
