@@ -50,6 +50,8 @@ pypi_packages = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages"
 pytorch_wheels = "https://download.pytorch.org/whl"
 rust_static = "https://static.rust-lang.org"
 sjtug_internal = "https://github.com/sjtug"
+opam_cache = "https://opam.ocaml.org/cache"
+pypi_simple = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 overrides = [
   { name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/" },
   { name = "tuna", pattern = "https://mirrors.tuna.tsinghua.edu.cn/", replace = "https://nanomirrors.tuna.tsinghua.edu.cn/" }

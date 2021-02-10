@@ -411,9 +411,3 @@ repos:
     name: google-fonts
     subdomain: google-fonts.mirrors.sjtug.sjtu.edu.cn
     serve_mode: mirror_intel
-  - type: external
-    name: opam-cache
-    serve_mode: mirror_intel
-  - type: external
-    name: pypi/web/simple
-    serve_mode: mirror_intel

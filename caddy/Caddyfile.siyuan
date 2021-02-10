@@ -674,6 +674,14 @@ ftp.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /opam-cache /opam-cache/ 301
+    route /opam-cache/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pypi/web/simple /pypi/web/simple/ 301
+    route /pypi/web/simple/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -712,6 +720,8 @@ ftp.sjtu.edu.cn {
         not path /manjarostable/*
         not path /gcr-registry-siyuan/*
         not path /docker-registry-siyuan/*
+        not path /opam-cache/*
+        not path /pypi/web/simple/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1382,6 +1392,14 @@ ftp6.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /opam-cache /opam-cache/ 301
+    route /opam-cache/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pypi/web/simple /pypi/web/simple/ 301
+    route /pypi/web/simple/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -1420,6 +1438,8 @@ ftp6.sjtu.edu.cn {
         not path /manjarostable/*
         not path /gcr-registry-siyuan/*
         not path /docker-registry-siyuan/*
+        not path /opam-cache/*
+        not path /pypi/web/simple/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2090,6 +2110,14 @@ mirror.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /opam-cache /opam-cache/ 301
+    route /opam-cache/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pypi/web/simple /pypi/web/simple/ 301
+    route /pypi/web/simple/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2128,6 +2156,8 @@ mirror.sjtu.edu.cn {
         not path /manjarostable/*
         not path /gcr-registry-siyuan/*
         not path /docker-registry-siyuan/*
+        not path /opam-cache/*
+        not path /pypi/web/simple/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2798,6 +2828,14 @@ siyuan.internal.sjtug.org {
         root /srv/disk1
         hide .*
     }
+    redir /opam-cache /opam-cache/ 301
+    route /opam-cache/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pypi/web/simple /pypi/web/simple/ 301
+    route /pypi/web/simple/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2836,6 +2874,8 @@ siyuan.internal.sjtug.org {
         not path /manjarostable/*
         not path /gcr-registry-siyuan/*
         not path /docker-registry-siyuan/*
+        not path /opam-cache/*
+        not path /pypi/web/simple/*
     }
     encode @gzip_enabled gzip zstd
 }

@@ -407,20 +407,10 @@ mirrors.sjtug.sjtu.edu.cn {
     route /google-fonts/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /opam-cache /opam-cache/ 301
-    route /opam-cache/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /pypi/web/simple /pypi/web/simple/ 301
-    route /pypi/web/simple/* {
-        reverse_proxy mirror-intel:8000
-    }
     @gzip_enabled {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
-        not path /opam-cache/*
-        not path /pypi/web/simple/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -785,20 +775,10 @@ zhiyuan.internal.sjtug.org {
     route /google-fonts/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /opam-cache /opam-cache/ 301
-    route /opam-cache/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /pypi/web/simple /pypi/web/simple/ 301
-    route /pypi/web/simple/* {
-        reverse_proxy mirror-intel:8000
-    }
     @gzip_enabled {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
-        not path /opam-cache/*
-        not path /pypi/web/simple/*
     }
     encode @gzip_enabled gzip zstd
 }
