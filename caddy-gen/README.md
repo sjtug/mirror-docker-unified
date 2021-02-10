@@ -9,8 +9,6 @@ lug configuration for a repo can always be viewed in two parts:
 * synchronization config (shell_script / external)
 * serving config (target, etc.)
 
-Currently, these configurations are supported.
-
 ## Synchronization Config
 
 lug only needs the following properties
@@ -39,7 +37,7 @@ lug only needs the following properties
     disabled: true
   ```
 
-## Serving Config
+## Serving Config (Outdated)
 
 * default: contents will be served from `path`. `path` must have the same suffix as repo name.
   ```yaml
@@ -71,14 +69,22 @@ lug only needs the following properties
     target: https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git
     <<: *oneshot_common
   ```
-* only_target: when specified, all requests will be 302 redirect to `$target` regardless of the parameters
+* (optional) only_target: when specified, all requests will be 302 redirect to `$target` regardless of the parameters
   ```yaml
   - type: xxx
     name: github/PowerShell
     target: /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list
     only_target: true
   ```
-* subdomain: when specified, `$subdomain.mirrors.sjtug.sjtu.edu.cn` will be generated. Should only be used on Zhiyuan server.
+* proxy: reverse proxy to a site
+  ```yaml
+  - type: external
+    name: gcr-registry-siyuan
+    proxy_to: siyuan-gcr-registry:80
+    disabled: true
+    subdomain: k8s-gcr-io.siyuan.internal.sjtug.org
+  ```
+* (optional) subdomain: when specified, `$subdomain.mirrors.sjtug.sjtu.edu.cn` will be generated. Should only be used on Zhiyuan server.
   ```yaml
   - type: external
     name: docker-registry

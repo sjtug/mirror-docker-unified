@@ -225,49 +225,49 @@ repos:
   # homebrew-bottles
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 128 --workers 8 homebrew_bottles --target http://mirror-intel:8000/homebrew-bottles
-    mirror_intel: true
+    serve_mode: mirror_intel
     interval: 10800
     name: homebrew-bottles
     <<: *oneshot_common
   # rust-static
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 --workers 8 rustup --target http://mirror-intel:8000/rust-static
-    mirror_intel: true
+    serve_mode: mirror_intel
     interval: 4800
     name: rust-static
     <<: *oneshot_common
   # pypi
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 --workers 16 pypi --target http://mirror-intel:8000/pypi-packages
-    mirror_intel: true
+    serve_mode: mirror_intel
     interval: 86400
     name: pypi-packages
     <<: *oneshot_common
   # dart-pub
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 --workers 8 dart_pub --target http://mirror-intel:8000/dart-pub
-    mirror_intel: true
+    serve_mode: mirror_intel
     interval: 4800
     name: dart-pub
     <<: *oneshot_common
   # pytorch-wheels
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 --workers 8 pytorch_wheels --target http://mirror-intel:8000/pytorch-wheels
-    mirror_intel: true
+    serve_mode: mirror_intel
     interval: 4900
     name: pytorch-wheels
     <<: *oneshot_common
   # crates.io
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 --workers 8 crates_io --target http://mirror-intel:8000/crates.io/crates
-    mirror_intel: true
+    serve_mode: mirror_intel
     interval: 7200
     name: crates.io
     <<: *oneshot_common
   # flutter_infra
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 --workers 8 flutter_infra --target http://mirror-intel:8000/flutter_infra
-    mirror_intel: true
+    serve_mode: mirror_intel
     interval: 4000
     name: flutter_infra
     <<: *oneshot_common
@@ -277,6 +277,7 @@ repos:
     name: git/linuxbrew-core.git
     source: https://github.com/Homebrew/linuxbrew-core.git
     path: /srv/disk2/git/linuxbrew-core.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git
     <<: *oneshot_common
   - type: shell_script
@@ -285,6 +286,7 @@ repos:
     name: git/homebrew-services.git
     source: https://github.com/Homebrew/homebrew-services.git
     path: /srv/disk2/git/homebrew-services.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/homebrew-services.git
     <<: *oneshot_common
   - type: shell_script
@@ -293,6 +295,7 @@ repos:
     name: git/homebrew-cask-drivers.git
     source: https://github.com/Homebrew/homebrew-cask-drivers.git
     path: /srv/disk2/git/homebrew-cask-drivers.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git
     <<: *oneshot_common
   - type: shell_script
@@ -301,6 +304,7 @@ repos:
     name: git/homebrew-cask-fonts.git
     source: https://github.com/Homebrew/homebrew-cask-fonts.git
     path: /srv/disk2/git/homebrew-cask-fonts.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git
     <<: *oneshot_common
   - type: shell_script
@@ -309,11 +313,12 @@ repos:
     name: git/homebrew-cask-versions.git
     source: https://github.com/Homebrew/homebrew-cask-versions.git
     path: /srv/disk2/git/homebrew-cask-versions.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 128 --workers 8 homebrew_bottles --arch x86_64_linux --api_base https://formulae.brew.sh/api/formula-linux.json --target http://mirror-intel:8000/linuxbrew-bottles
-    mirror_intel: true
+    serve_mode: mirror_intel
     interval: 10800
     name: linuxbrew-bottles
     <<: *oneshot_common
@@ -323,6 +328,7 @@ repos:
     name: git/guix.git
     source: https://git.savannah.gnu.org/git/guix.git
     path: /srv/disk2/git/guix.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/guix.git
     <<: *oneshot_common
   - type: shell_script
@@ -331,6 +337,7 @@ repos:
     name: git/llvm-project.git
     source: https://github.com/llvm/llvm-project.git
     path: /srv/disk2/git/llvm-project.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/llvm-project.git
     <<: *oneshot_common
   - type: shell_script
@@ -339,6 +346,7 @@ repos:
     name: git/flutter-sdk.git
     source: https://github.com/flutter/flutter.git
     path: /srv/disk2/git/flutter-sdk.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/flutter-sdk.git
     <<: *oneshot_common
   - type: shell_script
@@ -354,6 +362,7 @@ repos:
     name: git/ohmyzsh.git
     source: https://github.com/ohmyzsh/ohmyzsh.git
     path: /srv/disk2/git/ohmyzsh.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/ohmyzsh.git
   - type: shell_script
     script: /worker-script/git.sh
@@ -361,6 +370,7 @@ repos:
     name: git/spacemacs.git
     source: https://github.com/syl20bnr/spacemacs.git
     path: /srv/disk2/git/spacemacs.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/spacemacs.git
   - type: shell_script
     script: /worker-script/git.sh
@@ -368,6 +378,7 @@ repos:
     name: git/doom-emacs.git
     source: https://github.com/hlissner/doom-emacs.git
     path: /srv/disk2/git/doom-emacs.git
+    serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/doom-emacs.git
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -396,35 +407,35 @@ repos:
     interval: 4800
     name: github/GNS3
     target: /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list
-    only_target: true
+    serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo FreeCAD/FreeCAD --target http://mirror-intel:8000/github-release
     interval: 4800
     name: github/FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
-    only_target: true
+    serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/prometheus.sh
     interval: 7200
     name: github/prometheus
     target: /github-release/prometheus/?mirror_intel_list
-    only_target: true
+    serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo oneclick/rubyinstaller2 --target http://mirror-intel:8000/github-release
     interval: 86400
     name: github/rubyinstaller2
     target: /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list
-    only_target: true
+    serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo PowerShell/PowerShell --target http://mirror-intel:8000/github-release
     interval: 86400
     name: github/PowerShell
     target: /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list
-    only_target: true
+    serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -437,62 +448,57 @@ repos:
     script: /worker-script/mirrorz.sh
     interval: 300
     target: https://mirrorz.org/
+    serve_mode: ignore
     name: .mirrorz
   - type: external
     name: nix-channels/store
-    mirror_intel: true
+    serve_mode: mirror_intel
   - type: external
     name: guix
-    mirror_intel: true
+    serve_mode: mirror_intel
   - type: external
     name: sjtug-internal
-    mirror_intel: true
+    serve_mode: mirror_intel
   - type: external
     name: fedora-ostree
-    mirror_intel: true
+    serve_mode: mirror_intel
   - type: external
     name: fedora-iot
-    mirror_intel: true
+    serve_mode: mirror_intel
   - type: external
     name: flathub
-    mirror_intel: true
+    serve_mode: mirror_intel
   - type: external
     name: github-release
-    mirror_intel: true
+    serve_mode: mirror_intel
   - type: external
     name: npm-registry
-    target: https://registry.npmjs.org/
+    serve_mode: redir
+    target: https://registry.npmjs.org
   - type: external
     name: nodejs-release
-    target: https://nodejs.org/dist/
+    serve_mode: redir
+    target: https://nodejs.org/dist
   - type: external
     name: maven-central
-    target: https://repo.maven.apache.org/maven2/
+    serve_mode: redir
+    target: https://repo.maven.apache.org/maven2
   - type: external
     name: manjarostable
-    target: https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable/
+    serve_mode: redir
+    target: https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable
     disabled: true
-  - type: external
-    name: k8s.gcr.io
-    proxy_to: https://k8s-gcr-io.siyuan.internal.sjtug.org/
-    subdomain: k8s-gcr-io
   - type: external
     name: gcr-registry-siyuan
     proxy_to: siyuan-gcr-registry:80
     disabled: true
     subdomain: k8s-gcr-io.siyuan.internal.sjtug.org
+    no_unified: true
+    serve_mode: proxy
   - type: external
     name: docker-registry-siyuan
     proxy_to: siyuan-docker-registry:80
     disabled: true
     subdomain: docker.siyuan.internal.sjtug.org
-  - type: external
-    name: google-fonts
-    subdomain: google-fonts.mirrors.sjtug.sjtu.edu.cn
-    mirror_intel: true
-  - type: external
-    name: opam-cache
-    mirror_intel: true
-  - type: external
-    name: pypi/web/simple
-    mirror_intel: true
+    no_unified: true
+    serve_mode: proxy

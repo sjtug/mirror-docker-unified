@@ -3,6 +3,7 @@ http://ftp.sjtu.edu.cn/centos {
 }
 
 http://ftp.sjtu.edu.cn/centos/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -15,6 +16,7 @@ http://ftp.sjtu.edu.cn/centos/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/debian {
@@ -22,6 +24,7 @@ http://ftp.sjtu.edu.cn/debian {
 }
 
 http://ftp.sjtu.edu.cn/debian/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -34,6 +37,7 @@ http://ftp.sjtu.edu.cn/debian/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/debian-security {
@@ -41,6 +45,7 @@ http://ftp.sjtu.edu.cn/debian-security {
 }
 
 http://ftp.sjtu.edu.cn/debian-security/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -53,6 +58,7 @@ http://ftp.sjtu.edu.cn/debian-security/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/deepin {
@@ -60,6 +66,7 @@ http://ftp.sjtu.edu.cn/deepin {
 }
 
 http://ftp.sjtu.edu.cn/deepin/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -72,6 +79,7 @@ http://ftp.sjtu.edu.cn/deepin/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/docker-ce {
@@ -79,6 +87,7 @@ http://ftp.sjtu.edu.cn/docker-ce {
 }
 
 http://ftp.sjtu.edu.cn/docker-ce/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -91,6 +100,7 @@ http://ftp.sjtu.edu.cn/docker-ce/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/fedora/linux {
@@ -98,6 +108,7 @@ http://ftp.sjtu.edu.cn/fedora/linux {
 }
 
 http://ftp.sjtu.edu.cn/fedora/linux/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -110,6 +121,7 @@ http://ftp.sjtu.edu.cn/fedora/linux/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/fedora/epel {
@@ -117,6 +129,7 @@ http://ftp.sjtu.edu.cn/fedora/epel {
 }
 
 http://ftp.sjtu.edu.cn/fedora/epel/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -129,6 +142,7 @@ http://ftp.sjtu.edu.cn/fedora/epel/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/fedora-secondary {
@@ -136,6 +150,7 @@ http://ftp.sjtu.edu.cn/fedora-secondary {
 }
 
 http://ftp.sjtu.edu.cn/fedora-secondary/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -148,6 +163,7 @@ http://ftp.sjtu.edu.cn/fedora-secondary/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/opensuse {
@@ -155,6 +171,7 @@ http://ftp.sjtu.edu.cn/opensuse {
 }
 
 http://ftp.sjtu.edu.cn/opensuse/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -167,6 +184,7 @@ http://ftp.sjtu.edu.cn/opensuse/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/remi {
@@ -174,6 +192,7 @@ http://ftp.sjtu.edu.cn/remi {
 }
 
 http://ftp.sjtu.edu.cn/remi/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -186,6 +205,7 @@ http://ftp.sjtu.edu.cn/remi/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/ubuntu {
@@ -193,6 +213,7 @@ http://ftp.sjtu.edu.cn/ubuntu {
 }
 
 http://ftp.sjtu.edu.cn/ubuntu/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -205,6 +226,7 @@ http://ftp.sjtu.edu.cn/ubuntu/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/ubuntu-ports {
@@ -212,6 +234,7 @@ http://ftp.sjtu.edu.cn/ubuntu-ports {
 }
 
 http://ftp.sjtu.edu.cn/ubuntu-ports/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -224,6 +247,7 @@ http://ftp.sjtu.edu.cn/ubuntu-ports/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/openwrt {
@@ -231,6 +255,7 @@ http://ftp.sjtu.edu.cn/openwrt {
 }
 
 http://ftp.sjtu.edu.cn/openwrt/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -243,6 +268,7 @@ http://ftp.sjtu.edu.cn/openwrt/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp.sjtu.edu.cn/rpmfusion {
@@ -250,6 +276,7 @@ http://ftp.sjtu.edu.cn/rpmfusion {
 }
 
 http://ftp.sjtu.edu.cn/rpmfusion/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -262,6 +289,17 @@ http://ftp.sjtu.edu.cn/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
+k8s-gcr-io.siyuan.internal.sjtug.org {
+    reverse_proxy siyuan-gcr-registry:80
+    header * x-sjtug-mirror-id siyuan
+}
+
+docker.siyuan.internal.sjtug.org {
+    reverse_proxy siyuan-docker-registry:80
+    header * x-sjtug-mirror-id siyuan
 }
 
 ftp.sjtu.edu.cn {
@@ -269,24 +307,6 @@ ftp.sjtu.edu.cn {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    @not_mirror_intel_repo {
-        not path /crates.io/*
-        not path /pypi-packages/*
-        not path /flathub/*
-        not path /fedora-ostree/*
-        not path /fedora-iot/*
-        not path /rust-static/*
-        not path /homebrew-bottles/*
-        not path /dart-pub/*
-        not path /guix/*
-        not path /pytorch-wheels/*
-        not path /sjtug-internal/*
-        not path /flutter_infra/*
-        not path /linuxbrew-bottles/*
-        not path /github-release/*
-        not path /nix-channels/*
-    }
-    encode @not_mirror_intel_repo gzip zstd
 
     file_server /* {
         root /dists
@@ -326,52 +346,6 @@ ftp.sjtu.edu.cn {
         reverse_proxy siyuan-docker-registry:5001
     }
 
-    route /crates.io/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /pypi-packages/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /flathub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /fedora-ostree/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /fedora-iot/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /rust-static/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /homebrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /dart-pub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /guix/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /pytorch-wheels/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /sjtug-internal/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /flutter_infra/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /linuxbrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /github-release/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /nix-channels/* {
-        reverse_proxy mirror-intel:8000
-    }
-
     @hidden {
         path */.*
     }
@@ -380,6 +354,19 @@ ftp.sjtu.edu.cn {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
+    reverse_proxy /render service.prerender.io/https:// {
+        without /render
+    }
+    rewrite {
+        if_op or
+        if {>User-Agent} has bot
+        if {>User-Agent} has googlebot
+        if {>User-Agent} has crawler
+        if {>User-Agent} has spider
+        if {>User-Agent} has robot
+        if {>User-Agent} has crawling
+        to /render/{host}{uri}
+    }
 
     header * x-sjtug-mirror-id siyuan
     header /mirrorz/* Access-Control-Allow-Origin *
@@ -500,6 +487,34 @@ ftp.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /homebrew-bottles /homebrew-bottles/ 301
+    route /homebrew-bottles/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /rust-static /rust-static/ 301
+    route /rust-static/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /pypi-packages /pypi-packages/ 301
+    route /pypi-packages/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /dart-pub /dart-pub/ 301
+    route /dart-pub/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /pytorch-wheels /pytorch-wheels/ 301
+    route /pytorch-wheels/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /crates.io /crates.io/ 301
+    route /crates.io/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /flutter_infra /flutter_infra/ 301
+    route /flutter_infra/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
         uri strip_prefix /git/linuxbrew-core.git
@@ -525,6 +540,10 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /git/homebrew-cask-versions.git
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
     }
+    redir /linuxbrew-bottles /linuxbrew-bottles/ 301
+    route /linuxbrew-bottles/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
         uri strip_prefix /git/guix.git
@@ -540,7 +559,6 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /git/flutter-sdk.git
         redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
-    reverse_proxy /apache/ apache:80
     redir /apache /apache/ 301
     file_server /apache/* browse {
         root /srv/disk2
@@ -571,15 +589,15 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /archlinux /archlinux/ 301
-    route /archlinux/* {
-        uri strip_prefix /archlinux
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
-    }
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
         root /srv/disk2
         hide .*
+    }
+    redir /github/GNS3 /github/GNS3/ 301
+    route /github/GNS3/* {
+        uri strip_prefix /github/GNS3
+        redir * /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list 302
     }
     redir /github/FreeCAD /github/FreeCAD/ 301
     route /github/FreeCAD/* {
@@ -606,11 +624,104 @@ ftp.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
-    redir /.mirrorz /.mirrorz/ 301
-    route /.mirrorz/* {
-        uri strip_prefix /.mirrorz
-        redir * https://mirrorz.org/{uri} 302
+    redir /nix-channels/store /nix-channels/store/ 301
+    route /nix-channels/store/* {
+        reverse_proxy mirror-mirror-intel:8000
     }
+    redir /guix /guix/ 301
+    route /guix/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /sjtug-internal /sjtug-internal/ 301
+    route /sjtug-internal/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /fedora-ostree /fedora-ostree/ 301
+    route /fedora-ostree/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /fedora-iot /fedora-iot/ 301
+    route /fedora-iot/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /flathub /flathub/ 301
+    route /flathub/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /github-release /github-release/ 301
+    route /github-release/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /npm-registry /npm-registry/ 301
+    route /npm-registry/* {
+        uri strip_prefix /npm-registry
+        redir * https://registry.npmjs.org{uri} 302
+    }
+    redir /nodejs-release /nodejs-release/ 301
+    route /nodejs-release/* {
+        uri strip_prefix /nodejs-release
+        redir * https://nodejs.org/dist{uri} 302
+    }
+    redir /maven-central /maven-central/ 301
+    route /maven-central/* {
+        uri strip_prefix /maven-central
+        redir * https://repo.maven.apache.org/maven2{uri} 302
+    }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
+    redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
+    route /gcr-registry-siyuan/* {
+        uri strip_prefix /gcr-registry-siyuan
+        reverse_proxy siyuan-gcr-registry:80
+    }
+    redir /docker-registry-siyuan /docker-registry-siyuan/ 301
+    route /docker-registry-siyuan/* {
+        uri strip_prefix /docker-registry-siyuan
+        reverse_proxy siyuan-docker-registry:80
+    }
+    @gzip_enabled {
+        not path /homebrew-bottles/*
+        not path /rust-static/*
+        not path /pypi-packages/*
+        not path /dart-pub/*
+        not path /pytorch-wheels/*
+        not path /crates.io/*
+        not path /flutter_infra/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/homebrew-services.git/*
+        not path /git/homebrew-cask-drivers.git/*
+        not path /git/homebrew-cask-fonts.git/*
+        not path /git/homebrew-cask-versions.git/*
+        not path /linuxbrew-bottles/*
+        not path /git/guix.git/*
+        not path /git/llvm-project.git/*
+        not path /git/flutter-sdk.git/*
+        not path /git/ohmyzsh.git/*
+        not path /git/spacemacs.git/*
+        not path /git/doom-emacs.git/*
+        not path /github/GNS3/*
+        not path /github/FreeCAD/*
+        not path /github/prometheus/*
+        not path /github/rubyinstaller2/*
+        not path /github/PowerShell/*
+        not path /nix-channels/store/*
+        not path /guix/*
+        not path /sjtug-internal/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /flathub/*
+        not path /github-release/*
+        not path /npm-registry/*
+        not path /nodejs-release/*
+        not path /maven-central/*
+        not path /manjarostable/*
+        not path /gcr-registry-siyuan/*
+        not path /docker-registry-siyuan/*
+    }
+    encode @gzip_enabled gzip zstd
 }
 
 http://ftp6.sjtu.edu.cn/centos {
@@ -618,6 +729,7 @@ http://ftp6.sjtu.edu.cn/centos {
 }
 
 http://ftp6.sjtu.edu.cn/centos/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -630,6 +742,7 @@ http://ftp6.sjtu.edu.cn/centos/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/debian {
@@ -637,6 +750,7 @@ http://ftp6.sjtu.edu.cn/debian {
 }
 
 http://ftp6.sjtu.edu.cn/debian/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -649,6 +763,7 @@ http://ftp6.sjtu.edu.cn/debian/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/debian-security {
@@ -656,6 +771,7 @@ http://ftp6.sjtu.edu.cn/debian-security {
 }
 
 http://ftp6.sjtu.edu.cn/debian-security/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -668,6 +784,7 @@ http://ftp6.sjtu.edu.cn/debian-security/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/deepin {
@@ -675,6 +792,7 @@ http://ftp6.sjtu.edu.cn/deepin {
 }
 
 http://ftp6.sjtu.edu.cn/deepin/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -687,6 +805,7 @@ http://ftp6.sjtu.edu.cn/deepin/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/docker-ce {
@@ -694,6 +813,7 @@ http://ftp6.sjtu.edu.cn/docker-ce {
 }
 
 http://ftp6.sjtu.edu.cn/docker-ce/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -706,6 +826,7 @@ http://ftp6.sjtu.edu.cn/docker-ce/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/fedora/linux {
@@ -713,6 +834,7 @@ http://ftp6.sjtu.edu.cn/fedora/linux {
 }
 
 http://ftp6.sjtu.edu.cn/fedora/linux/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -725,6 +847,7 @@ http://ftp6.sjtu.edu.cn/fedora/linux/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/fedora/epel {
@@ -732,6 +855,7 @@ http://ftp6.sjtu.edu.cn/fedora/epel {
 }
 
 http://ftp6.sjtu.edu.cn/fedora/epel/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -744,6 +868,7 @@ http://ftp6.sjtu.edu.cn/fedora/epel/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/fedora-secondary {
@@ -751,6 +876,7 @@ http://ftp6.sjtu.edu.cn/fedora-secondary {
 }
 
 http://ftp6.sjtu.edu.cn/fedora-secondary/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -763,6 +889,7 @@ http://ftp6.sjtu.edu.cn/fedora-secondary/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/opensuse {
@@ -770,6 +897,7 @@ http://ftp6.sjtu.edu.cn/opensuse {
 }
 
 http://ftp6.sjtu.edu.cn/opensuse/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -782,6 +910,7 @@ http://ftp6.sjtu.edu.cn/opensuse/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/remi {
@@ -789,6 +918,7 @@ http://ftp6.sjtu.edu.cn/remi {
 }
 
 http://ftp6.sjtu.edu.cn/remi/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -801,6 +931,7 @@ http://ftp6.sjtu.edu.cn/remi/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/ubuntu {
@@ -808,6 +939,7 @@ http://ftp6.sjtu.edu.cn/ubuntu {
 }
 
 http://ftp6.sjtu.edu.cn/ubuntu/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -820,6 +952,7 @@ http://ftp6.sjtu.edu.cn/ubuntu/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/ubuntu-ports {
@@ -827,6 +960,7 @@ http://ftp6.sjtu.edu.cn/ubuntu-ports {
 }
 
 http://ftp6.sjtu.edu.cn/ubuntu-ports/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -839,6 +973,7 @@ http://ftp6.sjtu.edu.cn/ubuntu-ports/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/openwrt {
@@ -846,6 +981,7 @@ http://ftp6.sjtu.edu.cn/openwrt {
 }
 
 http://ftp6.sjtu.edu.cn/openwrt/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -858,6 +994,7 @@ http://ftp6.sjtu.edu.cn/openwrt/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://ftp6.sjtu.edu.cn/rpmfusion {
@@ -865,6 +1002,7 @@ http://ftp6.sjtu.edu.cn/rpmfusion {
 }
 
 http://ftp6.sjtu.edu.cn/rpmfusion/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -877,6 +1015,17 @@ http://ftp6.sjtu.edu.cn/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
+k8s-gcr-io.siyuan.internal.sjtug.org {
+    reverse_proxy siyuan-gcr-registry:80
+    header * x-sjtug-mirror-id siyuan
+}
+
+docker.siyuan.internal.sjtug.org {
+    reverse_proxy siyuan-docker-registry:80
+    header * x-sjtug-mirror-id siyuan
 }
 
 ftp6.sjtu.edu.cn {
@@ -884,24 +1033,6 @@ ftp6.sjtu.edu.cn {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    @not_mirror_intel_repo {
-        not path /crates.io/*
-        not path /pypi-packages/*
-        not path /flathub/*
-        not path /fedora-ostree/*
-        not path /fedora-iot/*
-        not path /rust-static/*
-        not path /homebrew-bottles/*
-        not path /dart-pub/*
-        not path /guix/*
-        not path /pytorch-wheels/*
-        not path /sjtug-internal/*
-        not path /flutter_infra/*
-        not path /linuxbrew-bottles/*
-        not path /github-release/*
-        not path /nix-channels/*
-    }
-    encode @not_mirror_intel_repo gzip zstd
 
     file_server /* {
         root /dists
@@ -941,52 +1072,6 @@ ftp6.sjtu.edu.cn {
         reverse_proxy siyuan-docker-registry:5001
     }
 
-    route /crates.io/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /pypi-packages/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /flathub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /fedora-ostree/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /fedora-iot/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /rust-static/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /homebrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /dart-pub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /guix/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /pytorch-wheels/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /sjtug-internal/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /flutter_infra/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /linuxbrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /github-release/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /nix-channels/* {
-        reverse_proxy mirror-intel:8000
-    }
-
     @hidden {
         path */.*
     }
@@ -995,6 +1080,19 @@ ftp6.sjtu.edu.cn {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
+    reverse_proxy /render service.prerender.io/https:// {
+        without /render
+    }
+    rewrite {
+        if_op or
+        if {>User-Agent} has bot
+        if {>User-Agent} has googlebot
+        if {>User-Agent} has crawler
+        if {>User-Agent} has spider
+        if {>User-Agent} has robot
+        if {>User-Agent} has crawling
+        to /render/{host}{uri}
+    }
 
     header * x-sjtug-mirror-id siyuan
     header /mirrorz/* Access-Control-Allow-Origin *
@@ -1115,6 +1213,34 @@ ftp6.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /homebrew-bottles /homebrew-bottles/ 301
+    route /homebrew-bottles/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /rust-static /rust-static/ 301
+    route /rust-static/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /pypi-packages /pypi-packages/ 301
+    route /pypi-packages/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /dart-pub /dart-pub/ 301
+    route /dart-pub/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /pytorch-wheels /pytorch-wheels/ 301
+    route /pytorch-wheels/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /crates.io /crates.io/ 301
+    route /crates.io/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /flutter_infra /flutter_infra/ 301
+    route /flutter_infra/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
         uri strip_prefix /git/linuxbrew-core.git
@@ -1140,6 +1266,10 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /git/homebrew-cask-versions.git
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
     }
+    redir /linuxbrew-bottles /linuxbrew-bottles/ 301
+    route /linuxbrew-bottles/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
         uri strip_prefix /git/guix.git
@@ -1155,7 +1285,6 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /git/flutter-sdk.git
         redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
-    reverse_proxy /apache/ apache:80
     redir /apache /apache/ 301
     file_server /apache/* browse {
         root /srv/disk2
@@ -1186,15 +1315,15 @@ ftp6.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /archlinux /archlinux/ 301
-    route /archlinux/* {
-        uri strip_prefix /archlinux
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
-    }
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
         root /srv/disk2
         hide .*
+    }
+    redir /github/GNS3 /github/GNS3/ 301
+    route /github/GNS3/* {
+        uri strip_prefix /github/GNS3
+        redir * /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list 302
     }
     redir /github/FreeCAD /github/FreeCAD/ 301
     route /github/FreeCAD/* {
@@ -1221,11 +1350,104 @@ ftp6.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
-    redir /.mirrorz /.mirrorz/ 301
-    route /.mirrorz/* {
-        uri strip_prefix /.mirrorz
-        redir * https://mirrorz.org/{uri} 302
+    redir /nix-channels/store /nix-channels/store/ 301
+    route /nix-channels/store/* {
+        reverse_proxy mirror-mirror-intel:8000
     }
+    redir /guix /guix/ 301
+    route /guix/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /sjtug-internal /sjtug-internal/ 301
+    route /sjtug-internal/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /fedora-ostree /fedora-ostree/ 301
+    route /fedora-ostree/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /fedora-iot /fedora-iot/ 301
+    route /fedora-iot/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /flathub /flathub/ 301
+    route /flathub/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /github-release /github-release/ 301
+    route /github-release/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /npm-registry /npm-registry/ 301
+    route /npm-registry/* {
+        uri strip_prefix /npm-registry
+        redir * https://registry.npmjs.org{uri} 302
+    }
+    redir /nodejs-release /nodejs-release/ 301
+    route /nodejs-release/* {
+        uri strip_prefix /nodejs-release
+        redir * https://nodejs.org/dist{uri} 302
+    }
+    redir /maven-central /maven-central/ 301
+    route /maven-central/* {
+        uri strip_prefix /maven-central
+        redir * https://repo.maven.apache.org/maven2{uri} 302
+    }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
+    redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
+    route /gcr-registry-siyuan/* {
+        uri strip_prefix /gcr-registry-siyuan
+        reverse_proxy siyuan-gcr-registry:80
+    }
+    redir /docker-registry-siyuan /docker-registry-siyuan/ 301
+    route /docker-registry-siyuan/* {
+        uri strip_prefix /docker-registry-siyuan
+        reverse_proxy siyuan-docker-registry:80
+    }
+    @gzip_enabled {
+        not path /homebrew-bottles/*
+        not path /rust-static/*
+        not path /pypi-packages/*
+        not path /dart-pub/*
+        not path /pytorch-wheels/*
+        not path /crates.io/*
+        not path /flutter_infra/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/homebrew-services.git/*
+        not path /git/homebrew-cask-drivers.git/*
+        not path /git/homebrew-cask-fonts.git/*
+        not path /git/homebrew-cask-versions.git/*
+        not path /linuxbrew-bottles/*
+        not path /git/guix.git/*
+        not path /git/llvm-project.git/*
+        not path /git/flutter-sdk.git/*
+        not path /git/ohmyzsh.git/*
+        not path /git/spacemacs.git/*
+        not path /git/doom-emacs.git/*
+        not path /github/GNS3/*
+        not path /github/FreeCAD/*
+        not path /github/prometheus/*
+        not path /github/rubyinstaller2/*
+        not path /github/PowerShell/*
+        not path /nix-channels/store/*
+        not path /guix/*
+        not path /sjtug-internal/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /flathub/*
+        not path /github-release/*
+        not path /npm-registry/*
+        not path /nodejs-release/*
+        not path /maven-central/*
+        not path /manjarostable/*
+        not path /gcr-registry-siyuan/*
+        not path /docker-registry-siyuan/*
+    }
+    encode @gzip_enabled gzip zstd
 }
 
 http://mirror.sjtu.edu.cn/centos {
@@ -1233,6 +1455,7 @@ http://mirror.sjtu.edu.cn/centos {
 }
 
 http://mirror.sjtu.edu.cn/centos/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1245,6 +1468,7 @@ http://mirror.sjtu.edu.cn/centos/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/debian {
@@ -1252,6 +1476,7 @@ http://mirror.sjtu.edu.cn/debian {
 }
 
 http://mirror.sjtu.edu.cn/debian/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1264,6 +1489,7 @@ http://mirror.sjtu.edu.cn/debian/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/debian-security {
@@ -1271,6 +1497,7 @@ http://mirror.sjtu.edu.cn/debian-security {
 }
 
 http://mirror.sjtu.edu.cn/debian-security/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1283,6 +1510,7 @@ http://mirror.sjtu.edu.cn/debian-security/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/deepin {
@@ -1290,6 +1518,7 @@ http://mirror.sjtu.edu.cn/deepin {
 }
 
 http://mirror.sjtu.edu.cn/deepin/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1302,6 +1531,7 @@ http://mirror.sjtu.edu.cn/deepin/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/docker-ce {
@@ -1309,6 +1539,7 @@ http://mirror.sjtu.edu.cn/docker-ce {
 }
 
 http://mirror.sjtu.edu.cn/docker-ce/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1321,6 +1552,7 @@ http://mirror.sjtu.edu.cn/docker-ce/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/fedora/linux {
@@ -1328,6 +1560,7 @@ http://mirror.sjtu.edu.cn/fedora/linux {
 }
 
 http://mirror.sjtu.edu.cn/fedora/linux/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1340,6 +1573,7 @@ http://mirror.sjtu.edu.cn/fedora/linux/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/fedora/epel {
@@ -1347,6 +1581,7 @@ http://mirror.sjtu.edu.cn/fedora/epel {
 }
 
 http://mirror.sjtu.edu.cn/fedora/epel/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1359,6 +1594,7 @@ http://mirror.sjtu.edu.cn/fedora/epel/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/fedora-secondary {
@@ -1366,6 +1602,7 @@ http://mirror.sjtu.edu.cn/fedora-secondary {
 }
 
 http://mirror.sjtu.edu.cn/fedora-secondary/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1378,6 +1615,7 @@ http://mirror.sjtu.edu.cn/fedora-secondary/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/opensuse {
@@ -1385,6 +1623,7 @@ http://mirror.sjtu.edu.cn/opensuse {
 }
 
 http://mirror.sjtu.edu.cn/opensuse/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1397,6 +1636,7 @@ http://mirror.sjtu.edu.cn/opensuse/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/remi {
@@ -1404,6 +1644,7 @@ http://mirror.sjtu.edu.cn/remi {
 }
 
 http://mirror.sjtu.edu.cn/remi/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1416,6 +1657,7 @@ http://mirror.sjtu.edu.cn/remi/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/ubuntu {
@@ -1423,6 +1665,7 @@ http://mirror.sjtu.edu.cn/ubuntu {
 }
 
 http://mirror.sjtu.edu.cn/ubuntu/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1435,6 +1678,7 @@ http://mirror.sjtu.edu.cn/ubuntu/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/ubuntu-ports {
@@ -1442,6 +1686,7 @@ http://mirror.sjtu.edu.cn/ubuntu-ports {
 }
 
 http://mirror.sjtu.edu.cn/ubuntu-ports/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1454,6 +1699,7 @@ http://mirror.sjtu.edu.cn/ubuntu-ports/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/openwrt {
@@ -1461,6 +1707,7 @@ http://mirror.sjtu.edu.cn/openwrt {
 }
 
 http://mirror.sjtu.edu.cn/openwrt/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1473,6 +1720,7 @@ http://mirror.sjtu.edu.cn/openwrt/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://mirror.sjtu.edu.cn/rpmfusion {
@@ -1480,6 +1728,7 @@ http://mirror.sjtu.edu.cn/rpmfusion {
 }
 
 http://mirror.sjtu.edu.cn/rpmfusion/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1492,6 +1741,17 @@ http://mirror.sjtu.edu.cn/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
+k8s-gcr-io.siyuan.internal.sjtug.org {
+    reverse_proxy siyuan-gcr-registry:80
+    header * x-sjtug-mirror-id siyuan
+}
+
+docker.siyuan.internal.sjtug.org {
+    reverse_proxy siyuan-docker-registry:80
+    header * x-sjtug-mirror-id siyuan
 }
 
 mirror.sjtu.edu.cn {
@@ -1499,24 +1759,6 @@ mirror.sjtu.edu.cn {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    @not_mirror_intel_repo {
-        not path /crates.io/*
-        not path /pypi-packages/*
-        not path /flathub/*
-        not path /fedora-ostree/*
-        not path /fedora-iot/*
-        not path /rust-static/*
-        not path /homebrew-bottles/*
-        not path /dart-pub/*
-        not path /guix/*
-        not path /pytorch-wheels/*
-        not path /sjtug-internal/*
-        not path /flutter_infra/*
-        not path /linuxbrew-bottles/*
-        not path /github-release/*
-        not path /nix-channels/*
-    }
-    encode @not_mirror_intel_repo gzip zstd
 
     file_server /* {
         root /dists
@@ -1556,52 +1798,6 @@ mirror.sjtu.edu.cn {
         reverse_proxy siyuan-docker-registry:5001
     }
 
-    route /crates.io/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /pypi-packages/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /flathub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /fedora-ostree/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /fedora-iot/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /rust-static/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /homebrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /dart-pub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /guix/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /pytorch-wheels/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /sjtug-internal/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /flutter_infra/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /linuxbrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /github-release/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /nix-channels/* {
-        reverse_proxy mirror-intel:8000
-    }
-
     @hidden {
         path */.*
     }
@@ -1610,6 +1806,19 @@ mirror.sjtu.edu.cn {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
+    reverse_proxy /render service.prerender.io/https:// {
+        without /render
+    }
+    rewrite {
+        if_op or
+        if {>User-Agent} has bot
+        if {>User-Agent} has googlebot
+        if {>User-Agent} has crawler
+        if {>User-Agent} has spider
+        if {>User-Agent} has robot
+        if {>User-Agent} has crawling
+        to /render/{host}{uri}
+    }
 
     header * x-sjtug-mirror-id siyuan
     header /mirrorz/* Access-Control-Allow-Origin *
@@ -1730,6 +1939,34 @@ mirror.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /homebrew-bottles /homebrew-bottles/ 301
+    route /homebrew-bottles/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /rust-static /rust-static/ 301
+    route /rust-static/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /pypi-packages /pypi-packages/ 301
+    route /pypi-packages/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /dart-pub /dart-pub/ 301
+    route /dart-pub/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /pytorch-wheels /pytorch-wheels/ 301
+    route /pytorch-wheels/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /crates.io /crates.io/ 301
+    route /crates.io/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /flutter_infra /flutter_infra/ 301
+    route /flutter_infra/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
         uri strip_prefix /git/linuxbrew-core.git
@@ -1755,6 +1992,10 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /git/homebrew-cask-versions.git
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
     }
+    redir /linuxbrew-bottles /linuxbrew-bottles/ 301
+    route /linuxbrew-bottles/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
         uri strip_prefix /git/guix.git
@@ -1770,7 +2011,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /git/flutter-sdk.git
         redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
-    reverse_proxy /apache/ apache:80
     redir /apache /apache/ 301
     file_server /apache/* browse {
         root /srv/disk2
@@ -1801,15 +2041,15 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /archlinux /archlinux/ 301
-    route /archlinux/* {
-        uri strip_prefix /archlinux
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
-    }
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
         root /srv/disk2
         hide .*
+    }
+    redir /github/GNS3 /github/GNS3/ 301
+    route /github/GNS3/* {
+        uri strip_prefix /github/GNS3
+        redir * /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list 302
     }
     redir /github/FreeCAD /github/FreeCAD/ 301
     route /github/FreeCAD/* {
@@ -1836,11 +2076,104 @@ mirror.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
-    redir /.mirrorz /.mirrorz/ 301
-    route /.mirrorz/* {
-        uri strip_prefix /.mirrorz
-        redir * https://mirrorz.org/{uri} 302
+    redir /nix-channels/store /nix-channels/store/ 301
+    route /nix-channels/store/* {
+        reverse_proxy mirror-mirror-intel:8000
     }
+    redir /guix /guix/ 301
+    route /guix/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /sjtug-internal /sjtug-internal/ 301
+    route /sjtug-internal/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /fedora-ostree /fedora-ostree/ 301
+    route /fedora-ostree/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /fedora-iot /fedora-iot/ 301
+    route /fedora-iot/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /flathub /flathub/ 301
+    route /flathub/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /github-release /github-release/ 301
+    route /github-release/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /npm-registry /npm-registry/ 301
+    route /npm-registry/* {
+        uri strip_prefix /npm-registry
+        redir * https://registry.npmjs.org{uri} 302
+    }
+    redir /nodejs-release /nodejs-release/ 301
+    route /nodejs-release/* {
+        uri strip_prefix /nodejs-release
+        redir * https://nodejs.org/dist{uri} 302
+    }
+    redir /maven-central /maven-central/ 301
+    route /maven-central/* {
+        uri strip_prefix /maven-central
+        redir * https://repo.maven.apache.org/maven2{uri} 302
+    }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
+    redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
+    route /gcr-registry-siyuan/* {
+        uri strip_prefix /gcr-registry-siyuan
+        reverse_proxy siyuan-gcr-registry:80
+    }
+    redir /docker-registry-siyuan /docker-registry-siyuan/ 301
+    route /docker-registry-siyuan/* {
+        uri strip_prefix /docker-registry-siyuan
+        reverse_proxy siyuan-docker-registry:80
+    }
+    @gzip_enabled {
+        not path /homebrew-bottles/*
+        not path /rust-static/*
+        not path /pypi-packages/*
+        not path /dart-pub/*
+        not path /pytorch-wheels/*
+        not path /crates.io/*
+        not path /flutter_infra/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/homebrew-services.git/*
+        not path /git/homebrew-cask-drivers.git/*
+        not path /git/homebrew-cask-fonts.git/*
+        not path /git/homebrew-cask-versions.git/*
+        not path /linuxbrew-bottles/*
+        not path /git/guix.git/*
+        not path /git/llvm-project.git/*
+        not path /git/flutter-sdk.git/*
+        not path /git/ohmyzsh.git/*
+        not path /git/spacemacs.git/*
+        not path /git/doom-emacs.git/*
+        not path /github/GNS3/*
+        not path /github/FreeCAD/*
+        not path /github/prometheus/*
+        not path /github/rubyinstaller2/*
+        not path /github/PowerShell/*
+        not path /nix-channels/store/*
+        not path /guix/*
+        not path /sjtug-internal/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /flathub/*
+        not path /github-release/*
+        not path /npm-registry/*
+        not path /nodejs-release/*
+        not path /maven-central/*
+        not path /manjarostable/*
+        not path /gcr-registry-siyuan/*
+        not path /docker-registry-siyuan/*
+    }
+    encode @gzip_enabled gzip zstd
 }
 
 http://siyuan.internal.sjtug.org/centos {
@@ -1848,6 +2181,7 @@ http://siyuan.internal.sjtug.org/centos {
 }
 
 http://siyuan.internal.sjtug.org/centos/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1860,6 +2194,7 @@ http://siyuan.internal.sjtug.org/centos/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/debian {
@@ -1867,6 +2202,7 @@ http://siyuan.internal.sjtug.org/debian {
 }
 
 http://siyuan.internal.sjtug.org/debian/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1879,6 +2215,7 @@ http://siyuan.internal.sjtug.org/debian/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/debian-security {
@@ -1886,6 +2223,7 @@ http://siyuan.internal.sjtug.org/debian-security {
 }
 
 http://siyuan.internal.sjtug.org/debian-security/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1898,6 +2236,7 @@ http://siyuan.internal.sjtug.org/debian-security/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/deepin {
@@ -1905,6 +2244,7 @@ http://siyuan.internal.sjtug.org/deepin {
 }
 
 http://siyuan.internal.sjtug.org/deepin/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1917,6 +2257,7 @@ http://siyuan.internal.sjtug.org/deepin/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/docker-ce {
@@ -1924,6 +2265,7 @@ http://siyuan.internal.sjtug.org/docker-ce {
 }
 
 http://siyuan.internal.sjtug.org/docker-ce/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1936,6 +2278,7 @@ http://siyuan.internal.sjtug.org/docker-ce/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/fedora/linux {
@@ -1943,6 +2286,7 @@ http://siyuan.internal.sjtug.org/fedora/linux {
 }
 
 http://siyuan.internal.sjtug.org/fedora/linux/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1955,6 +2299,7 @@ http://siyuan.internal.sjtug.org/fedora/linux/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/fedora/epel {
@@ -1962,6 +2307,7 @@ http://siyuan.internal.sjtug.org/fedora/epel {
 }
 
 http://siyuan.internal.sjtug.org/fedora/epel/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1974,6 +2320,7 @@ http://siyuan.internal.sjtug.org/fedora/epel/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/fedora-secondary {
@@ -1981,6 +2328,7 @@ http://siyuan.internal.sjtug.org/fedora-secondary {
 }
 
 http://siyuan.internal.sjtug.org/fedora-secondary/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -1993,6 +2341,7 @@ http://siyuan.internal.sjtug.org/fedora-secondary/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/opensuse {
@@ -2000,6 +2349,7 @@ http://siyuan.internal.sjtug.org/opensuse {
 }
 
 http://siyuan.internal.sjtug.org/opensuse/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -2012,6 +2362,7 @@ http://siyuan.internal.sjtug.org/opensuse/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/remi {
@@ -2019,6 +2370,7 @@ http://siyuan.internal.sjtug.org/remi {
 }
 
 http://siyuan.internal.sjtug.org/remi/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -2031,6 +2383,7 @@ http://siyuan.internal.sjtug.org/remi/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/ubuntu {
@@ -2038,6 +2391,7 @@ http://siyuan.internal.sjtug.org/ubuntu {
 }
 
 http://siyuan.internal.sjtug.org/ubuntu/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -2050,6 +2404,7 @@ http://siyuan.internal.sjtug.org/ubuntu/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/ubuntu-ports {
@@ -2057,6 +2412,7 @@ http://siyuan.internal.sjtug.org/ubuntu-ports {
 }
 
 http://siyuan.internal.sjtug.org/ubuntu-ports/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -2069,6 +2425,7 @@ http://siyuan.internal.sjtug.org/ubuntu-ports/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/openwrt {
@@ -2076,6 +2433,7 @@ http://siyuan.internal.sjtug.org/openwrt {
 }
 
 http://siyuan.internal.sjtug.org/openwrt/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -2088,6 +2446,7 @@ http://siyuan.internal.sjtug.org/openwrt/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
 }
 
 http://siyuan.internal.sjtug.org/rpmfusion {
@@ -2095,6 +2454,7 @@ http://siyuan.internal.sjtug.org/rpmfusion {
 }
 
 http://siyuan.internal.sjtug.org/rpmfusion/* {
+    encode /* gzip zstd
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -2107,6 +2467,17 @@ http://siyuan.internal.sjtug.org/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
+k8s-gcr-io.siyuan.internal.sjtug.org {
+    reverse_proxy siyuan-gcr-registry:80
+    header * x-sjtug-mirror-id siyuan
+}
+
+docker.siyuan.internal.sjtug.org {
+    reverse_proxy siyuan-docker-registry:80
+    header * x-sjtug-mirror-id siyuan
 }
 
 siyuan.internal.sjtug.org {
@@ -2114,24 +2485,6 @@ siyuan.internal.sjtug.org {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    @not_mirror_intel_repo {
-        not path /crates.io/*
-        not path /pypi-packages/*
-        not path /flathub/*
-        not path /fedora-ostree/*
-        not path /fedora-iot/*
-        not path /rust-static/*
-        not path /homebrew-bottles/*
-        not path /dart-pub/*
-        not path /guix/*
-        not path /pytorch-wheels/*
-        not path /sjtug-internal/*
-        not path /flutter_infra/*
-        not path /linuxbrew-bottles/*
-        not path /github-release/*
-        not path /nix-channels/*
-    }
-    encode @not_mirror_intel_repo gzip zstd
 
     file_server /* {
         root /dists
@@ -2171,52 +2524,6 @@ siyuan.internal.sjtug.org {
         reverse_proxy siyuan-docker-registry:5001
     }
 
-    route /crates.io/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /pypi-packages/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /flathub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /fedora-ostree/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /fedora-iot/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /rust-static/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /homebrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /dart-pub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /guix/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /pytorch-wheels/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /sjtug-internal/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /flutter_infra/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /linuxbrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /github-release/* {
-        reverse_proxy mirror-intel:8000
-    }
-    route /nix-channels/* {
-        reverse_proxy mirror-intel:8000
-    }
-
     @hidden {
         path */.*
     }
@@ -2225,6 +2532,19 @@ siyuan.internal.sjtug.org {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
+    reverse_proxy /render service.prerender.io/https:// {
+        without /render
+    }
+    rewrite {
+        if_op or
+        if {>User-Agent} has bot
+        if {>User-Agent} has googlebot
+        if {>User-Agent} has crawler
+        if {>User-Agent} has spider
+        if {>User-Agent} has robot
+        if {>User-Agent} has crawling
+        to /render/{host}{uri}
+    }
 
     header * x-sjtug-mirror-id siyuan
     header /mirrorz/* Access-Control-Allow-Origin *
@@ -2345,6 +2665,34 @@ siyuan.internal.sjtug.org {
         root /srv/disk1
         hide .*
     }
+    redir /homebrew-bottles /homebrew-bottles/ 301
+    route /homebrew-bottles/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /rust-static /rust-static/ 301
+    route /rust-static/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /pypi-packages /pypi-packages/ 301
+    route /pypi-packages/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /dart-pub /dart-pub/ 301
+    route /dart-pub/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /pytorch-wheels /pytorch-wheels/ 301
+    route /pytorch-wheels/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /crates.io /crates.io/ 301
+    route /crates.io/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /flutter_infra /flutter_infra/ 301
+    route /flutter_infra/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
         uri strip_prefix /git/linuxbrew-core.git
@@ -2370,6 +2718,10 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /git/homebrew-cask-versions.git
         redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
     }
+    redir /linuxbrew-bottles /linuxbrew-bottles/ 301
+    route /linuxbrew-bottles/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
         uri strip_prefix /git/guix.git
@@ -2385,7 +2737,6 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /git/flutter-sdk.git
         redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
     }
-    reverse_proxy /apache/ apache:80
     redir /apache /apache/ 301
     file_server /apache/* browse {
         root /srv/disk2
@@ -2416,15 +2767,15 @@ siyuan.internal.sjtug.org {
         root /srv/disk2
         hide .*
     }
-    redir /archlinux /archlinux/ 301
-    route /archlinux/* {
-        uri strip_prefix /archlinux
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
-    }
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
         root /srv/disk2
         hide .*
+    }
+    redir /github/GNS3 /github/GNS3/ 301
+    route /github/GNS3/* {
+        uri strip_prefix /github/GNS3
+        redir * /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list 302
     }
     redir /github/FreeCAD /github/FreeCAD/ 301
     route /github/FreeCAD/* {
@@ -2451,24 +2802,103 @@ siyuan.internal.sjtug.org {
         root /srv/disk1
         hide .*
     }
-    redir /.mirrorz /.mirrorz/ 301
-    route /.mirrorz/* {
-        uri strip_prefix /.mirrorz
-        redir * https://mirrorz.org/{uri} 302
+    redir /nix-channels/store /nix-channels/store/ 301
+    route /nix-channels/store/* {
+        reverse_proxy mirror-mirror-intel:8000
     }
-}
-
-k8s-gcr-io.siyuan.internal.sjtug.org {
-    encode  gzip zstd
-
-    reverse_proxy siyuan-gcr-registry:80
-    header * x-sjtug-mirror-id siyuan
-}
-
-docker.siyuan.internal.sjtug.org {
-    encode  gzip zstd
-
-    reverse_proxy siyuan-docker-registry:80
-    header * x-sjtug-mirror-id siyuan
+    redir /guix /guix/ 301
+    route /guix/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /sjtug-internal /sjtug-internal/ 301
+    route /sjtug-internal/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /fedora-ostree /fedora-ostree/ 301
+    route /fedora-ostree/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /fedora-iot /fedora-iot/ 301
+    route /fedora-iot/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /flathub /flathub/ 301
+    route /flathub/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /github-release /github-release/ 301
+    route /github-release/* {
+        reverse_proxy mirror-mirror-intel:8000
+    }
+    redir /npm-registry /npm-registry/ 301
+    route /npm-registry/* {
+        uri strip_prefix /npm-registry
+        redir * https://registry.npmjs.org{uri} 302
+    }
+    redir /nodejs-release /nodejs-release/ 301
+    route /nodejs-release/* {
+        uri strip_prefix /nodejs-release
+        redir * https://nodejs.org/dist{uri} 302
+    }
+    redir /maven-central /maven-central/ 301
+    route /maven-central/* {
+        uri strip_prefix /maven-central
+        redir * https://repo.maven.apache.org/maven2{uri} 302
+    }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
+    redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
+    route /gcr-registry-siyuan/* {
+        uri strip_prefix /gcr-registry-siyuan
+        reverse_proxy siyuan-gcr-registry:80
+    }
+    redir /docker-registry-siyuan /docker-registry-siyuan/ 301
+    route /docker-registry-siyuan/* {
+        uri strip_prefix /docker-registry-siyuan
+        reverse_proxy siyuan-docker-registry:80
+    }
+    @gzip_enabled {
+        not path /homebrew-bottles/*
+        not path /rust-static/*
+        not path /pypi-packages/*
+        not path /dart-pub/*
+        not path /pytorch-wheels/*
+        not path /crates.io/*
+        not path /flutter_infra/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/homebrew-services.git/*
+        not path /git/homebrew-cask-drivers.git/*
+        not path /git/homebrew-cask-fonts.git/*
+        not path /git/homebrew-cask-versions.git/*
+        not path /linuxbrew-bottles/*
+        not path /git/guix.git/*
+        not path /git/llvm-project.git/*
+        not path /git/flutter-sdk.git/*
+        not path /git/ohmyzsh.git/*
+        not path /git/spacemacs.git/*
+        not path /git/doom-emacs.git/*
+        not path /github/GNS3/*
+        not path /github/FreeCAD/*
+        not path /github/prometheus/*
+        not path /github/rubyinstaller2/*
+        not path /github/PowerShell/*
+        not path /nix-channels/store/*
+        not path /guix/*
+        not path /sjtug-internal/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /flathub/*
+        not path /github-release/*
+        not path /npm-registry/*
+        not path /nodejs-release/*
+        not path /maven-central/*
+        not path /manjarostable/*
+        not path /gcr-registry-siyuan/*
+        not path /docker-registry-siyuan/*
+    }
+    encode @gzip_enabled gzip zstd
 }
 

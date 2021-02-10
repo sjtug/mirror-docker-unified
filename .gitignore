@@ -4,3 +4,4 @@ docker-compose.override.yml
 .DS_Store
 .env
 /secrets
+.pytest_cache/
