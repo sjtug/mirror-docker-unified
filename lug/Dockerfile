@@ -28,7 +28,7 @@ RUN /app/build-script/setup-julia.sh
 ENV PATH="/app/julia-1.5.0/bin:${PATH}"
 
 # Python packages
-RUN if [ "$USE_SJTUG" = true ] ; then pip3 install python-dateutil -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple; else pip3 install python-dateutil ; fi
+RUN if [ "$USE_SJTUG" = true ] ; then pip3 install python-dateutil -i https://mirror.sjtu.edu.cn/pypi/web/simple; else pip3 install python-dateutil ; fi
 
 # StorageMirrorServer.jl
 COPY build-script/setup-julia-mirror.sh build-script/setup-julia-mirror.sh
