@@ -669,6 +669,11 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /docker-registry-siyuan
         reverse_proxy siyuan-docker-registry:80
     }
+    redir /sury /sury/ 301
+    file_server /sury/* browse {
+        root /srv/disk1
+        hide .*
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -1371,6 +1376,11 @@ ftp6.sjtu.edu.cn {
     route /docker-registry-siyuan/* {
         uri strip_prefix /docker-registry-siyuan
         reverse_proxy siyuan-docker-registry:80
+    }
+    redir /sury /sury/ 301
+    file_server /sury/* browse {
+        root /srv/disk1
+        hide .*
     }
     @gzip_enabled {
         not path /homebrew-bottles/*
@@ -2075,6 +2085,11 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /docker-registry-siyuan
         reverse_proxy siyuan-docker-registry:80
     }
+    redir /sury /sury/ 301
+    file_server /sury/* browse {
+        root /srv/disk1
+        hide .*
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2777,6 +2792,11 @@ siyuan.internal.sjtug.org {
     route /docker-registry-siyuan/* {
         uri strip_prefix /docker-registry-siyuan
         reverse_proxy siyuan-docker-registry:80
+    }
+    redir /sury /sury/ 301
+    file_server /sury/* browse {
+        root /srv/disk1
+        hide .*
     }
     @gzip_enabled {
         not path /homebrew-bottles/*

@@ -502,3 +502,10 @@ repos:
     subdomain: docker.siyuan.internal.sjtug.org
     no_unified: true
     serve_mode: proxy
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://himiko.rfc1925.org/repositories
+    interval: 7200
+    path: /srv/disk1/sury
+    name: sury
+    <<: *oneshot_common
