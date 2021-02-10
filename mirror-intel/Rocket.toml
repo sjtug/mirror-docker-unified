@@ -30,7 +30,8 @@ allow = [
   "GNS3/gns3-gui/",
   "PowerShell/PowerShell/",
   "oneclick/rubyinstaller2/",
-  "mikefarah/yq/"
+  "mikefarah/yq/",
+  "docker/compose/"
 ]
 
 [default.endpoints]
