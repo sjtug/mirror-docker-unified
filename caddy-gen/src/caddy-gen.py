@@ -107,7 +107,7 @@ def dict_to_repo(repo: dict) -> Repo:
     return None
 
 
-def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
+def repos(base: str, repos: dict, first_site: bool) -> tuple[list[Node], list[Node]]:
     outer_nodes = []
     file_server_nodes = []
 
@@ -128,7 +128,7 @@ def repos(base: str, repos: dict) -> tuple[list[Node], list[Node]]:
             file_server_nodes += repo_redir(repo)
             file_server_nodes += repo.as_repo()
 
-            if 'subdomain' in repo_:
+            if 'subdomain' in repo_ and first_site:
                 outer_nodes += [Node(repo_['subdomain'],
                                      repo.as_subdomain() + [sjtug_mirror_id()])]
 
@@ -148,9 +148,9 @@ def sjtug_mirror_id() -> Node:
     return Node("header * x-sjtug-mirror-id siyuan")
 
 
-def build_root(base, config_yaml: dict) -> Node:
+def build_root(base, config_yaml: dict, first_site: bool) -> Node:
     common_nodes = common()
-    no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'])
+    no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'], first_site)
 
     main_children = common_nodes + [BLANK_NODE]
     main_children += [sjtug_mirror_id()]  # SJTUG mirror ID header
@@ -191,8 +191,8 @@ if __name__ == "__main__":
 
     roots = []
 
-    for base in BASES[SITE]:
-        roots.append(build_root(base, config_yaml))
+    for (idx, base) in enumerate(BASES[SITE]):
+        roots.append(build_root(base, config_yaml, idx == 0))
 
     with open(f'{args.output}/Caddyfile.{SITE}', 'w') as fp:
         for root in roots:

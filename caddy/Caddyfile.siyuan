@@ -1018,16 +1018,6 @@ http://ftp6.sjtu.edu.cn/rpmfusion/* {
     header * x-sjtug-mirror-id siyuan
 }
 
-k8s-gcr-io.siyuan.internal.sjtug.org {
-    reverse_proxy siyuan-gcr-registry:80
-    header * x-sjtug-mirror-id siyuan
-}
-
-docker.siyuan.internal.sjtug.org {
-    reverse_proxy siyuan-docker-registry:80
-    header * x-sjtug-mirror-id siyuan
-}
-
 ftp6.sjtu.edu.cn {
     log {
         output stdout
@@ -1744,16 +1734,6 @@ http://mirror.sjtu.edu.cn/rpmfusion/* {
     header * x-sjtug-mirror-id siyuan
 }
 
-k8s-gcr-io.siyuan.internal.sjtug.org {
-    reverse_proxy siyuan-gcr-registry:80
-    header * x-sjtug-mirror-id siyuan
-}
-
-docker.siyuan.internal.sjtug.org {
-    reverse_proxy siyuan-docker-registry:80
-    header * x-sjtug-mirror-id siyuan
-}
-
 mirror.sjtu.edu.cn {
     log {
         output stdout
@@ -2467,16 +2447,6 @@ http://siyuan.internal.sjtug.org/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
-k8s-gcr-io.siyuan.internal.sjtug.org {
-    reverse_proxy siyuan-gcr-registry:80
-    header * x-sjtug-mirror-id siyuan
-}
-
-docker.siyuan.internal.sjtug.org {
-    reverse_proxy siyuan-docker-registry:80
     header * x-sjtug-mirror-id siyuan
 }
 
