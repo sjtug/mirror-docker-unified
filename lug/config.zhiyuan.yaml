@@ -397,13 +397,13 @@ repos:
     source: rsync://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/
   - type: external
     name: k8s.gcr.io
-    proxy_to: https://k8s-gcr-io.siyuan.internal.sjtug.org/
+    proxy_to: https://k8s-gcr-io.siyuan.internal.sjtug.org
     subdomain: k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn
     no_unified: true
     serve_mode: proxy
   - type: external
     name: docker-registry
-    proxy_to: https://docker.siyuan.internal.sjtug.org/
+    proxy_to: https://docker.siyuan.internal.sjtug.org
     subdomain: docker.mirrors.sjtug.sjtu.edu.cn
     no_unified: true
     serve_mode: proxy
