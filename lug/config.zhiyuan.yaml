@@ -143,7 +143,7 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/anaconda.py
-    path: /mnt/anaconda/
+    path: /mnt/anaconda
     name: anaconda
     subdomain: anaconda.mirrors.sjtug.sjtu.edu.cn
     interval: 6000
@@ -343,7 +343,7 @@ repos:
   - type: shell_script
     name: raspberry-pi-os-images
     script: /worker-script/rsync.sh
-    path: /mnt/raspbian-images
+    path: /mnt/raspberry-pi-os-images
     interval: 10801
     source: rsync://mirrors.tuna.tsinghua.edu.cn/raspberry-pi-os-images/
     <<: *oneshot_common

@@ -75,11 +75,11 @@ def repo_redir(repo: Repo) -> list[Node]:
     return [Node(f'redir /{repo.get_name()} /{repo.get_name()}/ 301')]
 
 
-def repo_no_redir(base: str, repo: Repo) -> list[Node]:
+def repo_no_redir(base: str, repo: Repo, site: str) -> list[Node]:
     return [
         Node(f'http://{base}/{repo.get_name()}', repo_redir(repo)),
         Node(f'http://{base}/{repo.get_name()}/*',
-             repo.as_site() + [sjtug_mirror_id()])
+             repo.as_site() + [sjtug_mirror_id(site)])
     ]
 
 
@@ -108,7 +108,7 @@ def dict_to_repo(repo: dict) -> Repo:
     return None
 
 
-def repos(base: str, repos: dict, first_site: bool) -> tuple[list[Node], list[Node]]:
+def repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list[Node], list[Node]]:
     outer_nodes = []
     file_server_nodes = []
 
@@ -125,13 +125,13 @@ def repos(base: str, repos: dict, first_site: bool) -> tuple[list[Node], list[No
                     logging.warning(
                         f'repo "{repo["name"]}": BASE "{base}" might be a local url, "no_redir_http" will be ignored')
                 else:
-                    outer_nodes += repo_no_redir(base, repo)
+                    outer_nodes += repo_no_redir(base, repo, site)
             file_server_nodes += repo_redir(repo)
             file_server_nodes += repo.as_repo()
 
             if 'subdomain' in repo_ and first_site:
                 outer_nodes += [Node(repo_['subdomain'],
-                                     repo.as_subdomain() + [sjtug_mirror_id()])]
+                                     repo.as_subdomain() + [sjtug_mirror_id(site)])]
 
             if not repo.enable_repo_gzip():
                 gzip_disabled_list.append(repo.get_name())
@@ -145,16 +145,16 @@ def repos(base: str, repos: dict, first_site: bool) -> tuple[list[Node], list[No
     return outer_nodes, file_server_nodes
 
 
-def sjtug_mirror_id() -> Node:
-    return Node("header * x-sjtug-mirror-id siyuan")
+def sjtug_mirror_id(site: str) -> Node:
+    return Node(f'header * x-sjtug-mirror-id {site}')
 
 
-def build_root(base, config_yaml: dict, first_site: bool) -> Node:
+def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     common_nodes = common()
-    no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'], first_site)
+    no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'], first_site, site)
 
     main_children = common_nodes + [BLANK_NODE]
-    main_children += [sjtug_mirror_id()]  # SJTUG mirror ID header
+    main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
     main_children += cors("/mirrorz/*")   # mirrorz.org protocol support
     main_children += [BLANK_NODE] + file_server_nodes
     main_node = Node(f'{base}', main_children)
@@ -183,21 +183,21 @@ if __name__ == "__main__":
 
     INDENT_CNT = args.indent
 
-    SITES = args.site.split(",")
-    SITE = SITES[0]
+    sites = args.site.split(",")
 
-    with open(f'{args.input}/config.{SITE}.yaml', 'r') as fp:
-        content = fp.read().replace('\t', '')
-        config_yaml = yaml.load(content, Loader=yaml.FullLoader)
+    for site in sites:
+        with open(f'{args.input}/config.{site}.yaml', 'r') as fp:
+            content = fp.read().replace('\t', '')
+            config_yaml = yaml.load(content, Loader=yaml.FullLoader)
 
-    roots = []
+        roots = []
 
-    for (idx, base) in enumerate(BASES[SITE]):
-        roots.append(build_root(base, config_yaml, idx == 0))
+        for (idx, base) in enumerate(BASES[site]):
+            roots.append(build_root(base, config_yaml, idx == 0, site))
 
-    with open(f'{args.output}/Caddyfile.{SITE}', 'w') as fp:
-        for root in roots:
-            fp.write(str(root))
-            fp.write("\n\n")
+        with open(f'{args.output}/Caddyfile.{site}', 'w') as fp:
+            for root in roots:
+                fp.write(str(root))
+                fp.write("\n\n")
 
-    print(f'{args.output}: done')
+        print(f'{args.output}: done')
