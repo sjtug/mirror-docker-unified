@@ -33,6 +33,10 @@ jobs:
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
+      - run: docker-compose pull
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
       - name: verify config
         run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
       - name: docker-compose build

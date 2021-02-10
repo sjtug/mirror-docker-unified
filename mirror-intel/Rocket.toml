@@ -1,6 +1,6 @@
 [default]
 address = "0.0.0.0"
-base_url = "https://mirrors.sjtug.sjtu.edu.cn"
+base_url = "https://mirror.sjtu.edu.cn"
 concurrent_download = 16
 direct_stream_size_kb = 4
 download_timeout = 300
@@ -29,7 +29,8 @@ allow = [
   "prometheus/statsd_exporter/",
   "GNS3/gns3-gui/",
   "PowerShell/PowerShell/",
-  "oneclick/rubyinstaller2"
+  "oneclick/rubyinstaller2/",
+  "mikefarah/yq/"
 ]
 
 [default.endpoints]
