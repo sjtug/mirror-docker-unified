@@ -476,31 +476,31 @@ ftp.sjtu.edu.cn {
     }
     redir /homebrew-bottles /homebrew-bottles/ 301
     route /homebrew-bottles/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /rust-static /rust-static/ 301
     route /rust-static/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /pypi-packages /pypi-packages/ 301
     route /pypi-packages/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /dart-pub /dart-pub/ 301
     route /dart-pub/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /pytorch-wheels /pytorch-wheels/ 301
     route /pytorch-wheels/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /crates.io /crates.io/ 301
     route /crates.io/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /flutter_infra /flutter_infra/ 301
     route /flutter_infra/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
@@ -529,7 +529,7 @@ ftp.sjtu.edu.cn {
     }
     redir /linuxbrew-bottles /linuxbrew-bottles/ 301
     route /linuxbrew-bottles/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
@@ -613,31 +613,31 @@ ftp.sjtu.edu.cn {
     }
     redir /nix-channels/store /nix-channels/store/ 301
     route /nix-channels/store/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /guix /guix/ 301
     route /guix/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /sjtug-internal /sjtug-internal/ 301
     route /sjtug-internal/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /fedora-ostree /fedora-ostree/ 301
     route /fedora-ostree/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /fedora-iot /fedora-iot/ 301
     route /fedora-iot/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /flathub /flathub/ 301
     route /flathub/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /github-release /github-release/ 301
     route /github-release/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /npm-registry /npm-registry/ 301
     route /npm-registry/* {
@@ -1179,31 +1179,31 @@ ftp6.sjtu.edu.cn {
     }
     redir /homebrew-bottles /homebrew-bottles/ 301
     route /homebrew-bottles/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /rust-static /rust-static/ 301
     route /rust-static/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /pypi-packages /pypi-packages/ 301
     route /pypi-packages/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /dart-pub /dart-pub/ 301
     route /dart-pub/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /pytorch-wheels /pytorch-wheels/ 301
     route /pytorch-wheels/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /crates.io /crates.io/ 301
     route /crates.io/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /flutter_infra /flutter_infra/ 301
     route /flutter_infra/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
@@ -1232,7 +1232,7 @@ ftp6.sjtu.edu.cn {
     }
     redir /linuxbrew-bottles /linuxbrew-bottles/ 301
     route /linuxbrew-bottles/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
@@ -1316,31 +1316,31 @@ ftp6.sjtu.edu.cn {
     }
     redir /nix-channels/store /nix-channels/store/ 301
     route /nix-channels/store/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /guix /guix/ 301
     route /guix/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /sjtug-internal /sjtug-internal/ 301
     route /sjtug-internal/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /fedora-ostree /fedora-ostree/ 301
     route /fedora-ostree/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /fedora-iot /fedora-iot/ 301
     route /fedora-iot/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /flathub /flathub/ 301
     route /flathub/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /github-release /github-release/ 301
     route /github-release/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /npm-registry /npm-registry/ 301
     route /npm-registry/* {
@@ -1882,31 +1882,31 @@ mirror.sjtu.edu.cn {
     }
     redir /homebrew-bottles /homebrew-bottles/ 301
     route /homebrew-bottles/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /rust-static /rust-static/ 301
     route /rust-static/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /pypi-packages /pypi-packages/ 301
     route /pypi-packages/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /dart-pub /dart-pub/ 301
     route /dart-pub/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /pytorch-wheels /pytorch-wheels/ 301
     route /pytorch-wheels/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /crates.io /crates.io/ 301
     route /crates.io/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /flutter_infra /flutter_infra/ 301
     route /flutter_infra/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
@@ -1935,7 +1935,7 @@ mirror.sjtu.edu.cn {
     }
     redir /linuxbrew-bottles /linuxbrew-bottles/ 301
     route /linuxbrew-bottles/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
@@ -2019,31 +2019,31 @@ mirror.sjtu.edu.cn {
     }
     redir /nix-channels/store /nix-channels/store/ 301
     route /nix-channels/store/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /guix /guix/ 301
     route /guix/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /sjtug-internal /sjtug-internal/ 301
     route /sjtug-internal/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /fedora-ostree /fedora-ostree/ 301
     route /fedora-ostree/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /fedora-iot /fedora-iot/ 301
     route /fedora-iot/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /flathub /flathub/ 301
     route /flathub/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /github-release /github-release/ 301
     route /github-release/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /npm-registry /npm-registry/ 301
     route /npm-registry/* {
@@ -2585,31 +2585,31 @@ siyuan.internal.sjtug.org {
     }
     redir /homebrew-bottles /homebrew-bottles/ 301
     route /homebrew-bottles/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /rust-static /rust-static/ 301
     route /rust-static/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /pypi-packages /pypi-packages/ 301
     route /pypi-packages/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /dart-pub /dart-pub/ 301
     route /dart-pub/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /pytorch-wheels /pytorch-wheels/ 301
     route /pytorch-wheels/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /crates.io /crates.io/ 301
     route /crates.io/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /flutter_infra /flutter_infra/ 301
     route /flutter_infra/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     route /git/linuxbrew-core.git/* {
@@ -2638,7 +2638,7 @@ siyuan.internal.sjtug.org {
     }
     redir /linuxbrew-bottles /linuxbrew-bottles/ 301
     route /linuxbrew-bottles/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /git/guix.git /git/guix.git/ 301
     route /git/guix.git/* {
@@ -2722,31 +2722,31 @@ siyuan.internal.sjtug.org {
     }
     redir /nix-channels/store /nix-channels/store/ 301
     route /nix-channels/store/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /guix /guix/ 301
     route /guix/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /sjtug-internal /sjtug-internal/ 301
     route /sjtug-internal/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /fedora-ostree /fedora-ostree/ 301
     route /fedora-ostree/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /fedora-iot /fedora-iot/ 301
     route /fedora-iot/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /flathub /flathub/ 301
     route /flathub/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /github-release /github-release/ 301
     route /github-release/* {
-        reverse_proxy mirror-mirror-intel:8000
+        reverse_proxy mirror-intel:8000
     }
     redir /npm-registry /npm-registry/ 301
     route /npm-registry/* {
