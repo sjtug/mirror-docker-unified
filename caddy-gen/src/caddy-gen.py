@@ -52,8 +52,9 @@ def common() -> list[Node]:
         Node('to /render/{host}{uri}')
     ])
 
-    render = Node('reverse_proxy /render service.prerender.io/https://', [
-        Node('without /render')
+    render = Node('route /render/*', [
+        Node('uri strip_prefix /render'),
+        Node('reverse_proxy https://service.prerender.io')
     ])
 
     reject_lug_api = Node('@reject_lug_api', [Node('path /lug/v1/admin/*')])
@@ -66,8 +67,8 @@ def common() -> list[Node]:
         [lug] + [BLANK_NODE] + \
         monitors + [BLANK_NODE] + \
         hidden() + \
-        [reject_lug_api, reject_lug_api_respond] + \
-        [render, crawler_rewrite]
+        [reject_lug_api, reject_lug_api_respond]
+        # [render, crawler_rewrite]
 
 
 def repo_redir(repo: Repo) -> list[Node]:

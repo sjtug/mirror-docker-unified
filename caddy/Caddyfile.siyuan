@@ -354,19 +354,6 @@ ftp.sjtu.edu.cn {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
-    reverse_proxy /render service.prerender.io/https:// {
-        without /render
-    }
-    rewrite {
-        if_op or
-        if {>User-Agent} has bot
-        if {>User-Agent} has googlebot
-        if {>User-Agent} has crawler
-        if {>User-Agent} has spider
-        if {>User-Agent} has robot
-        if {>User-Agent} has crawling
-        to /render/{host}{uri}
-    }
 
     header * x-sjtug-mirror-id siyuan
     header /mirrorz/* Access-Control-Allow-Origin *
@@ -1070,19 +1057,6 @@ ftp6.sjtu.edu.cn {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
-    reverse_proxy /render service.prerender.io/https:// {
-        without /render
-    }
-    rewrite {
-        if_op or
-        if {>User-Agent} has bot
-        if {>User-Agent} has googlebot
-        if {>User-Agent} has crawler
-        if {>User-Agent} has spider
-        if {>User-Agent} has robot
-        if {>User-Agent} has crawling
-        to /render/{host}{uri}
-    }
 
     header * x-sjtug-mirror-id siyuan
     header /mirrorz/* Access-Control-Allow-Origin *
@@ -1786,19 +1760,6 @@ mirror.sjtu.edu.cn {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
-    reverse_proxy /render service.prerender.io/https:// {
-        without /render
-    }
-    rewrite {
-        if_op or
-        if {>User-Agent} has bot
-        if {>User-Agent} has googlebot
-        if {>User-Agent} has crawler
-        if {>User-Agent} has spider
-        if {>User-Agent} has robot
-        if {>User-Agent} has crawling
-        to /render/{host}{uri}
-    }
 
     header * x-sjtug-mirror-id siyuan
     header /mirrorz/* Access-Control-Allow-Origin *
@@ -2502,19 +2463,6 @@ siyuan.internal.sjtug.org {
         path /lug/v1/admin/*
     }
     respond @reject_lug_api 403
-    reverse_proxy /render service.prerender.io/https:// {
-        without /render
-    }
-    rewrite {
-        if_op or
-        if {>User-Agent} has bot
-        if {>User-Agent} has googlebot
-        if {>User-Agent} has crawler
-        if {>User-Agent} has spider
-        if {>User-Agent} has robot
-        if {>User-Agent} has crawling
-        to /render/{host}{uri}
-    }
 
     header * x-sjtug-mirror-id siyuan
     header /mirrorz/* Access-Control-Allow-Origin *
