@@ -509,3 +509,9 @@ repos:
     path: /srv/disk1/sury
     name: sury
     <<: *oneshot_common
+  - type: external
+    name: opam-cache
+    serve_mode: mirror_intel
+  - type: external
+    name: pypi/web/simple
+    serve_mode: mirror_intel
