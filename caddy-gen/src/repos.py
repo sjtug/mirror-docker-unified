@@ -80,11 +80,11 @@ class ProxyRepo:
 
     def as_subdomain(self) -> list[Node]:
         proxy_node = Node(f'reverse_proxy {self.proxy_to}')
-        proxy_node_prefix = Node(f'reverse_proxy {self.proxy_to}/{self.name}')
+        proxy_node_prefix = [Node(f'rewrite * /{self.name}{{uri}}'), Node(f'reverse_proxy {self.proxy_to}')]
         if self.strip_prefix:
             return log() + [proxy_node]
         else:
-            return log() + [proxy_node_prefix]
+            return log() + proxy_node_prefix
 
     def get_name(self) -> str:
         return self.name

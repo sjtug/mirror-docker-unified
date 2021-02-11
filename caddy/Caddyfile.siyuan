@@ -266,7 +266,8 @@ gh-release.siyuan.internal.sjtug.org {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    reverse_proxy mirror-intel:8000/github-release
+    rewrite * /github-release{uri}
+    reverse_proxy mirror-intel:8000
     header * x-sjtug-mirror-id siyuan
 }
 
