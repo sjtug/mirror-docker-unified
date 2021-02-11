@@ -127,7 +127,7 @@ docker.mirrors.sjtug.sjtu.edu.cn {
 }
 
 google-fonts.mirrors.sjtug.sjtu.edu.cn {
-    reverse_proxy mirror-intel:8000/google-fonts
+    redir * https://fonts.googleapis.com{uri} 302
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -279,24 +279,24 @@ mirrors.sjtug.sjtu.edu.cn {
         hide .*
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
-    file_server /git/homebrew-core.git/* browse {
-        root /mnt
-        hide .*
+    route /git/homebrew-core.git/* {
+        uri strip_prefix /git/homebrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
     }
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
-    file_server /git/homebrew-cask.git/* browse {
-        root /mnt
-        hide .*
+    route /git/homebrew-cask.git/* {
+        uri strip_prefix /git/homebrew-cask.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask.git{uri} 302
     }
     redir /git/brew.git /git/brew.git/ 301
-    file_server /git/brew.git/* browse {
-        root /mnt
-        hide .*
+    route /git/brew.git/* {
+        uri strip_prefix /git/brew.git
+        redir * https://git.sjtu.edu.cn/sjtug/brew.git{uri} 302
     }
     redir /git/crates.io-index /git/crates.io-index/ 301
-    file_server /git/crates.io-index/* browse {
-        root /mnt
-        hide .*
+    route /git/crates.io-index/* {
+        uri strip_prefix /git/crates.io-index
+        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
     }
     redir /raspbian /raspbian/ 301
     file_server /raspbian/* browse {
@@ -364,24 +364,19 @@ mirrors.sjtug.sjtu.edu.cn {
         hide .*
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
-    file_server /git/opam-repository.git/* browse {
-        root /mnt
-        hide .*
-    }
-    redir /git/dpdk.git /git/dpdk.git/ 301
-    file_server /git/dpdk.git/* browse {
-        root /mnt
-        hide .*
+    route /git/opam-repository.git/* {
+        uri strip_prefix /git/opam-repository.git
+        redir * https://git.sjtu.edu.cn/sjtug/opam-repository.git{uri} 302
     }
     redir /git/qemu.git /git/qemu.git/ 301
-    file_server /git/qemu.git/* browse {
-        root /mnt
-        hide .*
+    route /git/qemu.git/* {
+        uri strip_prefix /git/qemu.git
+        redir * https://git.sjtu.edu.cn/sjtug/qemu.git{uri} 302
     }
     redir /git/linux.git /git/linux.git/ 301
-    file_server /git/linux.git/* browse {
-        root /mnt
-        hide .*
+    route /git/linux.git/* {
+        uri strip_prefix /git/linux.git
+        redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
     }
     redir /linuxliteos /linuxliteos/ 301
     file_server /linuxliteos/* browse {
@@ -405,9 +400,17 @@ mirrors.sjtug.sjtu.edu.cn {
     }
     redir /google-fonts /google-fonts/ 301
     route /google-fonts/* {
-        reverse_proxy mirror-intel:8000
+        uri strip_prefix /google-fonts
+        redir * https://fonts.googleapis.com{uri} 302
     }
     @gzip_enabled {
+        not path /git/homebrew-core.git/*
+        not path /git/homebrew-cask.git/*
+        not path /git/brew.git/*
+        not path /git/crates.io-index/*
+        not path /git/opam-repository.git/*
+        not path /git/qemu.git/*
+        not path /git/linux.git/*
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
@@ -647,24 +650,24 @@ zhiyuan.internal.sjtug.org {
         hide .*
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
-    file_server /git/homebrew-core.git/* browse {
-        root /mnt
-        hide .*
+    route /git/homebrew-core.git/* {
+        uri strip_prefix /git/homebrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
     }
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
-    file_server /git/homebrew-cask.git/* browse {
-        root /mnt
-        hide .*
+    route /git/homebrew-cask.git/* {
+        uri strip_prefix /git/homebrew-cask.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask.git{uri} 302
     }
     redir /git/brew.git /git/brew.git/ 301
-    file_server /git/brew.git/* browse {
-        root /mnt
-        hide .*
+    route /git/brew.git/* {
+        uri strip_prefix /git/brew.git
+        redir * https://git.sjtu.edu.cn/sjtug/brew.git{uri} 302
     }
     redir /git/crates.io-index /git/crates.io-index/ 301
-    file_server /git/crates.io-index/* browse {
-        root /mnt
-        hide .*
+    route /git/crates.io-index/* {
+        uri strip_prefix /git/crates.io-index
+        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
     }
     redir /raspbian /raspbian/ 301
     file_server /raspbian/* browse {
@@ -732,24 +735,19 @@ zhiyuan.internal.sjtug.org {
         hide .*
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
-    file_server /git/opam-repository.git/* browse {
-        root /mnt
-        hide .*
-    }
-    redir /git/dpdk.git /git/dpdk.git/ 301
-    file_server /git/dpdk.git/* browse {
-        root /mnt
-        hide .*
+    route /git/opam-repository.git/* {
+        uri strip_prefix /git/opam-repository.git
+        redir * https://git.sjtu.edu.cn/sjtug/opam-repository.git{uri} 302
     }
     redir /git/qemu.git /git/qemu.git/ 301
-    file_server /git/qemu.git/* browse {
-        root /mnt
-        hide .*
+    route /git/qemu.git/* {
+        uri strip_prefix /git/qemu.git
+        redir * https://git.sjtu.edu.cn/sjtug/qemu.git{uri} 302
     }
     redir /git/linux.git /git/linux.git/ 301
-    file_server /git/linux.git/* browse {
-        root /mnt
-        hide .*
+    route /git/linux.git/* {
+        uri strip_prefix /git/linux.git
+        redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
     }
     redir /linuxliteos /linuxliteos/ 301
     file_server /linuxliteos/* browse {
@@ -773,9 +771,17 @@ zhiyuan.internal.sjtug.org {
     }
     redir /google-fonts /google-fonts/ 301
     route /google-fonts/* {
-        reverse_proxy mirror-intel:8000
+        uri strip_prefix /google-fonts
+        redir * https://fonts.googleapis.com{uri} 302
     }
     @gzip_enabled {
+        not path /git/homebrew-core.git/*
+        not path /git/homebrew-cask.git/*
+        not path /git/brew.git/*
+        not path /git/crates.io-index/*
+        not path /git/opam-repository.git/*
+        not path /git/qemu.git/*
+        not path /git/linux.git/*
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
