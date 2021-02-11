@@ -24,6 +24,8 @@ repos:
     path: /srv/disk1/centos
     name: centos
     no_redir_http: true
+    # for test use, will be removed later
+    subdomain: centos.siyuan.internal.sjtug.org
     <<: *oneshot_common
   # debian
   - type: shell_script
@@ -471,18 +473,23 @@ repos:
   - type: external
     name: github-release
     serve_mode: mirror_intel
+    # TODO: only for test use, will be removed later
+    subdomain: gh-release.siyuan.internal.sjtug.org
   - type: external
     name: npm-registry
     serve_mode: redir
     target: https://registry.npmjs.org
+    disabled: true
   - type: external
     name: nodejs-release
     serve_mode: redir
     target: https://nodejs.org/dist
+    disabled: true
   - type: external
     name: maven-central
     serve_mode: redir
     target: https://repo.maven.apache.org/maven2
+    disabled: true
   - type: external
     name: manjarostable
     serve_mode: redir
@@ -515,3 +522,12 @@ repos:
   - type: external
     name: pypi/web/simple
     serve_mode: mirror_intel
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 4900
+    name: git/dpdk.git
+    source: http://dpdk.org/git/dpdk
+    path: /srv/disk2/git/dpdk.git
+    serve_mode: redir
+    target: https://git.sjtu.edu.cn/sjtug/dpdk.git
+    <<: *oneshot_common

@@ -113,9 +113,12 @@ class RedirRepo:
         return None
 
     def as_subdomain(self) -> list[Node]:
-        logging.warning(
-            f'{self.name}: subdomain redirect repo is not supported')
-        return None
+        redir_always_node = Node(f'redir * {self.target} 302')
+        redir_node = Node(f'redir * {self.target}{{uri}} 302')
+        if self.always_target:
+            return [redir_always_node]
+        else:
+            return [redir_node]
 
     def get_name(self) -> str:
         return self.name

@@ -19,6 +19,23 @@ http://ftp.sjtu.edu.cn/centos/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+centos.siyuan.internal.sjtug.org {
+    encode /* gzip zstd
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    file_server /* browse {
+        root /srv/disk1/centos
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
 http://ftp.sjtu.edu.cn/debian {
     redir /debian /debian/ 301
 }
@@ -289,6 +306,11 @@ http://ftp.sjtu.edu.cn/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
+gh-release.siyuan.internal.sjtug.org {
+    reverse_proxy mirror-intel:8000/github-release
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -682,6 +704,11 @@ ftp.sjtu.edu.cn {
     route /pypi/web/simple/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/dpdk.git /git/dpdk.git/ 301
+    route /git/dpdk.git/* {
+        uri strip_prefix /git/dpdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -722,6 +749,7 @@ ftp.sjtu.edu.cn {
         not path /docker-registry-siyuan/*
         not path /opam-cache/*
         not path /pypi/web/simple/*
+        not path /git/dpdk.git/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1400,6 +1428,11 @@ ftp6.sjtu.edu.cn {
     route /pypi/web/simple/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/dpdk.git /git/dpdk.git/ 301
+    route /git/dpdk.git/* {
+        uri strip_prefix /git/dpdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -1440,6 +1473,7 @@ ftp6.sjtu.edu.cn {
         not path /docker-registry-siyuan/*
         not path /opam-cache/*
         not path /pypi/web/simple/*
+        not path /git/dpdk.git/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2118,6 +2152,11 @@ mirror.sjtu.edu.cn {
     route /pypi/web/simple/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/dpdk.git /git/dpdk.git/ 301
+    route /git/dpdk.git/* {
+        uri strip_prefix /git/dpdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2158,6 +2197,7 @@ mirror.sjtu.edu.cn {
         not path /docker-registry-siyuan/*
         not path /opam-cache/*
         not path /pypi/web/simple/*
+        not path /git/dpdk.git/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2836,6 +2876,11 @@ siyuan.internal.sjtug.org {
     route /pypi/web/simple/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/dpdk.git /git/dpdk.git/ 301
+    route /git/dpdk.git/* {
+        uri strip_prefix /git/dpdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2876,6 +2921,7 @@ siyuan.internal.sjtug.org {
         not path /docker-registry-siyuan/*
         not path /opam-cache/*
         not path /pypi/web/simple/*
+        not path /git/dpdk.git/*
     }
     encode @gzip_enabled gzip zstd
 }
