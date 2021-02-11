@@ -1,13 +1,17 @@
+http://ftp.sjtu.edu.cn/ {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir / https://ftp.sjtu.edu.cn/ 308
+}
+
 http://ftp.sjtu.edu.cn/centos {
     redir /centos /centos/ 301
 }
 
 http://ftp.sjtu.edu.cn/centos/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -42,10 +46,6 @@ http://ftp.sjtu.edu.cn/debian {
 
 http://ftp.sjtu.edu.cn/debian/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -63,10 +63,6 @@ http://ftp.sjtu.edu.cn/debian-security {
 
 http://ftp.sjtu.edu.cn/debian-security/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -84,10 +80,6 @@ http://ftp.sjtu.edu.cn/deepin {
 
 http://ftp.sjtu.edu.cn/deepin/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -105,10 +97,6 @@ http://ftp.sjtu.edu.cn/docker-ce {
 
 http://ftp.sjtu.edu.cn/docker-ce/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -126,10 +114,6 @@ http://ftp.sjtu.edu.cn/fedora/linux {
 
 http://ftp.sjtu.edu.cn/fedora/linux/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -147,10 +131,6 @@ http://ftp.sjtu.edu.cn/fedora/epel {
 
 http://ftp.sjtu.edu.cn/fedora/epel/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -168,10 +148,6 @@ http://ftp.sjtu.edu.cn/fedora-secondary {
 
 http://ftp.sjtu.edu.cn/fedora-secondary/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -189,10 +165,6 @@ http://ftp.sjtu.edu.cn/opensuse {
 
 http://ftp.sjtu.edu.cn/opensuse/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -210,10 +182,6 @@ http://ftp.sjtu.edu.cn/remi {
 
 http://ftp.sjtu.edu.cn/remi/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -231,10 +199,6 @@ http://ftp.sjtu.edu.cn/ubuntu {
 
 http://ftp.sjtu.edu.cn/ubuntu/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -252,10 +216,6 @@ http://ftp.sjtu.edu.cn/ubuntu-ports {
 
 http://ftp.sjtu.edu.cn/ubuntu-ports/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -273,10 +233,6 @@ http://ftp.sjtu.edu.cn/openwrt {
 
 http://ftp.sjtu.edu.cn/openwrt/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -294,10 +250,6 @@ http://ftp.sjtu.edu.cn/rpmfusion {
 
 http://ftp.sjtu.edu.cn/rpmfusion/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -310,16 +262,29 @@ http://ftp.sjtu.edu.cn/rpmfusion/* {
 }
 
 gh-release.siyuan.internal.sjtug.org {
-    reverse_proxy mirror-intel:8000/github-release
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    rewrite * /github-release{uri}
+    reverse_proxy mirror-intel:8000
     header * x-sjtug-mirror-id siyuan
 }
 
 k8s-gcr-io.siyuan.internal.sjtug.org {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     reverse_proxy siyuan-gcr-registry:80
     header * x-sjtug-mirror-id siyuan
 }
 
 docker.siyuan.internal.sjtug.org {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     reverse_proxy siyuan-docker-registry:80
     header * x-sjtug-mirror-id siyuan
 }
@@ -754,16 +719,20 @@ ftp.sjtu.edu.cn {
     encode @gzip_enabled gzip zstd
 }
 
+http://ftp6.sjtu.edu.cn/ {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir / https://ftp6.sjtu.edu.cn/ 308
+}
+
 http://ftp6.sjtu.edu.cn/centos {
     redir /centos /centos/ 301
 }
 
 http://ftp6.sjtu.edu.cn/centos/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -781,10 +750,6 @@ http://ftp6.sjtu.edu.cn/debian {
 
 http://ftp6.sjtu.edu.cn/debian/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -802,10 +767,6 @@ http://ftp6.sjtu.edu.cn/debian-security {
 
 http://ftp6.sjtu.edu.cn/debian-security/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -823,10 +784,6 @@ http://ftp6.sjtu.edu.cn/deepin {
 
 http://ftp6.sjtu.edu.cn/deepin/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -844,10 +801,6 @@ http://ftp6.sjtu.edu.cn/docker-ce {
 
 http://ftp6.sjtu.edu.cn/docker-ce/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -865,10 +818,6 @@ http://ftp6.sjtu.edu.cn/fedora/linux {
 
 http://ftp6.sjtu.edu.cn/fedora/linux/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -886,10 +835,6 @@ http://ftp6.sjtu.edu.cn/fedora/epel {
 
 http://ftp6.sjtu.edu.cn/fedora/epel/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -907,10 +852,6 @@ http://ftp6.sjtu.edu.cn/fedora-secondary {
 
 http://ftp6.sjtu.edu.cn/fedora-secondary/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -928,10 +869,6 @@ http://ftp6.sjtu.edu.cn/opensuse {
 
 http://ftp6.sjtu.edu.cn/opensuse/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -949,10 +886,6 @@ http://ftp6.sjtu.edu.cn/remi {
 
 http://ftp6.sjtu.edu.cn/remi/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -970,10 +903,6 @@ http://ftp6.sjtu.edu.cn/ubuntu {
 
 http://ftp6.sjtu.edu.cn/ubuntu/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -991,10 +920,6 @@ http://ftp6.sjtu.edu.cn/ubuntu-ports {
 
 http://ftp6.sjtu.edu.cn/ubuntu-ports/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -1012,10 +937,6 @@ http://ftp6.sjtu.edu.cn/openwrt {
 
 http://ftp6.sjtu.edu.cn/openwrt/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1033,10 +954,6 @@ http://ftp6.sjtu.edu.cn/rpmfusion {
 
 http://ftp6.sjtu.edu.cn/rpmfusion/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1478,16 +1395,20 @@ ftp6.sjtu.edu.cn {
     encode @gzip_enabled gzip zstd
 }
 
+http://mirror.sjtu.edu.cn/ {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir / https://mirror.sjtu.edu.cn/ 308
+}
+
 http://mirror.sjtu.edu.cn/centos {
     redir /centos /centos/ 301
 }
 
 http://mirror.sjtu.edu.cn/centos/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1505,10 +1426,6 @@ http://mirror.sjtu.edu.cn/debian {
 
 http://mirror.sjtu.edu.cn/debian/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1526,10 +1443,6 @@ http://mirror.sjtu.edu.cn/debian-security {
 
 http://mirror.sjtu.edu.cn/debian-security/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1547,10 +1460,6 @@ http://mirror.sjtu.edu.cn/deepin {
 
 http://mirror.sjtu.edu.cn/deepin/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1568,10 +1477,6 @@ http://mirror.sjtu.edu.cn/docker-ce {
 
 http://mirror.sjtu.edu.cn/docker-ce/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -1589,10 +1494,6 @@ http://mirror.sjtu.edu.cn/fedora/linux {
 
 http://mirror.sjtu.edu.cn/fedora/linux/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1610,10 +1511,6 @@ http://mirror.sjtu.edu.cn/fedora/epel {
 
 http://mirror.sjtu.edu.cn/fedora/epel/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1631,10 +1528,6 @@ http://mirror.sjtu.edu.cn/fedora-secondary {
 
 http://mirror.sjtu.edu.cn/fedora-secondary/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1652,10 +1545,6 @@ http://mirror.sjtu.edu.cn/opensuse {
 
 http://mirror.sjtu.edu.cn/opensuse/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1673,10 +1562,6 @@ http://mirror.sjtu.edu.cn/remi {
 
 http://mirror.sjtu.edu.cn/remi/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -1694,10 +1579,6 @@ http://mirror.sjtu.edu.cn/ubuntu {
 
 http://mirror.sjtu.edu.cn/ubuntu/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -1715,10 +1596,6 @@ http://mirror.sjtu.edu.cn/ubuntu-ports {
 
 http://mirror.sjtu.edu.cn/ubuntu-ports/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -1736,10 +1613,6 @@ http://mirror.sjtu.edu.cn/openwrt {
 
 http://mirror.sjtu.edu.cn/openwrt/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -1757,10 +1630,6 @@ http://mirror.sjtu.edu.cn/rpmfusion {
 
 http://mirror.sjtu.edu.cn/rpmfusion/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2202,16 +2071,20 @@ mirror.sjtu.edu.cn {
     encode @gzip_enabled gzip zstd
 }
 
+http://siyuan.internal.sjtug.org/ {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir / https://siyuan.internal.sjtug.org/ 308
+}
+
 http://siyuan.internal.sjtug.org/centos {
     redir /centos /centos/ 301
 }
 
 http://siyuan.internal.sjtug.org/centos/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2229,10 +2102,6 @@ http://siyuan.internal.sjtug.org/debian {
 
 http://siyuan.internal.sjtug.org/debian/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2250,10 +2119,6 @@ http://siyuan.internal.sjtug.org/debian-security {
 
 http://siyuan.internal.sjtug.org/debian-security/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2271,10 +2136,6 @@ http://siyuan.internal.sjtug.org/deepin {
 
 http://siyuan.internal.sjtug.org/deepin/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2292,10 +2153,6 @@ http://siyuan.internal.sjtug.org/docker-ce {
 
 http://siyuan.internal.sjtug.org/docker-ce/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -2313,10 +2170,6 @@ http://siyuan.internal.sjtug.org/fedora/linux {
 
 http://siyuan.internal.sjtug.org/fedora/linux/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2334,10 +2187,6 @@ http://siyuan.internal.sjtug.org/fedora/epel {
 
 http://siyuan.internal.sjtug.org/fedora/epel/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2355,10 +2204,6 @@ http://siyuan.internal.sjtug.org/fedora-secondary {
 
 http://siyuan.internal.sjtug.org/fedora-secondary/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2376,10 +2221,6 @@ http://siyuan.internal.sjtug.org/opensuse {
 
 http://siyuan.internal.sjtug.org/opensuse/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2397,10 +2238,6 @@ http://siyuan.internal.sjtug.org/remi {
 
 http://siyuan.internal.sjtug.org/remi/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -2418,10 +2255,6 @@ http://siyuan.internal.sjtug.org/ubuntu {
 
 http://siyuan.internal.sjtug.org/ubuntu/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -2439,10 +2272,6 @@ http://siyuan.internal.sjtug.org/ubuntu-ports {
 
 http://siyuan.internal.sjtug.org/ubuntu-ports/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk2
         hide .*
@@ -2460,10 +2289,6 @@ http://siyuan.internal.sjtug.org/openwrt {
 
 http://siyuan.internal.sjtug.org/openwrt/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*
@@ -2481,10 +2306,6 @@ http://siyuan.internal.sjtug.org/rpmfusion {
 
 http://siyuan.internal.sjtug.org/rpmfusion/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /srv/disk1
         hide .*

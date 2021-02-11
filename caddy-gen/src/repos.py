@@ -41,7 +41,7 @@ class FileServerRepo(Repo):
 
     def as_site(self) -> list[Node]:
         real_root = self.path[:-len(self.name)][:-1]
-        return gzip('/*') + log() + [
+        return gzip('/*') + [
             Node(f'file_server /* browse', [
                 Node(f'root {real_root}'),
                 Node(f'hide .*')
@@ -80,11 +80,11 @@ class ProxyRepo:
 
     def as_subdomain(self) -> list[Node]:
         proxy_node = Node(f'reverse_proxy {self.proxy_to}')
-        proxy_node_prefix = Node(f'reverse_proxy {self.proxy_to}/{self.name}')
+        proxy_node_prefix = [Node(f'rewrite * /{self.name}{{uri}}'), Node(f'reverse_proxy {self.proxy_to}')]
         if self.strip_prefix:
-            return [proxy_node]
+            return log() + [proxy_node]
         else:
-            return [proxy_node_prefix]
+            return log() + proxy_node_prefix
 
     def get_name(self) -> str:
         return self.name
@@ -116,9 +116,9 @@ class RedirRepo:
         redir_always_node = Node(f'redir * {self.target} 302')
         redir_node = Node(f'redir * {self.target}{{uri}} 302')
         if self.always_target:
-            return [redir_always_node]
+            return log() + [redir_always_node]
         else:
-            return [redir_node]
+            return log() + [redir_node]
 
     def get_name(self) -> str:
         return self.name

@@ -1,13 +1,17 @@
+http://mirrors.sjtug.sjtu.edu.cn/ {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir / https://mirrors.sjtug.sjtu.edu.cn/ 308
+}
+
 http://mirrors.sjtug.sjtu.edu.cn/alpine {
     redir /alpine /alpine/ 301
 }
 
 http://mirrors.sjtug.sjtu.edu.cn/alpine/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /mnt
         hide .*
@@ -25,10 +29,6 @@ http://mirrors.sjtug.sjtu.edu.cn/ctan {
 
 http://mirrors.sjtug.sjtu.edu.cn/ctan/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /mnt
         hide .*
@@ -63,10 +63,6 @@ http://mirrors.sjtug.sjtu.edu.cn/raspbian {
 
 http://mirrors.sjtug.sjtu.edu.cn/raspbian/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /mnt
         hide .*
@@ -101,10 +97,6 @@ http://mirrors.sjtug.sjtu.edu.cn/qt {
 
 http://mirrors.sjtug.sjtu.edu.cn/qt/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /mnt
         hide .*
@@ -117,16 +109,28 @@ http://mirrors.sjtug.sjtu.edu.cn/qt/* {
 }
 
 k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     reverse_proxy https://k8s-gcr-io.siyuan.internal.sjtug.org
     header * x-sjtug-mirror-id zhiyuan
 }
 
 docker.mirrors.sjtug.sjtu.edu.cn {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     reverse_proxy https://docker.siyuan.internal.sjtug.org
     header * x-sjtug-mirror-id zhiyuan
 }
 
 google-fonts.mirrors.sjtug.sjtu.edu.cn {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     redir * https://fonts.googleapis.com{uri} 302
     header * x-sjtug-mirror-id zhiyuan
 }
@@ -418,16 +422,20 @@ mirrors.sjtug.sjtu.edu.cn {
     encode @gzip_enabled gzip zstd
 }
 
+http://zhiyuan.internal.sjtug.org/ {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir / https://zhiyuan.internal.sjtug.org/ 308
+}
+
 http://zhiyuan.internal.sjtug.org/alpine {
     redir /alpine /alpine/ 301
 }
 
 http://zhiyuan.internal.sjtug.org/alpine/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /mnt
         hide .*
@@ -445,10 +453,6 @@ http://zhiyuan.internal.sjtug.org/ctan {
 
 http://zhiyuan.internal.sjtug.org/ctan/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /mnt
         hide .*
@@ -466,10 +470,6 @@ http://zhiyuan.internal.sjtug.org/raspbian {
 
 http://zhiyuan.internal.sjtug.org/raspbian/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /mnt
         hide .*
@@ -487,10 +487,6 @@ http://zhiyuan.internal.sjtug.org/qt {
 
 http://zhiyuan.internal.sjtug.org/qt/* {
     encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
     file_server /* browse {
         root /mnt
         hide .*

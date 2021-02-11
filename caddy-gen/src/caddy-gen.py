@@ -158,8 +158,11 @@ def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     main_children += cors("/mirrorz/*")   # mirrorz.org protocol support
     main_children += [BLANK_NODE] + file_server_nodes
     main_node = Node(f'{base}', main_children)
-
+    http_base = Node(f'http://{base}/', log() + [
+        Node(f'redir / https://{base}/ 308')
+    ])
     return Node('',
+                [http_base] +
                 no_redir_nodes +
                 [main_node])
 
