@@ -674,6 +674,10 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /git/dpdk.git
         redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
     }
+    redir /gradle/distributions /gradle/distributions/ 301
+    route /gradle/distributions/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -715,6 +719,7 @@ ftp.sjtu.edu.cn {
         not path /opam-cache/*
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
+        not path /gradle/distributions/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1350,6 +1355,10 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /git/dpdk.git
         redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
     }
+    redir /gradle/distributions /gradle/distributions/ 301
+    route /gradle/distributions/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -1391,6 +1400,7 @@ ftp6.sjtu.edu.cn {
         not path /opam-cache/*
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
+        not path /gradle/distributions/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2026,6 +2036,10 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /git/dpdk.git
         redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
     }
+    redir /gradle/distributions /gradle/distributions/ 301
+    route /gradle/distributions/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2067,6 +2081,7 @@ mirror.sjtu.edu.cn {
         not path /opam-cache/*
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
+        not path /gradle/distributions/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2702,6 +2717,10 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /git/dpdk.git
         redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
     }
+    redir /gradle/distributions /gradle/distributions/ 301
+    route /gradle/distributions/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2743,6 +2762,7 @@ siyuan.internal.sjtug.org {
         not path /opam-cache/*
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
+        not path /gradle/distributions/*
     }
     encode @gzip_enabled gzip zstd
 }
