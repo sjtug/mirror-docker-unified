@@ -531,3 +531,9 @@ repos:
     serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/dpdk.git
     <<: *oneshot_common
+  - type: shell_script
+    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 gradle --target http://mirror-intel:8000/gradle/distribution
+    serve_mode: mirror_intel
+    interval: 10800
+    name: gradle/distribution
+    <<: *oneshot_common
