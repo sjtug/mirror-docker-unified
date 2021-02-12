@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "siyuan.internal.sjtug.org"
+BASE_URL = "mirror.sjtu.edu.cn"
 
 """
 Here we take Debian repo as an example. It should be served on both http
