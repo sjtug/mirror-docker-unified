@@ -168,14 +168,31 @@ def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
 
 
 def rewrite_config(repo: dict, site: str):
-    if repo.get('serve_mode', 'default') == 'default':
+    serve_mode = repo.get('serve_mode', 'default')
+    if serve_mode == 'default':
         name = repo['name']
         return {
             'name': name,
             'serve_mode': 'redir',
             'target': f'https://{BASES[site][0]}/{name}'
         }
-    return repo
+    if serve_mode == 'redir' or serve_mode == 'redir_force':
+        return {
+            'name': repo['name'],
+            'serve_mode': serve_mode,
+            'target': repo['target']
+        }
+    if serve_mode == 'mirror_intel':
+        return {
+            'name': repo['name'],
+            'serve_mode': serve_mode
+        }
+    if serve_mode == 'proxy':
+        return {
+            'name': repo['name'],
+            'proxy_to': repo['proxy_to']
+        }
+    return None
 
 
 if __name__ == "__main__":
@@ -212,7 +229,9 @@ if __name__ == "__main__":
                 continue
             if repo.get('no_unified', False):
                 continue
-            rewritten_repos[name] = rewrite_config(repo, site)
+            rewritten_repo = rewrite_config(repo, site)
+            if rewritten_repo is not None:
+                rewritten_repos[name] = rewritten_repo
 
     for site in sites:
         repos = site_configs[site]['repos']
@@ -222,7 +241,8 @@ if __name__ == "__main__":
             if name not in names:
                 repos.append(repo)
                 new_repo_names.append(name)
-        logger.info(f'{site}: {len(names)} local repos, {len(new_repo_names)} remote repos')
+        logger.info(
+            f'{site}: {len(names)} local repos, {len(new_repo_names)} remote repos')
         logger.info(f'local repos: {str(sorted(names))}')
         logger.info(f'remote repos: {str(sorted(new_repo_names))}')
 

@@ -262,15 +262,6 @@ docker.siyuan.internal.sjtug.org {
     header * x-sjtug-mirror-id siyuan
 }
 
-google-fonts.mirrors.sjtug.sjtu.edu.cn {
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-    redir * https://fonts.googleapis.com{uri} 302
-    header * x-sjtug-mirror-id siyuan
-}
-
 mirror.sjtu.edu.cn {
     log {
         output stdout
@@ -865,6 +856,21 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+    redir /CPAN /CPAN/ 301
+    route /CPAN/* {
+        uri strip_prefix /CPAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+    redir /CRAN /CRAN/ 301
+    route /CRAN/* {
+        uri strip_prefix /CRAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -948,6 +954,9 @@ mirror.sjtu.edu.cn {
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
+        not path /CTAN/*
+        not path /CPAN/*
+        not path /CRAN/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1792,6 +1801,21 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+    redir /CPAN /CPAN/ 301
+    route /CPAN/* {
+        uri strip_prefix /CPAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+    redir /CRAN /CRAN/ 301
+    route /CRAN/* {
+        uri strip_prefix /CRAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -1875,6 +1899,9 @@ ftp.sjtu.edu.cn {
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
+        not path /CTAN/*
+        not path /CPAN/*
+        not path /CRAN/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2719,6 +2746,21 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+    redir /CPAN /CPAN/ 301
+    route /CPAN/* {
+        uri strip_prefix /CPAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+    redir /CRAN /CRAN/ 301
+    route /CRAN/* {
+        uri strip_prefix /CRAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2802,6 +2844,9 @@ ftp6.sjtu.edu.cn {
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
+        not path /CTAN/*
+        not path /CPAN/*
+        not path /CRAN/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -3646,6 +3691,21 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+    redir /CPAN /CPAN/ 301
+    route /CPAN/* {
+        uri strip_prefix /CPAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+    redir /CRAN /CRAN/ 301
+    route /CRAN/* {
+        uri strip_prefix /CRAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -3729,6 +3789,9 @@ siyuan.internal.sjtug.org {
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
+        not path /CTAN/*
+        not path /CPAN/*
+        not path /CRAN/*
     }
     encode @gzip_enabled gzip zstd
 }

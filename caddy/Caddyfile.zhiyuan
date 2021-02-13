@@ -407,6 +407,21 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+    redir /CPAN /CPAN/ 301
+    route /CPAN/* {
+        uri strip_prefix /CPAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+    redir /CRAN /CRAN/ 301
+    route /CRAN/* {
+        uri strip_prefix /CRAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
     redir /centos /centos/ 301
     route /centos/* {
         uri strip_prefix /centos
@@ -740,6 +755,9 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
+        not path /CTAN/*
+        not path /CPAN/*
+        not path /CRAN/*
         not path /centos/*
         not path /debian/*
         not path /debian-cd/*
@@ -1160,6 +1178,21 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+    redir /CPAN /CPAN/ 301
+    route /CPAN/* {
+        uri strip_prefix /CPAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+    redir /CRAN /CRAN/ 301
+    route /CRAN/* {
+        uri strip_prefix /CRAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
     redir /centos /centos/ 301
     route /centos/* {
         uri strip_prefix /centos
@@ -1493,6 +1526,9 @@ zhiyuan.internal.sjtug.org {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
+        not path /CTAN/*
+        not path /CPAN/*
+        not path /CRAN/*
         not path /centos/*
         not path /debian/*
         not path /debian-cd/*
