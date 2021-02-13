@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import yaml
-import logging
+from loguru import logger
 import argparse
 
 from pathlib import Path
@@ -68,7 +68,6 @@ def common() -> list[Node]:
         monitors + [BLANK_NODE] + \
         hidden() + \
         [reject_lug_api, reject_lug_api_respond]
-        # [render, crawler_rewrite]
 
 
 def repo_redir(repo: Repo) -> list[Node]:
@@ -93,7 +92,7 @@ def dict_to_repo(repo: dict) -> Repo:
         path = repo['path']
         name = repo['name']
         if not path.endswith(name):
-            logging.error(
+            logger.error(
                 f'repo "{name}": {path} should have the same suffix as {name}, ignored')
             return None
         return FileServerRepo(name, path)
@@ -103,12 +102,12 @@ def dict_to_repo(repo: dict) -> Repo:
         return ProxyRepo(repo['name'], repo['proxy_to'], True)
     if serve_mode == 'ignore':
         return None
-    logging.error(
+    logger.error(
         f'repo "{repo["name"]}": unsupported serve mode {serve_mode}, ignored')
     return None
 
 
-def repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list[Node], list[Node]]:
+def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list[Node], list[Node]]:
     outer_nodes = []
     file_server_nodes = []
 
@@ -122,7 +121,7 @@ def repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list[Nod
 
             if repo_.get('no_redir_http', False):
                 if is_local(base):
-                    logging.warning(
+                    logger.warning(
                         f'repo "{repo["name"]}": BASE "{base}" might be a local url, "no_redir_http" will be ignored')
                 else:
                     outer_nodes += repo_no_redir(base, repo, site)
@@ -151,7 +150,8 @@ def sjtug_mirror_id(site: str) -> Node:
 
 def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     common_nodes = common()
-    no_redir_nodes, file_server_nodes = repos(base, config_yaml['repos'], first_site, site)
+    no_redir_nodes, file_server_nodes = gen_repos(
+        base, config_yaml['repos'], first_site, site)
 
     main_children = common_nodes + [BLANK_NODE]
     main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
@@ -167,6 +167,17 @@ def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
                 [main_node])
 
 
+def rewrite_config(repo: dict, site: str):
+    if repo.get('serve_mode', 'default') == 'default':
+        name = repo['name']
+        return {
+            'name': name,
+            'serve_mode': 'redir',
+            'target': f'https://{BASES[site][0]}/{name}'
+        }
+    return repo
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=DESC)
     parser.add_argument('-i', '--input', required=True,
@@ -177,30 +188,57 @@ if __name__ == "__main__":
                         help='Site names.')
     parser.add_argument('-I', '--indent', default=INDENT_CNT,
                         help='Number of spaces in indents.')
-    parser.add_argument('-D', '--debug', action='store_true',
-                        help='Show debug messages.')
     args = parser.parse_args()
-
-    if not args.debug:
-        logging.basicConfig(level=logging.ERROR)
 
     INDENT_CNT = args.indent
 
-    sites = args.site.split(",")
-
+    sites = args.site.split(',')
+    site_configs = {}
     for site in sites:
+        logger.info(f"parsing config for {site}")
         with open(f'{args.input}/config.{site}.yaml', 'r') as fp:
             content = fp.read().replace('\t', '')
-            config_yaml = yaml.load(content, Loader=yaml.FullLoader)
+            site_configs[site] = yaml.load(content, Loader=yaml.FullLoader)
 
+    logger.info(f'rewriting configs')
+    rewritten_repos = {}
+
+    for site in sites:
+        site_config = site_configs[site]
+        for repo in site_config['repos']:
+            name = repo['name']
+            if name in rewritten_repos:
+                logger.info(f'duplicated entry found: {name}')
+                continue
+            if repo.get('no_unified', False):
+                continue
+            rewritten_repos[name] = rewrite_config(repo, site)
+
+    for site in sites:
+        repos = site_configs[site]['repos']
+        names = [repo['name'] for repo in repos]
+        new_repo_names = []
+        for (name, repo) in rewritten_repos.items():
+            if name not in names:
+                repos.append(repo)
+                new_repo_names.append(name)
+        logger.info(f'{site}: {len(names)} local repos, {len(new_repo_names)} remote repos')
+        logger.info(f'local repos: {str(sorted(names))}')
+        logger.info(f'remote repos: {str(sorted(new_repo_names))}')
+
+    for site in sites:
+        logger.info(f"generating {site}")
+
+        config_yaml = site_configs[site]
         roots = []
 
         for (idx, base) in enumerate(BASES[site]):
             roots.append(build_root(base, config_yaml, idx == 0, site))
 
-        with open(f'{args.output}/Caddyfile.{site}', 'w') as fp:
+        output = f'{args.output}/Caddyfile.{site}'
+        with open(output, 'w') as fp:
             for root in roots:
                 fp.write(str(root))
                 fp.write("\n\n")
 
-        print(f'{args.output}: done')
+        logger.info(f'{output}: done')
