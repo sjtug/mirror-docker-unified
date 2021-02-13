@@ -407,6 +407,343 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+    redir /CPAN /CPAN/ 301
+    route /CPAN/* {
+        uri strip_prefix /CPAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+    redir /CRAN /CRAN/ 301
+    route /CRAN/* {
+        uri strip_prefix /CRAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
+    redir /centos /centos/ 301
+    route /centos/* {
+        uri strip_prefix /centos
+        redir * https://mirror.sjtu.edu.cn/centos{uri} 302
+    }
+    redir /debian /debian/ 301
+    route /debian/* {
+        uri strip_prefix /debian
+        redir * https://mirror.sjtu.edu.cn/debian{uri} 302
+    }
+    redir /debian-cd /debian-cd/ 301
+    route /debian-cd/* {
+        uri strip_prefix /debian-cd
+        redir * https://mirror.sjtu.edu.cn/debian-cd{uri} 302
+    }
+    redir /debian-security /debian-security/ 301
+    route /debian-security/* {
+        uri strip_prefix /debian-security
+        redir * https://mirror.sjtu.edu.cn/debian-security{uri} 302
+    }
+    redir /deepin /deepin/ 301
+    route /deepin/* {
+        uri strip_prefix /deepin
+        redir * https://mirror.sjtu.edu.cn/deepin{uri} 302
+    }
+    redir /deepin-cd /deepin-cd/ 301
+    route /deepin-cd/* {
+        uri strip_prefix /deepin-cd
+        redir * https://mirror.sjtu.edu.cn/deepin-cd{uri} 302
+    }
+    redir /docker-ce /docker-ce/ 301
+    route /docker-ce/* {
+        uri strip_prefix /docker-ce
+        redir * https://mirror.sjtu.edu.cn/docker-ce{uri} 302
+    }
+    redir /fedora/linux /fedora/linux/ 301
+    route /fedora/linux/* {
+        uri strip_prefix /fedora/linux
+        redir * https://mirror.sjtu.edu.cn/fedora/linux{uri} 302
+    }
+    redir /fedora/epel /fedora/epel/ 301
+    route /fedora/epel/* {
+        uri strip_prefix /fedora/epel
+        redir * https://mirror.sjtu.edu.cn/fedora/epel{uri} 302
+    }
+    redir /fedora-secondary /fedora-secondary/ 301
+    route /fedora-secondary/* {
+        uri strip_prefix /fedora-secondary
+        redir * https://mirror.sjtu.edu.cn/fedora-secondary{uri} 302
+    }
+    redir /linuxmint /linuxmint/ 301
+    route /linuxmint/* {
+        uri strip_prefix /linuxmint
+        redir * https://mirror.sjtu.edu.cn/linuxmint{uri} 302
+    }
+    redir /linuxmint-cd /linuxmint-cd/ 301
+    route /linuxmint-cd/* {
+        uri strip_prefix /linuxmint-cd
+        redir * https://mirror.sjtu.edu.cn/linuxmint-cd{uri} 302
+    }
+    redir /mageia /mageia/ 301
+    route /mageia/* {
+        uri strip_prefix /mageia
+        redir * https://mirror.sjtu.edu.cn/mageia{uri} 302
+    }
+    redir /opensuse /opensuse/ 301
+    route /opensuse/* {
+        uri strip_prefix /opensuse
+        redir * https://mirror.sjtu.edu.cn/opensuse{uri} 302
+    }
+    redir /openvz /openvz/ 301
+    route /openvz/* {
+        uri strip_prefix /openvz
+        redir * https://mirror.sjtu.edu.cn/openvz{uri} 302
+    }
+    redir /remi /remi/ 301
+    route /remi/* {
+        uri strip_prefix /remi
+        redir * https://mirror.sjtu.edu.cn/remi{uri} 302
+    }
+    redir /scientific /scientific/ 301
+    route /scientific/* {
+        uri strip_prefix /scientific
+        redir * https://mirror.sjtu.edu.cn/scientific{uri} 302
+    }
+    redir /ubuntu /ubuntu/ 301
+    route /ubuntu/* {
+        uri strip_prefix /ubuntu
+        redir * https://mirror.sjtu.edu.cn/ubuntu{uri} 302
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    route /ubuntu-cd/* {
+        uri strip_prefix /ubuntu-cd
+        redir * https://mirror.sjtu.edu.cn/ubuntu-cd{uri} 302
+    }
+    redir /ubuntu-cdimage /ubuntu-cdimage/ 301
+    route /ubuntu-cdimage/* {
+        uri strip_prefix /ubuntu-cdimage
+        redir * https://mirror.sjtu.edu.cn/ubuntu-cdimage{uri} 302
+    }
+    redir /ubuntu-ports /ubuntu-ports/ 301
+    route /ubuntu-ports/* {
+        uri strip_prefix /ubuntu-ports
+        redir * https://mirror.sjtu.edu.cn/ubuntu-ports{uri} 302
+    }
+    redir /openwrt /openwrt/ 301
+    route /openwrt/* {
+        uri strip_prefix /openwrt
+        redir * https://mirror.sjtu.edu.cn/openwrt{uri} 302
+    }
+    redir /rpmfusion /rpmfusion/ 301
+    route /rpmfusion/* {
+        uri strip_prefix /rpmfusion
+        redir * https://mirror.sjtu.edu.cn/rpmfusion{uri} 302
+    }
+    redir /homebrew-bottles /homebrew-bottles/ 301
+    route /homebrew-bottles/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /rust-static /rust-static/ 301
+    route /rust-static/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pypi-packages /pypi-packages/ 301
+    route /pypi-packages/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /dart-pub /dart-pub/ 301
+    route /dart-pub/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pytorch-wheels /pytorch-wheels/ 301
+    route /pytorch-wheels/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /crates.io /crates.io/ 301
+    route /crates.io/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /flutter_infra /flutter_infra/ 301
+    route /flutter_infra/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    route /git/linuxbrew-core.git/* {
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
+    }
+    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
+    route /git/homebrew-services.git/* {
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
+    }
+    redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
+    route /git/homebrew-cask-drivers.git/* {
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
+    }
+    redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
+    route /git/homebrew-cask-fonts.git/* {
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
+    }
+    redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
+    route /git/homebrew-cask-versions.git/* {
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
+    }
+    redir /linuxbrew-bottles /linuxbrew-bottles/ 301
+    route /linuxbrew-bottles/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /git/guix.git /git/guix.git/ 301
+    route /git/guix.git/* {
+        uri strip_prefix /git/guix.git
+        redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
+    }
+    redir /git/llvm-project.git /git/llvm-project.git/ 301
+    route /git/llvm-project.git/* {
+        uri strip_prefix /git/llvm-project.git
+        redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
+    }
+    redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
+    route /git/flutter-sdk.git/* {
+        uri strip_prefix /git/flutter-sdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
+    }
+    redir /apache /apache/ 301
+    route /apache/* {
+        uri strip_prefix /apache
+        redir * https://mirror.sjtu.edu.cn/apache{uri} 302
+    }
+    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
+    route /git/ohmyzsh.git/* {
+        uri strip_prefix /git/ohmyzsh.git
+        redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
+    }
+    redir /git/spacemacs.git /git/spacemacs.git/ 301
+    route /git/spacemacs.git/* {
+        uri strip_prefix /git/spacemacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
+    }
+    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
+    route /git/doom-emacs.git/* {
+        uri strip_prefix /git/doom-emacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
+    }
+    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
+    route /dragonflybsd/iso-images/* {
+        uri strip_prefix /dragonflybsd/iso-images
+        redir * https://mirror.sjtu.edu.cn/dragonflybsd/iso-images{uri} 302
+    }
+    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
+    route /dragonflybsd/dports/* {
+        uri strip_prefix /dragonflybsd/dports
+        redir * https://mirror.sjtu.edu.cn/dragonflybsd/dports{uri} 302
+    }
+    redir /blackarch /blackarch/ 301
+    route /blackarch/* {
+        uri strip_prefix /blackarch
+        redir * https://mirror.sjtu.edu.cn/blackarch{uri} 302
+    }
+    redir /github/GNS3 /github/GNS3/ 301
+    route /github/GNS3/* {
+        uri strip_prefix /github/GNS3
+        redir * /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list 302
+    }
+    redir /github/FreeCAD /github/FreeCAD/ 301
+    route /github/FreeCAD/* {
+        uri strip_prefix /github/FreeCAD
+        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
+    }
+    redir /github/prometheus /github/prometheus/ 301
+    route /github/prometheus/* {
+        uri strip_prefix /github/prometheus
+        redir * /github-release/prometheus/?mirror_intel_list 302
+    }
+    redir /github/rubyinstaller2 /github/rubyinstaller2/ 301
+    route /github/rubyinstaller2/* {
+        uri strip_prefix /github/rubyinstaller2
+        redir * /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list 302
+    }
+    redir /github/PowerShell /github/PowerShell/ 301
+    route /github/PowerShell/* {
+        uri strip_prefix /github/PowerShell
+        redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
+    }
+    redir /sites/tldp.org /sites/tldp.org/ 301
+    route /sites/tldp.org/* {
+        uri strip_prefix /sites/tldp.org
+        redir * https://mirror.sjtu.edu.cn/sites/tldp.org{uri} 302
+    }
+    redir /nix-channels/store /nix-channels/store/ 301
+    route /nix-channels/store/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /guix /guix/ 301
+    route /guix/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /sjtug-internal /sjtug-internal/ 301
+    route /sjtug-internal/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /fedora-ostree /fedora-ostree/ 301
+    route /fedora-ostree/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /fedora-iot /fedora-iot/ 301
+    route /fedora-iot/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /flathub /flathub/ 301
+    route /flathub/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /github-release /github-release/ 301
+    route /github-release/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /npm-registry /npm-registry/ 301
+    route /npm-registry/* {
+        uri strip_prefix /npm-registry
+        redir * https://registry.npmjs.org{uri} 302
+    }
+    redir /nodejs-release /nodejs-release/ 301
+    route /nodejs-release/* {
+        uri strip_prefix /nodejs-release
+        redir * https://nodejs.org/dist{uri} 302
+    }
+    redir /maven-central /maven-central/ 301
+    route /maven-central/* {
+        uri strip_prefix /maven-central
+        redir * https://repo.maven.apache.org/maven2{uri} 302
+    }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
+    redir /sury /sury/ 301
+    route /sury/* {
+        uri strip_prefix /sury
+        redir * https://mirror.sjtu.edu.cn/sury{uri} 302
+    }
+    redir /opam-cache /opam-cache/ 301
+    route /opam-cache/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pypi/web/simple /pypi/web/simple/ 301
+    route /pypi/web/simple/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /git/dpdk.git /git/dpdk.git/ 301
+    route /git/dpdk.git/* {
+        uri strip_prefix /git/dpdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
+    }
+    redir /gradle/distributions /gradle/distributions/ 301
+    route /gradle/distributions/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
@@ -418,6 +755,77 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
+        not path /CTAN/*
+        not path /CPAN/*
+        not path /CRAN/*
+        not path /centos/*
+        not path /debian/*
+        not path /debian-cd/*
+        not path /debian-security/*
+        not path /deepin/*
+        not path /deepin-cd/*
+        not path /docker-ce/*
+        not path /fedora/linux/*
+        not path /fedora/epel/*
+        not path /fedora-secondary/*
+        not path /linuxmint/*
+        not path /linuxmint-cd/*
+        not path /mageia/*
+        not path /opensuse/*
+        not path /openvz/*
+        not path /remi/*
+        not path /scientific/*
+        not path /ubuntu/*
+        not path /ubuntu-cd/*
+        not path /ubuntu-cdimage/*
+        not path /ubuntu-ports/*
+        not path /openwrt/*
+        not path /rpmfusion/*
+        not path /homebrew-bottles/*
+        not path /rust-static/*
+        not path /pypi-packages/*
+        not path /dart-pub/*
+        not path /pytorch-wheels/*
+        not path /crates.io/*
+        not path /flutter_infra/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/homebrew-services.git/*
+        not path /git/homebrew-cask-drivers.git/*
+        not path /git/homebrew-cask-fonts.git/*
+        not path /git/homebrew-cask-versions.git/*
+        not path /linuxbrew-bottles/*
+        not path /git/guix.git/*
+        not path /git/llvm-project.git/*
+        not path /git/flutter-sdk.git/*
+        not path /apache/*
+        not path /git/ohmyzsh.git/*
+        not path /git/spacemacs.git/*
+        not path /git/doom-emacs.git/*
+        not path /dragonflybsd/iso-images/*
+        not path /dragonflybsd/dports/*
+        not path /blackarch/*
+        not path /github/GNS3/*
+        not path /github/FreeCAD/*
+        not path /github/prometheus/*
+        not path /github/rubyinstaller2/*
+        not path /github/PowerShell/*
+        not path /sites/tldp.org/*
+        not path /nix-channels/store/*
+        not path /guix/*
+        not path /sjtug-internal/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /flathub/*
+        not path /github-release/*
+        not path /npm-registry/*
+        not path /nodejs-release/*
+        not path /maven-central/*
+        not path /manjarostable/*
+        not path /sury/*
+        not path /opam-cache/*
+        not path /pypi/web/simple/*
+        not path /git/dpdk.git/*
+        not path /gradle/distributions/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -770,6 +1178,343 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+    redir /CPAN /CPAN/ 301
+    route /CPAN/* {
+        uri strip_prefix /CPAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+    redir /CRAN /CRAN/ 301
+    route /CRAN/* {
+        uri strip_prefix /CRAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
+    redir /centos /centos/ 301
+    route /centos/* {
+        uri strip_prefix /centos
+        redir * https://mirror.sjtu.edu.cn/centos{uri} 302
+    }
+    redir /debian /debian/ 301
+    route /debian/* {
+        uri strip_prefix /debian
+        redir * https://mirror.sjtu.edu.cn/debian{uri} 302
+    }
+    redir /debian-cd /debian-cd/ 301
+    route /debian-cd/* {
+        uri strip_prefix /debian-cd
+        redir * https://mirror.sjtu.edu.cn/debian-cd{uri} 302
+    }
+    redir /debian-security /debian-security/ 301
+    route /debian-security/* {
+        uri strip_prefix /debian-security
+        redir * https://mirror.sjtu.edu.cn/debian-security{uri} 302
+    }
+    redir /deepin /deepin/ 301
+    route /deepin/* {
+        uri strip_prefix /deepin
+        redir * https://mirror.sjtu.edu.cn/deepin{uri} 302
+    }
+    redir /deepin-cd /deepin-cd/ 301
+    route /deepin-cd/* {
+        uri strip_prefix /deepin-cd
+        redir * https://mirror.sjtu.edu.cn/deepin-cd{uri} 302
+    }
+    redir /docker-ce /docker-ce/ 301
+    route /docker-ce/* {
+        uri strip_prefix /docker-ce
+        redir * https://mirror.sjtu.edu.cn/docker-ce{uri} 302
+    }
+    redir /fedora/linux /fedora/linux/ 301
+    route /fedora/linux/* {
+        uri strip_prefix /fedora/linux
+        redir * https://mirror.sjtu.edu.cn/fedora/linux{uri} 302
+    }
+    redir /fedora/epel /fedora/epel/ 301
+    route /fedora/epel/* {
+        uri strip_prefix /fedora/epel
+        redir * https://mirror.sjtu.edu.cn/fedora/epel{uri} 302
+    }
+    redir /fedora-secondary /fedora-secondary/ 301
+    route /fedora-secondary/* {
+        uri strip_prefix /fedora-secondary
+        redir * https://mirror.sjtu.edu.cn/fedora-secondary{uri} 302
+    }
+    redir /linuxmint /linuxmint/ 301
+    route /linuxmint/* {
+        uri strip_prefix /linuxmint
+        redir * https://mirror.sjtu.edu.cn/linuxmint{uri} 302
+    }
+    redir /linuxmint-cd /linuxmint-cd/ 301
+    route /linuxmint-cd/* {
+        uri strip_prefix /linuxmint-cd
+        redir * https://mirror.sjtu.edu.cn/linuxmint-cd{uri} 302
+    }
+    redir /mageia /mageia/ 301
+    route /mageia/* {
+        uri strip_prefix /mageia
+        redir * https://mirror.sjtu.edu.cn/mageia{uri} 302
+    }
+    redir /opensuse /opensuse/ 301
+    route /opensuse/* {
+        uri strip_prefix /opensuse
+        redir * https://mirror.sjtu.edu.cn/opensuse{uri} 302
+    }
+    redir /openvz /openvz/ 301
+    route /openvz/* {
+        uri strip_prefix /openvz
+        redir * https://mirror.sjtu.edu.cn/openvz{uri} 302
+    }
+    redir /remi /remi/ 301
+    route /remi/* {
+        uri strip_prefix /remi
+        redir * https://mirror.sjtu.edu.cn/remi{uri} 302
+    }
+    redir /scientific /scientific/ 301
+    route /scientific/* {
+        uri strip_prefix /scientific
+        redir * https://mirror.sjtu.edu.cn/scientific{uri} 302
+    }
+    redir /ubuntu /ubuntu/ 301
+    route /ubuntu/* {
+        uri strip_prefix /ubuntu
+        redir * https://mirror.sjtu.edu.cn/ubuntu{uri} 302
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    route /ubuntu-cd/* {
+        uri strip_prefix /ubuntu-cd
+        redir * https://mirror.sjtu.edu.cn/ubuntu-cd{uri} 302
+    }
+    redir /ubuntu-cdimage /ubuntu-cdimage/ 301
+    route /ubuntu-cdimage/* {
+        uri strip_prefix /ubuntu-cdimage
+        redir * https://mirror.sjtu.edu.cn/ubuntu-cdimage{uri} 302
+    }
+    redir /ubuntu-ports /ubuntu-ports/ 301
+    route /ubuntu-ports/* {
+        uri strip_prefix /ubuntu-ports
+        redir * https://mirror.sjtu.edu.cn/ubuntu-ports{uri} 302
+    }
+    redir /openwrt /openwrt/ 301
+    route /openwrt/* {
+        uri strip_prefix /openwrt
+        redir * https://mirror.sjtu.edu.cn/openwrt{uri} 302
+    }
+    redir /rpmfusion /rpmfusion/ 301
+    route /rpmfusion/* {
+        uri strip_prefix /rpmfusion
+        redir * https://mirror.sjtu.edu.cn/rpmfusion{uri} 302
+    }
+    redir /homebrew-bottles /homebrew-bottles/ 301
+    route /homebrew-bottles/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /rust-static /rust-static/ 301
+    route /rust-static/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pypi-packages /pypi-packages/ 301
+    route /pypi-packages/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /dart-pub /dart-pub/ 301
+    route /dart-pub/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pytorch-wheels /pytorch-wheels/ 301
+    route /pytorch-wheels/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /crates.io /crates.io/ 301
+    route /crates.io/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /flutter_infra /flutter_infra/ 301
+    route /flutter_infra/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    route /git/linuxbrew-core.git/* {
+        uri strip_prefix /git/linuxbrew-core.git
+        redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
+    }
+    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
+    route /git/homebrew-services.git/* {
+        uri strip_prefix /git/homebrew-services.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
+    }
+    redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
+    route /git/homebrew-cask-drivers.git/* {
+        uri strip_prefix /git/homebrew-cask-drivers.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
+    }
+    redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
+    route /git/homebrew-cask-fonts.git/* {
+        uri strip_prefix /git/homebrew-cask-fonts.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
+    }
+    redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
+    route /git/homebrew-cask-versions.git/* {
+        uri strip_prefix /git/homebrew-cask-versions.git
+        redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
+    }
+    redir /linuxbrew-bottles /linuxbrew-bottles/ 301
+    route /linuxbrew-bottles/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /git/guix.git /git/guix.git/ 301
+    route /git/guix.git/* {
+        uri strip_prefix /git/guix.git
+        redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
+    }
+    redir /git/llvm-project.git /git/llvm-project.git/ 301
+    route /git/llvm-project.git/* {
+        uri strip_prefix /git/llvm-project.git
+        redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
+    }
+    redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
+    route /git/flutter-sdk.git/* {
+        uri strip_prefix /git/flutter-sdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
+    }
+    redir /apache /apache/ 301
+    route /apache/* {
+        uri strip_prefix /apache
+        redir * https://mirror.sjtu.edu.cn/apache{uri} 302
+    }
+    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
+    route /git/ohmyzsh.git/* {
+        uri strip_prefix /git/ohmyzsh.git
+        redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
+    }
+    redir /git/spacemacs.git /git/spacemacs.git/ 301
+    route /git/spacemacs.git/* {
+        uri strip_prefix /git/spacemacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
+    }
+    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
+    route /git/doom-emacs.git/* {
+        uri strip_prefix /git/doom-emacs.git
+        redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
+    }
+    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
+    route /dragonflybsd/iso-images/* {
+        uri strip_prefix /dragonflybsd/iso-images
+        redir * https://mirror.sjtu.edu.cn/dragonflybsd/iso-images{uri} 302
+    }
+    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
+    route /dragonflybsd/dports/* {
+        uri strip_prefix /dragonflybsd/dports
+        redir * https://mirror.sjtu.edu.cn/dragonflybsd/dports{uri} 302
+    }
+    redir /blackarch /blackarch/ 301
+    route /blackarch/* {
+        uri strip_prefix /blackarch
+        redir * https://mirror.sjtu.edu.cn/blackarch{uri} 302
+    }
+    redir /github/GNS3 /github/GNS3/ 301
+    route /github/GNS3/* {
+        uri strip_prefix /github/GNS3
+        redir * /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list 302
+    }
+    redir /github/FreeCAD /github/FreeCAD/ 301
+    route /github/FreeCAD/* {
+        uri strip_prefix /github/FreeCAD
+        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
+    }
+    redir /github/prometheus /github/prometheus/ 301
+    route /github/prometheus/* {
+        uri strip_prefix /github/prometheus
+        redir * /github-release/prometheus/?mirror_intel_list 302
+    }
+    redir /github/rubyinstaller2 /github/rubyinstaller2/ 301
+    route /github/rubyinstaller2/* {
+        uri strip_prefix /github/rubyinstaller2
+        redir * /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list 302
+    }
+    redir /github/PowerShell /github/PowerShell/ 301
+    route /github/PowerShell/* {
+        uri strip_prefix /github/PowerShell
+        redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
+    }
+    redir /sites/tldp.org /sites/tldp.org/ 301
+    route /sites/tldp.org/* {
+        uri strip_prefix /sites/tldp.org
+        redir * https://mirror.sjtu.edu.cn/sites/tldp.org{uri} 302
+    }
+    redir /nix-channels/store /nix-channels/store/ 301
+    route /nix-channels/store/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /guix /guix/ 301
+    route /guix/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /sjtug-internal /sjtug-internal/ 301
+    route /sjtug-internal/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /fedora-ostree /fedora-ostree/ 301
+    route /fedora-ostree/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /fedora-iot /fedora-iot/ 301
+    route /fedora-iot/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /flathub /flathub/ 301
+    route /flathub/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /github-release /github-release/ 301
+    route /github-release/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /npm-registry /npm-registry/ 301
+    route /npm-registry/* {
+        uri strip_prefix /npm-registry
+        redir * https://registry.npmjs.org{uri} 302
+    }
+    redir /nodejs-release /nodejs-release/ 301
+    route /nodejs-release/* {
+        uri strip_prefix /nodejs-release
+        redir * https://nodejs.org/dist{uri} 302
+    }
+    redir /maven-central /maven-central/ 301
+    route /maven-central/* {
+        uri strip_prefix /maven-central
+        redir * https://repo.maven.apache.org/maven2{uri} 302
+    }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
+    redir /sury /sury/ 301
+    route /sury/* {
+        uri strip_prefix /sury
+        redir * https://mirror.sjtu.edu.cn/sury{uri} 302
+    }
+    redir /opam-cache /opam-cache/ 301
+    route /opam-cache/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /pypi/web/simple /pypi/web/simple/ 301
+    route /pypi/web/simple/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /git/dpdk.git /git/dpdk.git/ 301
+    route /git/dpdk.git/* {
+        uri strip_prefix /git/dpdk.git
+        redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
+    }
+    redir /gradle/distributions /gradle/distributions/ 301
+    route /gradle/distributions/* {
+        reverse_proxy mirror-intel:8000
+    }
     @gzip_enabled {
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
@@ -781,6 +1526,77 @@ zhiyuan.internal.sjtug.org {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
+        not path /CTAN/*
+        not path /CPAN/*
+        not path /CRAN/*
+        not path /centos/*
+        not path /debian/*
+        not path /debian-cd/*
+        not path /debian-security/*
+        not path /deepin/*
+        not path /deepin-cd/*
+        not path /docker-ce/*
+        not path /fedora/linux/*
+        not path /fedora/epel/*
+        not path /fedora-secondary/*
+        not path /linuxmint/*
+        not path /linuxmint-cd/*
+        not path /mageia/*
+        not path /opensuse/*
+        not path /openvz/*
+        not path /remi/*
+        not path /scientific/*
+        not path /ubuntu/*
+        not path /ubuntu-cd/*
+        not path /ubuntu-cdimage/*
+        not path /ubuntu-ports/*
+        not path /openwrt/*
+        not path /rpmfusion/*
+        not path /homebrew-bottles/*
+        not path /rust-static/*
+        not path /pypi-packages/*
+        not path /dart-pub/*
+        not path /pytorch-wheels/*
+        not path /crates.io/*
+        not path /flutter_infra/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/homebrew-services.git/*
+        not path /git/homebrew-cask-drivers.git/*
+        not path /git/homebrew-cask-fonts.git/*
+        not path /git/homebrew-cask-versions.git/*
+        not path /linuxbrew-bottles/*
+        not path /git/guix.git/*
+        not path /git/llvm-project.git/*
+        not path /git/flutter-sdk.git/*
+        not path /apache/*
+        not path /git/ohmyzsh.git/*
+        not path /git/spacemacs.git/*
+        not path /git/doom-emacs.git/*
+        not path /dragonflybsd/iso-images/*
+        not path /dragonflybsd/dports/*
+        not path /blackarch/*
+        not path /github/GNS3/*
+        not path /github/FreeCAD/*
+        not path /github/prometheus/*
+        not path /github/rubyinstaller2/*
+        not path /github/PowerShell/*
+        not path /sites/tldp.org/*
+        not path /nix-channels/store/*
+        not path /guix/*
+        not path /sjtug-internal/*
+        not path /fedora-ostree/*
+        not path /fedora-iot/*
+        not path /flathub/*
+        not path /github-release/*
+        not path /npm-registry/*
+        not path /nodejs-release/*
+        not path /maven-central/*
+        not path /manjarostable/*
+        not path /sury/*
+        not path /opam-cache/*
+        not path /pypi/web/simple/*
+        not path /git/dpdk.git/*
+        not path /gradle/distributions/*
     }
     encode @gzip_enabled gzip zstd
 }

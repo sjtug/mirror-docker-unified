@@ -6,13 +6,13 @@ caddy-verify-config:
 	docker-compose run --rm caddy caddy validate --config /etc/caddy/Caddyfile.zhiyuan
 
 caddy-gen:
-	cd caddy-gen && pipenv run python src/caddy-gen.py -i ../lug -o ../caddy --site siyuan,zhiyuan -D
+	cd caddy-gen && pipenv run python src/caddy-gen.py -i ../lug -o ../caddy --site siyuan,zhiyuan
 
 caddy-hash-password:
 	docker-compose run --rm caddy caddy hash-password
 
 caddy-gen-local:
-	cd caddy-gen && pipenv run python caddy-gen.py -i ../lug/config.local.yaml -o ../caddy/Caddyfile -D
+	cd caddy-gen && pipenv run python src/caddy-gen.py -i ../lug -o ../caddy --site local
 
 caddy-reload:
 	docker-compose exec -w /etc/caddy caddy caddy reload

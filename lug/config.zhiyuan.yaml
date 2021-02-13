@@ -414,3 +414,18 @@ repos:
     subdomain: google-fonts.mirrors.sjtug.sjtu.edu.cn
     serve_mode: redir
     target: https://fonts.googleapis.com
+  - type: external
+    name: CTAN
+    serve_mode: redir
+    target: https://mirrors.sjtug.sjtu.edu.cn/ctan
+    disabled: true
+  - type: external
+    name: CPAN
+    serve_mode: redir
+    target: https://mirrors.sjtug.sjtu.edu.cn/cpan
+    disabled: true
+  - type: external
+    name: CRAN
+    serve_mode: redir
+    target: https://mirrors.sjtug.sjtu.edu.cn/cran
+    disabled: true

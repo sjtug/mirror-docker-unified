@@ -24,8 +24,6 @@ repos:
     path: /srv/disk1/centos
     name: centos
     no_redir_http: true
-    # for test use, will be removed later
-    subdomain: centos.siyuan.internal.sjtug.org
     <<: *oneshot_common
   # debian
   - type: shell_script
@@ -473,8 +471,6 @@ repos:
   - type: external
     name: github-release
     serve_mode: mirror_intel
-    # TODO: only for test use, will be removed later
-    subdomain: gh-release.siyuan.internal.sjtug.org
   - type: external
     name: npm-registry
     serve_mode: redir

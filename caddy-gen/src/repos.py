@@ -1,4 +1,4 @@
-import logging
+from loguru import logger
 import dataclasses as dc
 
 from node import Node
@@ -109,7 +109,7 @@ class RedirRepo:
         return False
 
     def as_site(self) -> list[Node]:
-        logging.warning(f'{self.name}: site redirect repo is not supported')
+        logger.warning(f'{self.name}: site redirect repo is not supported')
         return None
 
     def as_subdomain(self) -> list[Node]:
