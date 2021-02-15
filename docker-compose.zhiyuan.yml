@@ -10,7 +10,7 @@ services:
   lug:
     container_name: zhiyuan-lug
     volumes:
-      - "/mnt/data12T:/mnt:ro"
+      - "/mnt/data12T:/mnt"
       - "./lug/config.zhiyuan.yaml:/config.yaml:ro"
     mem_limit: 10G
     memswap_limit: 10G
@@ -37,7 +37,7 @@ services:
       - 5001
       - 5002
     ports:
-      - "127.0.0.1:5003:5003"
+      - "127.0.0.1:5000:5000"
     networks:
       - tunnel-net
     volumes: 
@@ -57,8 +57,8 @@ services:
     container_name: zhiyuan-rsyncd
     volumes:
       - ./rsyncd/rsyncd.zhiyuan.conf:/etc/rsyncd.conf:ro
-      - ./secrets/rsyncd.zhiyuan.secrets:/etc/rsyncd.secrets:ro
       - /mnt/data12T:/mnt:ro
+      - ./rsyncd/motd.zhiyuan:/etc/rsync/motd:ro
     blkio_config:
       weight: 10
       device_read_bps:
