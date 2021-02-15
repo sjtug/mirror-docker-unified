@@ -298,7 +298,7 @@ repos:
     source: downstreamtestuser@rsync-mxlinux.org::MX-Linux/
     # Password is made public at https://mxlinux.org/wiki/rsyncserver/mirroring-mx-antix-linux/
     # So we do not hide it behind secrets
-    password: dstuPwd 
+    password: dstuPwd
     <<: *oneshot_common
   - type: shell_script
     name: mx-packages
