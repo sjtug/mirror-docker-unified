@@ -186,7 +186,7 @@ services:
         max-file: "10"
     ports:
       - "873:873"
-    restart: unless-stopped
+    restart: unless-stopped      
 
 networks:
   host-monitor-net:

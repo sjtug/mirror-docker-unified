@@ -142,8 +142,8 @@ services:
     container_name: siyuan-rsyncd
     volumes:
       - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
-      - ./secrets/rsyncd.siyuan.secrets:/etc/rsyncd.secrets:ro
       - /mnt/disk1:/srv/disk1:ro
+      - ./rsyncd/motd.siyuan:/etc/rsync/motd:ro
     blkio_config:
       weight: 10
       device_read_bps:
