@@ -387,6 +387,7 @@ repos:
     path: /srv/disk2/dragonflybsd/iso-images
     name: dragonflybsd/iso-images
     rsync_extra_flags: --exclude "tmp"
+    serve_mode: ignore
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -394,6 +395,7 @@ repos:
     interval: 9800
     path: /srv/disk2/dragonflybsd/dports
     name: dragonflybsd/dports
+    serve_mode: ignore
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -487,11 +489,6 @@ repos:
     target: https://repo.maven.apache.org/maven2
     disabled: true
   - type: external
-    name: manjarostable
-    serve_mode: redir
-    target: https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable
-    disabled: true
-  - type: external
     name: gcr-registry-siyuan
     proxy_to: siyuan-gcr-registry:80
     disabled: true
@@ -532,4 +529,9 @@ repos:
     serve_mode: mirror_intel
     interval: 10800
     name: gradle/distributions
+    <<: *oneshot_common
+  - type: external
+    path: /srv/disk2/dragonflybsd
+    name: dragonflybsd
+    disabled: true
     <<: *oneshot_common

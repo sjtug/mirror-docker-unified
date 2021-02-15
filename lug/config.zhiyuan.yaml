@@ -429,3 +429,8 @@ repos:
     serve_mode: redir
     target: https://mirrors.sjtug.sjtu.edu.cn/cran
     disabled: true
+  - type: external
+    name: manjarostable
+    serve_mode: redir
+    target: https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable
+    disabled: true
