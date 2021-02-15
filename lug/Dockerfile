@@ -66,5 +66,6 @@ RUN /app/build-script/from-cache.sh \
 
 RUN mkdir /root/.ssh && ssh-keyscan cran.r-project.org >> /root/.ssh/known_hosts
 RUN git config --global credential.helper store
+COPY ssh_config /root/.ssh/config
 
 ENTRYPOINT ["./lug"]
