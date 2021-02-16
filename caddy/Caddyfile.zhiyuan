@@ -1,3 +1,7 @@
+  {
+    key_type rsa2048
+}
+
 http://mirrors.sjtug.sjtu.edu.cn/ {
     log {
         output stdout

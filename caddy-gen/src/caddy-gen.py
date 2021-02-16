@@ -251,6 +251,7 @@ if __name__ == "__main__":
 
         config_yaml = site_configs[site]
         roots = []
+        roots.append(Node(" ", [Node('key_type rsa4096')]))
 
         for (idx, base) in enumerate(BASES[site]):
             roots.append(build_root(base, config_yaml, idx == 0, site))
