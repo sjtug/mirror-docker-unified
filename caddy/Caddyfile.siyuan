@@ -1,5 +1,5 @@
   {
-    key_type rsa2048
+    key_type rsa4096
 }
 
 http://mirror.sjtu.edu.cn/ {
