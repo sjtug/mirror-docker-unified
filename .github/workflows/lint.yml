@@ -9,6 +9,7 @@ on:
 jobs:
   test-lug:
     runs-on: ubuntu-latest
+    name: lug config format
     steps:
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
@@ -19,6 +20,7 @@ jobs:
       - run: npm i -g prettier
       - run: prettier -c lug/*.yaml
   test-docker-build:
+    name: docker build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,7 +30,6 @@ jobs:
       - name: use CI config for docker-compose
         run: |
           cp docker-compose.ci.yml docker-compose.override.yml 
-          cp .env.ci .env
           cp ./secrets/caddy.env.example ./secrets/caddy.env
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
@@ -42,6 +43,7 @@ jobs:
         run: make caddy-verify-config
   test-caddy-file:
     runs-on: ubuntu-latest
+    name: Caddyfile up-to-date
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
