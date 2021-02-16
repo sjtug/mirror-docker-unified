@@ -526,16 +526,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
-    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
-    file_server /dragonflybsd/iso-images/* browse {
-        root /srv/disk2
-        hide .*
-    }
-    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
-    file_server /dragonflybsd/dports/* browse {
-        root /srv/disk2
-        hide .*
-    }
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
         root /srv/disk2
@@ -614,11 +604,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /maven-central
         redir * https://repo.maven.apache.org/maven2{uri} 302
     }
-    redir /manjarostable /manjarostable/ 301
-    route /manjarostable/* {
-        uri strip_prefix /manjarostable
-        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
-    }
     redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
     route /gcr-registry-siyuan/* {
         uri strip_prefix /gcr-registry-siyuan
@@ -650,6 +635,11 @@ mirror.sjtu.edu.cn {
     redir /gradle/distributions /gradle/distributions/ 301
     route /gradle/distributions/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /dragonflybsd /dragonflybsd/ 301
+    file_server /dragonflybsd/* browse {
+        root /srv/disk2
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -871,6 +861,11 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
     }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -906,7 +901,6 @@ mirror.sjtu.edu.cn {
         not path /npm-registry/*
         not path /nodejs-release/*
         not path /maven-central/*
-        not path /manjarostable/*
         not path /gcr-registry-siyuan/*
         not path /docker-registry-siyuan/*
         not path /opam-cache/*
@@ -957,6 +951,7 @@ mirror.sjtu.edu.cn {
         not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /manjarostable/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1471,16 +1466,6 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
-    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
-    file_server /dragonflybsd/iso-images/* browse {
-        root /srv/disk2
-        hide .*
-    }
-    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
-    file_server /dragonflybsd/dports/* browse {
-        root /srv/disk2
-        hide .*
-    }
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
         root /srv/disk2
@@ -1559,11 +1544,6 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /maven-central
         redir * https://repo.maven.apache.org/maven2{uri} 302
     }
-    redir /manjarostable /manjarostable/ 301
-    route /manjarostable/* {
-        uri strip_prefix /manjarostable
-        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
-    }
     redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
     route /gcr-registry-siyuan/* {
         uri strip_prefix /gcr-registry-siyuan
@@ -1595,6 +1575,11 @@ ftp.sjtu.edu.cn {
     redir /gradle/distributions /gradle/distributions/ 301
     route /gradle/distributions/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /dragonflybsd /dragonflybsd/ 301
+    file_server /dragonflybsd/* browse {
+        root /srv/disk2
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -1816,6 +1801,11 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
     }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -1851,7 +1841,6 @@ ftp.sjtu.edu.cn {
         not path /npm-registry/*
         not path /nodejs-release/*
         not path /maven-central/*
-        not path /manjarostable/*
         not path /gcr-registry-siyuan/*
         not path /docker-registry-siyuan/*
         not path /opam-cache/*
@@ -1902,6 +1891,7 @@ ftp.sjtu.edu.cn {
         not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /manjarostable/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2416,16 +2406,6 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
-    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
-    file_server /dragonflybsd/iso-images/* browse {
-        root /srv/disk2
-        hide .*
-    }
-    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
-    file_server /dragonflybsd/dports/* browse {
-        root /srv/disk2
-        hide .*
-    }
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
         root /srv/disk2
@@ -2504,11 +2484,6 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /maven-central
         redir * https://repo.maven.apache.org/maven2{uri} 302
     }
-    redir /manjarostable /manjarostable/ 301
-    route /manjarostable/* {
-        uri strip_prefix /manjarostable
-        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
-    }
     redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
     route /gcr-registry-siyuan/* {
         uri strip_prefix /gcr-registry-siyuan
@@ -2540,6 +2515,11 @@ ftp6.sjtu.edu.cn {
     redir /gradle/distributions /gradle/distributions/ 301
     route /gradle/distributions/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /dragonflybsd /dragonflybsd/ 301
+    file_server /dragonflybsd/* browse {
+        root /srv/disk2
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -2761,6 +2741,11 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
     }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -2796,7 +2781,6 @@ ftp6.sjtu.edu.cn {
         not path /npm-registry/*
         not path /nodejs-release/*
         not path /maven-central/*
-        not path /manjarostable/*
         not path /gcr-registry-siyuan/*
         not path /docker-registry-siyuan/*
         not path /opam-cache/*
@@ -2847,6 +2831,7 @@ ftp6.sjtu.edu.cn {
         not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /manjarostable/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -3361,16 +3346,6 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
-    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
-    file_server /dragonflybsd/iso-images/* browse {
-        root /srv/disk2
-        hide .*
-    }
-    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
-    file_server /dragonflybsd/dports/* browse {
-        root /srv/disk2
-        hide .*
-    }
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
         root /srv/disk2
@@ -3449,11 +3424,6 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /maven-central
         redir * https://repo.maven.apache.org/maven2{uri} 302
     }
-    redir /manjarostable /manjarostable/ 301
-    route /manjarostable/* {
-        uri strip_prefix /manjarostable
-        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
-    }
     redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
     route /gcr-registry-siyuan/* {
         uri strip_prefix /gcr-registry-siyuan
@@ -3485,6 +3455,11 @@ siyuan.internal.sjtug.org {
     redir /gradle/distributions /gradle/distributions/ 301
     route /gradle/distributions/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /dragonflybsd /dragonflybsd/ 301
+    file_server /dragonflybsd/* browse {
+        root /srv/disk2
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -3706,6 +3681,11 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
     }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
     @gzip_enabled {
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -3741,7 +3721,6 @@ siyuan.internal.sjtug.org {
         not path /npm-registry/*
         not path /nodejs-release/*
         not path /maven-central/*
-        not path /manjarostable/*
         not path /gcr-registry-siyuan/*
         not path /docker-registry-siyuan/*
         not path /opam-cache/*
@@ -3792,6 +3771,7 @@ siyuan.internal.sjtug.org {
         not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /manjarostable/*
     }
     encode @gzip_enabled gzip zstd
 }

@@ -1,0 +1,23 @@
++==================================================+
+|                   SJTUG Mirror                   |
++--------------------------------------------------+
+|   Welcome to SJTUG Mirror.                       |
+|                                                  |
+|   This rsync endpoint is only intended for file  |
+|   scanning. Disk I/O is strictly limited.        |
+|                                                  |
+|   Please use HTTP(s) service to download files.  |
+|   Zhiyuan: https://mirrors.sjtug.sjtu.edu.cn     |
+|   Siyuan: https://mirror.sjtu.edu.cn             |
+|                                                  |
+|   If you have any issues, please contact us      |
+|   by sjtug-mirror-maintainers@googlegroups.com   |
+|   or by submitting issue via GitHub              |
+|   https://github.com/sjtug/mirror-requests       |
+|                                                  |
+|   Sponsored by SJTU Network Information Center   |
+|   Maintained by SJTU Linux User Group (SJTUG)    |
+|                                                  |
+|   You're using Siyuan Mirror Server.             |
+|                                                  |
++==================================================+

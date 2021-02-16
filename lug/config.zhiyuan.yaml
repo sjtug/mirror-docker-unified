@@ -27,7 +27,7 @@ repos:
     name: archlinux
     interval: 5300
     path: /mnt/archlinux
-    script: /worker-script/archlinux.sh
+    script: /worker-script/zhiyuan/worker-script/archlinux.sh
     source: rsync://mirrors.kernel.org/archlinux/
     lastupdate: https://mirrors.edge.kernel.org/archlinux/lastupdate
     <<: *oneshot_common
@@ -35,7 +35,7 @@ repos:
     name: archlinux-cn
     interval: 6000
     path: /mnt/archlinux-cn
-    script: /worker-script/archlinux-cn.sh
+    script: /worker-script/zhiyuan/worker-script/archlinux-cn.sh
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -91,7 +91,7 @@ repos:
     name: cpan
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/rsync_ssh.sh
+    script: /worker-script/zhiyuan/worker-script/rsync_ssh.sh
     source: "cran-rsync@cran.r-project.org:"
     interval: 43200
     path: /mnt/cran
@@ -142,7 +142,7 @@ repos:
     name: kali-images
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/anaconda.py
+    script: /worker-script/zhiyuan/worker-script/anaconda.py
     path: /mnt/anaconda
     name: anaconda
     subdomain: anaconda.mirrors.sjtug.sjtu.edu.cn
@@ -233,7 +233,7 @@ repos:
     cloud/pytorch-test/noarch: https://conda.anaconda.org/pytorch-test/noarch/
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/git.sh
+    script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/homebrew-core.git
     origin: https://github.com/Homebrew/homebrew-core.git
     interval: 3801
@@ -242,7 +242,7 @@ repos:
     serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/git.sh
+    script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/homebrew-cask.git
     interval: 3801
     path: /mnt/git/homebrew-cask.git
@@ -251,7 +251,7 @@ repos:
     serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/git.sh
+    script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/brew.git
     interval: 3927
     path: /mnt/git/brew.git
@@ -260,7 +260,7 @@ repos:
     serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/crates-io.sh
+    script: /worker-script/zhiyuan/worker-script/crates-io.sh
     name: git/crates.io-index
     interval: 3601
     path: /mnt/git/crates.io-index
@@ -292,20 +292,26 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     name: mx-isos
-    script: /worker-script/mxlinux.sh
+    script: /worker-script/zhiyuan/worker-script/mxlinux.sh
     path: /mnt/mx-isos
     interval: 43301
     source: downstreamtestuser@rsync-mxlinux.org::MX-Linux/
+    # Password is made public at https://mxlinux.org/wiki/rsyncserver/mirroring-mx-antix-linux/
+    # So we do not hide it behind secrets
+    password: dstuPwd
     <<: *oneshot_common
   - type: shell_script
     name: mx-packages
-    script: /worker-script/mxlinux.sh
+    script: /worker-script/zhiyuan/worker-script/mxlinux.sh
     path: /mnt/mx-packages
     interval: 9602
     source: rsuser@iso.mxrepo.com::workspace
+    # Password is made public at https://mxlinux.org/wiki/rsyncserver/mirroring-mx-antix-linux/
+    # So we do not hide it behind secrets
+    password: T1tpw4rstmr
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/packagist.sh
+    script: /worker-script/zhiyuan/worker-script/packagist.sh
     interval: 4800
     path: /mnt/packagist
     name: packagist
@@ -313,7 +319,7 @@ repos:
     upstream: https://repo.packagist.org
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mongodb.sh
+    script: /worker-script/zhiyuan/worker-script/mongodb.sh
     source: s3://repo.mongodb.org/
     interval: 4600
     path: /mnt/mongodb
@@ -327,18 +333,18 @@ repos:
     name: qt
     no_redir_http: true
   - type: shell_script
-    script: julia -t auto /worker-script/julia.jl
+    script: julia -t auto /worker-script/zhiyuan/worker-script/julia.jl
     interval: 8000
     path: /mnt/julia
     name: julia
   - type: shell_script
     name: emacs-elpa
-    script: /worker-script/emacs-elpa.sh
+    script: /worker-script/zhiyuan/worker-script/emacs-elpa.sh
     path: /mnt/emacs-elpa
     interval: 5000
     source: rsync://elpa.emacs-china.org/elpa/
   - type: shell_script
-    script: /worker-script/julia-releases.sh
+    script: /worker-script/zhiyuan/worker-script/julia-releases.sh
     source: s3://julialang2/
     interval: 9200
     path: /mnt/julia-releases
@@ -359,7 +365,7 @@ repos:
     source: rsync://repo.msys2.org/builds
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/opam.sh
+    script: /worker-script/zhiyuan/worker-script/opam.sh
     name: git/opam-repository.git
     interval: 4623
     path: /mnt/git/opam-repository.git
@@ -368,7 +374,7 @@ repos:
     serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/git.sh
+    script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/qemu.git
     origin: https://git.qemu.org/git/qemu.git
     interval: 4300
@@ -377,7 +383,7 @@ repos:
     serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/git.sh
+    script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/linux.git
     origin: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
     interval: 4700
@@ -428,4 +434,9 @@ repos:
     name: CRAN
     serve_mode: redir
     target: https://mirrors.sjtug.sjtu.edu.cn/cran
+    disabled: true
+  - type: external
+    name: manjarostable
+    serve_mode: redir
+    target: https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable
     disabled: true

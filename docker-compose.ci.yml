@@ -14,3 +14,7 @@ services:
     build:
       args:
         - USE_SJTUG=false
+  rsyncd:
+    build:
+      args:
+        - USE_SJTUG=false

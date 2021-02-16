@@ -56,6 +56,8 @@ services:
       - "./data/lug:/data"
       - "./data/caddy/dists/mirrorz:/mirrorz"
       - "./secrets/git-credentials:/root/.git-credentials:ro"
+      - "./secrets/lug-secrets.sh:/root/lug-secrets.sh:ro"
+      - "./secrets/ssh:/secrets_ssh:ro"
       - "./common/gai.conf:/etc/gai.conf:ro"
     environment:
       RUST_LOG: info
@@ -186,7 +188,7 @@ services:
         max-file: "10"
     ports:
       - "873:873"
-    restart: unless-stopped
+    restart: unless-stopped      
 
 networks:
   host-monitor-net:

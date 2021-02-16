@@ -9,6 +9,4 @@ WORKDIR /app
 
 RUN apt-get update -y -qq && apt-get install rsync -y -qq
 
-ARG INTEL_VERSION
-
 CMD rsync --daemon --no-detach

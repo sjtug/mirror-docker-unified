@@ -1,0 +1,7 @@
+Host cran.r-project.org
+    User cran-rsync
+    IdentityFile /secrets_ssh/id_rsa_cran
+
+Host *
+    ServerAliveInterval 30
+    ServerAliveCountMax 60

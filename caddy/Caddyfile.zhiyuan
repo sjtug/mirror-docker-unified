@@ -422,6 +422,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
     }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
     redir /centos /centos/ 301
     route /centos/* {
         uri strip_prefix /centos
@@ -629,16 +634,6 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
-    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
-    route /dragonflybsd/iso-images/* {
-        uri strip_prefix /dragonflybsd/iso-images
-        redir * https://mirror.sjtu.edu.cn/dragonflybsd/iso-images{uri} 302
-    }
-    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
-    route /dragonflybsd/dports/* {
-        uri strip_prefix /dragonflybsd/dports
-        redir * https://mirror.sjtu.edu.cn/dragonflybsd/dports{uri} 302
-    }
     redir /blackarch /blackarch/ 301
     route /blackarch/* {
         uri strip_prefix /blackarch
@@ -717,11 +712,6 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /maven-central
         redir * https://repo.maven.apache.org/maven2{uri} 302
     }
-    redir /manjarostable /manjarostable/ 301
-    route /manjarostable/* {
-        uri strip_prefix /manjarostable
-        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
-    }
     redir /sury /sury/ 301
     route /sury/* {
         uri strip_prefix /sury
@@ -744,6 +734,11 @@ mirrors.sjtug.sjtu.edu.cn {
     route /gradle/distributions/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /dragonflybsd /dragonflybsd/ 301
+    route /dragonflybsd/* {
+        uri strip_prefix /dragonflybsd
+        redir * https://mirror.sjtu.edu.cn/dragonflybsd{uri} 302
+    }
     @gzip_enabled {
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
@@ -758,6 +753,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /manjarostable/*
         not path /centos/*
         not path /debian/*
         not path /debian-cd/*
@@ -801,8 +797,6 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/ohmyzsh.git/*
         not path /git/spacemacs.git/*
         not path /git/doom-emacs.git/*
-        not path /dragonflybsd/iso-images/*
-        not path /dragonflybsd/dports/*
         not path /blackarch/*
         not path /github/GNS3/*
         not path /github/FreeCAD/*
@@ -820,12 +814,12 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /npm-registry/*
         not path /nodejs-release/*
         not path /maven-central/*
-        not path /manjarostable/*
         not path /sury/*
         not path /opam-cache/*
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
+        not path /dragonflybsd/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1193,6 +1187,11 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
     }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
     redir /centos /centos/ 301
     route /centos/* {
         uri strip_prefix /centos
@@ -1400,16 +1399,6 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /git/doom-emacs.git
         redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
     }
-    redir /dragonflybsd/iso-images /dragonflybsd/iso-images/ 301
-    route /dragonflybsd/iso-images/* {
-        uri strip_prefix /dragonflybsd/iso-images
-        redir * https://mirror.sjtu.edu.cn/dragonflybsd/iso-images{uri} 302
-    }
-    redir /dragonflybsd/dports /dragonflybsd/dports/ 301
-    route /dragonflybsd/dports/* {
-        uri strip_prefix /dragonflybsd/dports
-        redir * https://mirror.sjtu.edu.cn/dragonflybsd/dports{uri} 302
-    }
     redir /blackarch /blackarch/ 301
     route /blackarch/* {
         uri strip_prefix /blackarch
@@ -1488,11 +1477,6 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /maven-central
         redir * https://repo.maven.apache.org/maven2{uri} 302
     }
-    redir /manjarostable /manjarostable/ 301
-    route /manjarostable/* {
-        uri strip_prefix /manjarostable
-        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
-    }
     redir /sury /sury/ 301
     route /sury/* {
         uri strip_prefix /sury
@@ -1515,6 +1499,11 @@ zhiyuan.internal.sjtug.org {
     route /gradle/distributions/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /dragonflybsd /dragonflybsd/ 301
+    route /dragonflybsd/* {
+        uri strip_prefix /dragonflybsd
+        redir * https://mirror.sjtu.edu.cn/dragonflybsd{uri} 302
+    }
     @gzip_enabled {
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
@@ -1529,6 +1518,7 @@ zhiyuan.internal.sjtug.org {
         not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /manjarostable/*
         not path /centos/*
         not path /debian/*
         not path /debian-cd/*
@@ -1572,8 +1562,6 @@ zhiyuan.internal.sjtug.org {
         not path /git/ohmyzsh.git/*
         not path /git/spacemacs.git/*
         not path /git/doom-emacs.git/*
-        not path /dragonflybsd/iso-images/*
-        not path /dragonflybsd/dports/*
         not path /blackarch/*
         not path /github/GNS3/*
         not path /github/FreeCAD/*
@@ -1591,12 +1579,12 @@ zhiyuan.internal.sjtug.org {
         not path /npm-registry/*
         not path /nodejs-release/*
         not path /maven-central/*
-        not path /manjarostable/*
         not path /sury/*
         not path /opam-cache/*
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
+        not path /dragonflybsd/*
     }
     encode @gzip_enabled gzip zstd
 }
