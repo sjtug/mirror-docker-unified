@@ -1,3 +1,7 @@
+  {
+    key_type rsa4096
+}
+
 http://mirrors.sjtug.sjtu.edu.cn/ {
     log {
         output stdout
