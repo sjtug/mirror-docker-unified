@@ -253,7 +253,9 @@ k8s-gcr-io.siyuan.internal.sjtug.org {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    reverse_proxy siyuan-gcr-registry:80
+    reverse_proxy siyuan-gcr-registry:80 {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -262,7 +264,9 @@ docker.siyuan.internal.sjtug.org {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    reverse_proxy siyuan-docker-registry:80
+    reverse_proxy siyuan-docker-registry:80 {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -611,12 +615,16 @@ mirror.sjtu.edu.cn {
     redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
     route /gcr-registry-siyuan/* {
         uri strip_prefix /gcr-registry-siyuan
-        reverse_proxy siyuan-gcr-registry:80
+        reverse_proxy siyuan-gcr-registry:80 {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /docker-registry-siyuan /docker-registry-siyuan/ 301
     route /docker-registry-siyuan/* {
         uri strip_prefix /docker-registry-siyuan
-        reverse_proxy siyuan-docker-registry:80
+        reverse_proxy siyuan-docker-registry:80 {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /sury /sury/ 301
     file_server /sury/* browse {
@@ -1551,12 +1559,16 @@ ftp.sjtu.edu.cn {
     redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
     route /gcr-registry-siyuan/* {
         uri strip_prefix /gcr-registry-siyuan
-        reverse_proxy siyuan-gcr-registry:80
+        reverse_proxy siyuan-gcr-registry:80 {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /docker-registry-siyuan /docker-registry-siyuan/ 301
     route /docker-registry-siyuan/* {
         uri strip_prefix /docker-registry-siyuan
-        reverse_proxy siyuan-docker-registry:80
+        reverse_proxy siyuan-docker-registry:80 {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /sury /sury/ 301
     file_server /sury/* browse {
@@ -2491,12 +2503,16 @@ ftp6.sjtu.edu.cn {
     redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
     route /gcr-registry-siyuan/* {
         uri strip_prefix /gcr-registry-siyuan
-        reverse_proxy siyuan-gcr-registry:80
+        reverse_proxy siyuan-gcr-registry:80 {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /docker-registry-siyuan /docker-registry-siyuan/ 301
     route /docker-registry-siyuan/* {
         uri strip_prefix /docker-registry-siyuan
-        reverse_proxy siyuan-docker-registry:80
+        reverse_proxy siyuan-docker-registry:80 {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /sury /sury/ 301
     file_server /sury/* browse {
@@ -3431,12 +3447,16 @@ siyuan.internal.sjtug.org {
     redir /gcr-registry-siyuan /gcr-registry-siyuan/ 301
     route /gcr-registry-siyuan/* {
         uri strip_prefix /gcr-registry-siyuan
-        reverse_proxy siyuan-gcr-registry:80
+        reverse_proxy siyuan-gcr-registry:80 {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /docker-registry-siyuan /docker-registry-siyuan/ 301
     route /docker-registry-siyuan/* {
         uri strip_prefix /docker-registry-siyuan
-        reverse_proxy siyuan-docker-registry:80
+        reverse_proxy siyuan-docker-registry:80 {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /sury /sury/ 301
     file_server /sury/* browse {
