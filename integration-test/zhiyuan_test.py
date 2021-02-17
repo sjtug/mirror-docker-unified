@@ -13,9 +13,9 @@ def test_raspbian_http_base():
     assert response.url == f"http://{BASE_URL}/raspbian/"
 
 def test_raspbian_http_dir():
-    response = requests.get(f"http://{BASE_URL}/raspbian/pool")
+    response = requests.get(f"http://{BASE_URL}/raspbian/raspbian/pool")
     assert response.history
-    assert response.url == f"http://{BASE_URL}/raspbian/pool/"
+    assert response.url == f"http://{BASE_URL}/raspbian/raspbian/pool/"
 
 def test_raspbian_https_base():
     response = requests.get(f"https://{BASE_URL}/raspbian")
@@ -23,9 +23,9 @@ def test_raspbian_https_base():
     assert response.url == f"https://{BASE_URL}/raspbian/"
 
 def test_raspbian_https_dir():
-    response = requests.get(f"https://{BASE_URL}/raspbian/pool")
+    response = requests.get(f"https://{BASE_URL}/raspbian/raspbian/pool")
     assert response.history
-    assert response.url == f"https://{BASE_URL}/raspbian/pool/"
+    assert response.url == f"https://{BASE_URL}/raspbian/raspbian/pool/"
 
 """
 Here we take conda repo as an example. It should be served only on https
@@ -63,11 +63,6 @@ And for our frontend, it should always be available on https.
 
 def test_frontend_base():
     response = requests.get(f"http://{BASE_URL}")
-    assert response.history
-    assert response.url == f"https://{BASE_URL}/"
-
-def test_frontend_index():
-    response = requests.get(f"http://{BASE_URL}/index.html")
     assert response.history
     assert response.url == f"https://{BASE_URL}/"
 
