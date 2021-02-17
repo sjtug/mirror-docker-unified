@@ -21,13 +21,8 @@ repos:
     interval: 3600
     name: test
     path: /srv/test
-    subdomain: test.skyzh.xyz
     <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/test.sh
-    interval: 3600
-    name: test2
-    path: /srv/test2
-    subdomain: test2.skyzh.xyz
-    no_redir_http: true
-    <<: *oneshot_common
+  - type: external
+    name: TEST
+    path: /srv/TEST
+    disabled: true

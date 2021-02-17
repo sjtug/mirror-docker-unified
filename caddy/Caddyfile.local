@@ -1,0 +1,83 @@
+  {
+    key_type rsa4096
+}
+
+http://:80/ {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir / https://:80/ 308
+}
+
+:80 {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+
+    file_server /* {
+        root /dists
+    }
+    rewrite /docs/* /  # for react app
+
+    reverse_proxy /lug/* lug:7001 {
+        header_down Access-Control-Allow-Origin *
+        header_down Access-Control-Request-Method GET
+    }
+
+    basicauth /monitor/* {
+        {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
+    }
+    route /monitor/node_exporter/* {
+        uri strip_prefix /monitor/node_exporter
+        reverse_proxy 172.31.0.1:9100
+    }
+    route /monitor/cadvisor/* {
+        uri strip_prefix /monitor/cadvisor
+        reverse_proxy cadvisor:8080
+    }
+    route /monitor/lug/* {
+        uri strip_prefix /monitor/lug
+        reverse_proxy lug:8081
+    }
+    route /monitor/mirror-intel/* {
+        uri strip_prefix /monitor/mirror-intel
+        reverse_proxy mirror-intel:8000
+    }
+    route /monitor/docker-gcr/* {
+        uri strip_prefix /monitor/docker-gcr
+        reverse_proxy siyuan-gcr-registry:5001
+    }
+    route /monitor/docker-registry/* {
+        uri strip_prefix /monitor/docker-registry
+        reverse_proxy siyuan-docker-registry:5001
+    }
+
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    @reject_lug_api {
+        path /lug/v1/admin/*
+    }
+    respond @reject_lug_api 403
+
+    header * x-sjtug-mirror-id local
+    header /mirrorz/* Access-Control-Allow-Origin *
+    header /mirrorz/* Access-Control-Request-Method GET
+
+    redir /test /test/ 301
+    file_server /test/* browse {
+        root /srv
+        hide .*
+    }
+    redir /TEST /TEST/ 301
+    file_server /TEST/* browse {
+        root /srv
+        hide .*
+    }
+    @gzip_enabled
+    encode @gzip_enabled gzip zstd
+}
+

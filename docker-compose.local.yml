@@ -2,6 +2,7 @@ services:
     caddy:
       volumes:
         - "/srv:/srv"
+        - "./caddy/Caddyfile.local:/etc/caddy/Caddyfile:ro"
     lug:
       volumes:
         - "./lug/config.local.yaml:/config.local.yaml:ro"
