@@ -412,19 +412,19 @@ mirrors.sjtug.sjtu.edu.cn {
         redir * https://fonts.googleapis.com{uri} 302
     }
     redir /CTAN /CTAN/ 301
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    file_server /CTAN/* browse {
+        root /mnt
+        hide .*
     }
     redir /CPAN /CPAN/ 301
-    route /CPAN/* {
-        uri strip_prefix /CPAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    file_server /CPAN/* browse {
+        root /mnt
+        hide .*
     }
     redir /CRAN /CRAN/ 301
-    route /CRAN/* {
-        uri strip_prefix /CRAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    file_server /CRAN/* browse {
+        root /mnt
+        hide .*
     }
     redir /manjarostable /manjarostable/ 301
     route /manjarostable/* {
@@ -754,9 +754,6 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
-        not path /CTAN/*
-        not path /CPAN/*
-        not path /CRAN/*
         not path /manjarostable/*
         not path /centos/*
         not path /debian/*
@@ -1177,19 +1174,19 @@ zhiyuan.internal.sjtug.org {
         redir * https://fonts.googleapis.com{uri} 302
     }
     redir /CTAN /CTAN/ 301
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    file_server /CTAN/* browse {
+        root /mnt
+        hide .*
     }
     redir /CPAN /CPAN/ 301
-    route /CPAN/* {
-        uri strip_prefix /CPAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    file_server /CPAN/* browse {
+        root /mnt
+        hide .*
     }
     redir /CRAN /CRAN/ 301
-    route /CRAN/* {
-        uri strip_prefix /CRAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    file_server /CRAN/* browse {
+        root /mnt
+        hide .*
     }
     redir /manjarostable /manjarostable/ 301
     route /manjarostable/* {
@@ -1519,9 +1516,6 @@ zhiyuan.internal.sjtug.org {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
-        not path /CTAN/*
-        not path /CPAN/*
-        not path /CRAN/*
         not path /manjarostable/*
         not path /centos/*
         not path /debian/*

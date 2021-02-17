@@ -853,17 +853,17 @@ mirror.sjtu.edu.cn {
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
     }
     redir /CPAN /CPAN/ 301
     route /CPAN/* {
         uri strip_prefix /CPAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CPAN{uri} 302
     }
     redir /CRAN /CRAN/ 301
     route /CRAN/* {
         uri strip_prefix /CRAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
     redir /manjarostable /manjarostable/ 301
     route /manjarostable/* {
@@ -1793,17 +1793,17 @@ ftp.sjtu.edu.cn {
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
     }
     redir /CPAN /CPAN/ 301
     route /CPAN/* {
         uri strip_prefix /CPAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CPAN{uri} 302
     }
     redir /CRAN /CRAN/ 301
     route /CRAN/* {
         uri strip_prefix /CRAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
     redir /manjarostable /manjarostable/ 301
     route /manjarostable/* {
@@ -2733,17 +2733,17 @@ ftp6.sjtu.edu.cn {
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
     }
     redir /CPAN /CPAN/ 301
     route /CPAN/* {
         uri strip_prefix /CPAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CPAN{uri} 302
     }
     redir /CRAN /CRAN/ 301
     route /CRAN/* {
         uri strip_prefix /CRAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
     redir /manjarostable /manjarostable/ 301
     route /manjarostable/* {
@@ -3673,17 +3673,17 @@ siyuan.internal.sjtug.org {
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
     }
     redir /CPAN /CPAN/ 301
     route /CPAN/* {
         uri strip_prefix /CPAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CPAN{uri} 302
     }
     redir /CRAN /CRAN/ 301
     route /CRAN/* {
         uri strip_prefix /CRAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
     redir /manjarostable /manjarostable/ 301
     route /manjarostable/* {

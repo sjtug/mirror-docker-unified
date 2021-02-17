@@ -1,7 +1,7 @@
 BASES = {
     "siyuan": ['mirror.sjtu.edu.cn', 'ftp.sjtu.edu.cn', 'ftp6.sjtu.edu.cn', 'siyuan.internal.sjtug.org'],
     "zhiyuan": ['mirrors.sjtug.sjtu.edu.cn', 'zhiyuan.internal.sjtug.org'],
-    "local": ['localhost']
+    "local": [':80']
 }
 
 LUG_ADDR = 'lug:7001'

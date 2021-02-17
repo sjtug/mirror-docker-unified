@@ -422,18 +422,15 @@ repos:
     target: https://fonts.googleapis.com
   - type: external
     name: CTAN
-    serve_mode: redir
-    target: https://mirrors.sjtug.sjtu.edu.cn/ctan
+    path: /mnt/CTAN
     disabled: true
   - type: external
     name: CPAN
-    serve_mode: redir
-    target: https://mirrors.sjtug.sjtu.edu.cn/cpan
+    path: /mnt/CPAN
     disabled: true
   - type: external
     name: CRAN
-    serve_mode: redir
-    target: https://mirrors.sjtug.sjtu.edu.cn/cran
+    path: /mnt/CRAN
     disabled: true
   - type: external
     name: manjarostable
