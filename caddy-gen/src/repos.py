@@ -63,9 +63,12 @@ class ProxyRepo:
     name: str = ''
     proxy_to: str = ''
     strip_prefix: bool = False
+    rewrite_host: bool = True
 
     def as_repo(self) -> list[Node]:
-        proxy_node = Node(f'reverse_proxy {self.proxy_to}')
+        proxy_node = Node(f'reverse_proxy {self.proxy_to}', [
+            Node('header_up Host {http.reverse_proxy.upstream.hostport}')
+        ] if self.rewrite_host else [])
         strip_prefix = Node(f'uri strip_prefix /{self.name}')
         if self.strip_prefix:
             return [Node(f'route /{self.name}/*', [strip_prefix, proxy_node])]
@@ -79,8 +82,11 @@ class ProxyRepo:
         return self.as_repo()
 
     def as_subdomain(self) -> list[Node]:
-        proxy_node = Node(f'reverse_proxy {self.proxy_to}')
-        proxy_node_prefix = [Node(f'rewrite * /{self.name}{{uri}}'), Node(f'reverse_proxy {self.proxy_to}')]
+        proxy_node = Node(f'reverse_proxy {self.proxy_to}', [
+            Node('header_up Host {http.reverse_proxy.upstream.hostport}')
+        ] if self.rewrite_host else [])
+        proxy_node_prefix = [
+            Node(f'rewrite * /{self.name}{{uri}}'), Node(f'reverse_proxy {self.proxy_to}')]
         if self.strip_prefix:
             return log() + [proxy_node]
         else:
