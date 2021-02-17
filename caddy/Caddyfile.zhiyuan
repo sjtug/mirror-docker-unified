@@ -117,7 +117,9 @@ k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    reverse_proxy https://k8s-gcr-io.siyuan.internal.sjtug.org
+    reverse_proxy https://k8s-gcr-io.siyuan.internal.sjtug.org {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+    }
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -126,7 +128,9 @@ docker.mirrors.sjtug.sjtu.edu.cn {
         output stdout
         format single_field common_log  # log in v1 style
     }
-    reverse_proxy https://docker.siyuan.internal.sjtug.org
+    reverse_proxy https://docker.siyuan.internal.sjtug.org {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+    }
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -399,12 +403,16 @@ mirrors.sjtug.sjtu.edu.cn {
     redir /k8s.gcr.io /k8s.gcr.io/ 301
     route /k8s.gcr.io/* {
         uri strip_prefix /k8s.gcr.io
-        reverse_proxy https://k8s-gcr-io.siyuan.internal.sjtug.org
+        reverse_proxy https://k8s-gcr-io.siyuan.internal.sjtug.org {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /docker-registry /docker-registry/ 301
     route /docker-registry/* {
         uri strip_prefix /docker-registry
-        reverse_proxy https://docker.siyuan.internal.sjtug.org
+        reverse_proxy https://docker.siyuan.internal.sjtug.org {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /google-fonts /google-fonts/ 301
     route /google-fonts/* {
@@ -1161,12 +1169,16 @@ zhiyuan.internal.sjtug.org {
     redir /k8s.gcr.io /k8s.gcr.io/ 301
     route /k8s.gcr.io/* {
         uri strip_prefix /k8s.gcr.io
-        reverse_proxy https://k8s-gcr-io.siyuan.internal.sjtug.org
+        reverse_proxy https://k8s-gcr-io.siyuan.internal.sjtug.org {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /docker-registry /docker-registry/ 301
     route /docker-registry/* {
         uri strip_prefix /docker-registry
-        reverse_proxy https://docker.siyuan.internal.sjtug.org
+        reverse_proxy https://docker.siyuan.internal.sjtug.org {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
     }
     redir /google-fonts /google-fonts/ 301
     route /google-fonts/* {

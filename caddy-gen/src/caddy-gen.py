@@ -97,9 +97,9 @@ def dict_to_repo(repo: dict) -> Repo:
             return None
         return FileServerRepo(name, path)
     if serve_mode == 'mirror_intel':
-        return ProxyRepo(repo['name'], 'mirror-intel:8000', False)
+        return ProxyRepo(repo['name'], 'mirror-intel:8000', False, False)
     if serve_mode == 'proxy':
-        return ProxyRepo(repo['name'], repo['proxy_to'], True)
+        return ProxyRepo(repo['name'], repo['proxy_to'], True, True)
     if serve_mode == 'ignore':
         return None
     logger.error(
