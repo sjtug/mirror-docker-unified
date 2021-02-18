@@ -307,8 +307,7 @@ mirrors.sjtug.sjtu.edu.cn {
     }
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
-        uri strip_prefix /git/crates.io-index
-        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+        reverse_proxy git-backend
     }
     redir /raspbian /raspbian/ 301
     file_server /raspbian/* browse {
@@ -1073,8 +1072,7 @@ zhiyuan.internal.sjtug.org {
     }
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
-        uri strip_prefix /git/crates.io-index
-        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+        reverse_proxy git-backend
     }
     redir /raspbian /raspbian/ 301
     file_server /raspbian/* browse {

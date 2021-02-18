@@ -68,6 +68,13 @@ services:
         - path: /dev/mapper/vg0-mirror.sjtug
           rate: 24
 
+  git-backend:
+    container_name: zhiyuan-git-backend
+    volumes:
+      - "/mnt/data12T/git:/git:z"
+    mem_limit: 1G
+    memswap_limit: 1G
+
 networks:
   host-monitor-net:
     driver: bridge

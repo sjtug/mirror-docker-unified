@@ -100,6 +100,8 @@ def dict_to_repo(repo: dict) -> Repo:
         return ProxyRepo(repo['name'], 'mirror-intel:8000', False, False)
     if serve_mode == 'proxy':
         return ProxyRepo(repo['name'], repo['proxy_to'], True, True)
+    if serve_mode == 'git':
+        return ProxyRepo(repo['name'], 'git-backend', False, False)
     if serve_mode == 'ignore':
         return None
     logger.error(
@@ -169,7 +171,7 @@ def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
 
 def rewrite_config(repo: dict, site: str):
     serve_mode = repo.get('serve_mode', 'default')
-    if serve_mode == 'default':
+    if serve_mode == 'default' or serve_mode == 'git':
         name = repo['name']
         return {
             'name': name,
