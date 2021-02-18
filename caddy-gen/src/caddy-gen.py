@@ -112,10 +112,7 @@ def dict_to_repo(repo: dict) -> Repo:
 def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list[Node], list[Node]]:
     outer_nodes = []
     file_server_nodes = []
-    
-    file_server_nodes += [Node('@libgit2', [Node(f'path /git/*'), Node(f'header User-Agent *libgit2*')])]
-    file_server_nodes += [Node('reverse_proxy @libgit2 git-backend')]
-    file_server_nodes += [BLANK_NODE]
+    git_server_nodes = []
     
     gzip_disabled_list = []
 
@@ -132,7 +129,10 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
                 else:
                     outer_nodes += repo_no_redir(base, repo, site)
             file_server_nodes += repo_redir(repo)
-            file_server_nodes += repo.as_repo()
+            if repo.get_name().startswith('git/'):
+                git_server_nodes += repo.as_repo()
+            else:
+                file_server_nodes += repo.as_repo()
 
             if 'subdomain' in repo_ and first_site:
                 outer_nodes += [Node(repo_['subdomain'],
@@ -140,6 +140,12 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
 
             if not repo.enable_repo_gzip():
                 gzip_disabled_list.append(repo.get_name())
+
+    file_server_nodes += [BLANK_NODE]
+    file_server_nodes += [Node('@git_libgit2', [Node(f'path /git/*'), Node(f'header User-Agent *libgit2*')])]
+    file_server_nodes += [Node('reverse_proxy @git_libgit2 git-backend', [])]
+    file_server_nodes += [Node('@git_normal', [Node(f'path /git/*'), Node(f'not header User-Agent *libgit2*')])]
+    file_server_nodes += [Node('route @git_normal', git_server_nodes)]
 
     # disable gzip for all proxy repos
     gzip_disabled = [Node(
