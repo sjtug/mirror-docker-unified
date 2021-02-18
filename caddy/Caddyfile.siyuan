@@ -761,7 +761,7 @@ mirror.sjtu.edu.cn {
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
         uri strip_prefix /git/crates.io-index
-        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
     }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {
@@ -1705,7 +1705,7 @@ ftp.sjtu.edu.cn {
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
         uri strip_prefix /git/crates.io-index
-        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
     }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {
@@ -2649,7 +2649,7 @@ ftp6.sjtu.edu.cn {
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
         uri strip_prefix /git/crates.io-index
-        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
     }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {
@@ -3593,7 +3593,7 @@ siyuan.internal.sjtug.org {
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
         uri strip_prefix /git/crates.io-index
-        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
     }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {

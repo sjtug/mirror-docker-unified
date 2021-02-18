@@ -188,7 +188,18 @@ services:
         max-file: "10"
     ports:
       - "873:873"
-    restart: unless-stopped      
+    restart: unless-stopped
+
+  git-backend:
+    build:
+      context: ./git-backend
+    logging:
+      options:
+        max-size: "2M"
+        max-file: "10"
+    restart: unless-stopped
+    networks:
+      - ipv6-service-net
 
 networks:
   host-monitor-net:
