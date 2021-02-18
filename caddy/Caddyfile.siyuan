@@ -327,6 +327,12 @@ mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    @libgit2 {
+        path /git/*
+        header User-Agent *libgit2*
+    }
+    reverse_proxy @libgit2 git-backend
+
     redir /centos /centos/ 301
     file_server /centos/* browse {
         root /srv/disk1
@@ -761,7 +767,7 @@ mirror.sjtu.edu.cn {
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
         uri strip_prefix /git/crates.io-index
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
+        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
     }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {
@@ -1271,6 +1277,12 @@ ftp.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    @libgit2 {
+        path /git/*
+        header User-Agent *libgit2*
+    }
+    reverse_proxy @libgit2 git-backend
+
     redir /centos /centos/ 301
     file_server /centos/* browse {
         root /srv/disk1
@@ -1705,7 +1717,7 @@ ftp.sjtu.edu.cn {
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
         uri strip_prefix /git/crates.io-index
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
+        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
     }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {
@@ -2215,6 +2227,12 @@ ftp6.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    @libgit2 {
+        path /git/*
+        header User-Agent *libgit2*
+    }
+    reverse_proxy @libgit2 git-backend
+
     redir /centos /centos/ 301
     file_server /centos/* browse {
         root /srv/disk1
@@ -2649,7 +2667,7 @@ ftp6.sjtu.edu.cn {
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
         uri strip_prefix /git/crates.io-index
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
+        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
     }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {
@@ -3159,6 +3177,12 @@ siyuan.internal.sjtug.org {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    @libgit2 {
+        path /git/*
+        header User-Agent *libgit2*
+    }
+    reverse_proxy @libgit2 git-backend
+
     redir /centos /centos/ 301
     file_server /centos/* browse {
         root /srv/disk1
@@ -3593,7 +3617,7 @@ siyuan.internal.sjtug.org {
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
         uri strip_prefix /git/crates.io-index
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
+        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
     }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {

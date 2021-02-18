@@ -266,7 +266,7 @@ repos:
     path: /mnt/git/crates.io-index
     origin: https://github.com/rust-lang/crates.io-index.git
     target: https://git.sjtu.edu.cn/sjtug/crates.io-index.git
-    serve_mode: git
+    serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
     name: raspbian

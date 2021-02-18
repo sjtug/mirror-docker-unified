@@ -200,6 +200,12 @@ mirrors.sjtug.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    @libgit2 {
+        path /git/*
+        header User-Agent *libgit2*
+    }
+    reverse_proxy @libgit2 git-backend
+
     redir /putty /putty/ 301
     file_server /putty/* browse {
         root /mnt
@@ -307,7 +313,8 @@ mirrors.sjtug.sjtu.edu.cn {
     }
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
-        reverse_proxy git-backend
+        uri strip_prefix /git/crates.io-index
+        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
     }
     redir /raspbian /raspbian/ 301
     file_server /raspbian/* browse {
@@ -965,6 +972,12 @@ zhiyuan.internal.sjtug.org {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    @libgit2 {
+        path /git/*
+        header User-Agent *libgit2*
+    }
+    reverse_proxy @libgit2 git-backend
+
     redir /putty /putty/ 301
     file_server /putty/* browse {
         root /mnt
@@ -1072,7 +1085,8 @@ zhiyuan.internal.sjtug.org {
     }
     redir /git/crates.io-index /git/crates.io-index/ 301
     route /git/crates.io-index/* {
-        reverse_proxy git-backend
+        uri strip_prefix /git/crates.io-index
+        redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
     }
     redir /raspbian /raspbian/ 301
     file_server /raspbian/* browse {

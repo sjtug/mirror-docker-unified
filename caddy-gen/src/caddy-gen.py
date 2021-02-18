@@ -112,7 +112,11 @@ def dict_to_repo(repo: dict) -> Repo:
 def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list[Node], list[Node]]:
     outer_nodes = []
     file_server_nodes = []
-
+    
+    file_server_nodes += [Node('@libgit2', [Node(f'path /git/*'), Node(f'header User-Agent *libgit2*')])]
+    file_server_nodes += [Node('reverse_proxy @libgit2 git-backend')]
+    file_server_nodes += [BLANK_NODE]
+    
     gzip_disabled_list = []
 
     for repo_ in repos:
