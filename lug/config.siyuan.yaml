@@ -535,3 +535,12 @@ repos:
     name: dragonflybsd
     disabled: true
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 4900
+    name: git/homebrew-install.git
+    source: https://github.com/Homebrew/install.git
+    path: /srv/disk2/git/homebrew-install.git
+    serve_mode: redir
+    target: https://git.sjtu.edu.cn/sjtug/homebrew-install.git
+    <<: *oneshot_common

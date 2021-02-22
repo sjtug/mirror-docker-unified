@@ -675,6 +675,7 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /dragonflybsd
         redir * https://mirror.sjtu.edu.cn/dragonflybsd{uri} 302
     }
+    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
 
     @git_libgit2 {
         path /git/*
@@ -762,6 +763,10 @@ mirrors.sjtug.sjtu.edu.cn {
             uri strip_prefix /git/dpdk.git
             redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
+        route /git/homebrew-install.git/* {
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
+        }
     }
     @gzip_enabled {
         not path /git/homebrew-core.git/*
@@ -841,6 +846,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
         not path /dragonflybsd/*
+        not path /git/homebrew-install.git/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1453,6 +1459,7 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /dragonflybsd
         redir * https://mirror.sjtu.edu.cn/dragonflybsd{uri} 302
     }
+    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
 
     @git_libgit2 {
         path /git/*
@@ -1540,6 +1547,10 @@ zhiyuan.internal.sjtug.org {
             uri strip_prefix /git/dpdk.git
             redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
+        route /git/homebrew-install.git/* {
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
+        }
     }
     @gzip_enabled {
         not path /git/homebrew-core.git/*
@@ -1619,6 +1630,7 @@ zhiyuan.internal.sjtug.org {
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
         not path /dragonflybsd/*
+        not path /git/homebrew-install.git/*
     }
     encode @gzip_enabled gzip zstd
 }

@@ -605,6 +605,7 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -861,6 +862,10 @@ mirror.sjtu.edu.cn {
             uri strip_prefix /git/dpdk.git
             redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
+        route /git/homebrew-install.git/* {
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -931,6 +936,7 @@ mirror.sjtu.edu.cn {
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
+        not path /git/homebrew-install.git/*
         not path /putty/*
         not path /archlinux/*
         not path /archlinux-cn/*
@@ -1561,6 +1567,7 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1817,6 +1824,10 @@ ftp.sjtu.edu.cn {
             uri strip_prefix /git/dpdk.git
             redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
+        route /git/homebrew-install.git/* {
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -1887,6 +1898,7 @@ ftp.sjtu.edu.cn {
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
+        not path /git/homebrew-install.git/*
         not path /putty/*
         not path /archlinux/*
         not path /archlinux-cn/*
@@ -2517,6 +2529,7 @@ ftp6.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2773,6 +2786,10 @@ ftp6.sjtu.edu.cn {
             uri strip_prefix /git/dpdk.git
             redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
+        route /git/homebrew-install.git/* {
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -2843,6 +2860,7 @@ ftp6.sjtu.edu.cn {
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
+        not path /git/homebrew-install.git/*
         not path /putty/*
         not path /archlinux/*
         not path /archlinux-cn/*
@@ -3473,6 +3491,7 @@ siyuan.internal.sjtug.org {
         root /srv/disk2
         hide .*
     }
+    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3729,6 +3748,10 @@ siyuan.internal.sjtug.org {
             uri strip_prefix /git/dpdk.git
             redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
+        route /git/homebrew-install.git/* {
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -3799,6 +3822,7 @@ siyuan.internal.sjtug.org {
         not path /pypi/web/simple/*
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
+        not path /git/homebrew-install.git/*
         not path /putty/*
         not path /archlinux/*
         not path /archlinux-cn/*
