@@ -880,7 +880,7 @@ mirror.sjtu.edu.cn {
         }
         route /git/crates.io-index/* {
             uri strip_prefix /git/crates.io-index
-            redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+            redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
         }
         route /git/opam-repository.git/* {
             uri strip_prefix /git/opam-repository.git
@@ -1842,7 +1842,7 @@ ftp.sjtu.edu.cn {
         }
         route /git/crates.io-index/* {
             uri strip_prefix /git/crates.io-index
-            redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+            redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
         }
         route /git/opam-repository.git/* {
             uri strip_prefix /git/opam-repository.git
@@ -2804,7 +2804,7 @@ ftp6.sjtu.edu.cn {
         }
         route /git/crates.io-index/* {
             uri strip_prefix /git/crates.io-index
-            redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+            redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
         }
         route /git/opam-repository.git/* {
             uri strip_prefix /git/opam-repository.git
@@ -3766,7 +3766,7 @@ siyuan.internal.sjtug.org {
         }
         route /git/crates.io-index/* {
             uri strip_prefix /git/crates.io-index
-            redir * https://git.sjtu.edu.cn/sjtug/crates.io-index.git{uri} 302
+            redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
         }
         route /git/opam-repository.git/* {
             uri strip_prefix /git/opam-repository.git
