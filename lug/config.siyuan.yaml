@@ -277,7 +277,7 @@ repos:
     name: git/linuxbrew-core.git
     source: https://github.com/Homebrew/linuxbrew-core.git
     path: /srv/disk2/git/linuxbrew-core.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git
     <<: *oneshot_common
   - type: shell_script
@@ -286,7 +286,7 @@ repos:
     name: git/homebrew-services.git
     source: https://github.com/Homebrew/homebrew-services.git
     path: /srv/disk2/git/homebrew-services.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-services.git
     <<: *oneshot_common
   - type: shell_script
@@ -295,7 +295,7 @@ repos:
     name: git/homebrew-cask-drivers.git
     source: https://github.com/Homebrew/homebrew-cask-drivers.git
     path: /srv/disk2/git/homebrew-cask-drivers.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git
     <<: *oneshot_common
   - type: shell_script
@@ -304,7 +304,7 @@ repos:
     name: git/homebrew-cask-fonts.git
     source: https://github.com/Homebrew/homebrew-cask-fonts.git
     path: /srv/disk2/git/homebrew-cask-fonts.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git
     <<: *oneshot_common
   - type: shell_script
@@ -313,7 +313,7 @@ repos:
     name: git/homebrew-cask-versions.git
     source: https://github.com/Homebrew/homebrew-cask-versions.git
     path: /srv/disk2/git/homebrew-cask-versions.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
   - type: shell_script
@@ -328,7 +328,7 @@ repos:
     name: git/guix.git
     source: https://git.savannah.gnu.org/git/guix.git
     path: /srv/disk2/git/guix.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/guix.git
     <<: *oneshot_common
   - type: shell_script
@@ -337,7 +337,7 @@ repos:
     name: git/llvm-project.git
     source: https://github.com/llvm/llvm-project.git
     path: /srv/disk2/git/llvm-project.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/llvm-project.git
     <<: *oneshot_common
   - type: shell_script
@@ -346,7 +346,7 @@ repos:
     name: git/flutter-sdk.git
     source: https://github.com/flutter/flutter.git
     path: /srv/disk2/git/flutter-sdk.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/flutter-sdk.git
     <<: *oneshot_common
   - type: shell_script
@@ -362,7 +362,7 @@ repos:
     name: git/ohmyzsh.git
     source: https://github.com/ohmyzsh/ohmyzsh.git
     path: /srv/disk2/git/ohmyzsh.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/ohmyzsh.git
   - type: shell_script
     script: /worker-script/git.sh
@@ -370,7 +370,7 @@ repos:
     name: git/spacemacs.git
     source: https://github.com/syl20bnr/spacemacs.git
     path: /srv/disk2/git/spacemacs.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/spacemacs.git
   - type: shell_script
     script: /worker-script/git.sh
@@ -378,7 +378,7 @@ repos:
     name: git/doom-emacs.git
     source: https://github.com/hlissner/doom-emacs.git
     path: /srv/disk2/git/doom-emacs.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/doom-emacs.git
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -521,7 +521,7 @@ repos:
     name: git/dpdk.git
     source: http://dpdk.org/git/dpdk
     path: /srv/disk2/git/dpdk.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/dpdk.git
     <<: *oneshot_common
   - type: shell_script
@@ -541,6 +541,6 @@ repos:
     name: git/homebrew-install.git
     source: https://github.com/Homebrew/install.git
     path: /srv/disk2/git/homebrew-install.git
-    serve_mode: redir
+    serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-install.git
     <<: *oneshot_common
