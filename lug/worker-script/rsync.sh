@@ -22,4 +22,6 @@ fi
 
 rm -f "$tmp_stderr"
 
+chmod 755 $LUG_path
+
 exit "$retcode"

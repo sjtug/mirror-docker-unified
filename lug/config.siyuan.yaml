@@ -544,3 +544,11 @@ repos:
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-install.git
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync_password.sh
+    source: rsync://root@121.36.97.194/openeuler
+    interval: 5200
+    path: /srv/disk1/openeuler
+    name: openeuler
+    password: "openeuler@1234"
+    <<: *oneshot_common

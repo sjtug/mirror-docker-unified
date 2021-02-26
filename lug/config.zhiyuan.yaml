@@ -292,7 +292,7 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     name: mx-isos
-    script: /worker-script/zhiyuan/worker-script/mxlinux.sh
+    script: /worker-script/rsync_password.sh
     path: /mnt/mx-isos
     interval: 43301
     source: downstreamtestuser@rsync-mxlinux.org::MX-Linux/
@@ -302,7 +302,7 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     name: mx-packages
-    script: /worker-script/zhiyuan/worker-script/mxlinux.sh
+    script: /worker-script/rsync_password.sh
     path: /mnt/mx-packages
     interval: 9602
     source: rsuser@iso.mxrepo.com::workspace
