@@ -606,6 +606,11 @@ mirror.sjtu.edu.cn {
         hide .*
     }
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
+    redir /openeuler /openeuler/ 301
+    file_server /openeuler/* browse {
+        root /srv/disk1
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1555,6 +1560,11 @@ ftp.sjtu.edu.cn {
         hide .*
     }
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
+    redir /openeuler /openeuler/ 301
+    file_server /openeuler/* browse {
+        root /srv/disk1
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2504,6 +2514,11 @@ ftp6.sjtu.edu.cn {
         hide .*
     }
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
+    redir /openeuler /openeuler/ 301
+    file_server /openeuler/* browse {
+        root /srv/disk1
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3453,6 +3468,11 @@ siyuan.internal.sjtug.org {
         hide .*
     }
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
+    redir /openeuler /openeuler/ 301
+    file_server /openeuler/* browse {
+        root /srv/disk1
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty

@@ -676,6 +676,11 @@ mirrors.sjtug.sjtu.edu.cn {
         redir * https://mirror.sjtu.edu.cn/dragonflybsd{uri} 302
     }
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
+    redir /openeuler /openeuler/ 301
+    route /openeuler/* {
+        uri strip_prefix /openeuler
+        redir * https://mirror.sjtu.edu.cn/openeuler{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -840,6 +845,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /gradle/distributions/*
         not path /dragonflybsd/*
         not path /git/homebrew-install.git/*
+        not path /openeuler/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1453,6 +1459,11 @@ zhiyuan.internal.sjtug.org {
         redir * https://mirror.sjtu.edu.cn/dragonflybsd{uri} 302
     }
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
+    redir /openeuler /openeuler/ 301
+    route /openeuler/* {
+        uri strip_prefix /openeuler
+        redir * https://mirror.sjtu.edu.cn/openeuler{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1617,6 +1628,7 @@ zhiyuan.internal.sjtug.org {
         not path /gradle/distributions/*
         not path /dragonflybsd/*
         not path /git/homebrew-install.git/*
+        not path /openeuler/*
     }
     encode @gzip_enabled gzip zstd
 }

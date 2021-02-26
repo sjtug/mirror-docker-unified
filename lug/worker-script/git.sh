@@ -21,4 +21,4 @@ git fetch -p origin
 git for-each-ref --format 'delete %(refname)' refs/remotes | git update-ref --stdin
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
-# timeout 10 git push --mirror upstream || true
+timeout 60 git push --mirror upstream || true
