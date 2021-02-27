@@ -12,7 +12,7 @@ TO="$LUG_path"
 MAILTO=""
 # HUB=false
 
-RSYNC_HOST="$LUG_origin"
+RSYNC_HOST="$LUG_source"
 RSYNC_PATH="debian"
 # RSYNC_USER=
 # RSYNC_PASSWORD=
