@@ -47,9 +47,16 @@ RUN /app/build-script/from-cache.sh \
     /usr/local/bin/yq \
         && chmod +x /usr/local/bin/yq
 
-ARG CLONE_VERSION
-ARG LUG_VERSION
+# ftpsync for Debian
+COPY build-script/misc/ftpsync.patch .
+RUN git clone https://salsa.debian.org/mirror-team/archvsync.git && cd archvsync && git checkout 57af581ff28a452f053f40639721bb279e1f2cdb && git apply /app/ftpsync.patch
 
+# general config
+RUN mkdir /root/.ssh && ssh-keyscan cran.r-project.org >> /root/.ssh/known_hosts
+RUN git config --global credential.helper store
+COPY ssh_config /root/.ssh/config
+
+ARG LUG_VERSION
 RUN /app/build-script/from-cache.sh \
         https://mirror.sjtu.edu.cn/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
         https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
@@ -57,15 +64,12 @@ RUN /app/build-script/from-cache.sh \
         tmp.tar.gz \
             && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
+ARG CLONE_VERSION
 RUN /app/build-script/from-cache.sh \
         https://mirror.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
         https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
         https://github.com/sjtug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
         tmp.tar.gz \
             && tar -xvf tmp.tar.gz && rm tmp.tar.gz
-
-RUN mkdir /root/.ssh && ssh-keyscan cran.r-project.org >> /root/.ssh/known_hosts
-RUN git config --global credential.helper store
-COPY ssh_config /root/.ssh/config
 
 ENTRYPOINT ["./lug"]

@@ -1,0 +1,42 @@
+diff --git a/bin/ftpsync b/bin/ftpsync
+index f6881fa..8f5e271 100755
+--- a/bin/ftpsync
++++ b/bin/ftpsync
+@@ -131,8 +131,7 @@ run_rsync() {
+ 
+   log "Running $t:" "${_RSYNC[@]}" "$@"
+ 
+-  "${_RSYNC[@]}" "$@" \
+-    >>"${LOG_RSYNC_ERROR}" 2>&1 || return $?
++  "${_RSYNC[@]}" "$@"  || return $?
+ }
+ 
+ # Check rsyncs return value
+@@ -381,7 +380,7 @@ create_logdir
+ ########################################################################
+ MIRRORNAME=${MIRRORNAME:-$(hostname -f)}
+ TO=${TO:-"/srv/mirrors/debian/"}
+-MAILTO=${MAILTO:-${LOGNAME:?Environment variable LOGNAME unset, please check your system or specify MAILTO}}
++MAILTO=${MAILTO}
+ HUB=${HUB:-"false"}
+ 
+ # Connection options
+@@ -468,8 +467,6 @@ _TRACE_FILES=(
+ 
+ _RSYNC=(
+   $RSYNC
+-  --quiet
+-  --log-file "${LOG_RSYNC}"
+ )
+ 
+ # Rsync filter rules. Used to protect various files we always want to keep, even if we otherwise delete
+@@ -570,9 +567,6 @@ fi
+ # We want to cleanup always
+ trap cleanup EXIT TERM HUP INT QUIT
+ 
+-# Open log and close stdin
+-open_log $LOG
+-exec 2>&1 <&-
+ log "Mirrorsync start"
+ 
+ # Look who pushed us and note that in the log.

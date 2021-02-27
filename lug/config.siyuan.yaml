@@ -28,7 +28,7 @@ repos:
   # debian
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
-    source: rsync://mirrors.kernel.org/debian/
+    source: mirrors.kernel.org
     interval: 5400
     path: /srv/disk1/debian
     name: debian
