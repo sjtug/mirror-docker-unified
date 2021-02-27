@@ -27,7 +27,7 @@ repos:
     <<: *oneshot_common
   # debian
   - type: shell_script
-    script: /worker-script/ubuntu-debian-rsync.sh
+    script: /worker-script/debian.sh
     source: mirrors.kernel.org
     interval: 5400
     path: /srv/disk1/debian
