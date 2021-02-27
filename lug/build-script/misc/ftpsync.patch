@@ -1,0 +1,13 @@
+diff --git a/bin/ftpsync b/bin/ftpsync
+index f6881fa..35443a6 100755
+--- a/bin/ftpsync
++++ b/bin/ftpsync
+@@ -381,7 +381,7 @@ create_logdir
+ ########################################################################
+ MIRRORNAME=${MIRRORNAME:-$(hostname -f)}
+ TO=${TO:-"/srv/mirrors/debian/"}
+-MAILTO=${MAILTO:-${LOGNAME:?Environment variable LOGNAME unset, please check your system or specify MAILTO}}
++MAILTO=${MAILTO}
+ HUB=${HUB:-"false"}
+ 
+ # Connection options

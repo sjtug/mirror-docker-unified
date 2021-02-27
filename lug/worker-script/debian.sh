@@ -2,14 +2,14 @@
 
 set -e
 
-cd $HOME
-mkdir etc || true
-export BASEDIR=$HOME
+cd /app/archvsync
 
-cat > etc/ftpsync.conf <<EOF
+export LOGNAME=
+
+cat > /app/archvsync/etc/ftpsync.conf <<EOF
 MIRRORNAME="mirror.sjtu.edu.cn"
 TO="$LUG_path"
-# MAILTO="$LOGNAME"
+MAILTO=""
 # HUB=false
 
 RSYNC_HOST="$LUG_origin"
@@ -29,4 +29,4 @@ INFO_THROUGHPUT="1Gb"
 LOGDIR="/var/log/ftpsync"
 EOF
 
-ftpsync sync:all
+/app/archvsync/bin/ftpsync sync:all
