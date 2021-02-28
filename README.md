@@ -1,8 +1,9 @@
-# mirror-docker-siyuan
+# mirror-docker-unified
 
-Dockerfile for the new SJTUG mirror server.
+Dockerfile for the all SJTUG mirror servers.
+
 ## Docs
 
-The Siyuan mirror is the single point for SJTUG mirrors and SJTU services.
-
 ![New Architecture](docs/images/new-arch.png)
+
+For more information, refer to our [Wiki](https://github.com/sjtug/mirror-docker-unified/wiki).
