@@ -446,16 +446,6 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /docker-ce
         redir * https://mirror.sjtu.edu.cn/docker-ce{uri} 302
     }
-    redir /fedora/linux /fedora/linux/ 301
-    route /fedora/linux/* {
-        uri strip_prefix /fedora/linux
-        redir * https://mirror.sjtu.edu.cn/fedora/linux{uri} 302
-    }
-    redir /fedora/epel /fedora/epel/ 301
-    route /fedora/epel/* {
-        uri strip_prefix /fedora/epel
-        redir * https://mirror.sjtu.edu.cn/fedora/epel{uri} 302
-    }
     redir /fedora-secondary /fedora-secondary/ 301
     route /fedora-secondary/* {
         uri strip_prefix /fedora-secondary
@@ -681,6 +671,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /openeuler
         redir * https://mirror.sjtu.edu.cn/openeuler{uri} 302
     }
+    redir /fedora /fedora/ 301
+    route /fedora/* {
+        uri strip_prefix /fedora
+        redir * https://mirror.sjtu.edu.cn/fedora{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -785,8 +780,6 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /deepin/*
         not path /deepin-cd/*
         not path /docker-ce/*
-        not path /fedora/linux/*
-        not path /fedora/epel/*
         not path /fedora-secondary/*
         not path /linuxmint/*
         not path /linuxmint-cd/*
@@ -846,6 +839,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /dragonflybsd/*
         not path /git/homebrew-install.git/*
         not path /openeuler/*
+        not path /fedora/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1229,16 +1223,6 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /docker-ce
         redir * https://mirror.sjtu.edu.cn/docker-ce{uri} 302
     }
-    redir /fedora/linux /fedora/linux/ 301
-    route /fedora/linux/* {
-        uri strip_prefix /fedora/linux
-        redir * https://mirror.sjtu.edu.cn/fedora/linux{uri} 302
-    }
-    redir /fedora/epel /fedora/epel/ 301
-    route /fedora/epel/* {
-        uri strip_prefix /fedora/epel
-        redir * https://mirror.sjtu.edu.cn/fedora/epel{uri} 302
-    }
     redir /fedora-secondary /fedora-secondary/ 301
     route /fedora-secondary/* {
         uri strip_prefix /fedora-secondary
@@ -1464,6 +1448,11 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /openeuler
         redir * https://mirror.sjtu.edu.cn/openeuler{uri} 302
     }
+    redir /fedora /fedora/ 301
+    route /fedora/* {
+        uri strip_prefix /fedora
+        redir * https://mirror.sjtu.edu.cn/fedora{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1568,8 +1557,6 @@ zhiyuan.internal.sjtug.org {
         not path /deepin/*
         not path /deepin-cd/*
         not path /docker-ce/*
-        not path /fedora/linux/*
-        not path /fedora/epel/*
         not path /fedora-secondary/*
         not path /linuxmint/*
         not path /linuxmint-cd/*
@@ -1629,6 +1616,7 @@ zhiyuan.internal.sjtug.org {
         not path /dragonflybsd/*
         not path /git/homebrew-install.git/*
         not path /openeuler/*
+        not path /fedora/*
     }
     encode @gzip_enabled gzip zstd
 }

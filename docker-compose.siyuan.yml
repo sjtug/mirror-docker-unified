@@ -14,7 +14,7 @@ services:
     volumes:
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
-      - "./lug/config.siyuan.yaml:/config.yaml:ro"
+      - "./config.siyuan.yaml:/config.yaml:ro"
     environment:
       MIRROR_CLONE_SITE: "mirror.sjtu.edu.cn"
     mem_limit: 20G

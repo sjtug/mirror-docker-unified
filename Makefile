@@ -6,7 +6,7 @@ caddy-verify-config:
 	docker-compose run --rm caddy caddy validate --config /etc/caddy/Caddyfile.zhiyuan
 
 caddy-gen:
-	cd caddy-gen && pipenv run python src/caddy-gen.py -i ../lug -o ../caddy --site siyuan,zhiyuan
+	cd caddy-gen && pipenv run python src/caddy-gen.py -i ../ -o ../caddy --site siyuan,zhiyuan
 
 caddy-hash-password:
 	docker-compose run --rm caddy caddy hash-password
@@ -17,8 +17,8 @@ caddy-gen-local:
 caddy-reload:
 	docker-compose exec -w /etc/caddy caddy caddy reload
 
-lug-format-config: # You need to install prettier from npm to use this functionality
-	prettier lug/*.yaml -w
+format-config: # You need to install prettier from npm to use this functionality
+	prettier *.yaml -w
 
 integration-test:
 	cd integration-test && pipenv run pytest
