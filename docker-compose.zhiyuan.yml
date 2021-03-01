@@ -11,7 +11,7 @@ services:
     container_name: zhiyuan-lug
     volumes:
       - "/mnt/data12T:/mnt"
-      - "./lug/config.zhiyuan.yaml:/config.yaml:ro"
+      - "./config.zhiyuan.yaml:/config.yaml:ro"
     environment:
       MIRROR_CLONE_SITE: "mirrors.sjtug.sjtu.edu.cn"
     mem_limit: 10G

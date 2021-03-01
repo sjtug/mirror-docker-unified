@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 14
       - run: npm i -g prettier
-      - run: prettier -c lug/*.yaml
+      - run: prettier -c *.yaml
   test-docker-build:
     name: docker build
     runs-on: ubuntu-latest

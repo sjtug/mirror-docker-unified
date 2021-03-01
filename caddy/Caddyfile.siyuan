@@ -95,40 +95,6 @@ http://mirror.sjtu.edu.cn/docker-ce/* {
     header * x-sjtug-mirror-id siyuan
 }
 
-http://mirror.sjtu.edu.cn/fedora/linux {
-    redir /fedora/linux /fedora/linux/ 301
-}
-
-http://mirror.sjtu.edu.cn/fedora/linux/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
-http://mirror.sjtu.edu.cn/fedora/epel {
-    redir /fedora/epel /fedora/epel/ 301
-}
-
-http://mirror.sjtu.edu.cn/fedora/epel/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
 http://mirror.sjtu.edu.cn/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
 }
@@ -270,6 +236,23 @@ docker.siyuan.internal.sjtug.org {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://mirror.sjtu.edu.cn/fedora {
+    redir /fedora /fedora/ 301
+}
+
+http://mirror.sjtu.edu.cn/fedora/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
 mirror.sjtu.edu.cn {
     log {
         output stdout
@@ -360,16 +343,6 @@ mirror.sjtu.edu.cn {
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
         root /srv/disk2
-        hide .*
-    }
-    redir /fedora/linux /fedora/linux/ 301
-    file_server /fedora/linux/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    redir /fedora/epel /fedora/epel/ 301
-    file_server /fedora/epel/* browse {
-        root /srv/disk1
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
@@ -608,6 +581,11 @@ mirror.sjtu.edu.cn {
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /openeuler /openeuler/ 301
     file_server /openeuler/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora /fedora/ 301
+    file_server /fedora/* browse {
         root /srv/disk1
         hide .*
     }
@@ -1071,40 +1049,6 @@ http://ftp.sjtu.edu.cn/docker-ce/* {
     header * x-sjtug-mirror-id siyuan
 }
 
-http://ftp.sjtu.edu.cn/fedora/linux {
-    redir /fedora/linux /fedora/linux/ 301
-}
-
-http://ftp.sjtu.edu.cn/fedora/linux/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
-http://ftp.sjtu.edu.cn/fedora/epel {
-    redir /fedora/epel /fedora/epel/ 301
-}
-
-http://ftp.sjtu.edu.cn/fedora/epel/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
 http://ftp.sjtu.edu.cn/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
 }
@@ -1224,6 +1168,23 @@ http://ftp.sjtu.edu.cn/rpmfusion/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://ftp.sjtu.edu.cn/fedora {
+    redir /fedora /fedora/ 301
+}
+
+http://ftp.sjtu.edu.cn/fedora/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
 ftp.sjtu.edu.cn {
     log {
         output stdout
@@ -1314,16 +1275,6 @@ ftp.sjtu.edu.cn {
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
         root /srv/disk2
-        hide .*
-    }
-    redir /fedora/linux /fedora/linux/ 301
-    file_server /fedora/linux/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    redir /fedora/epel /fedora/epel/ 301
-    file_server /fedora/epel/* browse {
-        root /srv/disk1
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
@@ -1562,6 +1513,11 @@ ftp.sjtu.edu.cn {
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /openeuler /openeuler/ 301
     file_server /openeuler/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora /fedora/ 301
+    file_server /fedora/* browse {
         root /srv/disk1
         hide .*
     }
@@ -2025,40 +1981,6 @@ http://ftp6.sjtu.edu.cn/docker-ce/* {
     header * x-sjtug-mirror-id siyuan
 }
 
-http://ftp6.sjtu.edu.cn/fedora/linux {
-    redir /fedora/linux /fedora/linux/ 301
-}
-
-http://ftp6.sjtu.edu.cn/fedora/linux/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
-http://ftp6.sjtu.edu.cn/fedora/epel {
-    redir /fedora/epel /fedora/epel/ 301
-}
-
-http://ftp6.sjtu.edu.cn/fedora/epel/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
 http://ftp6.sjtu.edu.cn/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
 }
@@ -2178,6 +2100,23 @@ http://ftp6.sjtu.edu.cn/rpmfusion/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://ftp6.sjtu.edu.cn/fedora {
+    redir /fedora /fedora/ 301
+}
+
+http://ftp6.sjtu.edu.cn/fedora/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
 ftp6.sjtu.edu.cn {
     log {
         output stdout
@@ -2268,16 +2207,6 @@ ftp6.sjtu.edu.cn {
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
         root /srv/disk2
-        hide .*
-    }
-    redir /fedora/linux /fedora/linux/ 301
-    file_server /fedora/linux/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    redir /fedora/epel /fedora/epel/ 301
-    file_server /fedora/epel/* browse {
-        root /srv/disk1
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
@@ -2516,6 +2445,11 @@ ftp6.sjtu.edu.cn {
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /openeuler /openeuler/ 301
     file_server /openeuler/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora /fedora/ 301
+    file_server /fedora/* browse {
         root /srv/disk1
         hide .*
     }
@@ -2979,40 +2913,6 @@ http://siyuan.internal.sjtug.org/docker-ce/* {
     header * x-sjtug-mirror-id siyuan
 }
 
-http://siyuan.internal.sjtug.org/fedora/linux {
-    redir /fedora/linux /fedora/linux/ 301
-}
-
-http://siyuan.internal.sjtug.org/fedora/linux/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
-http://siyuan.internal.sjtug.org/fedora/epel {
-    redir /fedora/epel /fedora/epel/ 301
-}
-
-http://siyuan.internal.sjtug.org/fedora/epel/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id siyuan
-}
-
 http://siyuan.internal.sjtug.org/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
 }
@@ -3132,6 +3032,23 @@ http://siyuan.internal.sjtug.org/rpmfusion/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://siyuan.internal.sjtug.org/fedora {
+    redir /fedora /fedora/ 301
+}
+
+http://siyuan.internal.sjtug.org/fedora/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
 siyuan.internal.sjtug.org {
     log {
         output stdout
@@ -3222,16 +3139,6 @@ siyuan.internal.sjtug.org {
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
         root /srv/disk2
-        hide .*
-    }
-    redir /fedora/linux /fedora/linux/ 301
-    file_server /fedora/linux/* browse {
-        root /srv/disk1
-        hide .*
-    }
-    redir /fedora/epel /fedora/epel/ 301
-    file_server /fedora/epel/* browse {
-        root /srv/disk1
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
@@ -3470,6 +3377,11 @@ siyuan.internal.sjtug.org {
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /openeuler /openeuler/ 301
     file_server /openeuler/* browse {
+        root /srv/disk1
+        hide .*
+    }
+    redir /fedora /fedora/ 301
+    file_server /fedora/* browse {
         root /srv/disk1
         hide .*
     }

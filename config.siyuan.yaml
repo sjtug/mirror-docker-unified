@@ -84,6 +84,7 @@ repos:
     interval: 5000
     path: /srv/disk1/fedora/linux
     name: fedora/linux
+    serve_mode: ignore
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
     <<: *oneshot_common
@@ -94,6 +95,7 @@ repos:
     interval: 5000
     path: /srv/disk1/fedora/epel
     name: fedora/epel
+    serve_mode: ignore
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
     <<: *oneshot_common
@@ -552,4 +554,10 @@ repos:
     name: openeuler
     # Password is made public at https://github.com/sjtug/mirror-requests/issues/162
     password: "openeuler@1234"
+    <<: *oneshot_common
+  - type: external
+    path: /srv/disk1/fedora
+    name: fedora
+    disabled: true
+    no_redir_http: true
     <<: *oneshot_common
