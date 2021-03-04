@@ -618,7 +618,7 @@ mirror.sjtu.edu.cn {
     }
     redir /CTAN /CTAN/ 301
     file_server /CTAN/* browse {
-        root /mnt
+        root /srv/disk2
         hide .*
     }
     redir /ctan /ctan/ 301
@@ -1564,7 +1564,7 @@ ftp.sjtu.edu.cn {
     }
     redir /CTAN /CTAN/ 301
     file_server /CTAN/* browse {
-        root /mnt
+        root /srv/disk2
         hide .*
     }
     redir /ctan /ctan/ 301
@@ -2510,7 +2510,7 @@ ftp6.sjtu.edu.cn {
     }
     redir /CTAN /CTAN/ 301
     file_server /CTAN/* browse {
-        root /mnt
+        root /srv/disk2
         hide .*
     }
     redir /ctan /ctan/ 301
@@ -3456,7 +3456,7 @@ siyuan.internal.sjtug.org {
     }
     redir /CTAN /CTAN/ 301
     file_server /CTAN/* browse {
-        root /mnt
+        root /srv/disk2
         hide .*
     }
     redir /ctan /ctan/ 301
