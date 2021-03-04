@@ -226,7 +226,7 @@ repos:
     <<: *oneshot_common
   # homebrew-bottles
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 homebrew_bottles --target http://mirror-intel:8000/homebrew-bottles
+    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix homebrew-bottles --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 homebrew
     serve_mode: mirror_intel
     interval: 10800
     name: homebrew-bottles
@@ -240,7 +240,7 @@ repos:
     <<: *oneshot_common
   # pypi
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 16 pypi --target http://mirror-intel:8000/pypi-packages
+    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix pypi-packages --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 --s3-prefix-hint-mode pypi pypi
     serve_mode: mirror_intel
     interval: 86400
     name: pypi-packages
@@ -261,7 +261,7 @@ repos:
     <<: *oneshot_common
   # crates.io
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 crates_io --target http://mirror-intel:8000/crates.io/crates
+    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix crates.io/crates --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 crates-io
     serve_mode: mirror_intel
     interval: 7200
     name: crates.io
@@ -319,7 +319,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 homebrew_bottles --arch x86_64_linux --api_base https://formulae.brew.sh/api/formula-linux.json --target http://mirror-intel:8000/linuxbrew-bottles
+    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix linuxbrew-bottles --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 homebrew --arch x86_64_linux --api-base https://formulae.brew.sh/api/formula-linux.json --bottles-base https://linuxbrew.bintray.com
     serve_mode: mirror_intel
     interval: 10800
     name: linuxbrew-bottles
