@@ -652,14 +652,14 @@ mirrors.sjtug.sjtu.edu.cn {
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
-        reverse_proxy mirror.sjtu.edu.cn/CTAN {
+        reverse_proxy mirror.sjtu.edu.cn {
             header_up Host {http.reverse_proxy.upstream.hostport}
         }
     }
     redir /ctan /ctan/ 301
     route /ctan/* {
         uri strip_prefix /ctan
-        reverse_proxy mirror.sjtu.edu.cn/ctan {
+        reverse_proxy mirror.sjtu.edu.cn {
             header_up Host {http.reverse_proxy.upstream.hostport}
         }
     }
@@ -1419,14 +1419,14 @@ zhiyuan.internal.sjtug.org {
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
-        reverse_proxy mirror.sjtu.edu.cn/CTAN {
+        reverse_proxy mirror.sjtu.edu.cn {
             header_up Host {http.reverse_proxy.upstream.hostport}
         }
     }
     redir /ctan /ctan/ 301
     route /ctan/* {
         uri strip_prefix /ctan
-        reverse_proxy mirror.sjtu.edu.cn/ctan {
+        reverse_proxy mirror.sjtu.edu.cn {
             header_up Host {http.reverse_proxy.upstream.hostport}
         }
     }
