@@ -27,23 +27,6 @@ http://mirrors.sjtug.sjtu.edu.cn/alpine/* {
     header * x-sjtug-mirror-id zhiyuan
 }
 
-http://mirrors.sjtug.sjtu.edu.cn/ctan {
-    redir /ctan /ctan/ 301
-}
-
-http://mirrors.sjtug.sjtu.edu.cn/ctan/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /mnt
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id zhiyuan
-}
-
 anaconda.mirrors.sjtug.sjtu.edu.cn {
     encode /* gzip zstd
     log {
@@ -235,11 +218,6 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
-    redir /ctan /ctan/ 301
-    file_server /ctan/* browse {
-        root /mnt
-        hide .*
-    }
     redir /cpan /cpan/ 301
     file_server /cpan/* browse {
         root /mnt
@@ -678,6 +656,13 @@ mirrors.sjtug.sjtu.edu.cn {
             header_up Host {http.reverse_proxy.upstream.hostport}
         }
     }
+    redir /ctan /ctan/ 301
+    route /ctan/* {
+        uri strip_prefix /ctan
+        reverse_proxy mirror.sjtu.edu.cn/ctan {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+    }
 
     @git_libgit2 {
         path /git/*
@@ -844,6 +829,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /manjaro/*
         not path /manjarostable/*
         not path /CTAN/*
+        not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -861,23 +847,6 @@ http://zhiyuan.internal.sjtug.org/alpine {
 }
 
 http://zhiyuan.internal.sjtug.org/alpine/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /mnt
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id zhiyuan
-}
-
-http://zhiyuan.internal.sjtug.org/ctan {
-    redir /ctan /ctan/ 301
-}
-
-http://zhiyuan.internal.sjtug.org/ctan/* {
     encode /* gzip zstd
     file_server /* browse {
         root /mnt
@@ -1016,11 +985,6 @@ zhiyuan.internal.sjtug.org {
         root /mnt
         hide .*
     }
-    redir /ctan /ctan/ 301
-    file_server /ctan/* browse {
-        root /mnt
-        hide .*
-    }
     redir /cpan /cpan/ 301
     file_server /cpan/* browse {
         root /mnt
@@ -1459,6 +1423,13 @@ zhiyuan.internal.sjtug.org {
             header_up Host {http.reverse_proxy.upstream.hostport}
         }
     }
+    redir /ctan /ctan/ 301
+    route /ctan/* {
+        uri strip_prefix /ctan
+        reverse_proxy mirror.sjtu.edu.cn/ctan {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1625,6 +1596,7 @@ zhiyuan.internal.sjtug.org {
         not path /manjaro/*
         not path /manjarostable/*
         not path /CTAN/*
+        not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
 }
