@@ -401,22 +401,19 @@ repos:
     name: k8s.gcr.io
     proxy_to: https://k8s-gcr-io.siyuan.internal.sjtug.org
     subdomain: k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn
-    no_unified: true
+    unified: disable
     serve_mode: proxy
   - type: external
     name: docker-registry
     proxy_to: https://docker.siyuan.internal.sjtug.org
     subdomain: docker.mirrors.sjtug.sjtu.edu.cn
-    no_unified: true
+    unified: disable
     serve_mode: proxy
   - type: external
     name: google-fonts
     subdomain: google-fonts.mirrors.sjtug.sjtu.edu.cn
     serve_mode: redir
     target: https://fonts.googleapis.com
-  - type: external
-    name: CTAN
-    path: /mnt/CTAN
     disabled: true
   - type: external
     name: CPAN

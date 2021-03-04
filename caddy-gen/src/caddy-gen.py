@@ -113,7 +113,7 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
     outer_nodes = []
     file_server_nodes = []
     git_server_nodes = []
-    
+
     gzip_disabled_list = []
 
     for repo_ in repos:
@@ -142,9 +142,11 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
                 gzip_disabled_list.append(repo.get_name())
 
     file_server_nodes += [BLANK_NODE]
-    file_server_nodes += [Node('@git_libgit2', [Node(f'path /git/*'), Node(f'header User-Agent *libgit2*')])]
+    file_server_nodes += [Node('@git_libgit2', [Node(f'path /git/*'),
+                                                Node(f'header User-Agent *libgit2*')])]
     file_server_nodes += [Node('reverse_proxy @git_libgit2 git-backend', [])]
-    file_server_nodes += [Node('@git_normal', [Node(f'path /git/*'), Node(f'not header User-Agent *libgit2*')])]
+    file_server_nodes += [Node('@git_normal', [Node(f'path /git/*'),
+                                               Node(f'not header User-Agent *libgit2*')])]
     file_server_nodes += [Node('route @git_normal', git_server_nodes)]
 
     # disable gzip for all proxy repos
@@ -181,6 +183,12 @@ def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
 
 def rewrite_config(repo: dict, site: str):
     serve_mode = repo.get('serve_mode', 'default')
+    if repo.get('unified', '') == 'proxy':
+        return {
+            'name': repo['name'],
+            'proxy_to': f"{BASES[site][0]}/{repo['name']}",
+            'serve_mode': 'proxy'
+        }
     if serve_mode == 'default' or serve_mode == 'git':
         name = repo['name']
         return {
@@ -239,7 +247,7 @@ if __name__ == "__main__":
             if name in rewritten_repos:
                 logger.info(f'duplicated entry found: {name}')
                 continue
-            if repo.get('no_unified', False):
+            if repo.get('unified', '') == 'disable':
                 continue
             rewritten_repo = rewrite_config(repo, site)
             if rewritten_repo is not None:
