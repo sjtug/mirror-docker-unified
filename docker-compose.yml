@@ -58,6 +58,7 @@ services:
       - "./secrets/git-credentials:/root/.git-credentials:ro"
       - "./secrets/lug-secrets.sh:/root/lug-secrets.sh:ro"
       - "./secrets/ssh:/secrets_ssh:ro"
+      - "./secrets/mirror-intel.env:/secrets_s3:ro"
       - "./common/gai.conf:/etc/gai.conf:ro"
     environment:
       RUST_LOG: info
