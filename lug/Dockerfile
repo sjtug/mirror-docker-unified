@@ -72,10 +72,10 @@ RUN /app/build-script/from-cache.sh \
         tmp.tar.gz \
             && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
-RUN mkdir v2 && /app/build-script/from-cache.sh \
-    https://mirror.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/v0.2.1/mirror-clone.tar.gz \
-    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/mirror-clone/releases/download/v0.2.1/mirror-clone.tar.gz \
-    https://github.com/sjtug/mirror-clone/releases/download/v0.2.1/mirror-clone.tar.gz \
+RUN mkdir v2 && cd v2 && /app/build-script/from-cache.sh \
+    https://mirror.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/v0.2.2/mirror-clone.tar.gz \
+    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/mirror-clone/releases/download/v0.2.2/mirror-clone.tar.gz \
+    https://github.com/sjtug/mirror-clone/releases/download/v0.2.2/mirror-clone.tar.gz \
     tmp.tar.gz \
         && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
