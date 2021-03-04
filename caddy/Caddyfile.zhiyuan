@@ -230,11 +230,6 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
-    redir /manjaro /manjaro/ 301
-    file_server /manjaro/* browse {
-        root /mnt
-        hide .*
-    }
     redir /alpine /alpine/ 301
     file_server /alpine/* browse {
         root /mnt
@@ -405,11 +400,6 @@ mirrors.sjtug.sjtu.edu.cn {
     file_server /CRAN/* browse {
         root /mnt
         hide .*
-    }
-    redir /manjarostable /manjarostable/ 301
-    route /manjarostable/* {
-        uri strip_prefix /manjarostable
-        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
     }
     redir /centos /centos/ 301
     route /centos/* {
@@ -676,6 +666,16 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /fedora
         redir * https://mirror.sjtu.edu.cn/fedora{uri} 302
     }
+    redir /manjaro /manjaro/ 301
+    route /manjaro/* {
+        uri strip_prefix /manjaro
+        redir * https://mirror.sjtu.edu.cn/manjaro{uri} 302
+    }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -772,7 +772,6 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
-        not path /manjarostable/*
         not path /centos/*
         not path /debian/*
         not path /debian-cd/*
@@ -840,6 +839,8 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/homebrew-install.git/*
         not path /openeuler/*
         not path /fedora/*
+        not path /manjaro/*
+        not path /manjarostable/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1007,11 +1008,6 @@ zhiyuan.internal.sjtug.org {
         root /mnt
         hide .*
     }
-    redir /manjaro /manjaro/ 301
-    file_server /manjaro/* browse {
-        root /mnt
-        hide .*
-    }
     redir /alpine /alpine/ 301
     file_server /alpine/* browse {
         root /mnt
@@ -1182,11 +1178,6 @@ zhiyuan.internal.sjtug.org {
     file_server /CRAN/* browse {
         root /mnt
         hide .*
-    }
-    redir /manjarostable /manjarostable/ 301
-    route /manjarostable/* {
-        uri strip_prefix /manjarostable
-        redir * https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable{uri} 302
     }
     redir /centos /centos/ 301
     route /centos/* {
@@ -1453,6 +1444,16 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /fedora
         redir * https://mirror.sjtu.edu.cn/fedora{uri} 302
     }
+    redir /manjaro /manjaro/ 301
+    route /manjaro/* {
+        uri strip_prefix /manjaro
+        redir * https://mirror.sjtu.edu.cn/manjaro{uri} 302
+    }
+    redir /manjarostable /manjarostable/ 301
+    route /manjarostable/* {
+        uri strip_prefix /manjarostable
+        redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1549,7 +1550,6 @@ zhiyuan.internal.sjtug.org {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
-        not path /manjarostable/*
         not path /centos/*
         not path /debian/*
         not path /debian-cd/*
@@ -1617,6 +1617,8 @@ zhiyuan.internal.sjtug.org {
         not path /git/homebrew-install.git/*
         not path /openeuler/*
         not path /fedora/*
+        not path /manjaro/*
+        not path /manjarostable/*
     }
     encode @gzip_enabled gzip zstd
 }

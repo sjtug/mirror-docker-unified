@@ -60,14 +60,6 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirror.yandex.ru/mirrors/manjaro/
-    interval: 3600
-    path: /mnt/manjaro
-    name: manjaro
-    exclude_hidden: true
-    <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/rsync.sh
     source: rsync://rsync.alpinelinux.org/alpine/
     interval: 3600
     path: /mnt/alpine
@@ -433,9 +425,4 @@ repos:
   - type: external
     name: CRAN
     path: /mnt/CRAN
-    disabled: true
-  - type: external
-    name: manjarostable
-    serve_mode: redir
-    target: https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable
     disabled: true
