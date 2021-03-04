@@ -99,7 +99,10 @@ def dict_to_repo(repo: dict) -> Repo:
     if serve_mode == 'mirror_intel':
         return ProxyRepo(repo['name'], 'mirror-intel:8000', False, False)
     if serve_mode == 'proxy':
-        return ProxyRepo(repo['name'], repo['proxy_to'], True, True)
+        if repo.get('strip_prefix', False):
+            return ProxyRepo(repo['name'], repo['proxy_to'], False, True)
+        else:
+            return ProxyRepo(repo['name'], repo['proxy_to'], True, True)
     if serve_mode == 'git':
         return ProxyRepo(repo['name'], 'git-backend', False, False)
     if serve_mode == 'ignore':
@@ -186,8 +189,9 @@ def rewrite_config(repo: dict, site: str):
     if repo.get('unified', '') == 'proxy':
         return {
             'name': repo['name'],
-            'proxy_to': f"{BASES[site][0]}/{repo['name']}",
-            'serve_mode': 'proxy'
+            'proxy_to': f"{BASES[site][0]}",
+            'serve_mode': 'proxy',
+            'strip_prefix': False
         }
     if serve_mode == 'default' or serve_mode == 'git':
         name = repo['name']
