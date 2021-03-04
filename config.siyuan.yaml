@@ -495,14 +495,14 @@ repos:
     proxy_to: siyuan-gcr-registry:80
     disabled: true
     subdomain: k8s-gcr-io.siyuan.internal.sjtug.org
-    no_unified: true
+    unified: disable
     serve_mode: proxy
   - type: external
     name: docker-registry-siyuan
     proxy_to: siyuan-docker-registry:80
     disabled: true
     subdomain: docker.siyuan.internal.sjtug.org
-    no_unified: true
+    unified: disable
     serve_mode: proxy
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -574,3 +574,17 @@ repos:
     serve_mode: redir
     target: https://mirror.sjtu.edu.cn/manjaro/stable
     disabled: true
+  - type: external
+    name: CTAN
+    path: /srv/disk2/CTAN
+    disabled: true
+    unified: proxy
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.dante.ctan.org/CTAN
+    interval: 23020
+    path: /srv/disk2/ctan
+    no_redir_http: true
+    name: ctan
+    unified: proxy
+    <<: *oneshot_common

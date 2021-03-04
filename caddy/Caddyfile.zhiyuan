@@ -386,11 +386,6 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
-    redir /CTAN /CTAN/ 301
-    file_server /CTAN/* browse {
-        root /mnt
-        hide .*
-    }
     redir /CPAN /CPAN/ 301
     file_server /CPAN/* browse {
         root /mnt
@@ -676,6 +671,13 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        reverse_proxy mirror.sjtu.edu.cn/CTAN {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+    }
 
     @git_libgit2 {
         path /git/*
@@ -841,6 +843,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /fedora/*
         not path /manjaro/*
         not path /manjarostable/*
+        not path /CTAN/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1164,11 +1167,6 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
     }
-    redir /CTAN /CTAN/ 301
-    file_server /CTAN/* browse {
-        root /mnt
-        hide .*
-    }
     redir /CPAN /CPAN/ 301
     file_server /CPAN/* browse {
         root /mnt
@@ -1454,6 +1452,13 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        reverse_proxy mirror.sjtu.edu.cn/CTAN {
+            header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1619,6 +1624,7 @@ zhiyuan.internal.sjtug.org {
         not path /fedora/*
         not path /manjaro/*
         not path /manjarostable/*
+        not path /CTAN/*
     }
     encode @gzip_enabled gzip zstd
 }

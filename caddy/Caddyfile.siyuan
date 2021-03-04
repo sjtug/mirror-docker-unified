@@ -253,6 +253,23 @@ http://mirror.sjtu.edu.cn/fedora/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://mirror.sjtu.edu.cn/ctan {
+    redir /ctan /ctan/ 301
+}
+
+http://mirror.sjtu.edu.cn/ctan/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /srv/disk2
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
 mirror.sjtu.edu.cn {
     log {
         output stdout
@@ -599,6 +616,16 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    file_server /CTAN/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ctan /ctan/ 301
+    file_server /ctan/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -633,11 +660,6 @@ mirror.sjtu.edu.cn {
     route /alpine/* {
         uri strip_prefix /alpine
         redir * https://mirrors.sjtug.sjtu.edu.cn/alpine{uri} 302
-    }
-    redir /ctan /ctan/ 301
-    route /ctan/* {
-        uri strip_prefix /ctan
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
     redir /cpan /cpan/ 301
     route /cpan/* {
@@ -770,11 +792,6 @@ mirror.sjtu.edu.cn {
     route /google-fonts/* {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
-    }
-    redir /CTAN /CTAN/ 301
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
     }
     redir /CPAN /CPAN/ 301
     route /CPAN/* {
@@ -915,7 +932,6 @@ mirror.sjtu.edu.cn {
         not path /gentoo/*
         not path /vim/*
         not path /alpine/*
-        not path /ctan/*
         not path /cpan/*
         not path /cran/*
         not path /ctex/*
@@ -948,7 +964,6 @@ mirror.sjtu.edu.cn {
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
-        not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
     }
@@ -1175,6 +1190,23 @@ http://ftp.sjtu.edu.cn/fedora/* {
     encode /* gzip zstd
     file_server /* browse {
         root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
+http://ftp.sjtu.edu.cn/ctan {
+    redir /ctan /ctan/ 301
+}
+
+http://ftp.sjtu.edu.cn/ctan/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -1530,6 +1562,16 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    file_server /CTAN/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ctan /ctan/ 301
+    file_server /ctan/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1564,11 +1606,6 @@ ftp.sjtu.edu.cn {
     route /alpine/* {
         uri strip_prefix /alpine
         redir * https://mirrors.sjtug.sjtu.edu.cn/alpine{uri} 302
-    }
-    redir /ctan /ctan/ 301
-    route /ctan/* {
-        uri strip_prefix /ctan
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
     redir /cpan /cpan/ 301
     route /cpan/* {
@@ -1701,11 +1738,6 @@ ftp.sjtu.edu.cn {
     route /google-fonts/* {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
-    }
-    redir /CTAN /CTAN/ 301
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
     }
     redir /CPAN /CPAN/ 301
     route /CPAN/* {
@@ -1846,7 +1878,6 @@ ftp.sjtu.edu.cn {
         not path /gentoo/*
         not path /vim/*
         not path /alpine/*
-        not path /ctan/*
         not path /cpan/*
         not path /cran/*
         not path /ctex/*
@@ -1879,7 +1910,6 @@ ftp.sjtu.edu.cn {
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
-        not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
     }
@@ -2106,6 +2136,23 @@ http://ftp6.sjtu.edu.cn/fedora/* {
     encode /* gzip zstd
     file_server /* browse {
         root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
+http://ftp6.sjtu.edu.cn/ctan {
+    redir /ctan /ctan/ 301
+}
+
+http://ftp6.sjtu.edu.cn/ctan/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -2461,6 +2508,16 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    file_server /CTAN/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ctan /ctan/ 301
+    file_server /ctan/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2495,11 +2552,6 @@ ftp6.sjtu.edu.cn {
     route /alpine/* {
         uri strip_prefix /alpine
         redir * https://mirrors.sjtug.sjtu.edu.cn/alpine{uri} 302
-    }
-    redir /ctan /ctan/ 301
-    route /ctan/* {
-        uri strip_prefix /ctan
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
     redir /cpan /cpan/ 301
     route /cpan/* {
@@ -2632,11 +2684,6 @@ ftp6.sjtu.edu.cn {
     route /google-fonts/* {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
-    }
-    redir /CTAN /CTAN/ 301
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
     }
     redir /CPAN /CPAN/ 301
     route /CPAN/* {
@@ -2777,7 +2824,6 @@ ftp6.sjtu.edu.cn {
         not path /gentoo/*
         not path /vim/*
         not path /alpine/*
-        not path /ctan/*
         not path /cpan/*
         not path /cran/*
         not path /ctex/*
@@ -2810,7 +2856,6 @@ ftp6.sjtu.edu.cn {
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
-        not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
     }
@@ -3037,6 +3082,23 @@ http://siyuan.internal.sjtug.org/fedora/* {
     encode /* gzip zstd
     file_server /* browse {
         root /srv/disk1
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    header * x-sjtug-mirror-id siyuan
+}
+
+http://siyuan.internal.sjtug.org/ctan {
+    redir /ctan /ctan/ 301
+}
+
+http://siyuan.internal.sjtug.org/ctan/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -3392,6 +3454,16 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
+    redir /CTAN /CTAN/ 301
+    file_server /CTAN/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /ctan /ctan/ 301
+    file_server /ctan/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3426,11 +3498,6 @@ siyuan.internal.sjtug.org {
     route /alpine/* {
         uri strip_prefix /alpine
         redir * https://mirrors.sjtug.sjtu.edu.cn/alpine{uri} 302
-    }
-    redir /ctan /ctan/ 301
-    route /ctan/* {
-        uri strip_prefix /ctan
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
     redir /cpan /cpan/ 301
     route /cpan/* {
@@ -3563,11 +3630,6 @@ siyuan.internal.sjtug.org {
     route /google-fonts/* {
         uri strip_prefix /google-fonts
         redir * https://fonts.googleapis.com{uri} 302
-    }
-    redir /CTAN /CTAN/ 301
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
     }
     redir /CPAN /CPAN/ 301
     route /CPAN/* {
@@ -3708,7 +3770,6 @@ siyuan.internal.sjtug.org {
         not path /gentoo/*
         not path /vim/*
         not path /alpine/*
-        not path /ctan/*
         not path /cpan/*
         not path /cran/*
         not path /ctex/*
@@ -3741,7 +3802,6 @@ siyuan.internal.sjtug.org {
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
-        not path /CTAN/*
         not path /CPAN/*
         not path /CRAN/*
     }
