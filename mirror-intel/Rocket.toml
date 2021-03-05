@@ -57,6 +57,9 @@ overrides = [
   { name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/" },
   { name = "tuna", pattern = "https://mirrors.tuna.tsinghua.edu.cn/", replace = "https://nanomirrors.tuna.tsinghua.edu.cn/" }
 ]
+s3_only = [
+    "voidlinux/"
+]
 
 [default.s3]
 bucket = "899a892efef34b1b944a19981040f55b-oss01"

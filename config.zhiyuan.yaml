@@ -24,14 +24,6 @@ repos:
     name: putty
     <<: *oneshot_common
   - type: shell_script
-    name: archlinux
-    interval: 5300
-    path: /mnt/archlinux
-    script: /worker-script/zhiyuan/worker-script/archlinux.sh
-    source: rsync://mirrors.kernel.org/archlinux/
-    lastupdate: https://mirrors.edge.kernel.org/archlinux/lastupdate
-    <<: *oneshot_common
-  - type: shell_script
     name: archlinux-cn
     interval: 6000
     path: /mnt/archlinux-cn
