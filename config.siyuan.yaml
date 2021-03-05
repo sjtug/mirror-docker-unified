@@ -563,7 +563,7 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirror.yandex.ru/mirrors/manjaro/
+    source: rsync://mirrors.ocf.berkeley.edu/manjaro
     interval: 3600
     path: /srv/disk2/manjaro
     name: manjaro

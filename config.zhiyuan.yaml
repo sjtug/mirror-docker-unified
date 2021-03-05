@@ -306,6 +306,7 @@ repos:
     interval: 6000
     path: /mnt/qt
     name: qt
+    rsync_extra_flags: --exclude "snapshots/*"
     no_redir_http: true
   - type: shell_script
     script: julia -t auto /worker-script/zhiyuan/worker-script/julia.jl
