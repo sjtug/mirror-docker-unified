@@ -626,15 +626,19 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /voidlinux /voidlinux/ 301
+    route /voidlinux/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /archlinux /archlinux/ 301
+    file_server /archlinux/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
         redir * https://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
-    }
-    redir /archlinux /archlinux/ 301
-    route /archlinux/* {
-        uri strip_prefix /archlinux
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
     }
     redir /archlinux-cn /archlinux-cn/ 301
     route /archlinux-cn/* {
@@ -925,8 +929,8 @@ mirror.sjtu.edu.cn {
         not path /gradle/distributions/*
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
+        not path /voidlinux/*
         not path /putty/*
-        not path /archlinux/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
         not path /gentoo/*
@@ -1572,15 +1576,19 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /voidlinux /voidlinux/ 301
+    route /voidlinux/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /archlinux /archlinux/ 301
+    file_server /archlinux/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
         redir * https://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
-    }
-    redir /archlinux /archlinux/ 301
-    route /archlinux/* {
-        uri strip_prefix /archlinux
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
     }
     redir /archlinux-cn /archlinux-cn/ 301
     route /archlinux-cn/* {
@@ -1871,8 +1879,8 @@ ftp.sjtu.edu.cn {
         not path /gradle/distributions/*
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
+        not path /voidlinux/*
         not path /putty/*
-        not path /archlinux/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
         not path /gentoo/*
@@ -2518,15 +2526,19 @@ ftp6.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /voidlinux /voidlinux/ 301
+    route /voidlinux/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /archlinux /archlinux/ 301
+    file_server /archlinux/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
         redir * https://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
-    }
-    redir /archlinux /archlinux/ 301
-    route /archlinux/* {
-        uri strip_prefix /archlinux
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
     }
     redir /archlinux-cn /archlinux-cn/ 301
     route /archlinux-cn/* {
@@ -2817,8 +2829,8 @@ ftp6.sjtu.edu.cn {
         not path /gradle/distributions/*
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
+        not path /voidlinux/*
         not path /putty/*
-        not path /archlinux/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
         not path /gentoo/*
@@ -3464,15 +3476,19 @@ siyuan.internal.sjtug.org {
         root /srv/disk2
         hide .*
     }
+    redir /voidlinux /voidlinux/ 301
+    route /voidlinux/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /archlinux /archlinux/ 301
+    file_server /archlinux/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
         redir * https://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
-    }
-    redir /archlinux /archlinux/ 301
-    route /archlinux/* {
-        uri strip_prefix /archlinux
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux{uri} 302
     }
     redir /archlinux-cn /archlinux-cn/ 301
     route /archlinux-cn/* {
@@ -3763,8 +3779,8 @@ siyuan.internal.sjtug.org {
         not path /gradle/distributions/*
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
+        not path /voidlinux/*
         not path /putty/*
-        not path /archlinux/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
         not path /gentoo/*

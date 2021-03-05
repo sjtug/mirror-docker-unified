@@ -588,3 +588,17 @@ repos:
     name: ctan
     unified: proxy
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix voidlinux --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 --progress rsync --http-base https://mirror.clarkson.edu/voidlinux/ --rsync-base rsync://mirror.clarkson.edu/voidlinux/
+    serve_mode: mirror_intel
+    interval: 10800
+    name: voidlinux
+    <<: *oneshot_common
+  - type: shell_script
+    name: archlinux
+    interval: 5300
+    path: /srv/disk2/archlinux
+    script: /worker-script/zhiyuan/worker-script/archlinux.sh
+    source: rsync://mirrors.kernel.org/archlinux/
+    lastupdate: https://mirrors.edge.kernel.org/archlinux/lastupdate
+    <<: *oneshot_common
