@@ -603,10 +603,10 @@ repos:
     lastupdate: https://mirrors.edge.kernel.org/archlinux/lastupdate
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix voidlinux --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/biconductor --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/biconductor
+    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix bioconductor --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/bioconductor --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/bioconductor
     serve_mode: mirror_intel
     interval: 10800
-    name: biconductor
+    name: bioconductor
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/anaconda.sh --workers 8 --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 --no-delete --concurrent-transfer 1

@@ -667,8 +667,8 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /archlinux
         redir * https://mirror.sjtu.edu.cn/archlinux{uri} 302
     }
-    redir /biconductor /biconductor/ 301
-    route /biconductor/* {
+    redir /bioconductor /bioconductor/ 301
+    route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
 
@@ -840,7 +840,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /ctan/*
         not path /voidlinux/*
         not path /archlinux/*
-        not path /biconductor/*
+        not path /bioconductor/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1445,8 +1445,8 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /archlinux
         redir * https://mirror.sjtu.edu.cn/archlinux{uri} 302
     }
-    redir /biconductor /biconductor/ 301
-    route /biconductor/* {
+    redir /bioconductor /bioconductor/ 301
+    route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
 
@@ -1618,7 +1618,7 @@ zhiyuan.internal.sjtug.org {
         not path /ctan/*
         not path /voidlinux/*
         not path /archlinux/*
-        not path /biconductor/*
+        not path /bioconductor/*
     }
     encode @gzip_enabled gzip zstd
 }
