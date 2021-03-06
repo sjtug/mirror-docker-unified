@@ -27,23 +27,6 @@ http://mirrors.sjtug.sjtu.edu.cn/alpine/* {
     header * x-sjtug-mirror-id zhiyuan
 }
 
-anaconda.mirrors.sjtug.sjtu.edu.cn {
-    encode /* gzip zstd
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-    file_server /* browse {
-        root /mnt/anaconda
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    header * x-sjtug-mirror-id zhiyuan
-}
-
 http://mirrors.sjtug.sjtu.edu.cn/raspbian {
     redir /raspbian /raspbian/ 301
 }
@@ -123,6 +106,16 @@ google-fonts.mirrors.sjtug.sjtu.edu.cn {
         format single_field common_log  # log in v1 style
     }
     redir * https://fonts.googleapis.com{uri} 302
+    header * x-sjtug-mirror-id zhiyuan
+}
+
+anaconda.mirrors.sjtug.sjtu.edu.cn {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    rewrite * /anaconda{uri}
+    reverse_proxy mirror-intel:8000
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -253,11 +246,6 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
-    redir /anaconda /anaconda/ 301
-    file_server /anaconda/* browse {
-        root /mnt
-        hide .*
-    }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
     redir /git/brew.git /git/brew.git/ 301
@@ -368,6 +356,10 @@ mirrors.sjtug.sjtu.edu.cn {
     file_server /CRAN/* browse {
         root /mnt
         hide .*
+    }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
     }
     redir /centos /centos/ 301
     route /centos/* {
@@ -671,6 +663,10 @@ mirrors.sjtug.sjtu.edu.cn {
     route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /wireshark /wireshark/ 301
+    route /wireshark/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -767,6 +763,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
+        not path /anaconda/*
         not path /centos/*
         not path /debian/*
         not path /debian-cd/*
@@ -841,6 +838,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /voidlinux/*
         not path /archlinux/*
         not path /bioconductor/*
+        not path /wireshark/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1031,11 +1029,6 @@ zhiyuan.internal.sjtug.org {
         root /mnt
         hide .*
     }
-    redir /anaconda /anaconda/ 301
-    file_server /anaconda/* browse {
-        root /mnt
-        hide .*
-    }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
     redir /git/brew.git /git/brew.git/ 301
@@ -1146,6 +1139,10 @@ zhiyuan.internal.sjtug.org {
     file_server /CRAN/* browse {
         root /mnt
         hide .*
+    }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
     }
     redir /centos /centos/ 301
     route /centos/* {
@@ -1449,6 +1446,10 @@ zhiyuan.internal.sjtug.org {
     route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /wireshark /wireshark/ 301
+    route /wireshark/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1545,6 +1546,7 @@ zhiyuan.internal.sjtug.org {
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
+        not path /anaconda/*
         not path /centos/*
         not path /debian/*
         not path /debian-cd/*
@@ -1619,6 +1621,7 @@ zhiyuan.internal.sjtug.org {
         not path /voidlinux/*
         not path /archlinux/*
         not path /bioconductor/*
+        not path /wireshark/*
     }
     encode @gzip_enabled gzip zstd
 }
