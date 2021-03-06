@@ -635,6 +635,14 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /biconductor /biconductor/ 301
+    route /biconductor/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -704,11 +712,6 @@ mirror.sjtu.edu.cn {
     route /kali-images/* {
         uri strip_prefix /kali-images
         redir * https://mirrors.sjtug.sjtu.edu.cn/kali-images{uri} 302
-    }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
-        uri strip_prefix /anaconda
-        redir * https://mirrors.sjtug.sjtu.edu.cn/anaconda{uri} 302
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
@@ -930,6 +933,8 @@ mirror.sjtu.edu.cn {
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
         not path /voidlinux/*
+        not path /biconductor/*
+        not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -944,7 +949,6 @@ mirror.sjtu.edu.cn {
         not path /ros/*
         not path /kali/*
         not path /kali-images/*
-        not path /anaconda/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
@@ -1585,6 +1589,14 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /biconductor /biconductor/ 301
+    route /biconductor/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1654,11 +1666,6 @@ ftp.sjtu.edu.cn {
     route /kali-images/* {
         uri strip_prefix /kali-images
         redir * https://mirrors.sjtug.sjtu.edu.cn/kali-images{uri} 302
-    }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
-        uri strip_prefix /anaconda
-        redir * https://mirrors.sjtug.sjtu.edu.cn/anaconda{uri} 302
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
@@ -1880,6 +1887,8 @@ ftp.sjtu.edu.cn {
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
         not path /voidlinux/*
+        not path /biconductor/*
+        not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -1894,7 +1903,6 @@ ftp.sjtu.edu.cn {
         not path /ros/*
         not path /kali/*
         not path /kali-images/*
-        not path /anaconda/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
@@ -2535,6 +2543,14 @@ ftp6.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /biconductor /biconductor/ 301
+    route /biconductor/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2604,11 +2620,6 @@ ftp6.sjtu.edu.cn {
     route /kali-images/* {
         uri strip_prefix /kali-images
         redir * https://mirrors.sjtug.sjtu.edu.cn/kali-images{uri} 302
-    }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
-        uri strip_prefix /anaconda
-        redir * https://mirrors.sjtug.sjtu.edu.cn/anaconda{uri} 302
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
@@ -2830,6 +2841,8 @@ ftp6.sjtu.edu.cn {
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
         not path /voidlinux/*
+        not path /biconductor/*
+        not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -2844,7 +2857,6 @@ ftp6.sjtu.edu.cn {
         not path /ros/*
         not path /kali/*
         not path /kali-images/*
-        not path /anaconda/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
@@ -3485,6 +3497,14 @@ siyuan.internal.sjtug.org {
         root /srv/disk2
         hide .*
     }
+    redir /biconductor /biconductor/ 301
+    route /biconductor/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3554,11 +3574,6 @@ siyuan.internal.sjtug.org {
     route /kali-images/* {
         uri strip_prefix /kali-images
         redir * https://mirrors.sjtug.sjtu.edu.cn/kali-images{uri} 302
-    }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
-        uri strip_prefix /anaconda
-        redir * https://mirrors.sjtug.sjtu.edu.cn/anaconda{uri} 302
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
@@ -3780,6 +3795,8 @@ siyuan.internal.sjtug.org {
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
         not path /voidlinux/*
+        not path /biconductor/*
+        not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -3794,7 +3811,6 @@ siyuan.internal.sjtug.org {
         not path /ros/*
         not path /kali/*
         not path /kali-images/*
-        not path /anaconda/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*

@@ -123,6 +123,7 @@ repos:
     subdomain: anaconda.mirrors.sjtug.sjtu.edu.cn
     interval: 6000
     thread_num: 80
+    unified: disable
     pkgs/main/linux-64: https://repo.anaconda.com/pkgs/main/linux-64/
     pkgs/main/linux-32: https://repo.anaconda.com/pkgs/main/linux-32/
     pkgs/main/linux-ppc64le: https://repo.anaconda.com/pkgs/main/linux-ppc64le/
