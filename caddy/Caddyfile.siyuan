@@ -635,8 +635,8 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /biconductor /biconductor/ 301
-    route /biconductor/* {
+    redir /bioconductor /bioconductor/ 301
+    route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
     redir /anaconda /anaconda/ 301
@@ -933,7 +933,7 @@ mirror.sjtu.edu.cn {
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
         not path /voidlinux/*
-        not path /biconductor/*
+        not path /bioconductor/*
         not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
@@ -1589,8 +1589,8 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /biconductor /biconductor/ 301
-    route /biconductor/* {
+    redir /bioconductor /bioconductor/ 301
+    route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
     redir /anaconda /anaconda/ 301
@@ -1887,7 +1887,7 @@ ftp.sjtu.edu.cn {
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
         not path /voidlinux/*
-        not path /biconductor/*
+        not path /bioconductor/*
         not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
@@ -2543,8 +2543,8 @@ ftp6.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /biconductor /biconductor/ 301
-    route /biconductor/* {
+    redir /bioconductor /bioconductor/ 301
+    route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
     redir /anaconda /anaconda/ 301
@@ -2841,7 +2841,7 @@ ftp6.sjtu.edu.cn {
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
         not path /voidlinux/*
-        not path /biconductor/*
+        not path /bioconductor/*
         not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
@@ -3497,8 +3497,8 @@ siyuan.internal.sjtug.org {
         root /srv/disk2
         hide .*
     }
-    redir /biconductor /biconductor/ 301
-    route /biconductor/* {
+    redir /bioconductor /bioconductor/ 301
+    route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
     redir /anaconda /anaconda/ 301
@@ -3795,7 +3795,7 @@ siyuan.internal.sjtug.org {
         not path /git/homebrew-install.git/*
         not path /manjarostable/*
         not path /voidlinux/*
-        not path /biconductor/*
+        not path /bioconductor/*
         not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
