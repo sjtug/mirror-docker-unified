@@ -59,7 +59,8 @@ overrides = [
 ]
 s3_only = [
     "voidlinux/",
-    "bioconductor/"
+    "bioconductor/",
+    "anaconda/"
 ]
 
 [default.s3]

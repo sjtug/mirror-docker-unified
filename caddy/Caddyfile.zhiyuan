@@ -667,6 +667,10 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /archlinux
         redir * https://mirror.sjtu.edu.cn/archlinux{uri} 302
     }
+    redir /biconductor /biconductor/ 301
+    route /biconductor/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -836,6 +840,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /ctan/*
         not path /voidlinux/*
         not path /archlinux/*
+        not path /biconductor/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1440,6 +1445,10 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /archlinux
         redir * https://mirror.sjtu.edu.cn/archlinux{uri} 302
     }
+    redir /biconductor /biconductor/ 301
+    route /biconductor/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1609,6 +1618,7 @@ zhiyuan.internal.sjtug.org {
         not path /ctan/*
         not path /voidlinux/*
         not path /archlinux/*
+        not path /biconductor/*
     }
     encode @gzip_enabled gzip zstd
 }
