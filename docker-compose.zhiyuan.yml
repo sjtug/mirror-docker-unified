@@ -4,8 +4,8 @@ services:
     volumes:
       - "/mnt/data12T:/mnt:ro"
       - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile:ro"
-    mem_limit: 10G
-    memswap_limit: 10G
+    mem_limit: 20G
+    memswap_limit: 20G
 
   lug:
     container_name: zhiyuan-lug

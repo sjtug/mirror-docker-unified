@@ -6,8 +6,8 @@ services:
       - "/mnt/disk2:/srv/disk2:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile:ro"
       - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
-    mem_limit: 10G
-    memswap_limit: 10G
+    mem_limit: 20G
+    memswap_limit: 20G
 
   lug:
     container_name: siyuan-lug
