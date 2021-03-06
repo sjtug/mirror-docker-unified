@@ -58,7 +58,8 @@ overrides = [
   { name = "tuna", pattern = "https://mirrors.tuna.tsinghua.edu.cn/", replace = "https://nanomirrors.tuna.tsinghua.edu.cn/" }
 ]
 s3_only = [
-    "voidlinux/"
+    "voidlinux/",
+    "bioconductor/"
 ]
 
 [default.s3]
