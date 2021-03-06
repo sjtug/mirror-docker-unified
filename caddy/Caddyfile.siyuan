@@ -639,8 +639,8 @@ mirror.sjtu.edu.cn {
     route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
+    redir /wireshark /wireshark/ 301
+    route /wireshark/* {
         reverse_proxy mirror-intel:8000
     }
     redir /putty /putty/ 301
@@ -810,6 +810,10 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -934,7 +938,7 @@ mirror.sjtu.edu.cn {
         not path /manjarostable/*
         not path /voidlinux/*
         not path /bioconductor/*
-        not path /anaconda/*
+        not path /wireshark/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -974,6 +978,7 @@ mirror.sjtu.edu.cn {
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /anaconda/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1593,8 +1598,8 @@ ftp.sjtu.edu.cn {
     route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
+    redir /wireshark /wireshark/ 301
+    route /wireshark/* {
         reverse_proxy mirror-intel:8000
     }
     redir /putty /putty/ 301
@@ -1764,6 +1769,10 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1888,7 +1897,7 @@ ftp.sjtu.edu.cn {
         not path /manjarostable/*
         not path /voidlinux/*
         not path /bioconductor/*
-        not path /anaconda/*
+        not path /wireshark/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -1928,6 +1937,7 @@ ftp.sjtu.edu.cn {
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /anaconda/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2547,8 +2557,8 @@ ftp6.sjtu.edu.cn {
     route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
+    redir /wireshark /wireshark/ 301
+    route /wireshark/* {
         reverse_proxy mirror-intel:8000
     }
     redir /putty /putty/ 301
@@ -2718,6 +2728,10 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -2842,7 +2856,7 @@ ftp6.sjtu.edu.cn {
         not path /manjarostable/*
         not path /voidlinux/*
         not path /bioconductor/*
-        not path /anaconda/*
+        not path /wireshark/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -2882,6 +2896,7 @@ ftp6.sjtu.edu.cn {
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /anaconda/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -3501,8 +3516,8 @@ siyuan.internal.sjtug.org {
     route /bioconductor/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
+    redir /wireshark /wireshark/ 301
+    route /wireshark/* {
         reverse_proxy mirror-intel:8000
     }
     redir /putty /putty/ 301
@@ -3672,6 +3687,10 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -3796,7 +3815,7 @@ siyuan.internal.sjtug.org {
         not path /manjarostable/*
         not path /voidlinux/*
         not path /bioconductor/*
-        not path /anaconda/*
+        not path /wireshark/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -3836,6 +3855,7 @@ siyuan.internal.sjtug.org {
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
+        not path /anaconda/*
     }
     encode @gzip_enabled gzip zstd
 }

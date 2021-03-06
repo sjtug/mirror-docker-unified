@@ -226,49 +226,49 @@ repos:
     <<: *oneshot_common
   # homebrew-bottles
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix homebrew-bottles --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 homebrew
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix homebrew-bottles --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 homebrew
     serve_mode: mirror_intel
     interval: 10800
     name: homebrew-bottles
     <<: *oneshot_common
   # rust-static
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 rustup --target http://mirror-intel:8000/rust-static
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 4 rustup --target http://mirror-intel:8000/rust-static
     serve_mode: mirror_intel
     interval: 4800
     name: rust-static
     <<: *oneshot_common
   # pypi
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix pypi-packages --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 --s3-prefix-hint-mode pypi pypi
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix pypi-packages --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 --s3-prefix-hint-mode pypi pypi
     serve_mode: mirror_intel
     interval: 86400
     name: pypi-packages
     <<: *oneshot_common
   # dart-pub
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 dart_pub --target http://mirror-intel:8000/dart-pub
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 4 dart_pub --target http://mirror-intel:8000/dart-pub
     serve_mode: mirror_intel
     interval: 4800
     name: dart-pub
     <<: *oneshot_common
   # pytorch-wheels
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 pytorch_wheels --target http://mirror-intel:8000/pytorch-wheels
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 4 pytorch_wheels --target http://mirror-intel:8000/pytorch-wheels
     serve_mode: mirror_intel
     interval: 4900
     name: pytorch-wheels
     <<: *oneshot_common
   # crates.io
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix crates.io/crates --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 crates-io
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix crates.io/crates --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 crates-io
     serve_mode: mirror_intel
     interval: 7200
     name: crates.io
     <<: *oneshot_common
   # flutter_infra
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 8 flutter_infra --target http://mirror-intel:8000/flutter_infra
+    script: /app/mirror-clone --concurrent_resolve 64 --workers 4 flutter_infra --target http://mirror-intel:8000/flutter_infra
     serve_mode: mirror_intel
     interval: 4000
     name: flutter_infra
@@ -319,7 +319,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix linuxbrew-bottles --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 homebrew --arch x86_64_linux --api-base https://formulae.brew.sh/api/formula-linux.json --bottles-base https://linuxbrew.bintray.com
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix linuxbrew-bottles --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 homebrew --arch x86_64_linux --api-base https://formulae.brew.sh/api/formula-linux.json --bottles-base https://linuxbrew.bintray.com
     serve_mode: mirror_intel
     interval: 10800
     name: linuxbrew-bottles
@@ -360,7 +360,7 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
-    interval: 1800
+    interval: 7200
     name: git/ohmyzsh.git
     source: https://github.com/ohmyzsh/ohmyzsh.git
     path: /srv/disk2/git/ohmyzsh.git
@@ -368,7 +368,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/ohmyzsh.git
   - type: shell_script
     script: /worker-script/git.sh
-    interval: 1900
+    interval: 7200
     name: git/spacemacs.git
     source: https://github.com/syl20bnr/spacemacs.git
     path: /srv/disk2/git/spacemacs.git
@@ -376,7 +376,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/spacemacs.git
   - type: shell_script
     script: /worker-script/git.sh
-    interval: 2000
+    interval: 7200
     name: git/doom-emacs.git
     source: https://github.com/hlissner/doom-emacs.git
     path: /srv/disk2/git/doom-emacs.git
@@ -527,7 +527,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/dpdk.git
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 128 --workers 8 gradle --target http://mirror-intel:8000/gradle/distributions
+    script: /app/mirror-clone --concurrent_resolve 128 --workers 4 gradle --target http://mirror-intel:8000/gradle/distributions
     serve_mode: mirror_intel
     interval: 10800
     name: gradle/distributions
@@ -589,7 +589,7 @@ repos:
     unified: proxy
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix voidlinux --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/voidlinux --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/voidlinux
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix voidlinux --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/voidlinux --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/voidlinux
     serve_mode: mirror_intel
     interval: 10800
     name: voidlinux
@@ -603,15 +603,14 @@ repos:
     lastupdate: https://mirrors.edge.kernel.org/archlinux/lastupdate
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 8 --target-type s3 --s3-prefix bioconductor --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/bioconductor --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/bioconductor
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix bioconductor --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/bioconductor --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/bioconductor
     serve_mode: mirror_intel
     interval: 10800
     name: bioconductor
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/anaconda.sh --workers 8 --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 --no-delete --concurrent-transfer 1
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix wireshark --s3-buffer-path /srv/disk1/mirror-clone-cache --print-plan 100 rsync --http-base https://2.na.dl.wireshark.org --rsync-base rsync://rsync.wireshark.org/wsdl
     serve_mode: mirror_intel
     interval: 10800
-    name: anaconda
-    unified: disable
+    name: wireshark
     <<: *oneshot_common
