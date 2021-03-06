@@ -1,5 +1,4 @@
-# base: https://conda.anaconda.org
-base: https://nanomirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+base: https://conda.anaconda.org
 repos:
   - conda-forge/noarch
   - conda-forge/linux-64
