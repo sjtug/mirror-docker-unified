@@ -317,7 +317,7 @@ repos:
     path: /mnt/CRAN
     disabled: true
   - type: shell_script
-    script: /worker-script/anaconda.sh --workers 4 --s3-buffer-path /mnt/data12T/mirror-clone-cache --print-plan 100 --no-delete --concurrent-transfer 64
+    script: /worker-script/anaconda.sh --workers 4 --s3-buffer-path /var/cache --print-plan 100 --no-delete --concurrent-transfer 64
     serve_mode: mirror_intel
     interval: 3600
     name: anaconda

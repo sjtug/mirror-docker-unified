@@ -1,5 +1,4 @@
-# base: https://repo.anaconda.com/pkgs
-base: https://nanomirrors.tuna.tsinghua.edu.cn/anaconda/pkgs
+base: https://repo.anaconda.com/pkgs
 repos:
   - main/noarch
   - main/linux-64

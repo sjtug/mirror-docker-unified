@@ -47,7 +47,7 @@ services:
       args:
         - USE_SJTUG=true
         - CLONE_VERSION=v0.1.18
-        - CLONE_V2_VERSION=v0.2.5
+        - CLONE_V2_VERSION=v0.2.5-1
         - LUG_VERSION=v0.12.7
     expose:
       - 8081
@@ -61,6 +61,7 @@ services:
       - "./secrets/ssh:/secrets_ssh:ro"
       - "./secrets/mirror-intel.env:/secrets_s3:ro"
       - "./common/gai.conf:/etc/gai.conf:ro"
+    tmpfs: /var/cache
     environment:
       RUST_LOG: info
     healthcheck:
