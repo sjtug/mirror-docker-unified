@@ -24,6 +24,10 @@ http://mirrors.sjtug.sjtu.edu.cn/alpine/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -41,6 +45,10 @@ http://mirrors.sjtug.sjtu.edu.cn/raspbian/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -75,6 +83,10 @@ http://mirrors.sjtug.sjtu.edu.cn/qt/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -865,6 +877,10 @@ http://zhiyuan.internal.sjtug.org/alpine/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -882,6 +898,10 @@ http://zhiyuan.internal.sjtug.org/raspbian/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -899,6 +919,10 @@ http://zhiyuan.internal.sjtug.org/qt/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id zhiyuan
 }
 

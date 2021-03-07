@@ -45,7 +45,7 @@ class FileServerRepo(Repo):
             Node(f'file_server /* browse', [
                 Node(f'root {real_root}'),
                 Node(f'hide .*')
-            ])] + hidden()
+            ])] + hidden() + log()
 
     def as_subdomain(self) -> list[Node]:
         return gzip('/*') + log() + [
@@ -79,7 +79,7 @@ class ProxyRepo:
         return False
 
     def as_site(self) -> list[Node]:
-        return self.as_repo()
+        return self.as_repo() + log()
 
     def as_subdomain(self) -> list[Node]:
         proxy_node = Node(f'reverse_proxy {self.proxy_to}', [
