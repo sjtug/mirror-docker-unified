@@ -54,5 +54,13 @@ jobs:
         run: cd caddy-gen && pipenv install
       - name: check if Caddyfile is latest version
         run: make caddy-gen && git diff --exit-code
+      - name: use CI config for docker-compose
+        run: |
+          cp docker-compose.ci.yml docker-compose.override.yml 
+          cp ./secrets/caddy.env.example ./secrets/caddy.env
+          cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
+          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
+          cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
+          touch ./secrets/lug-secrets.sh
       - name: validate Caddyfile
-        run: cp ./secrets/caddy.env.example ./secrets/caddy.env && docker-compose build caddy && make caddy-verify-config
+        run: docker-compose build caddy && make caddy-verify-config
