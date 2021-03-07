@@ -24,6 +24,10 @@ http://mirror.sjtu.edu.cn/centos/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -41,6 +45,10 @@ http://mirror.sjtu.edu.cn/debian/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -58,6 +66,10 @@ http://mirror.sjtu.edu.cn/debian-security/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -75,6 +87,10 @@ http://mirror.sjtu.edu.cn/deepin/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -92,6 +108,10 @@ http://mirror.sjtu.edu.cn/docker-ce/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -109,6 +129,10 @@ http://mirror.sjtu.edu.cn/fedora-secondary/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -126,6 +150,10 @@ http://mirror.sjtu.edu.cn/opensuse/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -143,6 +171,10 @@ http://mirror.sjtu.edu.cn/remi/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -160,6 +192,10 @@ http://mirror.sjtu.edu.cn/ubuntu/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -177,6 +213,10 @@ http://mirror.sjtu.edu.cn/ubuntu-ports/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -194,6 +234,10 @@ http://mirror.sjtu.edu.cn/openwrt/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -211,6 +255,10 @@ http://mirror.sjtu.edu.cn/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -250,6 +298,10 @@ http://mirror.sjtu.edu.cn/fedora/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -267,6 +319,10 @@ http://mirror.sjtu.edu.cn/ctan/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1005,6 +1061,10 @@ http://ftp.sjtu.edu.cn/centos/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1022,6 +1082,10 @@ http://ftp.sjtu.edu.cn/debian/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1039,6 +1103,10 @@ http://ftp.sjtu.edu.cn/debian-security/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1056,6 +1124,10 @@ http://ftp.sjtu.edu.cn/deepin/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1073,6 +1145,10 @@ http://ftp.sjtu.edu.cn/docker-ce/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1090,6 +1166,10 @@ http://ftp.sjtu.edu.cn/fedora-secondary/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1107,6 +1187,10 @@ http://ftp.sjtu.edu.cn/opensuse/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1124,6 +1208,10 @@ http://ftp.sjtu.edu.cn/remi/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1141,6 +1229,10 @@ http://ftp.sjtu.edu.cn/ubuntu/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1158,6 +1250,10 @@ http://ftp.sjtu.edu.cn/ubuntu-ports/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1175,6 +1271,10 @@ http://ftp.sjtu.edu.cn/openwrt/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1192,6 +1292,10 @@ http://ftp.sjtu.edu.cn/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1209,6 +1313,10 @@ http://ftp.sjtu.edu.cn/fedora/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1226,6 +1334,10 @@ http://ftp.sjtu.edu.cn/ctan/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1964,6 +2076,10 @@ http://ftp6.sjtu.edu.cn/centos/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1981,6 +2097,10 @@ http://ftp6.sjtu.edu.cn/debian/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -1998,6 +2118,10 @@ http://ftp6.sjtu.edu.cn/debian-security/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2015,6 +2139,10 @@ http://ftp6.sjtu.edu.cn/deepin/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2032,6 +2160,10 @@ http://ftp6.sjtu.edu.cn/docker-ce/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2049,6 +2181,10 @@ http://ftp6.sjtu.edu.cn/fedora-secondary/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2066,6 +2202,10 @@ http://ftp6.sjtu.edu.cn/opensuse/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2083,6 +2223,10 @@ http://ftp6.sjtu.edu.cn/remi/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2100,6 +2244,10 @@ http://ftp6.sjtu.edu.cn/ubuntu/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2117,6 +2265,10 @@ http://ftp6.sjtu.edu.cn/ubuntu-ports/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2134,6 +2286,10 @@ http://ftp6.sjtu.edu.cn/openwrt/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2151,6 +2307,10 @@ http://ftp6.sjtu.edu.cn/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2168,6 +2328,10 @@ http://ftp6.sjtu.edu.cn/fedora/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2185,6 +2349,10 @@ http://ftp6.sjtu.edu.cn/ctan/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2923,6 +3091,10 @@ http://siyuan.internal.sjtug.org/centos/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2940,6 +3112,10 @@ http://siyuan.internal.sjtug.org/debian/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2957,6 +3133,10 @@ http://siyuan.internal.sjtug.org/debian-security/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2974,6 +3154,10 @@ http://siyuan.internal.sjtug.org/deepin/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -2991,6 +3175,10 @@ http://siyuan.internal.sjtug.org/docker-ce/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3008,6 +3196,10 @@ http://siyuan.internal.sjtug.org/fedora-secondary/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3025,6 +3217,10 @@ http://siyuan.internal.sjtug.org/opensuse/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3042,6 +3238,10 @@ http://siyuan.internal.sjtug.org/remi/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3059,6 +3259,10 @@ http://siyuan.internal.sjtug.org/ubuntu/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3076,6 +3280,10 @@ http://siyuan.internal.sjtug.org/ubuntu-ports/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3093,6 +3301,10 @@ http://siyuan.internal.sjtug.org/openwrt/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3110,6 +3322,10 @@ http://siyuan.internal.sjtug.org/rpmfusion/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3127,6 +3343,10 @@ http://siyuan.internal.sjtug.org/fedora/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
@@ -3144,6 +3364,10 @@ http://siyuan.internal.sjtug.org/ctan/* {
         path */.*
     }
     respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
     header * x-sjtug-mirror-id siyuan
 }
 
