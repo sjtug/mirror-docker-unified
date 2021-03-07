@@ -54,3 +54,5 @@ jobs:
         run: cd caddy-gen && pipenv install
       - name: check if Caddyfile is latest version
         run: make caddy-gen && git diff --exit-code
+      - name: validate Caddyfile
+        run: docker-compose build caddy && make caddy-verify-config
