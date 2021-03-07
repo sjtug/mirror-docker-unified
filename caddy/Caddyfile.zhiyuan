@@ -12,6 +12,10 @@ http://mirrors.sjtug.sjtu.edu.cn/ {
 
 http://mirrors.sjtug.sjtu.edu.cn/alpine {
     redir /alpine /alpine/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirrors.sjtug.sjtu.edu.cn/alpine/* {
@@ -33,6 +37,10 @@ http://mirrors.sjtug.sjtu.edu.cn/alpine/* {
 
 http://mirrors.sjtug.sjtu.edu.cn/raspbian {
     redir /raspbian /raspbian/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirrors.sjtug.sjtu.edu.cn/raspbian/* {
@@ -71,6 +79,10 @@ packagist.mirrors.sjtug.sjtu.edu.cn {
 
 http://mirrors.sjtug.sjtu.edu.cn/qt {
     redir /qt /qt/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirrors.sjtug.sjtu.edu.cn/qt/* {
@@ -865,6 +877,10 @@ http://zhiyuan.internal.sjtug.org/ {
 
 http://zhiyuan.internal.sjtug.org/alpine {
     redir /alpine /alpine/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://zhiyuan.internal.sjtug.org/alpine/* {
@@ -886,6 +902,10 @@ http://zhiyuan.internal.sjtug.org/alpine/* {
 
 http://zhiyuan.internal.sjtug.org/raspbian {
     redir /raspbian /raspbian/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://zhiyuan.internal.sjtug.org/raspbian/* {
@@ -907,6 +927,10 @@ http://zhiyuan.internal.sjtug.org/raspbian/* {
 
 http://zhiyuan.internal.sjtug.org/qt {
     redir /qt /qt/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://zhiyuan.internal.sjtug.org/qt/* {
