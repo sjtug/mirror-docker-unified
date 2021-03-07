@@ -12,6 +12,10 @@ http://mirror.sjtu.edu.cn/ {
 
 http://mirror.sjtu.edu.cn/centos {
     redir /centos /centos/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/centos/* {
@@ -33,6 +37,10 @@ http://mirror.sjtu.edu.cn/centos/* {
 
 http://mirror.sjtu.edu.cn/debian {
     redir /debian /debian/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/debian/* {
@@ -54,6 +62,10 @@ http://mirror.sjtu.edu.cn/debian/* {
 
 http://mirror.sjtu.edu.cn/debian-security {
     redir /debian-security /debian-security/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/debian-security/* {
@@ -75,6 +87,10 @@ http://mirror.sjtu.edu.cn/debian-security/* {
 
 http://mirror.sjtu.edu.cn/deepin {
     redir /deepin /deepin/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/deepin/* {
@@ -96,6 +112,10 @@ http://mirror.sjtu.edu.cn/deepin/* {
 
 http://mirror.sjtu.edu.cn/docker-ce {
     redir /docker-ce /docker-ce/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/docker-ce/* {
@@ -117,6 +137,10 @@ http://mirror.sjtu.edu.cn/docker-ce/* {
 
 http://mirror.sjtu.edu.cn/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/fedora-secondary/* {
@@ -138,6 +162,10 @@ http://mirror.sjtu.edu.cn/fedora-secondary/* {
 
 http://mirror.sjtu.edu.cn/opensuse {
     redir /opensuse /opensuse/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/opensuse/* {
@@ -159,6 +187,10 @@ http://mirror.sjtu.edu.cn/opensuse/* {
 
 http://mirror.sjtu.edu.cn/remi {
     redir /remi /remi/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/remi/* {
@@ -180,6 +212,10 @@ http://mirror.sjtu.edu.cn/remi/* {
 
 http://mirror.sjtu.edu.cn/ubuntu {
     redir /ubuntu /ubuntu/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/ubuntu/* {
@@ -201,6 +237,10 @@ http://mirror.sjtu.edu.cn/ubuntu/* {
 
 http://mirror.sjtu.edu.cn/ubuntu-ports {
     redir /ubuntu-ports /ubuntu-ports/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/ubuntu-ports/* {
@@ -222,6 +262,10 @@ http://mirror.sjtu.edu.cn/ubuntu-ports/* {
 
 http://mirror.sjtu.edu.cn/openwrt {
     redir /openwrt /openwrt/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/openwrt/* {
@@ -243,6 +287,10 @@ http://mirror.sjtu.edu.cn/openwrt/* {
 
 http://mirror.sjtu.edu.cn/rpmfusion {
     redir /rpmfusion /rpmfusion/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/rpmfusion/* {
@@ -286,6 +334,10 @@ docker.siyuan.internal.sjtug.org {
 
 http://mirror.sjtu.edu.cn/fedora {
     redir /fedora /fedora/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/fedora/* {
@@ -307,6 +359,10 @@ http://mirror.sjtu.edu.cn/fedora/* {
 
 http://mirror.sjtu.edu.cn/ctan {
     redir /ctan /ctan/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://mirror.sjtu.edu.cn/ctan/* {
@@ -1049,6 +1105,10 @@ http://ftp.sjtu.edu.cn/ {
 
 http://ftp.sjtu.edu.cn/centos {
     redir /centos /centos/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/centos/* {
@@ -1070,6 +1130,10 @@ http://ftp.sjtu.edu.cn/centos/* {
 
 http://ftp.sjtu.edu.cn/debian {
     redir /debian /debian/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/debian/* {
@@ -1091,6 +1155,10 @@ http://ftp.sjtu.edu.cn/debian/* {
 
 http://ftp.sjtu.edu.cn/debian-security {
     redir /debian-security /debian-security/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/debian-security/* {
@@ -1112,6 +1180,10 @@ http://ftp.sjtu.edu.cn/debian-security/* {
 
 http://ftp.sjtu.edu.cn/deepin {
     redir /deepin /deepin/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/deepin/* {
@@ -1133,6 +1205,10 @@ http://ftp.sjtu.edu.cn/deepin/* {
 
 http://ftp.sjtu.edu.cn/docker-ce {
     redir /docker-ce /docker-ce/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/docker-ce/* {
@@ -1154,6 +1230,10 @@ http://ftp.sjtu.edu.cn/docker-ce/* {
 
 http://ftp.sjtu.edu.cn/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/fedora-secondary/* {
@@ -1175,6 +1255,10 @@ http://ftp.sjtu.edu.cn/fedora-secondary/* {
 
 http://ftp.sjtu.edu.cn/opensuse {
     redir /opensuse /opensuse/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/opensuse/* {
@@ -1196,6 +1280,10 @@ http://ftp.sjtu.edu.cn/opensuse/* {
 
 http://ftp.sjtu.edu.cn/remi {
     redir /remi /remi/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/remi/* {
@@ -1217,6 +1305,10 @@ http://ftp.sjtu.edu.cn/remi/* {
 
 http://ftp.sjtu.edu.cn/ubuntu {
     redir /ubuntu /ubuntu/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/ubuntu/* {
@@ -1238,6 +1330,10 @@ http://ftp.sjtu.edu.cn/ubuntu/* {
 
 http://ftp.sjtu.edu.cn/ubuntu-ports {
     redir /ubuntu-ports /ubuntu-ports/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/ubuntu-ports/* {
@@ -1259,6 +1355,10 @@ http://ftp.sjtu.edu.cn/ubuntu-ports/* {
 
 http://ftp.sjtu.edu.cn/openwrt {
     redir /openwrt /openwrt/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/openwrt/* {
@@ -1280,6 +1380,10 @@ http://ftp.sjtu.edu.cn/openwrt/* {
 
 http://ftp.sjtu.edu.cn/rpmfusion {
     redir /rpmfusion /rpmfusion/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/rpmfusion/* {
@@ -1301,6 +1405,10 @@ http://ftp.sjtu.edu.cn/rpmfusion/* {
 
 http://ftp.sjtu.edu.cn/fedora {
     redir /fedora /fedora/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/fedora/* {
@@ -1322,6 +1430,10 @@ http://ftp.sjtu.edu.cn/fedora/* {
 
 http://ftp.sjtu.edu.cn/ctan {
     redir /ctan /ctan/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp.sjtu.edu.cn/ctan/* {
@@ -2064,6 +2176,10 @@ http://ftp6.sjtu.edu.cn/ {
 
 http://ftp6.sjtu.edu.cn/centos {
     redir /centos /centos/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/centos/* {
@@ -2085,6 +2201,10 @@ http://ftp6.sjtu.edu.cn/centos/* {
 
 http://ftp6.sjtu.edu.cn/debian {
     redir /debian /debian/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/debian/* {
@@ -2106,6 +2226,10 @@ http://ftp6.sjtu.edu.cn/debian/* {
 
 http://ftp6.sjtu.edu.cn/debian-security {
     redir /debian-security /debian-security/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/debian-security/* {
@@ -2127,6 +2251,10 @@ http://ftp6.sjtu.edu.cn/debian-security/* {
 
 http://ftp6.sjtu.edu.cn/deepin {
     redir /deepin /deepin/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/deepin/* {
@@ -2148,6 +2276,10 @@ http://ftp6.sjtu.edu.cn/deepin/* {
 
 http://ftp6.sjtu.edu.cn/docker-ce {
     redir /docker-ce /docker-ce/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/docker-ce/* {
@@ -2169,6 +2301,10 @@ http://ftp6.sjtu.edu.cn/docker-ce/* {
 
 http://ftp6.sjtu.edu.cn/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/fedora-secondary/* {
@@ -2190,6 +2326,10 @@ http://ftp6.sjtu.edu.cn/fedora-secondary/* {
 
 http://ftp6.sjtu.edu.cn/opensuse {
     redir /opensuse /opensuse/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/opensuse/* {
@@ -2211,6 +2351,10 @@ http://ftp6.sjtu.edu.cn/opensuse/* {
 
 http://ftp6.sjtu.edu.cn/remi {
     redir /remi /remi/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/remi/* {
@@ -2232,6 +2376,10 @@ http://ftp6.sjtu.edu.cn/remi/* {
 
 http://ftp6.sjtu.edu.cn/ubuntu {
     redir /ubuntu /ubuntu/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/ubuntu/* {
@@ -2253,6 +2401,10 @@ http://ftp6.sjtu.edu.cn/ubuntu/* {
 
 http://ftp6.sjtu.edu.cn/ubuntu-ports {
     redir /ubuntu-ports /ubuntu-ports/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/ubuntu-ports/* {
@@ -2274,6 +2426,10 @@ http://ftp6.sjtu.edu.cn/ubuntu-ports/* {
 
 http://ftp6.sjtu.edu.cn/openwrt {
     redir /openwrt /openwrt/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/openwrt/* {
@@ -2295,6 +2451,10 @@ http://ftp6.sjtu.edu.cn/openwrt/* {
 
 http://ftp6.sjtu.edu.cn/rpmfusion {
     redir /rpmfusion /rpmfusion/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/rpmfusion/* {
@@ -2316,6 +2476,10 @@ http://ftp6.sjtu.edu.cn/rpmfusion/* {
 
 http://ftp6.sjtu.edu.cn/fedora {
     redir /fedora /fedora/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/fedora/* {
@@ -2337,6 +2501,10 @@ http://ftp6.sjtu.edu.cn/fedora/* {
 
 http://ftp6.sjtu.edu.cn/ctan {
     redir /ctan /ctan/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://ftp6.sjtu.edu.cn/ctan/* {
@@ -3079,6 +3247,10 @@ http://siyuan.internal.sjtug.org/ {
 
 http://siyuan.internal.sjtug.org/centos {
     redir /centos /centos/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/centos/* {
@@ -3100,6 +3272,10 @@ http://siyuan.internal.sjtug.org/centos/* {
 
 http://siyuan.internal.sjtug.org/debian {
     redir /debian /debian/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/debian/* {
@@ -3121,6 +3297,10 @@ http://siyuan.internal.sjtug.org/debian/* {
 
 http://siyuan.internal.sjtug.org/debian-security {
     redir /debian-security /debian-security/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/debian-security/* {
@@ -3142,6 +3322,10 @@ http://siyuan.internal.sjtug.org/debian-security/* {
 
 http://siyuan.internal.sjtug.org/deepin {
     redir /deepin /deepin/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/deepin/* {
@@ -3163,6 +3347,10 @@ http://siyuan.internal.sjtug.org/deepin/* {
 
 http://siyuan.internal.sjtug.org/docker-ce {
     redir /docker-ce /docker-ce/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/docker-ce/* {
@@ -3184,6 +3372,10 @@ http://siyuan.internal.sjtug.org/docker-ce/* {
 
 http://siyuan.internal.sjtug.org/fedora-secondary {
     redir /fedora-secondary /fedora-secondary/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/fedora-secondary/* {
@@ -3205,6 +3397,10 @@ http://siyuan.internal.sjtug.org/fedora-secondary/* {
 
 http://siyuan.internal.sjtug.org/opensuse {
     redir /opensuse /opensuse/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/opensuse/* {
@@ -3226,6 +3422,10 @@ http://siyuan.internal.sjtug.org/opensuse/* {
 
 http://siyuan.internal.sjtug.org/remi {
     redir /remi /remi/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/remi/* {
@@ -3247,6 +3447,10 @@ http://siyuan.internal.sjtug.org/remi/* {
 
 http://siyuan.internal.sjtug.org/ubuntu {
     redir /ubuntu /ubuntu/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/ubuntu/* {
@@ -3268,6 +3472,10 @@ http://siyuan.internal.sjtug.org/ubuntu/* {
 
 http://siyuan.internal.sjtug.org/ubuntu-ports {
     redir /ubuntu-ports /ubuntu-ports/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/ubuntu-ports/* {
@@ -3289,6 +3497,10 @@ http://siyuan.internal.sjtug.org/ubuntu-ports/* {
 
 http://siyuan.internal.sjtug.org/openwrt {
     redir /openwrt /openwrt/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/openwrt/* {
@@ -3310,6 +3522,10 @@ http://siyuan.internal.sjtug.org/openwrt/* {
 
 http://siyuan.internal.sjtug.org/rpmfusion {
     redir /rpmfusion /rpmfusion/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/rpmfusion/* {
@@ -3331,6 +3547,10 @@ http://siyuan.internal.sjtug.org/rpmfusion/* {
 
 http://siyuan.internal.sjtug.org/fedora {
     redir /fedora /fedora/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/fedora/* {
@@ -3352,6 +3572,10 @@ http://siyuan.internal.sjtug.org/fedora/* {
 
 http://siyuan.internal.sjtug.org/ctan {
     redir /ctan /ctan/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
 }
 
 http://siyuan.internal.sjtug.org/ctan/* {

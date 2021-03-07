@@ -76,7 +76,7 @@ def repo_redir(repo: Repo) -> list[Node]:
 
 def repo_no_redir(base: str, repo: Repo, site: str) -> list[Node]:
     return [
-        Node(f'http://{base}/{repo.get_name()}', repo_redir(repo)),
+        Node(f'http://{base}/{repo.get_name()}', repo_redir(repo) + log()),
         Node(f'http://{base}/{repo.get_name()}/*',
              repo.as_site() + [sjtug_mirror_id(site)])
     ]
