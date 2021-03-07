@@ -55,4 +55,4 @@ jobs:
       - name: check if Caddyfile is latest version
         run: make caddy-gen && git diff --exit-code
       - name: validate Caddyfile
-        run: docker-compose build caddy && make caddy-verify-config
+        run: cp ./secrets/caddy.env.example ./secrets/caddy.env && docker-compose build caddy && make caddy-verify-config
