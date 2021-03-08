@@ -382,6 +382,11 @@ http://mirror.sjtu.edu.cn/ctan/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://mirror.sjtu.edu.cn/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
+}
+
 mirror.sjtu.edu.cn {
     log {
         output stdout
@@ -754,6 +759,11 @@ mirror.sjtu.edu.cn {
     redir /wireshark /wireshark/ 301
     route /wireshark/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /test /test/ 301
+    file_server /test/* browse {
+        root /srv/disk1
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -1453,6 +1463,11 @@ http://ftp.sjtu.edu.cn/ctan/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://ftp.sjtu.edu.cn/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
+}
+
 ftp.sjtu.edu.cn {
     log {
         output stdout
@@ -1825,6 +1840,11 @@ ftp.sjtu.edu.cn {
     redir /wireshark /wireshark/ 301
     route /wireshark/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /test /test/ 301
+    file_server /test/* browse {
+        root /srv/disk1
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -2524,6 +2544,11 @@ http://ftp6.sjtu.edu.cn/ctan/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://ftp6.sjtu.edu.cn/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
+}
+
 ftp6.sjtu.edu.cn {
     log {
         output stdout
@@ -2896,6 +2921,11 @@ ftp6.sjtu.edu.cn {
     redir /wireshark /wireshark/ 301
     route /wireshark/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /test /test/ 301
+    file_server /test/* browse {
+        root /srv/disk1
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -3595,6 +3625,11 @@ http://siyuan.internal.sjtug.org/ctan/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://siyuan.internal.sjtug.org/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
+}
+
 siyuan.internal.sjtug.org {
     log {
         output stdout
@@ -3967,6 +4002,11 @@ siyuan.internal.sjtug.org {
     redir /wireshark /wireshark/ 301
     route /wireshark/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /test /test/ 301
+    file_server /test/* browse {
+        root /srv/disk1
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {

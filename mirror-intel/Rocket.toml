@@ -31,7 +31,8 @@ allow = [
   "PowerShell/PowerShell/",
   "oneclick/rubyinstaller2/",
   "mikefarah/yq/",
-  "docker/compose/"
+  "docker/compose/",
+  "librespeed/speedtest-go/"
 ]
 
 [default.endpoints]

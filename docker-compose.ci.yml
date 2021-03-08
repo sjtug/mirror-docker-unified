@@ -18,3 +18,8 @@ services:
     build:
       args:
         - USE_SJTUG=false
+
+  speedtest:
+    build:
+      args:
+        - USE_SJTUG=false
