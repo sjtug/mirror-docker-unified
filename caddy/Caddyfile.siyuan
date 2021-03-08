@@ -382,6 +382,10 @@ http://mirror.sjtu.edu.cn/ctan/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://mirror.sjtu.edu.cn/speedtest {
+    redir / http://{base}/speedtest/ 308
+}
+
 http://mirror.sjtu.edu.cn/speedtest/* {
     uri strip_prefix /speedtest
     reverse_proxy speedtest:8989
@@ -1461,6 +1465,10 @@ http://ftp.sjtu.edu.cn/ctan/* {
         format single_field common_log  # log in v1 style
     }
     header * x-sjtug-mirror-id siyuan
+}
+
+http://ftp.sjtu.edu.cn/speedtest {
+    redir / http://{base}/speedtest/ 308
 }
 
 http://ftp.sjtu.edu.cn/speedtest/* {
@@ -2544,6 +2552,10 @@ http://ftp6.sjtu.edu.cn/ctan/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://ftp6.sjtu.edu.cn/speedtest {
+    redir / http://{base}/speedtest/ 308
+}
+
 http://ftp6.sjtu.edu.cn/speedtest/* {
     uri strip_prefix /speedtest
     reverse_proxy speedtest:8989
@@ -3623,6 +3635,10 @@ http://siyuan.internal.sjtug.org/ctan/* {
         format single_field common_log  # log in v1 style
     }
     header * x-sjtug-mirror-id siyuan
+}
+
+http://siyuan.internal.sjtug.org/speedtest {
+    redir / http://{base}/speedtest/ 308
 }
 
 http://siyuan.internal.sjtug.org/speedtest/* {
