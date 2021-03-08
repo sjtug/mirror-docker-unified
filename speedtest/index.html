@@ -10,12 +10,15 @@
 		function I(i) { return document.getElementById(i); }
 		//INITIALIZE SPEEDTEST
 		var s = new Speedtest(); //create speedtest object
+		s.setParameter("telemetry_level", "basic"); //enable telemetry
+		s.setParameter("url_telemetry", "results/telemetry");
 		var server = {
-			name: "SJTUG Mirror Speedtest",
+			name: "demo",
 			server: window.location.protocol + "//" + window.location.host,
 			dlURL: "garbage",
+			ulURL: "empty",
 			pingURL: "empty",
-			getIpURL: "getIP"
+			getIpURL: "getIP",
 		};
 		s.setSelectedServer(server);
 
@@ -73,7 +76,6 @@
 			} else {
 				//test is not running, begin
 				I("startStopBtn").className = "running";
-				I("shareArea").style.display = "none";
 				s.onupdate = function (data) {
 					uiData = data;
 				};
@@ -89,7 +91,6 @@
 								I("resultsImg").src = shareURL;
 								I("resultsURL").value = shareURL;
 								I("testId").innerHTML = testId;
-								I("shareArea").style.display = "";
 							}
 						} catch (e) { }
 					}
@@ -181,7 +182,7 @@
 		}
 
 		#startStopBtn.running:before {
-			content: "终止";
+			content: "停止";
 		}
 
 		#test {
@@ -345,16 +346,8 @@
 			<div id="ipArea">
 				<span id="ip"></span>
 			</div>
-			<div id="shareArea" style="display:none">
-				<h3>Share results</h3>
-				<p>Test ID: <span id="testId"></span></p>
-				<input type="text" value="" id="resultsURL" readonly="readonly"
-					onclick="this.select();this.focus();this.select();document.execCommand('copy');alert('Link copied')" />
-				<img src="" id="resultsImg" />
-			</div>
 		</div>
-		<a href="https://github.com/librespeed/speedtest">源代码</a>
-	</div>
+		<a href="https://github.com/librespeed/speedtest">Source code</a>
 	</div>
 	<script type="text/javascript">setTimeout(function () { initUI() }, 100);</script>
 </body>

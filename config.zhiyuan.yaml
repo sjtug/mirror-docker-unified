@@ -323,3 +323,15 @@ repos:
     name: anaconda
     subdomain: anaconda.mirrors.sjtug.sjtu.edu.cn
     <<: *oneshot_common
+  - type: external
+    name: CTAN
+    path: /mnt/CTAN
+    disabled: true
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.dante.ctan.org/CTAN
+    interval: 23020
+    path: /mnt/ctan
+    no_redir_http: true
+    name: ctan
+    <<: *oneshot_common

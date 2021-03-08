@@ -574,20 +574,6 @@ repos:
     serve_mode: redir
     target: https://mirror.sjtu.edu.cn/manjaro/stable
     disabled: true
-  - type: external
-    name: CTAN
-    path: /srv/disk2/CTAN
-    disabled: true
-    unified: proxy
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://rsync.dante.ctan.org/CTAN
-    interval: 23020
-    path: /srv/disk2/ctan
-    no_redir_http: true
-    name: ctan
-    unified: proxy
-    <<: *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix voidlinux --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/voidlinux --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/voidlinux
     serve_mode: mirror_intel
