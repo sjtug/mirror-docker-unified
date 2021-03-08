@@ -159,6 +159,9 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
     file_server_nodes += gzip('@gzip_enabled')
 
     outer_nodes += [
+        Node(f'http://{base}/speedtest', [
+            Node('redir / http://{base}/speedtest/ 308')
+        ]),
         Node(f'http://{base}/speedtest/*', [
             Node('uri strip_prefix /speedtest'),
             Node(f'reverse_proxy {SPEEDTEST_ADDR}')

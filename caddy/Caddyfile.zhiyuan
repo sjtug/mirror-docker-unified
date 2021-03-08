@@ -143,6 +143,10 @@ anaconda.mirrors.sjtug.sjtu.edu.cn {
     header * x-sjtug-mirror-id zhiyuan
 }
 
+http://mirrors.sjtug.sjtu.edu.cn/speedtest {
+    redir / http://{base}/speedtest/ 308
+}
+
 http://mirrors.sjtug.sjtu.edu.cn/speedtest/* {
     uri strip_prefix /speedtest
     reverse_proxy speedtest:8989
@@ -959,6 +963,10 @@ http://zhiyuan.internal.sjtug.org/qt/* {
         format single_field common_log  # log in v1 style
     }
     header * x-sjtug-mirror-id zhiyuan
+}
+
+http://zhiyuan.internal.sjtug.org/speedtest {
+    redir / http://{base}/speedtest/ 308
 }
 
 http://zhiyuan.internal.sjtug.org/speedtest/* {
