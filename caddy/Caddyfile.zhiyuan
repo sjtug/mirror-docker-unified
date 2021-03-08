@@ -143,6 +143,31 @@ anaconda.mirrors.sjtug.sjtu.edu.cn {
     header * x-sjtug-mirror-id zhiyuan
 }
 
+http://mirrors.sjtug.sjtu.edu.cn/ctan {
+    redir /ctan /ctan/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+}
+
+http://mirrors.sjtug.sjtu.edu.cn/ctan/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /mnt
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    header * x-sjtug-mirror-id zhiyuan
+}
+
 http://mirrors.sjtug.sjtu.edu.cn/speedtest {
     redir / http://{base}/speedtest/ 308
 }
@@ -393,6 +418,16 @@ mirrors.sjtug.sjtu.edu.cn {
     redir /anaconda /anaconda/ 301
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /CTAN /CTAN/ 301
+    file_server /CTAN/* browse {
+        root /mnt
+        hide .*
+    }
+    redir /ctan /ctan/ 301
+    file_server /ctan/* browse {
+        root /mnt
+        hide .*
     }
     redir /centos /centos/ 301
     route /centos/* {
@@ -669,20 +704,6 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
-    redir /CTAN /CTAN/ 301
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        reverse_proxy mirror.sjtu.edu.cn {
-            header_up Host {http.reverse_proxy.upstream.hostport}
-        }
-    }
-    redir /ctan /ctan/ 301
-    route /ctan/* {
-        uri strip_prefix /ctan
-        reverse_proxy mirror.sjtu.edu.cn {
-            header_up Host {http.reverse_proxy.upstream.hostport}
-        }
-    }
     redir /voidlinux /voidlinux/ 301
     route /voidlinux/* {
         reverse_proxy mirror-intel:8000
@@ -871,8 +892,6 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /fedora/*
         not path /manjaro/*
         not path /manjarostable/*
-        not path /CTAN/*
-        not path /ctan/*
         not path /voidlinux/*
         not path /archlinux/*
         not path /bioconductor/*
@@ -949,6 +968,31 @@ http://zhiyuan.internal.sjtug.org/qt {
 }
 
 http://zhiyuan.internal.sjtug.org/qt/* {
+    encode /* gzip zstd
+    file_server /* browse {
+        root /mnt
+        hide .*
+    }
+    @hidden {
+        path */.*
+    }
+    respond @hidden 404
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    header * x-sjtug-mirror-id zhiyuan
+}
+
+http://zhiyuan.internal.sjtug.org/ctan {
+    redir /ctan /ctan/ 301
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+}
+
+http://zhiyuan.internal.sjtug.org/ctan/* {
     encode /* gzip zstd
     file_server /* browse {
         root /mnt
@@ -1216,6 +1260,16 @@ zhiyuan.internal.sjtug.org {
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /CTAN /CTAN/ 301
+    file_server /CTAN/* browse {
+        root /mnt
+        hide .*
+    }
+    redir /ctan /ctan/ 301
+    file_server /ctan/* browse {
+        root /mnt
+        hide .*
+    }
     redir /centos /centos/ 301
     route /centos/* {
         uri strip_prefix /centos
@@ -1491,20 +1545,6 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
-    redir /CTAN /CTAN/ 301
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        reverse_proxy mirror.sjtu.edu.cn {
-            header_up Host {http.reverse_proxy.upstream.hostport}
-        }
-    }
-    redir /ctan /ctan/ 301
-    route /ctan/* {
-        uri strip_prefix /ctan
-        reverse_proxy mirror.sjtu.edu.cn {
-            header_up Host {http.reverse_proxy.upstream.hostport}
-        }
-    }
     redir /voidlinux /voidlinux/ 301
     route /voidlinux/* {
         reverse_proxy mirror-intel:8000
@@ -1693,8 +1733,6 @@ zhiyuan.internal.sjtug.org {
         not path /fedora/*
         not path /manjaro/*
         not path /manjarostable/*
-        not path /CTAN/*
-        not path /ctan/*
         not path /voidlinux/*
         not path /archlinux/*
         not path /bioconductor/*

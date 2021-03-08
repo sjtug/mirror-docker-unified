@@ -357,31 +357,6 @@ http://mirror.sjtu.edu.cn/fedora/* {
     header * x-sjtug-mirror-id siyuan
 }
 
-http://mirror.sjtu.edu.cn/ctan {
-    redir /ctan /ctan/ 301
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-}
-
-http://mirror.sjtu.edu.cn/ctan/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk2
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-    header * x-sjtug-mirror-id siyuan
-}
-
 http://mirror.sjtu.edu.cn/speedtest {
     redir / http://{base}/speedtest/ 308
 }
@@ -737,16 +712,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
-    redir /CTAN /CTAN/ 301
-    file_server /CTAN/* browse {
-        root /srv/disk2
-        hide .*
-    }
-    redir /ctan /ctan/ 301
-    file_server /ctan/* browse {
-        root /srv/disk2
-        hide .*
-    }
     redir /voidlinux /voidlinux/ 301
     route /voidlinux/* {
         reverse_proxy mirror-intel:8000
@@ -940,6 +905,16 @@ mirror.sjtu.edu.cn {
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
+    }
+    redir /ctan /ctan/ 301
+    route /ctan/* {
+        uri strip_prefix /ctan
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1105,6 +1080,8 @@ mirror.sjtu.edu.cn {
         not path /CPAN/*
         not path /CRAN/*
         not path /anaconda/*
+        not path /CTAN/*
+        not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1429,31 +1406,6 @@ http://ftp.sjtu.edu.cn/fedora/* {
     encode /* gzip zstd
     file_server /* browse {
         root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-    header * x-sjtug-mirror-id siyuan
-}
-
-http://ftp.sjtu.edu.cn/ctan {
-    redir /ctan /ctan/ 301
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-}
-
-http://ftp.sjtu.edu.cn/ctan/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -1822,16 +1774,6 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
-    redir /CTAN /CTAN/ 301
-    file_server /CTAN/* browse {
-        root /srv/disk2
-        hide .*
-    }
-    redir /ctan /ctan/ 301
-    file_server /ctan/* browse {
-        root /srv/disk2
-        hide .*
-    }
     redir /voidlinux /voidlinux/ 301
     route /voidlinux/* {
         reverse_proxy mirror-intel:8000
@@ -2025,6 +1967,16 @@ ftp.sjtu.edu.cn {
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
+    }
+    redir /ctan /ctan/ 301
+    route /ctan/* {
+        uri strip_prefix /ctan
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -2190,6 +2142,8 @@ ftp.sjtu.edu.cn {
         not path /CPAN/*
         not path /CRAN/*
         not path /anaconda/*
+        not path /CTAN/*
+        not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -2514,31 +2468,6 @@ http://ftp6.sjtu.edu.cn/fedora/* {
     encode /* gzip zstd
     file_server /* browse {
         root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-    header * x-sjtug-mirror-id siyuan
-}
-
-http://ftp6.sjtu.edu.cn/ctan {
-    redir /ctan /ctan/ 301
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-}
-
-http://ftp6.sjtu.edu.cn/ctan/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -2907,16 +2836,6 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
-    redir /CTAN /CTAN/ 301
-    file_server /CTAN/* browse {
-        root /srv/disk2
-        hide .*
-    }
-    redir /ctan /ctan/ 301
-    file_server /ctan/* browse {
-        root /srv/disk2
-        hide .*
-    }
     redir /voidlinux /voidlinux/ 301
     route /voidlinux/* {
         reverse_proxy mirror-intel:8000
@@ -3110,6 +3029,16 @@ ftp6.sjtu.edu.cn {
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
+    }
+    redir /ctan /ctan/ 301
+    route /ctan/* {
+        uri strip_prefix /ctan
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -3275,6 +3204,8 @@ ftp6.sjtu.edu.cn {
         not path /CPAN/*
         not path /CRAN/*
         not path /anaconda/*
+        not path /CTAN/*
+        not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -3599,31 +3530,6 @@ http://siyuan.internal.sjtug.org/fedora/* {
     encode /* gzip zstd
     file_server /* browse {
         root /srv/disk1
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-    header * x-sjtug-mirror-id siyuan
-}
-
-http://siyuan.internal.sjtug.org/ctan {
-    redir /ctan /ctan/ 301
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-}
-
-http://siyuan.internal.sjtug.org/ctan/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -3992,16 +3898,6 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /manjarostable
         redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
     }
-    redir /CTAN /CTAN/ 301
-    file_server /CTAN/* browse {
-        root /srv/disk2
-        hide .*
-    }
-    redir /ctan /ctan/ 301
-    file_server /ctan/* browse {
-        root /srv/disk2
-        hide .*
-    }
     redir /voidlinux /voidlinux/ 301
     route /voidlinux/* {
         reverse_proxy mirror-intel:8000
@@ -4195,6 +4091,16 @@ siyuan.internal.sjtug.org {
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /CTAN /CTAN/ 301
+    route /CTAN/* {
+        uri strip_prefix /CTAN
+        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
+    }
+    redir /ctan /ctan/ 301
+    route /ctan/* {
+        uri strip_prefix /ctan
+        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -4360,6 +4266,8 @@ siyuan.internal.sjtug.org {
         not path /CPAN/*
         not path /CRAN/*
         not path /anaconda/*
+        not path /CTAN/*
+        not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
 }
