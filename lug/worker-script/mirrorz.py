@@ -73,7 +73,7 @@ def main():
     mirrorz["info"] = []
     mirrors = []
     for worker, param in summary["WorkerStatus"].items():
-        if worker.startswith("."):
+        if worker.startswith(".") or worker == 'sjtug-internal' or worker == 'test':
             continue
         mirror = {
             "cname": name(worker),

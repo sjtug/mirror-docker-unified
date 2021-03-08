@@ -143,6 +143,11 @@ anaconda.mirrors.sjtug.sjtu.edu.cn {
     header * x-sjtug-mirror-id zhiyuan
 }
 
+http://mirrors.sjtug.sjtu.edu.cn/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
+}
+
 mirrors.sjtug.sjtu.edu.cn {
     log {
         output stdout
@@ -691,6 +696,11 @@ mirrors.sjtug.sjtu.edu.cn {
     route /wireshark/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /test /test/ 301
+    route /test/* {
+        uri strip_prefix /test
+        redir * https://mirror.sjtu.edu.cn/test{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -863,6 +873,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /archlinux/*
         not path /bioconductor/*
         not path /wireshark/*
+        not path /test/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -948,6 +959,11 @@ http://zhiyuan.internal.sjtug.org/qt/* {
         format single_field common_log  # log in v1 style
     }
     header * x-sjtug-mirror-id zhiyuan
+}
+
+http://zhiyuan.internal.sjtug.org/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
 }
 
 zhiyuan.internal.sjtug.org {
@@ -1498,6 +1514,11 @@ zhiyuan.internal.sjtug.org {
     route /wireshark/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /test /test/ 301
+    route /test/* {
+        uri strip_prefix /test
+        redir * https://mirror.sjtu.edu.cn/test{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1670,6 +1691,7 @@ zhiyuan.internal.sjtug.org {
         not path /archlinux/*
         not path /bioconductor/*
         not path /wireshark/*
+        not path /test/*
     }
     encode @gzip_enabled gzip zstd
 }

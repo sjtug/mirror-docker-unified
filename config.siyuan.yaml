@@ -614,3 +614,9 @@ repos:
     interval: 10800
     name: wireshark
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/test.sh
+    interval: 300
+    path: /srv/disk1/test
+    name: test
+    <<: *oneshot_common
