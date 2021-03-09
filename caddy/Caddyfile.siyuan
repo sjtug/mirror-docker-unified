@@ -734,6 +734,10 @@ mirror.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /macports /macports/ 301
+    route /macports/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1040,6 +1044,7 @@ mirror.sjtu.edu.cn {
         not path /voidlinux/*
         not path /bioconductor/*
         not path /wireshark/*
+        not path /macports/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -1796,6 +1801,10 @@ ftp.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /macports /macports/ 301
+    route /macports/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2102,6 +2111,7 @@ ftp.sjtu.edu.cn {
         not path /voidlinux/*
         not path /bioconductor/*
         not path /wireshark/*
+        not path /macports/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -2858,6 +2868,10 @@ ftp6.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /macports /macports/ 301
+    route /macports/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3164,6 +3178,7 @@ ftp6.sjtu.edu.cn {
         not path /voidlinux/*
         not path /bioconductor/*
         not path /wireshark/*
+        not path /macports/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -3920,6 +3935,10 @@ siyuan.internal.sjtug.org {
         root /srv/disk1
         hide .*
     }
+    redir /macports /macports/ 301
+    route /macports/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -4226,6 +4245,7 @@ siyuan.internal.sjtug.org {
         not path /voidlinux/*
         not path /bioconductor/*
         not path /wireshark/*
+        not path /macports/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*

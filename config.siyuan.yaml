@@ -606,3 +606,9 @@ repos:
     path: /srv/disk1/test
     name: test
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix macports --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/macports --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/macports
+    serve_mode: mirror_intel
+    interval: 10800
+    name: macports
+    <<: *oneshot_common

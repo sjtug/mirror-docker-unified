@@ -726,6 +726,10 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /test
         redir * https://mirror.sjtu.edu.cn/test{uri} 302
     }
+    redir /macports /macports/ 301
+    route /macports/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -897,6 +901,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /bioconductor/*
         not path /wireshark/*
         not path /test/*
+        not path /macports/*
     }
     encode @gzip_enabled gzip zstd
 }
@@ -1567,6 +1572,10 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /test
         redir * https://mirror.sjtu.edu.cn/test{uri} 302
     }
+    redir /macports /macports/ 301
+    route /macports/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1738,6 +1747,7 @@ zhiyuan.internal.sjtug.org {
         not path /bioconductor/*
         not path /wireshark/*
         not path /test/*
+        not path /macports/*
     }
     encode @gzip_enabled gzip zstd
 }
