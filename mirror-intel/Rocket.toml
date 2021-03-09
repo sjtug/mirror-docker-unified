@@ -62,7 +62,8 @@ s3_only = [
     "voidlinux/",
     "bioconductor/",
     "anaconda/",
-    "wireshark/"
+    "wireshark/",
+    "macports/"
 ]
 
 [default.s3]
