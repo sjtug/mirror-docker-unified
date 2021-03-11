@@ -22,8 +22,7 @@ output_dir = ENV["LUG_path"]
 
 # check https://status.julialang.org/ for available public storage servers
 upstreams = [
-    "https://kr.storage.juliahub.com",
-    "https://us-east.storage.juliahub.com"
+    "https://us-east.pkg.julialang.org"
 ]
 
 registries = [
