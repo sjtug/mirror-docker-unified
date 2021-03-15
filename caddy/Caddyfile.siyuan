@@ -357,15 +357,6 @@ http://mirror.sjtu.edu.cn/fedora/* {
     header * x-sjtug-mirror-id siyuan
 }
 
-http://mirror.sjtu.edu.cn/speedtest {
-    redir / http://{base}/speedtest/ 308
-}
-
-http://mirror.sjtu.edu.cn/speedtest/* {
-    uri strip_prefix /speedtest
-    reverse_proxy speedtest:8989
-}
-
 mirror.sjtu.edu.cn {
     log {
         output stdout
@@ -999,6 +990,7 @@ mirror.sjtu.edu.cn {
         }
     }
     @gzip_enabled {
+        not path /speedtest/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -1089,6 +1081,11 @@ mirror.sjtu.edu.cn {
         not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
+    redir /speedtest /speedtest/ 308
+    route /speedtest/* {
+        uri strip_prefix /speedtest
+        reverse_proxy speedtest:8989
+    }
 }
 
 http://ftp.sjtu.edu.cn/ {
@@ -1422,15 +1419,6 @@ http://ftp.sjtu.edu.cn/fedora/* {
         format single_field common_log  # log in v1 style
     }
     header * x-sjtug-mirror-id siyuan
-}
-
-http://ftp.sjtu.edu.cn/speedtest {
-    redir / http://{base}/speedtest/ 308
-}
-
-http://ftp.sjtu.edu.cn/speedtest/* {
-    uri strip_prefix /speedtest
-    reverse_proxy speedtest:8989
 }
 
 ftp.sjtu.edu.cn {
@@ -2066,6 +2054,7 @@ ftp.sjtu.edu.cn {
         }
     }
     @gzip_enabled {
+        not path /speedtest/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -2156,6 +2145,11 @@ ftp.sjtu.edu.cn {
         not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
+    redir /speedtest /speedtest/ 308
+    route /speedtest/* {
+        uri strip_prefix /speedtest
+        reverse_proxy speedtest:8989
+    }
 }
 
 http://ftp6.sjtu.edu.cn/ {
@@ -2489,15 +2483,6 @@ http://ftp6.sjtu.edu.cn/fedora/* {
         format single_field common_log  # log in v1 style
     }
     header * x-sjtug-mirror-id siyuan
-}
-
-http://ftp6.sjtu.edu.cn/speedtest {
-    redir / http://{base}/speedtest/ 308
-}
-
-http://ftp6.sjtu.edu.cn/speedtest/* {
-    uri strip_prefix /speedtest
-    reverse_proxy speedtest:8989
 }
 
 ftp6.sjtu.edu.cn {
@@ -3133,6 +3118,7 @@ ftp6.sjtu.edu.cn {
         }
     }
     @gzip_enabled {
+        not path /speedtest/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -3223,6 +3209,11 @@ ftp6.sjtu.edu.cn {
         not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
+    redir /speedtest /speedtest/ 308
+    route /speedtest/* {
+        uri strip_prefix /speedtest
+        reverse_proxy speedtest:8989
+    }
 }
 
 http://siyuan.internal.sjtug.org/ {
@@ -3556,15 +3547,6 @@ http://siyuan.internal.sjtug.org/fedora/* {
         format single_field common_log  # log in v1 style
     }
     header * x-sjtug-mirror-id siyuan
-}
-
-http://siyuan.internal.sjtug.org/speedtest {
-    redir / http://{base}/speedtest/ 308
-}
-
-http://siyuan.internal.sjtug.org/speedtest/* {
-    uri strip_prefix /speedtest
-    reverse_proxy speedtest:8989
 }
 
 siyuan.internal.sjtug.org {
@@ -4200,6 +4182,7 @@ siyuan.internal.sjtug.org {
         }
     }
     @gzip_enabled {
+        not path /speedtest/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -4290,5 +4273,10 @@ siyuan.internal.sjtug.org {
         not path /ctan/*
     }
     encode @gzip_enabled gzip zstd
+    redir /speedtest /speedtest/ 308
+    route /speedtest/* {
+        uri strip_prefix /speedtest
+        reverse_proxy speedtest:8989
+    }
 }
 

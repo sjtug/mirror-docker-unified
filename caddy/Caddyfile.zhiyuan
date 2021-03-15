@@ -168,15 +168,6 @@ http://mirrors.sjtug.sjtu.edu.cn/ctan/* {
     header * x-sjtug-mirror-id zhiyuan
 }
 
-http://mirrors.sjtug.sjtu.edu.cn/speedtest {
-    redir / http://{base}/speedtest/ 308
-}
-
-http://mirrors.sjtug.sjtu.edu.cn/speedtest/* {
-    uri strip_prefix /speedtest
-    reverse_proxy speedtest:8989
-}
-
 mirrors.sjtug.sjtu.edu.cn {
     log {
         output stdout
@@ -816,6 +807,7 @@ mirrors.sjtug.sjtu.edu.cn {
         }
     }
     @gzip_enabled {
+        not path /speedtest/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
@@ -904,6 +896,11 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /macports/*
     }
     encode @gzip_enabled gzip zstd
+    redir /speedtest /speedtest/ 308
+    route /speedtest/* {
+        uri strip_prefix /speedtest
+        reverse_proxy speedtest:8989
+    }
 }
 
 http://zhiyuan.internal.sjtug.org/ {
@@ -1012,15 +1009,6 @@ http://zhiyuan.internal.sjtug.org/ctan/* {
         format single_field common_log  # log in v1 style
     }
     header * x-sjtug-mirror-id zhiyuan
-}
-
-http://zhiyuan.internal.sjtug.org/speedtest {
-    redir / http://{base}/speedtest/ 308
-}
-
-http://zhiyuan.internal.sjtug.org/speedtest/* {
-    uri strip_prefix /speedtest
-    reverse_proxy speedtest:8989
 }
 
 zhiyuan.internal.sjtug.org {
@@ -1662,6 +1650,7 @@ zhiyuan.internal.sjtug.org {
         }
     }
     @gzip_enabled {
+        not path /speedtest/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
@@ -1750,5 +1739,10 @@ zhiyuan.internal.sjtug.org {
         not path /macports/*
     }
     encode @gzip_enabled gzip zstd
+    redir /speedtest /speedtest/ 308
+    route /speedtest/* {
+        uri strip_prefix /speedtest
+        reverse_proxy speedtest:8989
+    }
 }
 
