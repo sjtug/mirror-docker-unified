@@ -330,7 +330,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.dante.ctan.org/CTAN
-    interval: 23020
+    interval: 4800
     path: /mnt/ctan
     no_redir_http: true
     name: ctan
