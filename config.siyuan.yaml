@@ -612,3 +612,10 @@ repos:
     interval: 10800
     name: macports
     <<: *oneshot_common
+  - type: shell_script
+    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo VSCodium/vscodium --target http://mirror-intel:8000/github-release
+    interval: 86400
+    name: github/vscodium
+    target: /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list
+    serve_mode: redir_force
+    <<: *oneshot_common

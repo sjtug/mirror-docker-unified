@@ -729,6 +729,11 @@ mirror.sjtu.edu.cn {
     route /macports/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /github/vscodium /github/vscodium/ 301
+    route /github/vscodium/* {
+        uri strip_prefix /github/vscodium
+        redir * /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list 302
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1037,6 +1042,7 @@ mirror.sjtu.edu.cn {
         not path /bioconductor/*
         not path /wireshark/*
         not path /macports/*
+        not path /github/vscodium/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -1793,6 +1799,11 @@ ftp.sjtu.edu.cn {
     route /macports/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /github/vscodium /github/vscodium/ 301
+    route /github/vscodium/* {
+        uri strip_prefix /github/vscodium
+        redir * /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list 302
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2101,6 +2112,7 @@ ftp.sjtu.edu.cn {
         not path /bioconductor/*
         not path /wireshark/*
         not path /macports/*
+        not path /github/vscodium/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -2857,6 +2869,11 @@ ftp6.sjtu.edu.cn {
     route /macports/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /github/vscodium /github/vscodium/ 301
+    route /github/vscodium/* {
+        uri strip_prefix /github/vscodium
+        redir * /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list 302
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3165,6 +3182,7 @@ ftp6.sjtu.edu.cn {
         not path /bioconductor/*
         not path /wireshark/*
         not path /macports/*
+        not path /github/vscodium/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -3921,6 +3939,11 @@ siyuan.internal.sjtug.org {
     route /macports/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /github/vscodium /github/vscodium/ 301
+    route /github/vscodium/* {
+        uri strip_prefix /github/vscodium
+        redir * /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list 302
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -4229,6 +4252,7 @@ siyuan.internal.sjtug.org {
         not path /bioconductor/*
         not path /wireshark/*
         not path /macports/*
+        not path /github/vscodium/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*

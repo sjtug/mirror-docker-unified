@@ -32,7 +32,8 @@ allow = [
   "oneclick/rubyinstaller2/",
   "mikefarah/yq/",
   "docker/compose/",
-  "librespeed/speedtest-go/"
+  "librespeed/speedtest-go/",
+  "VSCodium/vscodium/"
 ]
 
 [default.endpoints]
