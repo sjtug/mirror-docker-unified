@@ -85,6 +85,8 @@ services:
 
   clash:
     container_name: siyuan-clash
+    ports:
+      - 127.0.0.1:8080:8080
 
   mirror-intel:
     container_name: siyuan-mirror-intel
