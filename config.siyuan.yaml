@@ -414,7 +414,7 @@ repos:
     serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/github-release.sh FreeCAD/FreeCAD 3
+    script: /worker-script/github-release.sh FreeCAD/FreeCAD 5
     interval: 4800
     name: github/FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
