@@ -407,14 +407,14 @@ repos:
     name: blackarch
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo GNS3/gns3-gui --target http://mirror-intel:8000/github-release
+    script: /worker-script/github-release.sh GNS3/gns3-gui 3
     interval: 4800
     name: github/GNS3
     target: /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list
     serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo FreeCAD/FreeCAD --target http://mirror-intel:8000/github-release
+    script: /worker-script/github-release.sh FreeCAD/FreeCAD 3
     interval: 4800
     name: github/FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
@@ -428,14 +428,14 @@ repos:
     serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo oneclick/rubyinstaller2 --target http://mirror-intel:8000/github-release
+    script: /worker-script/github-release.sh oneclick/rubyinstaller2 30
     interval: 86400
     name: github/rubyinstaller2
     target: /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list
     serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo PowerShell/PowerShell --target http://mirror-intel:8000/github-release
+    script: /worker-script/github-release.sh PowerShell/PowerShell 5
     interval: 86400
     name: github/PowerShell
     target: /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list
@@ -613,7 +613,7 @@ repos:
     name: macports
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 8 --workers 4 github_release --repo VSCodium/vscodium --target http://mirror-intel:8000/github-release
+    script: /worker-script/github-release.sh VSCodium/vscodium 3
     interval: 86400
     name: github/vscodium
     target: /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list
