@@ -42,6 +42,7 @@ services:
     command: -c /config.yaml
     networks: 
       - ipv6-service-net
+      - proxy-net
     build:
       context: ./lug
       args:
