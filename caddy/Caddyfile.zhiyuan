@@ -726,6 +726,10 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /github/vscodium
         redir * /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list 302
     }
+    redir /gimp /gimp/ 301
+    route /gimp/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -900,6 +904,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /test/*
         not path /macports/*
         not path /github/vscodium/*
+        not path /gimp/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -1575,6 +1580,10 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /github/vscodium
         redir * /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list 302
     }
+    redir /gimp /gimp/ 301
+    route /gimp/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1749,6 +1758,7 @@ zhiyuan.internal.sjtug.org {
         not path /test/*
         not path /macports/*
         not path /github/vscodium/*
+        not path /gimp/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

@@ -619,3 +619,9 @@ repos:
     target: /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list
     serve_mode: redir_force
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix gimp --s3-buffer-path /var/cache --print-plan 100 rsync --http-base http://www.mirrorservice.org/sites/ftp.gimp.org/pub/gimp --rsync-base rsync://rsync.mirrorservice.org/ftp.gimp.org/pub/gimp/
+    serve_mode: mirror_intel
+    interval: 86400
+    name: gimp
+    <<: *oneshot_common
