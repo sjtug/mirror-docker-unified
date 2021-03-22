@@ -247,7 +247,7 @@ repos:
     <<: *oneshot_common
   # dart-pub
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 4 dart_pub --target http://mirror-intel:8000/dart-pub
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix dart-pub --s3-buffer-path /var/cache --print-plan 100 dart-pub
     serve_mode: mirror_intel
     interval: 4800
     name: dart-pub
