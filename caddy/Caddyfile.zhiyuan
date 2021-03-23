@@ -730,6 +730,11 @@ mirrors.sjtug.sjtu.edu.cn {
     route /gimp/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /flutter_infra_release /flutter_infra_release/ 301
+    route /flutter_infra_release/* {
+        uri strip_prefix /flutter_infra_release
+        redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -905,6 +910,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /macports/*
         not path /github/vscodium/*
         not path /gimp/*
+        not path /flutter_infra_release/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -1584,6 +1590,11 @@ zhiyuan.internal.sjtug.org {
     route /gimp/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /flutter_infra_release /flutter_infra_release/ 301
+    route /flutter_infra_release/* {
+        uri strip_prefix /flutter_infra_release
+        redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1759,6 +1770,7 @@ zhiyuan.internal.sjtug.org {
         not path /macports/*
         not path /github/vscodium/*
         not path /gimp/*
+        not path /flutter_infra_release/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

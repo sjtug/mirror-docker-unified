@@ -268,7 +268,7 @@ repos:
     <<: *oneshot_common
   # flutter_infra
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 64 --workers 4 flutter_infra --target http://mirror-intel:8000/flutter_infra
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra/
     serve_mode: mirror_intel
     interval: 4000
     name: flutter_infra
@@ -625,3 +625,16 @@ repos:
     interval: 86400
     name: gimp
     <<: *oneshot_common
+  # We will enable flutter_infra_release later. Currently, we just set original upstream of flutter_infra to
+  # flutter_infra_release, and redirect users to that URL.
+  # - type: shell_script
+  #   script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra_release --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra_release --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra_release/
+  #   serve_mode: mirror_intel
+  #   interval: 10800
+  #   name: flutter_infra_release
+  #   <<: *oneshot_common
+  - type: external
+    name: flutter_infra_release
+    serve_mode: redir
+    target: https://mirror.sjtu.edu.cn/flutter_infra
+    disabled: true
