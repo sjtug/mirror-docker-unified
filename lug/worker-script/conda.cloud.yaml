@@ -4,6 +4,7 @@ repos:
   - conda-forge/linux-64
   - conda-forge/osx-64
   - conda-forge/win-64
+  - conda-forge/osx-arm64
   - bioconda/noarch
   - bioconda/linux-64
   - bioconda/osx-64
