@@ -638,3 +638,10 @@ repos:
     serve_mode: redir
     target: https://mirror.sjtu.edu.cn/flutter_infra
     disabled: true
+  - type: shell_script
+    script: /worker-script/anaconda.sh --workers 4 --s3-buffer-path /var/cache --print-plan 100 --no-delete --concurrent-transfer 64
+    serve_mode: mirror_intel
+    interval: 3600
+    name: anaconda
+    unified: disable
+    <<: *oneshot_common
