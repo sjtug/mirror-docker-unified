@@ -743,6 +743,10 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /flutter_infra_release
         redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
     }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -910,10 +914,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
-        reverse_proxy mirror-intel:8000
-    }
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
@@ -1054,6 +1054,7 @@ mirror.sjtu.edu.cn {
         not path /github/vscodium/*
         not path /gimp/*
         not path /flutter_infra_release/*
+        not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -1093,7 +1094,6 @@ mirror.sjtu.edu.cn {
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
-        not path /anaconda/*
         not path /CTAN/*
         not path /ctan/*
     }
@@ -1824,6 +1824,10 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /flutter_infra_release
         redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
     }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1991,10 +1995,6 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
-        reverse_proxy mirror-intel:8000
-    }
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
@@ -2135,6 +2135,7 @@ ftp.sjtu.edu.cn {
         not path /github/vscodium/*
         not path /gimp/*
         not path /flutter_infra_release/*
+        not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -2174,7 +2175,6 @@ ftp.sjtu.edu.cn {
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
-        not path /anaconda/*
         not path /CTAN/*
         not path /ctan/*
     }
@@ -2905,6 +2905,10 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /flutter_infra_release
         redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
     }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3072,10 +3076,6 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
-        reverse_proxy mirror-intel:8000
-    }
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
@@ -3216,6 +3216,7 @@ ftp6.sjtu.edu.cn {
         not path /github/vscodium/*
         not path /gimp/*
         not path /flutter_infra_release/*
+        not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -3255,7 +3256,6 @@ ftp6.sjtu.edu.cn {
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
-        not path /anaconda/*
         not path /CTAN/*
         not path /ctan/*
     }
@@ -3986,6 +3986,10 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /flutter_infra_release
         redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
     }
+    redir /anaconda /anaconda/ 301
+    route /anaconda/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -4153,10 +4157,6 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /CRAN
         redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
     }
-    redir /anaconda /anaconda/ 301
-    route /anaconda/* {
-        reverse_proxy mirror-intel:8000
-    }
     redir /CTAN /CTAN/ 301
     route /CTAN/* {
         uri strip_prefix /CTAN
@@ -4297,6 +4297,7 @@ siyuan.internal.sjtug.org {
         not path /github/vscodium/*
         not path /gimp/*
         not path /flutter_infra_release/*
+        not path /anaconda/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -4336,7 +4337,6 @@ siyuan.internal.sjtug.org {
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
-        not path /anaconda/*
         not path /CTAN/*
         not path /ctan/*
     }

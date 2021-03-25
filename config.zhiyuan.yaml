@@ -316,12 +316,12 @@ repos:
     name: CRAN
     path: /mnt/CRAN
     disabled: true
-  - type: shell_script
-    script: /worker-script/anaconda.sh --workers 4 --s3-buffer-path /var/cache --print-plan 100 --no-delete --concurrent-transfer 64
+  - type: external
     serve_mode: mirror_intel
-    interval: 3600
     name: anaconda
     subdomain: anaconda.mirrors.sjtug.sjtu.edu.cn
+    disabled: true
+    unified: disable
     <<: *oneshot_common
   - type: external
     name: CTAN
