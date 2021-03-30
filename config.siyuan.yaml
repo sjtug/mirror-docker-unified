@@ -273,6 +273,13 @@ repos:
     interval: 4000
     name: flutter_infra
     <<: *oneshot_common
+  # ghcup
+  - type: shell_script
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix ghcup --s3-buffer-path /var/cache --print-plan 100 ghcup --target-mirror https://mirror.sjtu.edu.cn/ghcup
+    serve_mode: mirror_intel
+    interval: 7000
+    name: ghcup
+    <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600

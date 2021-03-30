@@ -65,7 +65,8 @@ s3_only = [
     "anaconda/",
     "wireshark/",
     "macports/",
-    "gimp/"
+    "gimp/",
+    "ghcup/"
 ]
 
 [default.s3]
