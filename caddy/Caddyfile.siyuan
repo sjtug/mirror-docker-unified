@@ -547,6 +547,10 @@ mirror.sjtu.edu.cn {
     route /flutter_infra/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /ghcup /ghcup/ 301
+    route /ghcup/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
@@ -1012,6 +1016,7 @@ mirror.sjtu.edu.cn {
         not path /pytorch-wheels/*
         not path /crates.io/*
         not path /flutter_infra/*
+        not path /ghcup/*
         not path /git/linuxbrew-core.git/*
         not path /git/homebrew-services.git/*
         not path /git/homebrew-cask-drivers.git/*
@@ -1628,6 +1633,10 @@ ftp.sjtu.edu.cn {
     route /flutter_infra/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /ghcup /ghcup/ 301
+    route /ghcup/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
@@ -2093,6 +2102,7 @@ ftp.sjtu.edu.cn {
         not path /pytorch-wheels/*
         not path /crates.io/*
         not path /flutter_infra/*
+        not path /ghcup/*
         not path /git/linuxbrew-core.git/*
         not path /git/homebrew-services.git/*
         not path /git/homebrew-cask-drivers.git/*
@@ -2709,6 +2719,10 @@ ftp6.sjtu.edu.cn {
     route /flutter_infra/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /ghcup /ghcup/ 301
+    route /ghcup/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
@@ -3174,6 +3188,7 @@ ftp6.sjtu.edu.cn {
         not path /pytorch-wheels/*
         not path /crates.io/*
         not path /flutter_infra/*
+        not path /ghcup/*
         not path /git/linuxbrew-core.git/*
         not path /git/homebrew-services.git/*
         not path /git/homebrew-cask-drivers.git/*
@@ -3790,6 +3805,10 @@ siyuan.internal.sjtug.org {
     route /flutter_infra/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /ghcup /ghcup/ 301
+    route /ghcup/* {
+        reverse_proxy mirror-intel:8000
+    }
     redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
@@ -4255,6 +4274,7 @@ siyuan.internal.sjtug.org {
         not path /pytorch-wheels/*
         not path /crates.io/*
         not path /flutter_infra/*
+        not path /ghcup/*
         not path /git/linuxbrew-core.git/*
         not path /git/homebrew-services.git/*
         not path /git/homebrew-cask-drivers.git/*
