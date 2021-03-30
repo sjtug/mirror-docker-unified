@@ -38,7 +38,7 @@ allow = [
 
 [default.endpoints]
 crates_io = "https://static.crates.io"
-dart_pub = "https://pub.dartlang.org"
+dart_pub = "https://pub.flutter-io.cn"
 fedora_iot = "https://d2ju0wfl996cmc.cloudfront.net"
 fedora_ostree = "https://d2uk5hbyrobdzx.cloudfront.net"
 flathub = "https://dl.flathub.org/repo"
