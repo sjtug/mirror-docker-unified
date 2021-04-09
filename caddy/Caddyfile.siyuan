@@ -751,6 +751,16 @@ mirror.sjtu.edu.cn {
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /armbian /armbian/ 301
+    file_server /armbian/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /almalinux /almalinux/ 301
+    file_server /almalinux/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1836,6 +1846,16 @@ ftp.sjtu.edu.cn {
     redir /anaconda /anaconda/ 301
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /armbian /armbian/ 301
+    file_server /armbian/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /almalinux /almalinux/ 301
+    file_server /almalinux/* browse {
+        root /srv/disk2
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -2923,6 +2943,16 @@ ftp6.sjtu.edu.cn {
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /armbian /armbian/ 301
+    file_server /armbian/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /almalinux /almalinux/ 301
+    file_server /almalinux/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -4008,6 +4038,16 @@ siyuan.internal.sjtug.org {
     redir /anaconda /anaconda/ 301
     route /anaconda/* {
         reverse_proxy mirror-intel:8000
+    }
+    redir /armbian /armbian/ 301
+    file_server /armbian/* browse {
+        root /srv/disk2
+        hide .*
+    }
+    redir /almalinux /almalinux/ 301
+    file_server /almalinux/* browse {
+        root /srv/disk2
+        hide .*
     }
     redir /putty /putty/ 301
     route /putty/* {
