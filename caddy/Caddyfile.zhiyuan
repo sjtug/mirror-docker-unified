@@ -739,6 +739,16 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /flutter_infra_release
         redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
     }
+    redir /armbian /armbian/ 301
+    route /armbian/* {
+        uri strip_prefix /armbian
+        redir * https://mirror.sjtu.edu.cn/armbian{uri} 302
+    }
+    redir /almalinux /almalinux/ 301
+    route /almalinux/* {
+        uri strip_prefix /almalinux
+        redir * https://mirror.sjtu.edu.cn/almalinux{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -916,6 +926,8 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /github/vscodium/*
         not path /gimp/*
         not path /flutter_infra_release/*
+        not path /armbian/*
+        not path /almalinux/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -1604,6 +1616,16 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /flutter_infra_release
         redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
     }
+    redir /armbian /armbian/ 301
+    route /armbian/* {
+        uri strip_prefix /armbian
+        redir * https://mirror.sjtu.edu.cn/armbian{uri} 302
+    }
+    redir /almalinux /almalinux/ 301
+    route /almalinux/* {
+        uri strip_prefix /almalinux
+        redir * https://mirror.sjtu.edu.cn/almalinux{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1781,6 +1803,8 @@ zhiyuan.internal.sjtug.org {
         not path /github/vscodium/*
         not path /gimp/*
         not path /flutter_infra_release/*
+        not path /armbian/*
+        not path /almalinux/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
