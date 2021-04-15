@@ -666,3 +666,9 @@ repos:
     path: /srv/disk2/almalinux
     name: almalinux
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix kernel --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/kernel --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/kernel/
+    serve_mode: mirror_intel
+    interval: 86400
+    name: kernel
+    <<: *oneshot_common

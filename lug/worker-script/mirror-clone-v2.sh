@@ -4,4 +4,4 @@ set -e
 
 export $(cat /secrets_s3 | xargs)
 
-/app/v2/mirror-clone $@
+timeout 4h /app/v2/mirror-clone $@
