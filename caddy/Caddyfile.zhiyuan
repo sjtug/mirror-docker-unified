@@ -749,6 +749,10 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /almalinux
         redir * https://mirror.sjtu.edu.cn/almalinux{uri} 302
     }
+    redir /kernel /kernel/ 301
+    route /kernel/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -928,6 +932,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /flutter_infra_release/*
         not path /armbian/*
         not path /almalinux/*
+        not path /kernel/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -1626,6 +1631,10 @@ zhiyuan.internal.sjtug.org {
         uri strip_prefix /almalinux
         redir * https://mirror.sjtu.edu.cn/almalinux{uri} 302
     }
+    redir /kernel /kernel/ 301
+    route /kernel/* {
+        reverse_proxy mirror-intel:8000
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1805,6 +1814,7 @@ zhiyuan.internal.sjtug.org {
         not path /flutter_infra_release/*
         not path /armbian/*
         not path /almalinux/*
+        not path /kernel/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
