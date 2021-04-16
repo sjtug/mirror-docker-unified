@@ -226,7 +226,7 @@ repos:
     <<: *oneshot_common
   # homebrew-bottles
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix homebrew-bottles --s3-buffer-path /var/cache --print-plan 100 homebrew
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix homebrew-bottles/bottles --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.ustc.edu.cn/homebrew-bottles/bottles --rsync-base rsync://mirrors.ustc.edu.cn/homebrew-bottles/bottles/
     serve_mode: mirror_intel
     interval: 10800
     name: homebrew-bottles
@@ -646,7 +646,7 @@ repos:
     target: https://mirror.sjtu.edu.cn/flutter_infra
     disabled: true
   - type: shell_script
-    script: /worker-script/anaconda.sh --workers 4 --s3-buffer-path /var/cache --print-plan 100 --no-delete --concurrent-transfer 64
+    script: /worker-script/anaconda.sh --workers 4 --s3-buffer-path /var/cache --print-plan 100 --concurrent-transfer 64
     serve_mode: mirror_intel
     interval: 3600
     name: anaconda
@@ -667,7 +667,7 @@ repos:
     name: almalinux
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix kernel --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/kernel --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/kernel/
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix kernel --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/kernel --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/kernel/
     serve_mode: mirror_intel
     interval: 86400
     name: kernel
