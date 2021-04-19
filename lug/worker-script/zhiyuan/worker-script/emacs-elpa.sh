@@ -7,5 +7,5 @@ $DIR/rsync.sh
 
 for value in emacswiki gnu marmalade melpa melpa-stable org SC sunrise-commander user42
 do
-    touch "$LUG_path/$value/index.html"
+    echo "Too many files to list" > ${LUG_path}/${value}/index.html
 done
