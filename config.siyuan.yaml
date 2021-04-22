@@ -592,8 +592,8 @@ repos:
     interval: 5300
     path: /srv/disk2/archlinux
     script: /worker-script/zhiyuan/worker-script/archlinux.sh
-    source: rsync://mirrors.kernel.org/archlinux/
-    lastupdate: https://mirrors.edge.kernel.org/archlinux/lastupdate
+    source: rsync://nanomirrors.tuna.tsinghua.edu.cn/archlinux/
+    lastupdate: https://nanomirrors.tuna.tsinghua.edu.cn/archlinux/lastupdate
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix bioconductor --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://nanomirrors.tuna.tsinghua.edu.cn/bioconductor --rsync-base rsync://nanomirrors.tuna.tsinghua.edu.cn/bioconductor
@@ -671,4 +671,5 @@ repos:
     serve_mode: mirror_intel
     interval: 86400
     name: kernel
+    disabled: true
     <<: *oneshot_common
