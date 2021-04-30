@@ -152,14 +152,14 @@ services:
       weight: 10
       device_read_bps:
         - path: /dev/vdb
-          rate: '1mb'
+          rate: '10mb'
         - path: /dev/vdc
-          rate: '1mb'
+          rate: '10mb'
       device_read_iops:
         - path: /dev/vdb
-          rate: 24
+          rate: 20
         - path: /dev/vdc
-          rate: 24
+          rate: 20
 
   git-backend:
     container_name: siyuan-git-backend
