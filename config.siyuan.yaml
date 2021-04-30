@@ -671,5 +671,4 @@ repos:
     serve_mode: mirror_intel
     interval: 86400
     name: kernel
-    disabled: true
     <<: *oneshot_common
