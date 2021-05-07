@@ -226,7 +226,7 @@ repos:
     <<: *oneshot_common
   # homebrew-bottles
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix homebrew-bottles/bottles --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.ustc.edu.cn/homebrew-bottles/bottles --rsync-base rsync://rsync.mirrors.ustc.edu.cn/homebrew-bottles/bottles/
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix homebrew-bottles/bottles --s3-buffer-path /var/cache --print-plan 100 homebrew
     serve_mode: mirror_intel
     interval: 10800
     name: homebrew-bottles
@@ -326,7 +326,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix linuxbrew-bottles --s3-buffer-path /var/cache --print-plan 100 homebrew --arch x86_64_linux --api-base https://formulae.brew.sh/api/formula-linux.json --bottles-base https://linuxbrew.bintray.com
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix linuxbrew-bottles/bottles --s3-buffer-path /var/cache --print-plan 100 homebrew --arch x86_64_linux --api-base https://formulae.brew.sh/api/formula-linux.json
     serve_mode: mirror_intel
     interval: 10800
     name: linuxbrew-bottles
@@ -534,7 +534,7 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/dpdk.git
     <<: *oneshot_common
   - type: shell_script
-    script: /app/mirror-clone --concurrent_resolve 128 --workers 4 gradle --target http://mirror-intel:8000/gradle/distributions
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix gradle/distributions --s3-buffer-path /var/cache --print-plan 100 gradle
     serve_mode: mirror_intel
     interval: 10800
     name: gradle/distributions
