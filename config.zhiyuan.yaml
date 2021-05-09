@@ -341,4 +341,5 @@ repos:
     interval: 40000
     path: /mnt/rocky
     name: rocky
+    rsync_extra_flags: --exclude "*/debug/*"
     <<: *oneshot_common
