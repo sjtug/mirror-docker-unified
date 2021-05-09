@@ -65,10 +65,10 @@ services:
       weight: 10
       device_read_bps:
         - path: /dev/mapper/vg0-mirror.sjtug
-          rate: '1mb'
+          rate: '10mb'
       device_read_iops:
         - path: /dev/mapper/vg0-mirror.sjtug
-          rate: 24
+          rate: 20
 
   git-backend:
     container_name: zhiyuan-git-backend
