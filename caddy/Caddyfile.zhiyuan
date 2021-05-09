@@ -420,6 +420,11 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
+    redir /rocky /rocky/ 301
+    file_server /rocky/* browse {
+        root /mnt
+        hide .*
+    }
     redir /centos /centos/ 301
     route /centos/* {
         uri strip_prefix /centos
@@ -1299,6 +1304,11 @@ zhiyuan.internal.sjtug.org {
     }
     redir /ctan /ctan/ 301
     file_server /ctan/* browse {
+        root /mnt
+        hide .*
+    }
+    redir /rocky /rocky/ 301
+    file_server /rocky/* browse {
         root /mnt
         hide .*
     }

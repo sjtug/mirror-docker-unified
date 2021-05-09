@@ -942,6 +942,11 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /ctan
         redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
+    redir /rocky /rocky/ 301
+    route /rocky/* {
+        uri strip_prefix /rocky
+        redir * https://mirrors.sjtug.sjtu.edu.cn/rocky{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1116,6 +1121,7 @@ mirror.sjtu.edu.cn {
         not path /CRAN/*
         not path /CTAN/*
         not path /ctan/*
+        not path /rocky/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -2043,6 +2049,11 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /ctan
         redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
+    redir /rocky /rocky/ 301
+    route /rocky/* {
+        uri strip_prefix /rocky
+        redir * https://mirrors.sjtug.sjtu.edu.cn/rocky{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -2217,6 +2228,7 @@ ftp.sjtu.edu.cn {
         not path /CRAN/*
         not path /CTAN/*
         not path /ctan/*
+        not path /rocky/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -3144,6 +3156,11 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /ctan
         redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
+    redir /rocky /rocky/ 301
+    route /rocky/* {
+        uri strip_prefix /rocky
+        redir * https://mirrors.sjtug.sjtu.edu.cn/rocky{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -3318,6 +3335,7 @@ ftp6.sjtu.edu.cn {
         not path /CRAN/*
         not path /CTAN/*
         not path /ctan/*
+        not path /rocky/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -4245,6 +4263,11 @@ siyuan.internal.sjtug.org {
         uri strip_prefix /ctan
         redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
+    redir /rocky /rocky/ 301
+    route /rocky/* {
+        uri strip_prefix /rocky
+        redir * https://mirrors.sjtug.sjtu.edu.cn/rocky{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -4419,6 +4442,7 @@ siyuan.internal.sjtug.org {
         not path /CRAN/*
         not path /CTAN/*
         not path /ctan/*
+        not path /rocky/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
