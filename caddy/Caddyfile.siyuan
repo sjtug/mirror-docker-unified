@@ -959,43 +959,56 @@ mirror.sjtu.edu.cn {
     }
     route @git_normal {
         route /git/linuxbrew-core.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/linuxbrew-core.git
+            redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
         }
         route /git/homebrew-services.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-services.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
         }
         route /git/homebrew-cask-drivers.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-drivers.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
         }
         route /git/homebrew-cask-fonts.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-fonts.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
         }
         route /git/homebrew-cask-versions.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-versions.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
         }
         route /git/guix.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/guix.git
+            redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
         }
         route /git/llvm-project.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/llvm-project.git
+            redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
         }
         route /git/flutter-sdk.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/flutter-sdk.git
+            redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
         }
         route /git/ohmyzsh.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/ohmyzsh.git
+            redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
         }
         route /git/spacemacs.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/spacemacs.git
+            redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
         }
         route /git/doom-emacs.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/doom-emacs.git
+            redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
         }
         route /git/dpdk.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/dpdk.git
+            redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
         route /git/homebrew-install.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
@@ -2066,43 +2079,56 @@ ftp.sjtu.edu.cn {
     }
     route @git_normal {
         route /git/linuxbrew-core.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/linuxbrew-core.git
+            redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
         }
         route /git/homebrew-services.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-services.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
         }
         route /git/homebrew-cask-drivers.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-drivers.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
         }
         route /git/homebrew-cask-fonts.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-fonts.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
         }
         route /git/homebrew-cask-versions.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-versions.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
         }
         route /git/guix.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/guix.git
+            redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
         }
         route /git/llvm-project.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/llvm-project.git
+            redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
         }
         route /git/flutter-sdk.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/flutter-sdk.git
+            redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
         }
         route /git/ohmyzsh.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/ohmyzsh.git
+            redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
         }
         route /git/spacemacs.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/spacemacs.git
+            redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
         }
         route /git/doom-emacs.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/doom-emacs.git
+            redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
         }
         route /git/dpdk.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/dpdk.git
+            redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
         route /git/homebrew-install.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
@@ -3173,43 +3199,56 @@ ftp6.sjtu.edu.cn {
     }
     route @git_normal {
         route /git/linuxbrew-core.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/linuxbrew-core.git
+            redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
         }
         route /git/homebrew-services.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-services.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
         }
         route /git/homebrew-cask-drivers.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-drivers.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
         }
         route /git/homebrew-cask-fonts.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-fonts.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
         }
         route /git/homebrew-cask-versions.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-versions.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
         }
         route /git/guix.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/guix.git
+            redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
         }
         route /git/llvm-project.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/llvm-project.git
+            redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
         }
         route /git/flutter-sdk.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/flutter-sdk.git
+            redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
         }
         route /git/ohmyzsh.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/ohmyzsh.git
+            redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
         }
         route /git/spacemacs.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/spacemacs.git
+            redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
         }
         route /git/doom-emacs.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/doom-emacs.git
+            redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
         }
         route /git/dpdk.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/dpdk.git
+            redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
         route /git/homebrew-install.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
@@ -4280,43 +4319,56 @@ siyuan.internal.sjtug.org {
     }
     route @git_normal {
         route /git/linuxbrew-core.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/linuxbrew-core.git
+            redir * https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git{uri} 302
         }
         route /git/homebrew-services.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-services.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-services.git{uri} 302
         }
         route /git/homebrew-cask-drivers.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-drivers.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git{uri} 302
         }
         route /git/homebrew-cask-fonts.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-fonts.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git{uri} 302
         }
         route /git/homebrew-cask-versions.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-cask-versions.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git{uri} 302
         }
         route /git/guix.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/guix.git
+            redir * https://git.sjtu.edu.cn/sjtug/guix.git{uri} 302
         }
         route /git/llvm-project.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/llvm-project.git
+            redir * https://git.sjtu.edu.cn/sjtug/llvm-project.git{uri} 302
         }
         route /git/flutter-sdk.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/flutter-sdk.git
+            redir * https://git.sjtu.edu.cn/sjtug/flutter-sdk.git{uri} 302
         }
         route /git/ohmyzsh.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/ohmyzsh.git
+            redir * https://git.sjtu.edu.cn/sjtug/ohmyzsh.git{uri} 302
         }
         route /git/spacemacs.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/spacemacs.git
+            redir * https://git.sjtu.edu.cn/sjtug/spacemacs.git{uri} 302
         }
         route /git/doom-emacs.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/doom-emacs.git
+            redir * https://git.sjtu.edu.cn/sjtug/doom-emacs.git{uri} 302
         }
         route /git/dpdk.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/dpdk.git
+            redir * https://git.sjtu.edu.cn/sjtug/dpdk.git{uri} 302
         }
         route /git/homebrew-install.git/* {
-            reverse_proxy git-backend
+            uri strip_prefix /git/homebrew-install.git
+            redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
