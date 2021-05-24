@@ -337,7 +337,7 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.lysator.liu.se/rocky
+    source: rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/
     interval: 40000
     path: /mnt/rocky
     name: rocky
