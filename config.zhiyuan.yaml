@@ -123,7 +123,7 @@ repos:
     interval: 3801
     path: /mnt/git/homebrew-core.git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-core.git
-    serve_mode: git
+    serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
@@ -132,7 +132,7 @@ repos:
     path: /mnt/git/homebrew-cask.git
     origin: https://github.com/Homebrew/homebrew-cask.git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask.git
-    serve_mode: git
+    serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
@@ -141,7 +141,7 @@ repos:
     path: /mnt/git/brew.git
     origin: https://github.com/Homebrew/brew.git
     target: https://git.sjtu.edu.cn/sjtug/brew.git
-    serve_mode: git
+    serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/crates-io.sh
@@ -150,7 +150,7 @@ repos:
     path: /mnt/git/crates.io-index
     origin: https://github.com/rust-lang/crates.io-index.git
     target: https://git.sjtu.edu.cn/sjtug/crates.io-index.git
-    serve_mode: git
+    serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
     name: raspbian
@@ -256,7 +256,7 @@ repos:
     path: /mnt/git/opam-repository.git
     origin: https://github.com/ocaml/opam-repository.git
     target: https://git.sjtu.edu.cn/sjtug/opam-repository.git
-    serve_mode: git
+    serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
@@ -265,7 +265,7 @@ repos:
     interval: 4300
     path: /mnt/git/qemu.git
     target: https://git.sjtu.edu.cn/sjtug/qemu.git
-    serve_mode: git
+    serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
@@ -274,7 +274,7 @@ repos:
     interval: 4700
     path: /mnt/git/linux.git
     target: https://git.sjtu.edu.cn/sjtug/linux.git
-    serve_mode: git
+    serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
