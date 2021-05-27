@@ -366,7 +366,6 @@ mirrors.sjtug.sjtu.edu.cn {
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
     redir /git/qemu.git /git/qemu.git/ 301
-    redir /git/linux.git /git/linux.git/ 301
     redir /linuxliteos /linuxliteos/ 301
     file_server /linuxliteos/* browse {
         root /mnt
@@ -758,6 +757,7 @@ mirrors.sjtug.sjtu.edu.cn {
     route /kernel/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/linux.git /git/linux.git/ 301
 
     @git_libgit2 {
         path /git/*
@@ -792,10 +792,6 @@ mirrors.sjtug.sjtu.edu.cn {
         route /git/qemu.git/* {
             uri strip_prefix /git/qemu.git
             redir * https://git.sjtu.edu.cn/sjtug/qemu.git{uri} 302
-        }
-        route /git/linux.git/* {
-            uri strip_prefix /git/linux.git
-            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
         route /git/linuxbrew-core.git/* {
             uri strip_prefix /git/linuxbrew-core.git
@@ -849,6 +845,10 @@ mirrors.sjtug.sjtu.edu.cn {
             uri strip_prefix /git/homebrew-install.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
+        route /git/linux.git/* {
+            uri strip_prefix /git/linux.git
+            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
+        }
     }
     @gzip_enabled {
         not path /speedtest/*
@@ -858,7 +858,6 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/crates.io-index/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
-        not path /git/linux.git/*
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
@@ -945,6 +944,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /armbian/*
         not path /almalinux/*
         not path /kernel/*
+        not path /git/linux.git/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -1260,7 +1260,6 @@ zhiyuan.internal.sjtug.org {
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
     redir /git/qemu.git /git/qemu.git/ 301
-    redir /git/linux.git /git/linux.git/ 301
     redir /linuxliteos /linuxliteos/ 301
     file_server /linuxliteos/* browse {
         root /mnt
@@ -1652,6 +1651,7 @@ zhiyuan.internal.sjtug.org {
     route /kernel/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/linux.git /git/linux.git/ 301
 
     @git_libgit2 {
         path /git/*
@@ -1686,10 +1686,6 @@ zhiyuan.internal.sjtug.org {
         route /git/qemu.git/* {
             uri strip_prefix /git/qemu.git
             redir * https://git.sjtu.edu.cn/sjtug/qemu.git{uri} 302
-        }
-        route /git/linux.git/* {
-            uri strip_prefix /git/linux.git
-            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
         route /git/linuxbrew-core.git/* {
             uri strip_prefix /git/linuxbrew-core.git
@@ -1743,6 +1739,10 @@ zhiyuan.internal.sjtug.org {
             uri strip_prefix /git/homebrew-install.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
+        route /git/linux.git/* {
+            uri strip_prefix /git/linux.git
+            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
+        }
     }
     @gzip_enabled {
         not path /speedtest/*
@@ -1752,7 +1752,6 @@ zhiyuan.internal.sjtug.org {
         not path /git/crates.io-index/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
-        not path /git/linux.git/*
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
@@ -1839,6 +1838,7 @@ zhiyuan.internal.sjtug.org {
         not path /armbian/*
         not path /almalinux/*
         not path /kernel/*
+        not path /git/linux.git/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

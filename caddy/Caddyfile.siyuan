@@ -765,6 +765,7 @@ mirror.sjtu.edu.cn {
     route /kernel/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/linux.git /git/linux.git/ 301
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -906,7 +907,6 @@ mirror.sjtu.edu.cn {
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
     redir /git/qemu.git /git/qemu.git/ 301
-    redir /git/linux.git /git/linux.git/ 301
     redir /linuxliteos /linuxliteos/ 301
     route /linuxliteos/* {
         uri strip_prefix /linuxliteos
@@ -1010,6 +1010,10 @@ mirror.sjtu.edu.cn {
             uri strip_prefix /git/homebrew-install.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
+        route /git/linux.git/* {
+            uri strip_prefix /git/linux.git
+            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -1033,10 +1037,6 @@ mirror.sjtu.edu.cn {
         route /git/qemu.git/* {
             uri strip_prefix /git/qemu.git
             redir * https://git.sjtu.edu.cn/sjtug/qemu.git{uri} 302
-        }
-        route /git/linux.git/* {
-            uri strip_prefix /git/linux.git
-            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
     }
     @gzip_enabled {
@@ -1093,6 +1093,7 @@ mirror.sjtu.edu.cn {
         not path /flutter_infra_release/*
         not path /anaconda/*
         not path /kernel/*
+        not path /git/linux.git/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -1126,7 +1127,6 @@ mirror.sjtu.edu.cn {
         not path /msys2/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
-        not path /git/linux.git/*
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
@@ -1885,6 +1885,7 @@ ftp.sjtu.edu.cn {
     route /kernel/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/linux.git /git/linux.git/ 301
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2026,7 +2027,6 @@ ftp.sjtu.edu.cn {
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
     redir /git/qemu.git /git/qemu.git/ 301
-    redir /git/linux.git /git/linux.git/ 301
     redir /linuxliteos /linuxliteos/ 301
     route /linuxliteos/* {
         uri strip_prefix /linuxliteos
@@ -2130,6 +2130,10 @@ ftp.sjtu.edu.cn {
             uri strip_prefix /git/homebrew-install.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
+        route /git/linux.git/* {
+            uri strip_prefix /git/linux.git
+            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -2153,10 +2157,6 @@ ftp.sjtu.edu.cn {
         route /git/qemu.git/* {
             uri strip_prefix /git/qemu.git
             redir * https://git.sjtu.edu.cn/sjtug/qemu.git{uri} 302
-        }
-        route /git/linux.git/* {
-            uri strip_prefix /git/linux.git
-            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
     }
     @gzip_enabled {
@@ -2213,6 +2213,7 @@ ftp.sjtu.edu.cn {
         not path /flutter_infra_release/*
         not path /anaconda/*
         not path /kernel/*
+        not path /git/linux.git/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -2246,7 +2247,6 @@ ftp.sjtu.edu.cn {
         not path /msys2/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
-        not path /git/linux.git/*
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
@@ -3005,6 +3005,7 @@ ftp6.sjtu.edu.cn {
     route /kernel/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/linux.git /git/linux.git/ 301
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3146,7 +3147,6 @@ ftp6.sjtu.edu.cn {
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
     redir /git/qemu.git /git/qemu.git/ 301
-    redir /git/linux.git /git/linux.git/ 301
     redir /linuxliteos /linuxliteos/ 301
     route /linuxliteos/* {
         uri strip_prefix /linuxliteos
@@ -3250,6 +3250,10 @@ ftp6.sjtu.edu.cn {
             uri strip_prefix /git/homebrew-install.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
+        route /git/linux.git/* {
+            uri strip_prefix /git/linux.git
+            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -3273,10 +3277,6 @@ ftp6.sjtu.edu.cn {
         route /git/qemu.git/* {
             uri strip_prefix /git/qemu.git
             redir * https://git.sjtu.edu.cn/sjtug/qemu.git{uri} 302
-        }
-        route /git/linux.git/* {
-            uri strip_prefix /git/linux.git
-            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
     }
     @gzip_enabled {
@@ -3333,6 +3333,7 @@ ftp6.sjtu.edu.cn {
         not path /flutter_infra_release/*
         not path /anaconda/*
         not path /kernel/*
+        not path /git/linux.git/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -3366,7 +3367,6 @@ ftp6.sjtu.edu.cn {
         not path /msys2/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
-        not path /git/linux.git/*
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*
@@ -4125,6 +4125,7 @@ siyuan.internal.sjtug.org {
     route /kernel/* {
         reverse_proxy mirror-intel:8000
     }
+    redir /git/linux.git /git/linux.git/ 301
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -4266,7 +4267,6 @@ siyuan.internal.sjtug.org {
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
     redir /git/qemu.git /git/qemu.git/ 301
-    redir /git/linux.git /git/linux.git/ 301
     redir /linuxliteos /linuxliteos/ 301
     route /linuxliteos/* {
         uri strip_prefix /linuxliteos
@@ -4370,6 +4370,10 @@ siyuan.internal.sjtug.org {
             uri strip_prefix /git/homebrew-install.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-install.git{uri} 302
         }
+        route /git/linux.git/* {
+            uri strip_prefix /git/linux.git
+            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -4393,10 +4397,6 @@ siyuan.internal.sjtug.org {
         route /git/qemu.git/* {
             uri strip_prefix /git/qemu.git
             redir * https://git.sjtu.edu.cn/sjtug/qemu.git{uri} 302
-        }
-        route /git/linux.git/* {
-            uri strip_prefix /git/linux.git
-            redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
     }
     @gzip_enabled {
@@ -4453,6 +4453,7 @@ siyuan.internal.sjtug.org {
         not path /flutter_infra_release/*
         not path /anaconda/*
         not path /kernel/*
+        not path /git/linux.git/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -4486,7 +4487,6 @@ siyuan.internal.sjtug.org {
         not path /msys2/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
-        not path /git/linux.git/*
         not path /linuxliteos/*
         not path /download.flutter.io/*
         not path /google-fonts/*

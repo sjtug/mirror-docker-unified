@@ -268,15 +268,6 @@ repos:
     serve_mode: redir
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/zhiyuan/worker-script/git.sh
-    name: git/linux.git
-    origin: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-    interval: 4700
-    path: /mnt/git/linux.git
-    target: https://git.sjtu.edu.cn/sjtug/linux.git
-    serve_mode: redir
-    <<: *oneshot_common
-  - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://repo.linuxliteos.com/repo
     interval: 7200
