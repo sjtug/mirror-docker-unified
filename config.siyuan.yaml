@@ -675,7 +675,7 @@ repos:
   - type: shell_script
     script: /worker-script/git.sh
     name: git/linux.git
-    origin: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+    source: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
     interval: 4700
     path: /srv/disk2/git/linux.git
     target: https://git.sjtu.edu.cn/sjtug/linux.git
