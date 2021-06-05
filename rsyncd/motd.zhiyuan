@@ -3,8 +3,9 @@
 +--------------------------------------------------+
 |   Welcome to SJTUG Mirror.                       |
 |                                                  |
-|   This rsync endpoint is only intended for file  |
+|   This rsync endpoint is mostly for file         |
 |   scanning. Disk I/O is strictly limited.        |
+|   Please email us before synchronizing files.    |
 |                                                  |
 |   Please use HTTP(s) service to download files.  |
 |   Zhiyuan: https://mirrors.sjtug.sjtu.edu.cn     |
