@@ -171,7 +171,7 @@ http://mirror.sjtu.edu.cn/opensuse {
 http://mirror.sjtu.edu.cn/opensuse/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -471,7 +471,7 @@ mirror.sjtu.edu.cn {
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /openvz /openvz/ 301
@@ -1313,7 +1313,7 @@ http://ftp.sjtu.edu.cn/opensuse {
 http://ftp.sjtu.edu.cn/opensuse/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -1591,7 +1591,7 @@ ftp.sjtu.edu.cn {
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /openvz /openvz/ 301
@@ -2433,7 +2433,7 @@ http://ftp6.sjtu.edu.cn/opensuse {
 http://ftp6.sjtu.edu.cn/opensuse/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -2711,7 +2711,7 @@ ftp6.sjtu.edu.cn {
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /openvz /openvz/ 301
@@ -3553,7 +3553,7 @@ http://siyuan.internal.sjtug.org/opensuse {
 http://siyuan.internal.sjtug.org/opensuse/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -3831,7 +3831,7 @@ siyuan.internal.sjtug.org {
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /openvz /openvz/ 301
