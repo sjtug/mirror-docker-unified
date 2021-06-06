@@ -496,12 +496,12 @@ mirror.sjtu.edu.cn {
     }
     redir /ubuntu-cd /ubuntu-cd/ 301
     file_server /ubuntu-cd/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     file_server /ubuntu-cdimage/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
@@ -1616,12 +1616,12 @@ ftp.sjtu.edu.cn {
     }
     redir /ubuntu-cd /ubuntu-cd/ 301
     file_server /ubuntu-cd/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     file_server /ubuntu-cdimage/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
@@ -2736,12 +2736,12 @@ ftp6.sjtu.edu.cn {
     }
     redir /ubuntu-cd /ubuntu-cd/ 301
     file_server /ubuntu-cd/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     file_server /ubuntu-cdimage/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
@@ -3856,12 +3856,12 @@ siyuan.internal.sjtug.org {
     }
     redir /ubuntu-cd /ubuntu-cd/ 301
     file_server /ubuntu-cd/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     file_server /ubuntu-cdimage/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
