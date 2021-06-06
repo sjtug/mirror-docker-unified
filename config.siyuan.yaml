@@ -21,7 +21,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/centos/
     interval: 5800
-    path: /srv/disk1/centos
+    path: /srv/disk3/centos
     name: centos
     no_redir_http: true
     <<: *oneshot_common

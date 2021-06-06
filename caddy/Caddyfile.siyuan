@@ -21,7 +21,7 @@ http://mirror.sjtu.edu.cn/centos {
 http://mirror.sjtu.edu.cn/centos/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -416,7 +416,7 @@ mirror.sjtu.edu.cn {
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /debian /debian/ 301
@@ -1163,7 +1163,7 @@ http://ftp.sjtu.edu.cn/centos {
 http://ftp.sjtu.edu.cn/centos/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -1536,7 +1536,7 @@ ftp.sjtu.edu.cn {
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /debian /debian/ 301
@@ -2283,7 +2283,7 @@ http://ftp6.sjtu.edu.cn/centos {
 http://ftp6.sjtu.edu.cn/centos/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -2656,7 +2656,7 @@ ftp6.sjtu.edu.cn {
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /debian /debian/ 301
@@ -3403,7 +3403,7 @@ http://siyuan.internal.sjtug.org/centos {
 http://siyuan.internal.sjtug.org/centos/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -3776,7 +3776,7 @@ siyuan.internal.sjtug.org {
 
     redir /centos /centos/ 301
     file_server /centos/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /debian /debian/ 301
