@@ -140,7 +140,7 @@ repos:
     source: rsync://fr2.rpmfind.net/linux/opensuse/
     interval: 8000
     rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*" --exclude "ports/zsystems/*" --exclude "ports/riscv/*" --exclude "ports/update/*"
-    path: /srv/disk1/opensuse
+    path: /srv/disk3/opensuse
     name: opensuse
     no_redir_http: true
     <<: *oneshot_common

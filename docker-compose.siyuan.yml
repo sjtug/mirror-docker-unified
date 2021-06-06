@@ -4,6 +4,7 @@ services:
     volumes:
       - "/mnt/disk1:/srv/disk1:ro"
       - "/mnt/disk2:/srv/disk2:ro"
+      - "/mnt/disk3:/srv/disk3:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile:ro"
       - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
     mem_limit: 20G
@@ -14,6 +15,7 @@ services:
     volumes:
       - "/mnt/disk1:/srv/disk1"
       - "/mnt/disk2:/srv/disk2"
+      - "/mnt/disk3:/srv/disk3"
       - "./config.siyuan.yaml:/config.yaml:ro"
     environment:
       MIRROR_CLONE_SITE: "mirror.sjtu.edu.cn"
@@ -120,33 +122,13 @@ services:
     mem_limit: 2G
     memswap_limit: 2G
 
-  apache:
-    container_name: siyuan-apache
-    restart: unless-stopped
-    build:
-      context: ./apache 
-    networks:
-      - ipv6-service-net
-    expose:
-      - 80
-    volumes:
-      - "/mnt/disk2:/usr/local/apache2/htdocs:ro"
-    logging:
-      options:
-        max-size: "4M"
-        max-file: "20"
-    ulimits:
-      nofile:
-        soft: 80000
-        hard: 120000
-    mem_limit: 1G
-    memswap_limit: 1G
-
   rsyncd:
     container_name: siyuan-rsyncd
     volumes:
       - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
       - /mnt/disk1:/srv/disk1:ro
+      - /mnt/disk2:/srv/disk2:ro
+      - /mnt/disk3:/srv/disk3:ro
       - ./rsyncd/motd.siyuan:/etc/rsync/motd:ro
     blkio_config:
       weight: 10
@@ -155,10 +137,14 @@ services:
           rate: '10mb'
         - path: /dev/vdc
           rate: '10mb'
+        - path: /dev/vdd
+          rate: '10mb'
       device_read_iops:
         - path: /dev/vdb
           rate: 20
         - path: /dev/vdc
+          rate: 20
+        - path: /dev/vdd
           rate: 20
 
   git-backend:
