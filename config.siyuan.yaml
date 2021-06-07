@@ -559,8 +559,6 @@ repos:
     interval: 5200
     path: /srv/disk1/openeuler
     name: openeuler
-    # Password is made public at https://github.com/sjtug/mirror-requests/issues/162
-    password: "openeuler@1234"
     <<: *oneshot_common
   - type: external
     path: /srv/disk1/fedora
