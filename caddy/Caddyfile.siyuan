@@ -121,7 +121,7 @@ http://mirror.sjtu.edu.cn/docker-ce {
 http://mirror.sjtu.edu.cn/docker-ce/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -246,7 +246,7 @@ http://mirror.sjtu.edu.cn/ubuntu-ports {
 http://mirror.sjtu.edu.cn/ubuntu-ports/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -446,7 +446,7 @@ mirror.sjtu.edu.cn {
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
@@ -506,7 +506,7 @@ mirror.sjtu.edu.cn {
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     file_server /ubuntu-ports/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /openwrt /openwrt/ 301
@@ -1263,7 +1263,7 @@ http://ftp.sjtu.edu.cn/docker-ce {
 http://ftp.sjtu.edu.cn/docker-ce/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -1388,7 +1388,7 @@ http://ftp.sjtu.edu.cn/ubuntu-ports {
 http://ftp.sjtu.edu.cn/ubuntu-ports/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -1566,7 +1566,7 @@ ftp.sjtu.edu.cn {
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
@@ -1626,7 +1626,7 @@ ftp.sjtu.edu.cn {
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     file_server /ubuntu-ports/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /openwrt /openwrt/ 301
@@ -2383,7 +2383,7 @@ http://ftp6.sjtu.edu.cn/docker-ce {
 http://ftp6.sjtu.edu.cn/docker-ce/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -2508,7 +2508,7 @@ http://ftp6.sjtu.edu.cn/ubuntu-ports {
 http://ftp6.sjtu.edu.cn/ubuntu-ports/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -2686,7 +2686,7 @@ ftp6.sjtu.edu.cn {
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
@@ -2746,7 +2746,7 @@ ftp6.sjtu.edu.cn {
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     file_server /ubuntu-ports/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /openwrt /openwrt/ 301
@@ -3503,7 +3503,7 @@ http://siyuan.internal.sjtug.org/docker-ce {
 http://siyuan.internal.sjtug.org/docker-ce/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -3628,7 +3628,7 @@ http://siyuan.internal.sjtug.org/ubuntu-ports {
 http://siyuan.internal.sjtug.org/ubuntu-ports/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -3806,7 +3806,7 @@ siyuan.internal.sjtug.org {
     }
     redir /docker-ce /docker-ce/ 301
     file_server /docker-ce/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /fedora-secondary /fedora-secondary/ 301
@@ -3866,7 +3866,7 @@ siyuan.internal.sjtug.org {
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     file_server /ubuntu-ports/* browse {
-        root /srv/disk2
+        root /srv/disk3
         hide .*
     }
     redir /openwrt /openwrt/ 301
