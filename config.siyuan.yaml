@@ -73,7 +73,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce/
     interval: 4900
-    path: /srv/disk2/docker-ce
+    path: /srv/disk3/docker-ce
     name: docker-ce
     no_redir_http: true
     <<: *oneshot_common
@@ -201,7 +201,7 @@ repos:
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://ports.ubuntu.com/ubuntu-ports/
     interval: 7800
-    path: /srv/disk2/ubuntu-ports
+    path: /srv/disk3/ubuntu-ports
     name: ubuntu-ports
     no_redir_http: true
     <<: *oneshot_common
