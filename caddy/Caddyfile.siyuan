@@ -766,6 +766,11 @@ mirror.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     redir /git/linux.git /git/linux.git/ 301
+    redir /raspbian-addons /raspbian-addons/ 301
+    file_server /raspbian-addons/* browse {
+        root /srv/disk3
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1886,6 +1891,11 @@ ftp.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     redir /git/linux.git /git/linux.git/ 301
+    redir /raspbian-addons /raspbian-addons/ 301
+    file_server /raspbian-addons/* browse {
+        root /srv/disk3
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3006,6 +3016,11 @@ ftp6.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     redir /git/linux.git /git/linux.git/ 301
+    redir /raspbian-addons /raspbian-addons/ 301
+    file_server /raspbian-addons/* browse {
+        root /srv/disk3
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -4126,6 +4141,11 @@ siyuan.internal.sjtug.org {
         reverse_proxy mirror-intel:8000
     }
     redir /git/linux.git /git/linux.git/ 301
+    redir /raspbian-addons /raspbian-addons/ 301
+    file_server /raspbian-addons/* browse {
+        root /srv/disk3
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty

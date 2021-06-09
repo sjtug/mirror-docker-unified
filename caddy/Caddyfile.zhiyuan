@@ -758,6 +758,11 @@ mirrors.sjtug.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     redir /git/linux.git /git/linux.git/ 301
+    redir /raspbian-addons /raspbian-addons/ 301
+    route /raspbian-addons/* {
+        uri strip_prefix /raspbian-addons
+        redir * https://mirror.sjtu.edu.cn/raspbian-addons{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -945,6 +950,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /almalinux/*
         not path /kernel/*
         not path /git/linux.git/*
+        not path /raspbian-addons/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
@@ -1652,6 +1658,11 @@ zhiyuan.internal.sjtug.org {
         reverse_proxy mirror-intel:8000
     }
     redir /git/linux.git /git/linux.git/ 301
+    redir /raspbian-addons /raspbian-addons/ 301
+    route /raspbian-addons/* {
+        uri strip_prefix /raspbian-addons
+        redir * https://mirror.sjtu.edu.cn/raspbian-addons{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -1839,6 +1850,7 @@ zhiyuan.internal.sjtug.org {
         not path /almalinux/*
         not path /kernel/*
         not path /git/linux.git/*
+        not path /raspbian-addons/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

@@ -679,3 +679,10 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/linux.git
     serve_mode: redir
     <<: *oneshot_common
+  - type: shell_script
+    name: raspbian-addons
+    script: /worker-script/rsync.sh
+    path: /srv/disk3/raspbian-addons
+    interval: 10000
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/osdn/storage/g/r/ra/raspbian-addons/
+    <<: *oneshot_common
