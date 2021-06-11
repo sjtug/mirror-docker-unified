@@ -1109,6 +1109,7 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /speedtest
         reverse_proxy speedtest:8989
     }
+    tls iskyzh@gmail.com
 }
 
 http://ftp.sjtu.edu.cn/ {
@@ -2218,6 +2219,7 @@ ftp.sjtu.edu.cn {
         uri strip_prefix /speedtest
         reverse_proxy speedtest:8989
     }
+    tls /etc/ssl/certs/ftp_sjtu/cert.pem /etc/ssl/certs/ftp_sjtu/key.pem
 }
 
 http://ftp6.sjtu.edu.cn/ {
@@ -3327,5 +3329,6 @@ ftp6.sjtu.edu.cn {
         uri strip_prefix /speedtest
         reverse_proxy speedtest:8989
     }
+    tls /etc/ssl/certs/ftp_sjtu/cert.pem /etc/ssl/certs/ftp_sjtu/key.pem
 }
 

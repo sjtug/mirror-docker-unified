@@ -958,5 +958,6 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /speedtest
         reverse_proxy speedtest:8989
     }
+    tls iskyzh@gmail.com
 }
 

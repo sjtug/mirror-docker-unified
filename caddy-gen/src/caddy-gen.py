@@ -175,8 +175,18 @@ def sjtug_mirror_id(site: str) -> Node:
 
 def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     common_nodes = common()
+
     no_redir_nodes, file_server_nodes = gen_repos(
         base, config_yaml['repos'], first_site, site)
+
+    if not is_local(base):
+        if base == "ftp.sjtu.edu.cn" or base == "ftp6.sjtu.edu.cn":
+            file_server_nodes += [
+                Node('tls /etc/ssl/certs/ftp_sjtu/cert.pem /etc/ssl/certs/ftp_sjtu/key.pem')]
+        else:
+            file_server_nodes += [
+                Node('tls iskyzh@gmail.com')
+            ]
 
     main_children = common_nodes + [BLANK_NODE]
     main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
