@@ -283,13 +283,13 @@ repos:
     <<: *oneshot_common
   - type: external
     name: k8s.gcr.io
-    proxy_to: https://k8s-gcr-io.siyuan.internal.sjtug.org
+    proxy_to: gcr-registry:80
     subdomain: k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn
     unified: disable
     serve_mode: proxy
   - type: external
     name: docker-registry
-    proxy_to: https://docker.siyuan.internal.sjtug.org
+    proxy_to: docker-registry:80
     subdomain: docker.mirrors.sjtug.sjtu.edu.cn
     unified: disable
     serve_mode: proxy

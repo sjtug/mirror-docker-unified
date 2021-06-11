@@ -497,20 +497,6 @@ repos:
     serve_mode: redir
     target: https://repo.maven.apache.org/maven2
     disabled: true
-  - type: external
-    name: gcr-registry-siyuan
-    proxy_to: siyuan-gcr-registry:80
-    disabled: true
-    subdomain: k8s-gcr-io.siyuan.internal.sjtug.org
-    unified: disable
-    serve_mode: proxy
-  - type: external
-    name: docker-registry-siyuan
-    proxy_to: siyuan-docker-registry:80
-    disabled: true
-    subdomain: docker.siyuan.internal.sjtug.org
-    unified: disable
-    serve_mode: proxy
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://himiko.rfc1925.org/repositories

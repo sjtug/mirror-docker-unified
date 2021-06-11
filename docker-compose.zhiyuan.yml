@@ -77,6 +77,63 @@ services:
     mem_limit: 1G
     memswap_limit: 1G
 
+
+  gcr-registry:
+    container_name: zhiyuan-gcr-registry
+    restart: unless-stopped
+    image: registry:2.6
+    networks:
+      - ipv6-service-net
+      - proxy-net
+    expose:
+      - 80
+      - 5001
+    volumes:
+      - "./secrets/gcr-registry.yml:/etc/docker/registry/config.yml"
+    environment:
+      http_proxy: http://clash:8080
+      https_proxy: http://clash:8080
+      HTTP_PROXY: http://clash:8080
+      HTTPS_PROXY: http://clash:8080
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 5G
+    memswap_limit: 5G
+
+  docker-registry:
+    container_name: zhiyuan-docker-registry
+    restart: unless-stopped
+    image: registry:2.6
+    networks:
+      - ipv6-service-net
+      - proxy-net
+    expose:
+      - 80
+      - 5001
+    volumes:
+      - "./secrets/docker-registry.yml:/etc/docker/registry/config.yml"
+    environment:
+      http_proxy: http://clash:8080
+      https_proxy: http://clash:8080
+      HTTP_PROXY: http://clash:8080
+      HTTPS_PROXY: http://clash:8080
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 5G
+    memswap_limit: 5G
+
 networks:
   host-monitor-net:
     driver: bridge
