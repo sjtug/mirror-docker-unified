@@ -85,7 +85,7 @@ repos:
     path: /srv/disk1/fedora/linux
     name: fedora/linux
     serve_mode: ignore
-    rsync_extra_flags: --exclude "extras/*" --exclude "*/debug/*" --exclude "development/rawhide/*"
+    rsync_extra_flags: --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
     <<: *oneshot_common
   # fedora/epel
