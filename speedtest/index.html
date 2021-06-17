@@ -10,7 +10,7 @@
 		function I(i) { return document.getElementById(i); }
 		//INITIALIZE SPEEDTEST
 		var s = new Speedtest(); //create speedtest object
-		s.setParameter("getIp_ispInfo", "false"); // disable get ISP info
+		s.setParameter("getIp_ispInfo", false); // disable get ISP info
 		var server = {
 			name: "SJTUG Speed Test",
 			server: window.location.protocol + "//" + window.location.host,
