@@ -34,3 +34,7 @@ repos:
   - pytorch-test/win-64
   - pytorch-test/win-32
   - pytorch-test/noarch
+  - dglteam/linux-64
+  - dglteam/win-64
+  - dglteam/osx-64
+  - dglteam/noarch
