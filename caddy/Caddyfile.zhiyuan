@@ -763,6 +763,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /raspbian-addons
         redir * https://mirror.sjtu.edu.cn/raspbian-addons{uri} 302
     }
+    redir /OpenBSD /OpenBSD/ 301
+    route /OpenBSD/* {
+        uri strip_prefix /OpenBSD
+        redir * https://mirror.sjtu.edu.cn/OpenBSD{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -951,6 +956,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /kernel/*
         not path /git/linux.git/*
         not path /raspbian-addons/*
+        not path /OpenBSD/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
