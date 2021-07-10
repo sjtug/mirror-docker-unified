@@ -735,6 +735,11 @@ mirror.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /OpenBSD /OpenBSD/ 301
+    file_server /OpenBSD/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1844,6 +1849,11 @@ ftp.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /OpenBSD /OpenBSD/ 301
+    file_server /OpenBSD/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2951,6 +2961,11 @@ ftp6.sjtu.edu.cn {
     redir /raspbian-addons /raspbian-addons/ 301
     file_server /raspbian-addons/* browse {
         root /srv/disk3
+        hide .*
+    }
+    redir /OpenBSD /OpenBSD/ 301
+    file_server /OpenBSD/* browse {
+        root /srv/disk2
         hide .*
     }
     redir /putty /putty/ 301

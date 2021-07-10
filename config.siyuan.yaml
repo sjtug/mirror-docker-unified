@@ -672,3 +672,10 @@ repos:
     interval: 10000
     source: rsync://mirrors.tuna.tsinghua.edu.cn/osdn/storage/g/r/ra/raspbian-addons/
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/OpenBSD
+    interval: 50000
+    path: /srv/disk2/OpenBSD
+    name: OpenBSD
+    <<: *oneshot_common
