@@ -768,6 +768,16 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /OpenBSD
         redir * https://mirror.sjtu.edu.cn/OpenBSD{uri} 302
     }
+    redir /ubuntukylin-cdimage /ubuntukylin-cdimage/ 301
+    route /ubuntukylin-cdimage/* {
+        uri strip_prefix /ubuntukylin-cdimage
+        redir * https://mirror.sjtu.edu.cn/ubuntukylin-cdimage{uri} 302
+    }
+    redir /ubuntukylin /ubuntukylin/ 301
+    route /ubuntukylin/* {
+        uri strip_prefix /ubuntukylin
+        redir * https://mirror.sjtu.edu.cn/ubuntukylin{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -957,6 +967,8 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/linux.git/*
         not path /raspbian-addons/*
         not path /OpenBSD/*
+        not path /ubuntukylin-cdimage/*
+        not path /ubuntukylin/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

@@ -679,3 +679,19 @@ repos:
     path: /srv/disk2/OpenBSD
     name: OpenBSD
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://cdimage.ubuntukylin.com/releases/
+    interval: 86400
+    path: /srv/disk2/ubuntukylin-cdimage
+    name: ubuntukylin-cdimage
+    rsync_extra_flags: --exclude "professional/"
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://archive.ubuntukylin.com/ubuntukylin/
+    interval: 6000
+    path: /srv/disk2/ubuntukylin
+    name: ubuntukylin
+    rsync_extra_flags: --exclude "*partner*/"
+    <<: *oneshot_common
