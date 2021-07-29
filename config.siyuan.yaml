@@ -695,3 +695,10 @@ repos:
     name: ubuntukylin
     rsync_extra_flags: --exclude "*partner*/"
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirror.zorinos.com/isos/
+    interval: 86400
+    path: /srv/disk3/zorinos-isos
+    name: zorinos-isos
+    <<: *oneshot_common

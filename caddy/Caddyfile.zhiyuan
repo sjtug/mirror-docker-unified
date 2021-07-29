@@ -778,6 +778,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /ubuntukylin
         redir * https://mirror.sjtu.edu.cn/ubuntukylin{uri} 302
     }
+    redir /zorinos-isos /zorinos-isos/ 301
+    route /zorinos-isos/* {
+        uri strip_prefix /zorinos-isos
+        redir * https://mirror.sjtu.edu.cn/zorinos-isos{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -969,6 +974,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /OpenBSD/*
         not path /ubuntukylin-cdimage/*
         not path /ubuntukylin/*
+        not path /zorinos-isos/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
