@@ -268,7 +268,7 @@ repos:
     <<: *oneshot_common
   # flutter_infra
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://tuna.tsinghua.edu.cn/flutter/flutter_infra --rsync-base rsync://tuna.tsinghua.edu.cn/flutter/flutter_infra/
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra/
     serve_mode: mirror_intel
     interval: 4000
     name: flutter_infra
@@ -566,7 +566,7 @@ repos:
     target: https://mirror.sjtu.edu.cn/manjaro/stable
     disabled: true
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix voidlinux --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://tuna.tsinghua.edu.cn/voidlinux --rsync-base rsync://tuna.tsinghua.edu.cn/voidlinux
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix voidlinux --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/voidlinux --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/voidlinux
     serve_mode: mirror_intel
     interval: 10800
     name: voidlinux
@@ -576,11 +576,11 @@ repos:
     interval: 5300
     path: /srv/disk2/archlinux
     script: /worker-script/zhiyuan/worker-script/archlinux.sh
-    source: rsync://tuna.tsinghua.edu.cn/archlinux/
-    lastupdate: https://tuna.tsinghua.edu.cn/archlinux/lastupdate
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/archlinux/
+    lastupdate: https://mirrors.tuna.tsinghua.edu.cn/archlinux/lastupdate
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix bioconductor --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://tuna.tsinghua.edu.cn/bioconductor --rsync-base rsync://tuna.tsinghua.edu.cn/bioconductor
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix bioconductor --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/bioconductor --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/bioconductor
     serve_mode: mirror_intel
     interval: 10800
     name: bioconductor
@@ -598,7 +598,7 @@ repos:
     name: test
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix macports --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://tuna.tsinghua.edu.cn/macports --rsync-base rsync://tuna.tsinghua.edu.cn/macports
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix macports --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/macports --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/macports
     serve_mode: mirror_intel
     interval: 10800
     name: macports
@@ -619,7 +619,7 @@ repos:
   # We will enable flutter_infra_release later. Currently, we just set original upstream of flutter_infra to
   # flutter_infra_release, and redirect users to that URL.
   # - type: shell_script
-  #   script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra_release --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://tuna.tsinghua.edu.cn/flutter/flutter_infra_release --rsync-base rsync://tuna.tsinghua.edu.cn/flutter/flutter_infra_release/
+  #   script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra_release --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra_release --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra_release/
   #   serve_mode: mirror_intel
   #   interval: 10800
   #   name: flutter_infra_release
@@ -651,7 +651,7 @@ repos:
     name: almalinux
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix kernel --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://tuna.tsinghua.edu.cn/kernel --rsync-base rsync://tuna.tsinghua.edu.cn/kernel/
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix kernel --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/kernel --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/kernel/
     serve_mode: mirror_intel
     interval: 86400
     name: kernel
