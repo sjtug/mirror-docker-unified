@@ -783,6 +783,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /zorinos-isos
         redir * https://mirror.sjtu.edu.cn/zorinos-isos{uri} 302
     }
+    redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
+    route /ubuntu-cloud-images/* {
+        uri strip_prefix /ubuntu-cloud-images
+        redir * https://mirror.sjtu.edu.cn/ubuntu-cloud-images{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -975,6 +980,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /ubuntukylin-cdimage/*
         not path /ubuntukylin/*
         not path /zorinos-isos/*
+        not path /ubuntu-cloud-images/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

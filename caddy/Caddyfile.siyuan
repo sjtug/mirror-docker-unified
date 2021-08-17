@@ -755,6 +755,11 @@ mirror.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
+    file_server /ubuntu-cloud-images/* browse {
+        root /srv/disk3
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1884,6 +1889,11 @@ ftp.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
+    file_server /ubuntu-cloud-images/* browse {
+        root /srv/disk3
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3010,6 +3020,11 @@ ftp6.sjtu.edu.cn {
     }
     redir /zorinos-isos /zorinos-isos/ 301
     file_server /zorinos-isos/* browse {
+        root /srv/disk3
+        hide .*
+    }
+    redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
+    file_server /ubuntu-cloud-images/* browse {
         root /srv/disk3
         hide .*
     }
