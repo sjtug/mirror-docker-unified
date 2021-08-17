@@ -702,3 +702,10 @@ repos:
     path: /srv/disk3/zorinos-isos
     name: zorinos-isos
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://cloud-images.ubuntu.com/cloud-images/
+    interval: 86400
+    path: /srv/disk3/ubuntu-cloud-images
+    name: ubuntu-cloud-images
+    <<: *oneshot_common
