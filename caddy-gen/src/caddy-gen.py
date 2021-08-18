@@ -150,7 +150,8 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
     file_server_nodes += [Node('reverse_proxy @git_libgit2 git-backend', [])]
     file_server_nodes += [Node('@git_normal', [Node(f'path /git/*'),
                                                Node(f'not header User-Agent *libgit2*')])]
-    file_server_nodes += [Node('route @git_normal', git_server_nodes)]
+    # file_server_nodes += [Node('route @git_normal', git_server_nodes)]
+    file_server_nodes += [Node('reverse_proxy @git_normal git-backend', [])]
 
     # disable gzip for all proxy repos
     gzip_disabled = [Node(
