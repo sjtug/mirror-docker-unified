@@ -708,4 +708,5 @@ repos:
     interval: 86400
     path: /srv/disk3/ubuntu-cloud-images
     name: ubuntu-cloud-images
+    rsync_extra_flags: --exclude "releases/" --exclude ".bzr/" --exclude "lost+found/"
     <<: *oneshot_common
