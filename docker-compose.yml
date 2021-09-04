@@ -48,7 +48,7 @@ services:
       args:
         - USE_SJTUG=true
         - CLONE_VERSION=v0.1.18
-        - CLONE_V2_VERSION=v0.2.20
+        - CLONE_V2_VERSION=v0.2.22
         - LUG_VERSION=v0.12.7
     expose:
       - 8081
