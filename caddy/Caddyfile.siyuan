@@ -760,6 +760,11 @@ mirror.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /debian-ports /debian-ports/ 301
+    file_server /debian-ports/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1894,6 +1899,11 @@ ftp.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /debian-ports /debian-ports/ 301
+    file_server /debian-ports/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3026,6 +3036,11 @@ ftp6.sjtu.edu.cn {
     redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
     file_server /ubuntu-cloud-images/* browse {
         root /srv/disk3
+        hide .*
+    }
+    redir /debian-ports /debian-ports/ 301
+    file_server /debian-ports/* browse {
+        root /srv/disk2
         hide .*
     }
     redir /putty /putty/ 301

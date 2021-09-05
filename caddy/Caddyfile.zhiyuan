@@ -788,6 +788,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /ubuntu-cloud-images
         redir * https://mirror.sjtu.edu.cn/ubuntu-cloud-images{uri} 302
     }
+    redir /debian-ports /debian-ports/ 301
+    route /debian-ports/* {
+        uri strip_prefix /debian-ports
+        redir * https://mirror.sjtu.edu.cn/debian-ports{uri} 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -981,6 +986,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /ubuntukylin/*
         not path /zorinos-isos/*
         not path /ubuntu-cloud-images/*
+        not path /debian-ports/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

@@ -28,7 +28,7 @@ repos:
   # debian
   - type: shell_script
     script: /worker-script/debian.sh
-    source: mirrors.kernel.org
+    source: mirrors.sfo.kernel.org
     interval: 5400
     path: /srv/disk1/debian
     name: debian
@@ -709,4 +709,12 @@ repos:
     path: /srv/disk3/ubuntu-cloud-images
     name: ubuntu-cloud-images
     rsync_extra_flags: --exclude "releases/" --exclude ".bzr/" --exclude "lost+found/"
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://ftp.kr.debian.org/debian-ports/
+    interval: 9000
+    path: /srv/disk2/debian-ports
+    name: debian-ports
+    rsync_extra_flags: --exclude "pool-alpha" --exclude "pool-hppa" --exclude "pool-hurd-i386" --exclude "pool-ia64" --exclude "pool-kfreebsd-amd64" --exclude "pool-kfreebsd-i386" --exclude "pool-m68k" --exclude "pool-powerpc" --exclude "pool-ppc64" --exclude "pool-sh4" --exclude "pool-sparc64" --exclude "pool-x32"
     <<: *oneshot_common
