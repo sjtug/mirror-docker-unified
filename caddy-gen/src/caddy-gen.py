@@ -166,6 +166,15 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
         ])
     ]
 
+    outer_nodes += [
+        Node(f'http://{base}/speedtest',
+             [Node(f'redir /speedtest /speedtest/ 308')] + log()),
+        Node(f'http://{base}/speedtest/*', [
+            Node('uri strip_prefix /speedtest'),
+            Node(f'reverse_proxy {SPEEDTEST_ADDR}')
+        ] + [sjtug_mirror_id(site)])
+    ]
+
     return outer_nodes, file_server_nodes
 
 

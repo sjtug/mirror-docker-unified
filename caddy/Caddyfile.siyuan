@@ -335,6 +335,20 @@ http://mirror.sjtu.edu.cn/fedora/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://mirror.sjtu.edu.cn/speedtest {
+    redir /speedtest /speedtest/ 308
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+}
+
+http://mirror.sjtu.edu.cn/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
+    header * x-sjtug-mirror-id siyuan
+}
+
 mirror.sjtu.edu.cn {
     log {
         output stdout
@@ -1474,6 +1488,20 @@ http://ftp.sjtu.edu.cn/fedora/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://ftp.sjtu.edu.cn/speedtest {
+    redir /speedtest /speedtest/ 308
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+}
+
+http://ftp.sjtu.edu.cn/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
+    header * x-sjtug-mirror-id siyuan
+}
+
 ftp.sjtu.edu.cn {
     log {
         output stdout
@@ -2610,6 +2638,20 @@ http://ftp6.sjtu.edu.cn/fedora/* {
         output stdout
         format single_field common_log  # log in v1 style
     }
+    header * x-sjtug-mirror-id siyuan
+}
+
+http://ftp6.sjtu.edu.cn/speedtest {
+    redir /speedtest /speedtest/ 308
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+}
+
+http://ftp6.sjtu.edu.cn/speedtest/* {
+    uri strip_prefix /speedtest
+    reverse_proxy speedtest:8989
     header * x-sjtug-mirror-id siyuan
 }
 
