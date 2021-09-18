@@ -11,6 +11,7 @@
 		//INITIALIZE SPEEDTEST
 		var s = new Speedtest(); //create speedtest object
 		s.setParameter("getIp_ispInfo", false); // disable get ISP info
+		s.setParameter("telemetry_level", "basic"); //enable telemetry
 		var server = {
 			name: "SJTUG Speed Test",
 			server: window.location.protocol + "//" + window.location.host,
