@@ -721,7 +721,7 @@ repos:
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
-    name: git/linuxbrew-core.git
+    name: git/homebrew-bundle.git
     source: https://github.com/Homebrew/homebrew-bundle.git
     path: /srv/disk2/git/homebrew-bundle.git
     serve_mode: git
