@@ -779,6 +779,21 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    redir /git/spdk.git /git/spdk.git/ 301
+    redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
+    redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
+    redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
+    redir /github/SJTUBeamer /github/SJTUBeamer/ 301
+    route /github/SJTUBeamer/* {
+        uri strip_prefix /github/SJTUBeamer
+        redir * /github-release/sjtug/SJTUBeamer/releases/download/?mirror_intel_list 302
+    }
+    redir /github/SJTUThesis /github/SJTUThesis/ 301
+    route /github/SJTUThesis/* {
+        uri strip_prefix /github/SJTUThesis
+        redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1027,6 +1042,21 @@ mirror.sjtu.edu.cn {
             uri strip_prefix /git/linux.git
             redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
+        route /git/linuxbrew-core.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/spdk.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUBeamer.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUTeX.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUThesis.git/* {
+            reverse_proxy git-backend
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -1105,6 +1135,13 @@ mirror.sjtu.edu.cn {
         not path /anaconda/*
         not path /kernel/*
         not path /git/linux.git/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/spdk.git/*
+        not path /git/SJTUBeamer.git/*
+        not path /git/SJTUTeX.git/*
+        not path /git/SJTUThesis.git/*
+        not path /github/SJTUBeamer/*
+        not path /github/SJTUThesis/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -1932,6 +1969,21 @@ ftp.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    redir /git/spdk.git /git/spdk.git/ 301
+    redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
+    redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
+    redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
+    redir /github/SJTUBeamer /github/SJTUBeamer/ 301
+    route /github/SJTUBeamer/* {
+        uri strip_prefix /github/SJTUBeamer
+        redir * /github-release/sjtug/SJTUBeamer/releases/download/?mirror_intel_list 302
+    }
+    redir /github/SJTUThesis /github/SJTUThesis/ 301
+    route /github/SJTUThesis/* {
+        uri strip_prefix /github/SJTUThesis
+        redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -2180,6 +2232,21 @@ ftp.sjtu.edu.cn {
             uri strip_prefix /git/linux.git
             redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
+        route /git/linuxbrew-core.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/spdk.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUBeamer.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUTeX.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUThesis.git/* {
+            reverse_proxy git-backend
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -2258,6 +2325,13 @@ ftp.sjtu.edu.cn {
         not path /anaconda/*
         not path /kernel/*
         not path /git/linux.git/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/spdk.git/*
+        not path /git/SJTUBeamer.git/*
+        not path /git/SJTUTeX.git/*
+        not path /git/SJTUThesis.git/*
+        not path /github/SJTUBeamer/*
+        not path /github/SJTUThesis/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
@@ -3085,6 +3159,21 @@ ftp6.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
+    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    redir /git/spdk.git /git/spdk.git/ 301
+    redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
+    redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
+    redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
+    redir /github/SJTUBeamer /github/SJTUBeamer/ 301
+    route /github/SJTUBeamer/* {
+        uri strip_prefix /github/SJTUBeamer
+        redir * /github-release/sjtug/SJTUBeamer/releases/download/?mirror_intel_list 302
+    }
+    redir /github/SJTUThesis /github/SJTUThesis/ 301
+    route /github/SJTUThesis/* {
+        uri strip_prefix /github/SJTUThesis
+        redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -3333,6 +3422,21 @@ ftp6.sjtu.edu.cn {
             uri strip_prefix /git/linux.git
             redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
+        route /git/linuxbrew-core.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/spdk.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUBeamer.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUTeX.git/* {
+            reverse_proxy git-backend
+        }
+        route /git/SJTUThesis.git/* {
+            reverse_proxy git-backend
+        }
         route /git/homebrew-core.git/* {
             uri strip_prefix /git/homebrew-core.git
             redir * https://git.sjtu.edu.cn/sjtug/homebrew-core.git{uri} 302
@@ -3411,6 +3515,13 @@ ftp6.sjtu.edu.cn {
         not path /anaconda/*
         not path /kernel/*
         not path /git/linux.git/*
+        not path /git/linuxbrew-core.git/*
+        not path /git/spdk.git/*
+        not path /git/SJTUBeamer.git/*
+        not path /git/SJTUTeX.git/*
+        not path /git/SJTUThesis.git/*
+        not path /github/SJTUBeamer/*
+        not path /github/SJTUThesis/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
