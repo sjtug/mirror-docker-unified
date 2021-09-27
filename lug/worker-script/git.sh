@@ -9,7 +9,10 @@ fi
 cd $LUG_path
 
 git remote set-url origin $LUG_source
-git remote add upstream $LUG_target || git remote set-url upstream $LUG_target
+
+if [ -n "$LUG_target" ]; then
+    git remote add upstream $LUG_target || git remote set-url upstream $LUG_target
+fi
 
 git config --unset-all remote.origin.fetch
 git config --add remote.origin.fetch "+refs/heads/*:refs/heads/*"
@@ -21,4 +24,6 @@ git fetch -p origin
 git for-each-ref --format 'delete %(refname)' refs/remotes | git update-ref --stdin
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
-timeout 60 git push --mirror upstream || true
+if [ -n "$LUG_target" ]; then
+    timeout 60 git push --mirror upstream || true
+fi
