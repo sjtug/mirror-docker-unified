@@ -1,5 +1,5 @@
 BASES = {
-    "siyuan": ['mirror.sjtu.edu.cn', 'ftp.sjtu.edu.cn', 'ftp6.sjtu.edu.cn'],
+    "siyuan": ['mirror.sjtu.edu.cn'],
     "zhiyuan": ['mirrors.sjtug.sjtu.edu.cn'],
     "local": [':80']
 }
