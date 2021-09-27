@@ -779,7 +779,7 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
+    redir /git/homebrew-bundle.git /git/homebrew-bundle.git/ 301
     redir /git/spdk.git /git/spdk.git/ 301
     redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
     redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
@@ -1042,7 +1042,7 @@ mirror.sjtu.edu.cn {
             uri strip_prefix /git/linux.git
             redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
         }
-        route /git/linuxbrew-core.git/* {
+        route /git/homebrew-bundle.git/* {
             reverse_proxy git-backend
         }
         route /git/spdk.git/* {
@@ -1135,7 +1135,7 @@ mirror.sjtu.edu.cn {
         not path /anaconda/*
         not path /kernel/*
         not path /git/linux.git/*
-        not path /git/linuxbrew-core.git/*
+        not path /git/homebrew-bundle.git/*
         not path /git/spdk.git/*
         not path /git/SJTUBeamer.git/*
         not path /git/SJTUTeX.git/*
