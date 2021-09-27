@@ -718,3 +718,57 @@ repos:
     name: debian-ports
     rsync_extra_flags: --exclude "pool-alpha" --exclude "pool-hppa" --exclude "pool-hurd-i386" --exclude "pool-ia64" --exclude "pool-kfreebsd-amd64" --exclude "pool-kfreebsd-i386" --exclude "pool-m68k" --exclude "pool-powerpc" --exclude "pool-ppc64" --exclude "pool-sh4" --exclude "pool-sparc64" --exclude "pool-x32"
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 7200
+    name: git/linuxbrew-core.git
+    source: https://github.com/Homebrew/homebrew-bundle.git
+    path: /srv/disk2/git/homebrew-bundle.git
+    serve_mode: git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 7200
+    name: git/spdk.git
+    source: https://github.com/spdk/spdk
+    path: /srv/disk2/git/spdk.git
+    serve_mode: git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 7200
+    name: git/SJTUBeamer.git
+    source: https://github.com/sjtug/SJTUBeamer
+    path: /srv/disk2/git/SJTUBeamer.git
+    serve_mode: git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 7200
+    name: git/SJTUTeX.git
+    source: https://github.com/sjtug/SJTUTeX
+    path: /srv/disk2/git/SJTUTeX.git
+    serve_mode: git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 7200
+    name: git/SJTUThesis.git
+    source: https://github.com/sjtug/SJTUThesis
+    path: /srv/disk2/git/SJTUThesis.git
+    serve_mode: git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/github-release.sh sjtug/SJTUBeamer 30
+    interval: 86400
+    name: github/SJTUBeamer
+    target: /github-release/sjtug/SJTUBeamer/releases/download/?mirror_intel_list
+    serve_mode: redir_force
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/github-release.sh sjtug/SJTUThesis 30
+    interval: 86400
+    name: github/SJTUThesis
+    target: /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list
+    serve_mode: redir_force
+    <<: *oneshot_common

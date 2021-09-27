@@ -807,6 +807,20 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /debian-ports
         redir * https://mirror.sjtu.edu.cn/debian-ports{uri} 302
     }
+    redir /git/spdk.git /git/spdk.git/ 301
+    redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
+    redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
+    redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
+    redir /github/SJTUBeamer /github/SJTUBeamer/ 301
+    route /github/SJTUBeamer/* {
+        uri strip_prefix /github/SJTUBeamer
+        redir * /github-release/sjtug/SJTUBeamer/releases/download/?mirror_intel_list 302
+    }
+    redir /github/SJTUThesis /github/SJTUThesis/ 301
+    route /github/SJTUThesis/* {
+        uri strip_prefix /github/SJTUThesis
+        redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
+    }
 
     @git_libgit2 {
         path /git/*
@@ -897,6 +911,22 @@ mirrors.sjtug.sjtu.edu.cn {
         route /git/linux.git/* {
             uri strip_prefix /git/linux.git
             redir * https://git.sjtu.edu.cn/sjtug/linux.git{uri} 302
+        }
+        route /git/spdk.git/* {
+            uri strip_prefix /git/spdk.git
+            redir * https://mirror.sjtu.edu.cn/git/spdk.git{uri} 302
+        }
+        route /git/SJTUBeamer.git/* {
+            uri strip_prefix /git/SJTUBeamer.git
+            redir * https://mirror.sjtu.edu.cn/git/SJTUBeamer.git{uri} 302
+        }
+        route /git/SJTUTeX.git/* {
+            uri strip_prefix /git/SJTUTeX.git
+            redir * https://mirror.sjtu.edu.cn/git/SJTUTeX.git{uri} 302
+        }
+        route /git/SJTUThesis.git/* {
+            uri strip_prefix /git/SJTUThesis.git
+            redir * https://mirror.sjtu.edu.cn/git/SJTUThesis.git{uri} 302
         }
     }
     @gzip_enabled {
@@ -1001,6 +1031,12 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /zorinos-isos/*
         not path /ubuntu-cloud-images/*
         not path /debian-ports/*
+        not path /git/spdk.git/*
+        not path /git/SJTUBeamer.git/*
+        not path /git/SJTUTeX.git/*
+        not path /git/SJTUThesis.git/*
+        not path /github/SJTUBeamer/*
+        not path /github/SJTUThesis/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

@@ -15,25 +15,10 @@ workers = 8
 
 [default.github_release]
 allow = [
-  "FreeCAD/FreeCAD/",
-  "prometheus/prometheus/",
-  "prometheus/node_exporter/",
-  "prometheus/alertmanager/",
-  "prometheus/blackbox_exporter/",
-  "prometheus/consul_exporter/",
-  "prometheus/graphite_exporter/",
-  "prometheus/haproxy_exporter/",
-  "prometheus/memcached_exporter/",
-  "prometheus/mysqld_exporter/",
-  "prometheus/pushgateway/",
-  "prometheus/statsd_exporter/",
-  "GNS3/gns3-gui/",
-  "PowerShell/PowerShell/",
   "oneclick/rubyinstaller2/",
   "mikefarah/yq/",
   "docker/compose/",
-  "librespeed/speedtest-go/",
-  "VSCodium/vscodium/"
+  "librespeed/speedtest-go/"
 ]
 
 [default.endpoints]

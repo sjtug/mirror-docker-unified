@@ -39,6 +39,7 @@ jobs:
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
           touch ./secrets/lug-secrets.sh
+          touch ./speedtest/settings.toml
       - name: verify config
         run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
       - name: docker-compose build
