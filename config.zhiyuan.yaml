@@ -82,7 +82,7 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.ocf.berkeley.edu/gnu/
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/gnu/
     interval: 43200
     path: /mnt/gnu
     name: gnu
