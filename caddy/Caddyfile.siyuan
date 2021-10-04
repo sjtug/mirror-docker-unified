@@ -335,6 +335,652 @@ http://mirror.sjtu.edu.cn/fedora/* {
     header * x-sjtug-mirror-id siyuan
 }
 
+http://mirror.sjtu.edu.cn/putty {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /putty /putty/ 301
+}
+
+http://mirror.sjtu.edu.cn/putty/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /putty
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/archlinux-cn {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /archlinux-cn /archlinux-cn/ 301
+}
+
+http://mirror.sjtu.edu.cn/archlinux-cn/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /archlinux-cn
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/archlinux-cn{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/archlinuxarm {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /archlinuxarm /archlinuxarm/ 301
+}
+
+http://mirror.sjtu.edu.cn/archlinuxarm/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /archlinuxarm
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/archlinuxarm{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/gentoo {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /gentoo /gentoo/ 301
+}
+
+http://mirror.sjtu.edu.cn/gentoo/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /gentoo
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/gentoo{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/vim {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /vim /vim/ 301
+}
+
+http://mirror.sjtu.edu.cn/vim/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /vim
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/vim{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/alpine {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /alpine /alpine/ 301
+}
+
+http://mirror.sjtu.edu.cn/alpine/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /alpine
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/alpine{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/cpan {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /cpan /cpan/ 301
+}
+
+http://mirror.sjtu.edu.cn/cpan/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /cpan
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/cran {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /cran /cran/ 301
+}
+
+http://mirror.sjtu.edu.cn/cran/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /cran
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/ctex {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /ctex /ctex/ 301
+}
+
+http://mirror.sjtu.edu.cn/ctex/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /ctex
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/ctex{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/gnu {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /gnu /gnu/ 301
+}
+
+http://mirror.sjtu.edu.cn/gnu/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /gnu
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/gnu{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/cygwin {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /cygwin /cygwin/ 301
+}
+
+http://mirror.sjtu.edu.cn/cygwin/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /cygwin
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/cygwin{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/ros {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /ros /ros/ 301
+}
+
+http://mirror.sjtu.edu.cn/ros/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /ros
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/ros{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/kali {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /kali /kali/ 301
+}
+
+http://mirror.sjtu.edu.cn/kali/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /kali
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/kali{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/kali-images {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /kali-images /kali-images/ 301
+}
+
+http://mirror.sjtu.edu.cn/kali-images/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /kali-images
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/kali-images{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/raspbian {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /raspbian /raspbian/ 301
+}
+
+http://mirror.sjtu.edu.cn/raspbian/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /raspbian
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/raspbian{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/parrot {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /parrot /parrot/ 301
+}
+
+http://mirror.sjtu.edu.cn/parrot/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /parrot
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/parrot{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/raspberrypi {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /raspberrypi /raspberrypi/ 301
+}
+
+http://mirror.sjtu.edu.cn/raspberrypi/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /raspberrypi
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/raspberrypi{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/mx-isos {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /mx-isos /mx-isos/ 301
+}
+
+http://mirror.sjtu.edu.cn/mx-isos/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /mx-isos
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/mx-isos{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/mx-packages {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /mx-packages /mx-packages/ 301
+}
+
+http://mirror.sjtu.edu.cn/mx-packages/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /mx-packages
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/mx-packages{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/packagist {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /packagist /packagist/ 301
+}
+
+http://mirror.sjtu.edu.cn/packagist/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /packagist
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/packagist{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/mongodb {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /mongodb /mongodb/ 301
+}
+
+http://mirror.sjtu.edu.cn/mongodb/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /mongodb
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/mongodb{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/qt {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /qt /qt/ 301
+}
+
+http://mirror.sjtu.edu.cn/qt/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /qt
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/qt{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/julia {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /julia /julia/ 301
+}
+
+http://mirror.sjtu.edu.cn/julia/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /julia
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/julia{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/emacs-elpa {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /emacs-elpa /emacs-elpa/ 301
+}
+
+http://mirror.sjtu.edu.cn/emacs-elpa/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /emacs-elpa
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/emacs-elpa{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/julia-releases {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /julia-releases /julia-releases/ 301
+}
+
+http://mirror.sjtu.edu.cn/julia-releases/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /julia-releases
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/julia-releases{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/raspberry-pi-os-images {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
+}
+
+http://mirror.sjtu.edu.cn/raspberry-pi-os-images/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /raspberry-pi-os-images
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/raspberry-pi-os-images{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/msys2 {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /msys2 /msys2/ 301
+}
+
+http://mirror.sjtu.edu.cn/msys2/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /msys2
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/msys2{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/linuxliteos {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /linuxliteos /linuxliteos/ 301
+}
+
+http://mirror.sjtu.edu.cn/linuxliteos/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /linuxliteos
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/linuxliteos{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/download.flutter.io {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /download.flutter.io /download.flutter.io/ 301
+}
+
+http://mirror.sjtu.edu.cn/download.flutter.io/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /download.flutter.io
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/download.flutter.io{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/CPAN {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /CPAN /CPAN/ 301
+}
+
+http://mirror.sjtu.edu.cn/CPAN/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /CPAN
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/CPAN{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/CRAN {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /CRAN /CRAN/ 301
+}
+
+http://mirror.sjtu.edu.cn/CRAN/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /CRAN
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/CTAN {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /CTAN /CTAN/ 301
+}
+
+http://mirror.sjtu.edu.cn/CTAN/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /CTAN
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/ctan {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /ctan /ctan/ 301
+}
+
+http://mirror.sjtu.edu.cn/ctan/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /ctan
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+    }
+}
+
+http://mirror.sjtu.edu.cn/rocky {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    redir /rocky /rocky/ 301
+}
+
+http://mirror.sjtu.edu.cn/rocky/* {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route * {
+        uri strip_prefix /rocky
+        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/rocky{uri} 302
+    }
+}
+
 http://mirror.sjtu.edu.cn/speedtest {
     redir /speedtest /speedtest/ 308
     log {
@@ -347,152 +993,6 @@ http://mirror.sjtu.edu.cn/speedtest/* {
     uri strip_prefix /speedtest
     reverse_proxy speedtest:8989
     header * x-sjtug-mirror-id siyuan
-}
-
-http://mirror.sjtu.edu.cn {
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-    route /putty/* {
-        uri strip_prefix /putty
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
-    }
-    route /archlinux-cn/* {
-        uri strip_prefix /archlinux-cn
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/archlinux-cn{uri} 302
-    }
-    route /archlinuxarm/* {
-        uri strip_prefix /archlinuxarm
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/archlinuxarm{uri} 302
-    }
-    route /gentoo/* {
-        uri strip_prefix /gentoo
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/gentoo{uri} 302
-    }
-    route /vim/* {
-        uri strip_prefix /vim
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/vim{uri} 302
-    }
-    route /alpine/* {
-        uri strip_prefix /alpine
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/alpine{uri} 302
-    }
-    route /cpan/* {
-        uri strip_prefix /cpan
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
-    }
-    route /cran/* {
-        uri strip_prefix /cran
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
-    }
-    route /ctex/* {
-        uri strip_prefix /ctex
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/ctex{uri} 302
-    }
-    route /gnu/* {
-        uri strip_prefix /gnu
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/gnu{uri} 302
-    }
-    route /cygwin/* {
-        uri strip_prefix /cygwin
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/cygwin{uri} 302
-    }
-    route /ros/* {
-        uri strip_prefix /ros
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/ros{uri} 302
-    }
-    route /kali/* {
-        uri strip_prefix /kali
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/kali{uri} 302
-    }
-    route /kali-images/* {
-        uri strip_prefix /kali-images
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/kali-images{uri} 302
-    }
-    route /raspbian/* {
-        uri strip_prefix /raspbian
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/raspbian{uri} 302
-    }
-    route /parrot/* {
-        uri strip_prefix /parrot
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/parrot{uri} 302
-    }
-    route /raspberrypi/* {
-        uri strip_prefix /raspberrypi
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/raspberrypi{uri} 302
-    }
-    route /mx-isos/* {
-        uri strip_prefix /mx-isos
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/mx-isos{uri} 302
-    }
-    route /mx-packages/* {
-        uri strip_prefix /mx-packages
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/mx-packages{uri} 302
-    }
-    route /packagist/* {
-        uri strip_prefix /packagist
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/packagist{uri} 302
-    }
-    route /mongodb/* {
-        uri strip_prefix /mongodb
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/mongodb{uri} 302
-    }
-    route /qt/* {
-        uri strip_prefix /qt
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/qt{uri} 302
-    }
-    route /julia/* {
-        uri strip_prefix /julia
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/julia{uri} 302
-    }
-    route /emacs-elpa/* {
-        uri strip_prefix /emacs-elpa
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/emacs-elpa{uri} 302
-    }
-    route /julia-releases/* {
-        uri strip_prefix /julia-releases
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/julia-releases{uri} 302
-    }
-    route /raspberry-pi-os-images/* {
-        uri strip_prefix /raspberry-pi-os-images
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/raspberry-pi-os-images{uri} 302
-    }
-    route /msys2/* {
-        uri strip_prefix /msys2
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/msys2{uri} 302
-    }
-    route /linuxliteos/* {
-        uri strip_prefix /linuxliteos
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/linuxliteos{uri} 302
-    }
-    route /download.flutter.io/* {
-        uri strip_prefix /download.flutter.io
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/download.flutter.io{uri} 302
-    }
-    route /CPAN/* {
-        uri strip_prefix /CPAN
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/CPAN{uri} 302
-    }
-    route /CRAN/* {
-        uri strip_prefix /CRAN
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
-    }
-    route /CTAN/* {
-        uri strip_prefix /CTAN
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
-    }
-    route /ctan/* {
-        uri strip_prefix /ctan
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
-    }
-    route /rocky/* {
-        uri strip_prefix /rocky
-        redir * {scheme}://mirrors.sjtug.sjtu.edu.cn/rocky{uri} 302
-    }
-    route /* {
-        redir * https://mirror.sjtu.edu.cn{uri} 308
-    }
 }
 
 mirror.sjtu.edu.cn {

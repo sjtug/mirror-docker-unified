@@ -82,6 +82,16 @@ def repo_no_redir(base: str, repo: Repo, site: str) -> list[Node]:
     ]
 
 
+def repo_redir_scheme_keep(base: str, repo: Repo, site: str) -> list[Node]:
+    strip_prefix = Node(f'uri strip_prefix /{repo.get_name()}')
+    redir_node = Node(f'redir * {repo.target}{{uri}} 302')
+    return [
+        Node(f'http://{base}/{repo.get_name()}', log() + repo_redir(repo)),
+        Node(f'http://{base}/{repo.get_name()}/*', log() +
+             [Node(f'route *', [strip_prefix, redir_node])])
+    ]
+
+
 def dict_to_repo(repo: dict) -> Repo:
     serve_mode = repo.get('serve_mode', 'default')
     if serve_mode == 'redir':
@@ -118,7 +128,6 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
     outer_nodes = []
     file_server_nodes = []
     git_server_nodes = []
-    redir_scheme_keep_nodes = []
 
     gzip_disabled_list = ["speedtest"]
 
@@ -140,7 +149,7 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
             else:
                 file_server_nodes += repo.as_repo()
                 if isinstance(repo, RedirRepo) and repo.scheme_keep:
-                    redir_scheme_keep_nodes += repo.as_repo()
+                    outer_nodes += repo_redir_scheme_keep(base, repo, site)
 
             if 'subdomain' in repo_ and first_site:
                 outer_nodes += [Node(repo_['subdomain'],
@@ -180,7 +189,7 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
         ] + [sjtug_mirror_id(site)])
     ]
 
-    return outer_nodes, file_server_nodes, redir_scheme_keep_nodes
+    return outer_nodes, file_server_nodes
 
 
 def sjtug_mirror_id(site: str) -> Node:
@@ -189,7 +198,7 @@ def sjtug_mirror_id(site: str) -> Node:
 
 def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     common_nodes = common()
-    no_redir_nodes, file_server_nodes, redir_scheme_keep_nodes = gen_repos(
+    no_redir_nodes, file_server_nodes = gen_repos(
         base, config_yaml['repos'], first_site, site)
 
     main_children = common_nodes + [BLANK_NODE]
@@ -200,11 +209,9 @@ def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     http_base = Node(f'http://{base}/', log() + [
         Node(f'redir / https://{base}/ 308')
     ])
-    redir_scheme_keep_node = Node(f'http://{base}', log() + redir_scheme_keep_nodes + [Node(f'route /*',[Node(f'redir * https://{base}{{uri}} 308')])])
     return Node('',
                 [http_base] +
                 no_redir_nodes +
-                [redir_scheme_keep_node] +
                 [main_node])
 
 
