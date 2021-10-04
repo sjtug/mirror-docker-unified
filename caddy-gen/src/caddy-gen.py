@@ -191,7 +191,7 @@ def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
     main_children += cors("/mirrorz/*")   # mirrorz.org protocol support
     main_children += [BLANK_NODE] + file_server_nodes
-    main_node = Node(f'{base}', main_children)
+    main_node = Node(f'{base}, http://{base}', main_children)
     http_base = Node(f'http://{base}/', log() + [
         Node(f'redir / https://{base}/ 308')
     ])
@@ -215,7 +215,7 @@ def rewrite_config(repo: dict, site: str):
         return {
             'name': name,
             'serve_mode': 'redir',
-            'target': f'https://{BASES[site][0]}/{name}'
+            'target': f'{{scheme}}://{BASES[site][0]}/{name}'
         }
     if serve_mode == 'redir' or serve_mode == 'redir_force':
         return {
