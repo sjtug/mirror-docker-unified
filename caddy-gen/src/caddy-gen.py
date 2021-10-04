@@ -85,9 +85,11 @@ def repo_no_redir(base: str, repo: Repo, site: str) -> list[Node]:
 def dict_to_repo(repo: dict) -> Repo:
     serve_mode = repo.get('serve_mode', 'default')
     if serve_mode == 'redir':
-        return RedirRepo(repo['name'], repo['target'], False)
+        return RedirRepo(repo['name'], repo['target'], False, False)
     if serve_mode == 'redir_force':
-        return RedirRepo(repo['name'], repo['target'], True)
+        return RedirRepo(repo['name'], repo['target'], True, False)
+    if serve_mode == 'redir_scheme_keep':
+        return RedirRepo(repo['name'], repo['target'], False, True)
     if serve_mode == 'default':
         path = repo['path']
         name = repo['name']
@@ -116,6 +118,7 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
     outer_nodes = []
     file_server_nodes = []
     git_server_nodes = []
+    redir_scheme_keep_nodes = []
 
     gzip_disabled_list = ["speedtest"]
 
@@ -136,6 +139,8 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
                 git_server_nodes += repo.as_repo()
             else:
                 file_server_nodes += repo.as_repo()
+                if isinstance(repo, RedirRepo) and repo.scheme_keep:
+                    redir_scheme_keep_nodes += repo.as_repo()
 
             if 'subdomain' in repo_ and first_site:
                 outer_nodes += [Node(repo_['subdomain'],
@@ -175,7 +180,7 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
         ] + [sjtug_mirror_id(site)])
     ]
 
-    return outer_nodes, file_server_nodes
+    return outer_nodes, file_server_nodes, redir_scheme_keep_nodes
 
 
 def sjtug_mirror_id(site: str) -> Node:
@@ -184,20 +189,22 @@ def sjtug_mirror_id(site: str) -> Node:
 
 def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     common_nodes = common()
-    no_redir_nodes, file_server_nodes = gen_repos(
+    no_redir_nodes, file_server_nodes, redir_scheme_keep_nodes = gen_repos(
         base, config_yaml['repos'], first_site, site)
 
     main_children = common_nodes + [BLANK_NODE]
     main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
     main_children += cors("/mirrorz/*")   # mirrorz.org protocol support
     main_children += [BLANK_NODE] + file_server_nodes
-    main_node = Node(f'{base}, http://{base}', main_children)
+    main_node = Node(f'{base}', main_children)
     http_base = Node(f'http://{base}/', log() + [
         Node(f'redir / https://{base}/ 308')
     ])
+    redir_scheme_keep_node = Node(f'http://{base}', log() + redir_scheme_keep_nodes + [Node(f'route /*',[Node(f'redir * https://{base}{{uri}} 308')])])
     return Node('',
                 [http_base] +
                 no_redir_nodes +
+                [redir_scheme_keep_node] +
                 [main_node])
 
 
@@ -210,12 +217,19 @@ def rewrite_config(repo: dict, site: str):
             'serve_mode': 'proxy',
             'strip_prefix': False
         }
-    if serve_mode == 'default' or serve_mode == 'git':
+    if serve_mode == 'default':
+        name = repo['name']
+        return {
+            'name': name,
+            'serve_mode': 'redir_scheme_keep',
+            'target': f'{{scheme}}://{BASES[site][0]}/{name}'
+        }
+    if serve_mode == 'git':
         name = repo['name']
         return {
             'name': name,
             'serve_mode': 'redir',
-            'target': f'{{scheme}}://{BASES[site][0]}/{name}'
+            'target': f'https://{BASES[site][0]}/{name}'
         }
     if serve_mode == 'redir' or serve_mode == 'redir_force':
         return {

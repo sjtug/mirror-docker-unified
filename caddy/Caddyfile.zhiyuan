@@ -182,7 +182,177 @@ http://mirrors.sjtug.sjtu.edu.cn/speedtest/* {
     header * x-sjtug-mirror-id zhiyuan
 }
 
-mirrors.sjtug.sjtu.edu.cn, http://mirrors.sjtug.sjtu.edu.cn {
+http://mirrors.sjtug.sjtu.edu.cn {
+    log {
+        output stdout
+        format single_field common_log  # log in v1 style
+    }
+    route /centos/* {
+        uri strip_prefix /centos
+        redir * {scheme}://mirror.sjtu.edu.cn/centos{uri} 302
+    }
+    route /debian/* {
+        uri strip_prefix /debian
+        redir * {scheme}://mirror.sjtu.edu.cn/debian{uri} 302
+    }
+    route /debian-cd/* {
+        uri strip_prefix /debian-cd
+        redir * {scheme}://mirror.sjtu.edu.cn/debian-cd{uri} 302
+    }
+    route /debian-security/* {
+        uri strip_prefix /debian-security
+        redir * {scheme}://mirror.sjtu.edu.cn/debian-security{uri} 302
+    }
+    route /deepin/* {
+        uri strip_prefix /deepin
+        redir * {scheme}://mirror.sjtu.edu.cn/deepin{uri} 302
+    }
+    route /deepin-cd/* {
+        uri strip_prefix /deepin-cd
+        redir * {scheme}://mirror.sjtu.edu.cn/deepin-cd{uri} 302
+    }
+    route /docker-ce/* {
+        uri strip_prefix /docker-ce
+        redir * {scheme}://mirror.sjtu.edu.cn/docker-ce{uri} 302
+    }
+    route /fedora-secondary/* {
+        uri strip_prefix /fedora-secondary
+        redir * {scheme}://mirror.sjtu.edu.cn/fedora-secondary{uri} 302
+    }
+    route /linuxmint/* {
+        uri strip_prefix /linuxmint
+        redir * {scheme}://mirror.sjtu.edu.cn/linuxmint{uri} 302
+    }
+    route /linuxmint-cd/* {
+        uri strip_prefix /linuxmint-cd
+        redir * {scheme}://mirror.sjtu.edu.cn/linuxmint-cd{uri} 302
+    }
+    route /mageia/* {
+        uri strip_prefix /mageia
+        redir * {scheme}://mirror.sjtu.edu.cn/mageia{uri} 302
+    }
+    route /opensuse/* {
+        uri strip_prefix /opensuse
+        redir * {scheme}://mirror.sjtu.edu.cn/opensuse{uri} 302
+    }
+    route /openvz/* {
+        uri strip_prefix /openvz
+        redir * {scheme}://mirror.sjtu.edu.cn/openvz{uri} 302
+    }
+    route /remi/* {
+        uri strip_prefix /remi
+        redir * {scheme}://mirror.sjtu.edu.cn/remi{uri} 302
+    }
+    route /scientific/* {
+        uri strip_prefix /scientific
+        redir * {scheme}://mirror.sjtu.edu.cn/scientific{uri} 302
+    }
+    route /ubuntu/* {
+        uri strip_prefix /ubuntu
+        redir * {scheme}://mirror.sjtu.edu.cn/ubuntu{uri} 302
+    }
+    route /ubuntu-cd/* {
+        uri strip_prefix /ubuntu-cd
+        redir * {scheme}://mirror.sjtu.edu.cn/ubuntu-cd{uri} 302
+    }
+    route /ubuntu-cdimage/* {
+        uri strip_prefix /ubuntu-cdimage
+        redir * {scheme}://mirror.sjtu.edu.cn/ubuntu-cdimage{uri} 302
+    }
+    route /ubuntu-ports/* {
+        uri strip_prefix /ubuntu-ports
+        redir * {scheme}://mirror.sjtu.edu.cn/ubuntu-ports{uri} 302
+    }
+    route /openwrt/* {
+        uri strip_prefix /openwrt
+        redir * {scheme}://mirror.sjtu.edu.cn/openwrt{uri} 302
+    }
+    route /rpmfusion/* {
+        uri strip_prefix /rpmfusion
+        redir * {scheme}://mirror.sjtu.edu.cn/rpmfusion{uri} 302
+    }
+    route /apache/* {
+        uri strip_prefix /apache
+        redir * {scheme}://mirror.sjtu.edu.cn/apache{uri} 302
+    }
+    route /blackarch/* {
+        uri strip_prefix /blackarch
+        redir * {scheme}://mirror.sjtu.edu.cn/blackarch{uri} 302
+    }
+    route /sites/tldp.org/* {
+        uri strip_prefix /sites/tldp.org
+        redir * {scheme}://mirror.sjtu.edu.cn/sites/tldp.org{uri} 302
+    }
+    route /sury/* {
+        uri strip_prefix /sury
+        redir * {scheme}://mirror.sjtu.edu.cn/sury{uri} 302
+    }
+    route /dragonflybsd/* {
+        uri strip_prefix /dragonflybsd
+        redir * {scheme}://mirror.sjtu.edu.cn/dragonflybsd{uri} 302
+    }
+    route /openeuler/* {
+        uri strip_prefix /openeuler
+        redir * {scheme}://mirror.sjtu.edu.cn/openeuler{uri} 302
+    }
+    route /fedora/* {
+        uri strip_prefix /fedora
+        redir * {scheme}://mirror.sjtu.edu.cn/fedora{uri} 302
+    }
+    route /manjaro/* {
+        uri strip_prefix /manjaro
+        redir * {scheme}://mirror.sjtu.edu.cn/manjaro{uri} 302
+    }
+    route /archlinux/* {
+        uri strip_prefix /archlinux
+        redir * {scheme}://mirror.sjtu.edu.cn/archlinux{uri} 302
+    }
+    route /test/* {
+        uri strip_prefix /test
+        redir * {scheme}://mirror.sjtu.edu.cn/test{uri} 302
+    }
+    route /armbian/* {
+        uri strip_prefix /armbian
+        redir * {scheme}://mirror.sjtu.edu.cn/armbian{uri} 302
+    }
+    route /almalinux/* {
+        uri strip_prefix /almalinux
+        redir * {scheme}://mirror.sjtu.edu.cn/almalinux{uri} 302
+    }
+    route /raspbian-addons/* {
+        uri strip_prefix /raspbian-addons
+        redir * {scheme}://mirror.sjtu.edu.cn/raspbian-addons{uri} 302
+    }
+    route /OpenBSD/* {
+        uri strip_prefix /OpenBSD
+        redir * {scheme}://mirror.sjtu.edu.cn/OpenBSD{uri} 302
+    }
+    route /ubuntukylin-cdimage/* {
+        uri strip_prefix /ubuntukylin-cdimage
+        redir * {scheme}://mirror.sjtu.edu.cn/ubuntukylin-cdimage{uri} 302
+    }
+    route /ubuntukylin/* {
+        uri strip_prefix /ubuntukylin
+        redir * {scheme}://mirror.sjtu.edu.cn/ubuntukylin{uri} 302
+    }
+    route /zorinos-isos/* {
+        uri strip_prefix /zorinos-isos
+        redir * {scheme}://mirror.sjtu.edu.cn/zorinos-isos{uri} 302
+    }
+    route /ubuntu-cloud-images/* {
+        uri strip_prefix /ubuntu-cloud-images
+        redir * {scheme}://mirror.sjtu.edu.cn/ubuntu-cloud-images{uri} 302
+    }
+    route /debian-ports/* {
+        uri strip_prefix /debian-ports
+        redir * {scheme}://mirror.sjtu.edu.cn/debian-ports{uri} 302
+    }
+    route /* {
+        redir * https://mirrors.sjtug.sjtu.edu.cn{uri} 308
+    }
+}
+
+mirrors.sjtug.sjtu.edu.cn {
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -915,23 +1085,23 @@ mirrors.sjtug.sjtu.edu.cn, http://mirrors.sjtug.sjtu.edu.cn {
         }
         route /git/homebrew-bundle.git/* {
             uri strip_prefix /git/homebrew-bundle.git
-            redir * {scheme}://mirror.sjtu.edu.cn/git/homebrew-bundle.git{uri} 302
+            redir * https://mirror.sjtu.edu.cn/git/homebrew-bundle.git{uri} 302
         }
         route /git/spdk.git/* {
             uri strip_prefix /git/spdk.git
-            redir * {scheme}://mirror.sjtu.edu.cn/git/spdk.git{uri} 302
+            redir * https://mirror.sjtu.edu.cn/git/spdk.git{uri} 302
         }
         route /git/SJTUBeamer.git/* {
             uri strip_prefix /git/SJTUBeamer.git
-            redir * {scheme}://mirror.sjtu.edu.cn/git/SJTUBeamer.git{uri} 302
+            redir * https://mirror.sjtu.edu.cn/git/SJTUBeamer.git{uri} 302
         }
         route /git/SJTUTeX.git/* {
             uri strip_prefix /git/SJTUTeX.git
-            redir * {scheme}://mirror.sjtu.edu.cn/git/SJTUTeX.git{uri} 302
+            redir * https://mirror.sjtu.edu.cn/git/SJTUTeX.git{uri} 302
         }
         route /git/SJTUThesis.git/* {
             uri strip_prefix /git/SJTUThesis.git
-            redir * {scheme}://mirror.sjtu.edu.cn/git/SJTUThesis.git{uri} 302
+            redir * https://mirror.sjtu.edu.cn/git/SJTUThesis.git{uri} 302
         }
     }
     @gzip_enabled {

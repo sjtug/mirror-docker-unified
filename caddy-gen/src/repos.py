@@ -101,6 +101,7 @@ class RedirRepo:
     name: str = ''
     target: str = ''
     always_target: bool = False
+    scheme_keep: bool = False
 
     def as_repo(self) -> list[Node]:
         redir_always_node = Node(f'redir * {self.target} 302')
