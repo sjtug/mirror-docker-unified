@@ -169,18 +169,6 @@ services:
     volumes:
       - "./common/gai.conf:/etc/gai.conf:ro"
 
-  ipv6nat:
-    image: robbertkl/ipv6nat:0.4.4
-    network_mode: host
-    restart: unless-stopped
-    volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    - "/lib/modules:/lib/modules:ro"
-    cap_add:
-    - SYS_MODULE
-    - NET_ADMIN
-    - NET_RAW
-
   rsyncd:
     build:
       context: ./rsyncd
