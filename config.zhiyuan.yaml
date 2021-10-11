@@ -228,6 +228,7 @@ repos:
     path: /mnt/emacs-elpa
     interval: 5000
     source: rsync://elpa.emacs-china.org/elpa/
+    rsync_extra_flags: --bwlimit=1000
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/julia-releases.sh
     source: s3://julialang2/
