@@ -1,5 +1,8 @@
   {
     key_type rsa4096
+    email sjtug-mirror-maintainers@googlegroups.com
+    preferred_chains smallest
+    cert_issuer acme
 }
 
 http://mirrors.sjtug.sjtu.edu.cn/ {

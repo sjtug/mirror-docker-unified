@@ -292,7 +292,12 @@ if __name__ == "__main__":
 
         config_yaml = site_configs[site]
         roots = []
-        roots.append(Node(" ", [Node('key_type rsa4096')]))
+        roots.append(Node(" ", [
+            Node('key_type rsa4096'),
+            Node('email sjtug-mirror-maintainers@googlegroups.com'),
+            Node('preferred_chains smallest'),
+            Node('cert_issuer acme')
+        ]))
 
         for (idx, base) in enumerate(BASES[site]):
             roots.append(build_root(base, config_yaml, idx == 0, site))
