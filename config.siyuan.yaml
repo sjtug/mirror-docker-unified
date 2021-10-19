@@ -632,7 +632,7 @@ repos:
   - type: shell_script
     script: /worker-script/anaconda.sh --workers 4 --s3-buffer-path /var/cache --print-plan 100 --concurrent-transfer 64
     serve_mode: mirror_intel
-    interval: 3600
+    interval: 7200
     name: anaconda
     unified: disable
     <<: *oneshot_common
