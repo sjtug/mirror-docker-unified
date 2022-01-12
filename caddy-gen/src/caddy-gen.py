@@ -82,12 +82,24 @@ def repo_no_redir(base: str, repo: Repo, site: str) -> list[Node]:
     ]
 
 
+def repo_redir_scheme_keep(base: str, repo: Repo, site: str) -> list[Node]:
+    strip_prefix = Node(f'uri strip_prefix /{repo.get_name()}')
+    redir_node = Node(f'redir * {repo.target}{{uri}} 302')
+    return [
+        Node(f'http://{base}/{repo.get_name()}', log() + repo_redir(repo)),
+        Node(f'http://{base}/{repo.get_name()}/*', log() +
+             [Node(f'route *', [strip_prefix, redir_node])])
+    ]
+
+
 def dict_to_repo(repo: dict) -> Repo:
     serve_mode = repo.get('serve_mode', 'default')
     if serve_mode == 'redir':
-        return RedirRepo(repo['name'], repo['target'], False)
+        return RedirRepo(repo['name'], repo['target'], False, False)
     if serve_mode == 'redir_force':
-        return RedirRepo(repo['name'], repo['target'], True)
+        return RedirRepo(repo['name'], repo['target'], True, False)
+    if serve_mode == 'redir_scheme_keep':
+        return RedirRepo(repo['name'], repo['target'], False, True)
     if serve_mode == 'default':
         path = repo['path']
         name = repo['name']
@@ -136,6 +148,8 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
                 git_server_nodes += repo.as_repo()
             else:
                 file_server_nodes += repo.as_repo()
+                if isinstance(repo, RedirRepo) and repo.scheme_keep:
+                    outer_nodes += repo_redir_scheme_keep(base, repo, site)
 
             if 'subdomain' in repo_ and first_site:
                 outer_nodes += [Node(repo_['subdomain'],
@@ -210,7 +224,14 @@ def rewrite_config(repo: dict, site: str):
             'serve_mode': 'proxy',
             'strip_prefix': False
         }
-    if serve_mode == 'default' or serve_mode == 'git':
+    if serve_mode == 'default':
+        name = repo['name']
+        return {
+            'name': name,
+            'serve_mode': 'redir_scheme_keep',
+            'target': f'{{scheme}}://{BASES[site][0]}/{name}'
+        }
+    if serve_mode == 'git':
         name = repo['name']
         return {
             'name': name,
