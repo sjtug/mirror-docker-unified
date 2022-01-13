@@ -274,7 +274,7 @@ http://mirror.sjtu.edu.cn/openwrt {
 http://mirror.sjtu.edu.cn/openwrt/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     @hidden {
@@ -506,7 +506,7 @@ mirror.sjtu.edu.cn {
     }
     redir /openwrt /openwrt/ 301
     file_server /openwrt/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /rpmfusion /rpmfusion/ 301
