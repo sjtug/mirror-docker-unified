@@ -210,7 +210,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://downloads.openwrt.org/downloads/
     interval: 6900
-    path: /srv/disk1/openwrt
+    path: /srv/disk2/openwrt
     rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
     name: openwrt
     no_redir_http: true
