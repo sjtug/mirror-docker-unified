@@ -325,11 +325,11 @@ repos:
     serve_mode: redir
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix linuxbrew-bottles/bottles --s3-buffer-path /var/cache --print-plan 100 homebrew --arch x86_64_linux --api-base https://formulae.brew.sh/api/formula-linux.json
-    serve_mode: mirror_intel
-    interval: 10800
+  - type: external
     name: linuxbrew-bottles
+    serve_mode: redir
+    target: https://mirror.sjtu.edu.cn/homebrew-bottles
+    disabled: true
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh

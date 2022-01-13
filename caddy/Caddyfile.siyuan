@@ -553,7 +553,8 @@ mirror.sjtu.edu.cn {
     redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
     redir /linuxbrew-bottles /linuxbrew-bottles/ 301
     route /linuxbrew-bottles/* {
-        reverse_proxy mirror-intel:8000
+        uri strip_prefix /linuxbrew-bottles
+        redir * https://mirror.sjtu.edu.cn/homebrew-bottles{uri} 302
     }
     redir /git/guix.git /git/guix.git/ 301
     redir /git/llvm-project.git /git/llvm-project.git/ 301
