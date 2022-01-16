@@ -224,7 +224,7 @@ repos:
     name: julia
   - type: shell_script
     name: emacs-elpa
-    script: /worker-script/zhiyuan/worker-script/emacs-elpa.sh
+    script: /worker-script/rsync.sh
     path: /mnt/emacs-elpa
     interval: 5000
     source: rsync://mirrors.tuna.tsinghua.edu.cn/elpa/
