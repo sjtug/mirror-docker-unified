@@ -31,6 +31,7 @@ repos:
   - pytorch/noarch
   - pytorch-lts/linux-64
   - pytorch-lts/win-64
+  - pytorch-lts/noarch
   - pytorch-test/linux-64
   - pytorch-test/osx-64
   - pytorch-test/win-64
