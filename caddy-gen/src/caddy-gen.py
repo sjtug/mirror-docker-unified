@@ -145,12 +145,16 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
                 gzip_disabled_list.append(repo.get_name())
 
     file_server_nodes += [BLANK_NODE]
-    file_server_nodes += [Node('@git_libgit2', [Node(f'path /git/*'),
-                                                Node(f'header User-Agent *libgit2*')])]
-    file_server_nodes += [Node('reverse_proxy @git_libgit2 git-backend', [])]
-    file_server_nodes += [Node('@git_normal', [Node(f'path /git/*'),
-                                               Node(f'not header User-Agent *libgit2*')])]
-    file_server_nodes += [Node('route @git_normal', git_server_nodes)]
+
+    # libgit2 patches -- libgit2 doesn't support 301 redirect
+    # file_server_nodes += [Node('@git_libgit2', [Node(f'path /git/*'),
+    #                                             Node(f'header User-Agent *libgit2*')])]
+    # file_server_nodes += [Node('reverse_proxy @git_libgit2 git-backend', [])]
+    # file_server_nodes += [Node('@git_normal', [Node(f'path /git/*'),
+    #                                            Node(f'not header User-Agent *libgit2*')])]
+    # file_server_nodes += [Node('route @git_normal', git_server_nodes)]
+
+    file_server_nodes += git_server_nodes
 
     # disable gzip for all proxy repos
     gzip_disabled = [Node(
