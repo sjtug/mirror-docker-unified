@@ -41,9 +41,9 @@ COPY build-script/from-cache.sh build-script/from-cache.sh
 
 # yq
 RUN /app/build-script/from-cache.sh \
-    https://mirror.sjtu.edu.cn/github-release/mikefarah/yq/releases/download/4.19.1/yq_linux_amd64 \
-    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/github-release/yq/releases/download/4.19.1/yq_linux_amd64 \
-    https://github.com/mikefarah/yq/releases/download/4.19.1/yq_linux_amd64 \
+    https://mirror.sjtu.edu.cn/github-release/mikefarah/yq/releases/download/v4.19.1/yq_linux_amd64 \
+    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/github-release/yq/releases/download/v4.19.1/yq_linux_amd64 \
+    https://github.com/mikefarah/yq/releases/download/v4.19.1/yq_linux_amd64 \
     /usr/local/bin/yq \
         && chmod +x /usr/local/bin/yq
 
