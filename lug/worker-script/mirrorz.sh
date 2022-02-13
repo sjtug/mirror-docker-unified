@@ -8,6 +8,8 @@ curl -sSLf https://mirror.sjtu.edu.cn/lug/v1/manager/summary > /tmp/siyuan-summa
 curl -sSLf https://mirrors.sjtug.sjtu.edu.cn/lug/v1/manager/summary > /tmp/zhiyuan-summary.json
 curl -sSLf https://sjtug-portal-1251836446.file.myqcloud.com/tags/mirror-help/index.xml > /tmp/help.xml
 curl -sSLf https://mirrorz.org/static/json/cname.json > /tmp/cname.json
+yq -o=json '.' /config.siyuan.yaml > /tmp/config.siyuan.json
+yq -o=json '.' /config.zhiyuan.yaml > /tmp/config.zhiyuan.json
 
-$DIR/mirrorz.py $DIR/mirrorz/siyuan.json /tmp/siyuan-summary.json /tmp/help.xml /tmp/cname.json > /mirrorz/siyuan.json
-$DIR/mirrorz.py $DIR/mirrorz/zhiyuan.json /tmp/zhiyuan-summary.json /tmp/help.xml /tmp/cname.json > /mirrorz/zhiyuan.json
+$DIR/mirrorz.py $DIR/mirrorz/siyuan.json /tmp/config.siyuan.json /tmp/siyuan-summary.json /tmp/help.xml /tmp/cname.json > /mirrorz/siyuan.json
+$DIR/mirrorz.py $DIR/mirrorz/zhiyuan.json /tmp/config.zhiyuan.json /tmp/zhiyuan-summary.json /tmp/help.xml /tmp/cname.json > /mirrorz/zhiyuan.json

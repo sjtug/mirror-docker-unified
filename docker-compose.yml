@@ -62,6 +62,8 @@ services:
       - "./secrets/ssh:/secrets_ssh:ro"
       - "./secrets/mirror-intel.env:/secrets_s3:ro"
       - "./common/gai.conf:/etc/gai.conf:ro"
+      - "./config.siyuan.yaml:/config.siyuan.yaml:ro"
+      - "./config.zhiyuan.yaml:/config.zhiyuan.yaml:ro"
     tmpfs: /var/cache
     environment:
       RUST_LOG: info
