@@ -334,3 +334,10 @@ repos:
     name: rocky
     rsync_extra_flags: --exclude "*/debug/*"
     <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/mirrorz.sh
+    interval: 300
+    target: https://mirrorz.org/
+    serve_mode: ignore
+    unified: disable
+    name: .mirrorz

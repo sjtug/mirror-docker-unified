@@ -26,7 +26,6 @@ SOFTWARE.
 
 import json
 import sys
-import xml
 from xml.dom import minidom
 from dateutil.parser import parse
 
@@ -61,17 +60,19 @@ def main():
     global options
     global cname
     if len(sys.argv) < 5:
-        print("help: mirrorz.py site.json summary.json help.xml cname.json")
+        print("help: mirrorz.py site.json lug.json summary.json help.xml cname.json")
         sys.exit(0)
     site = json.loads(open(sys.argv[1]).read())
-    summary = json.loads(open(sys.argv[2]).read())
+    lug = json.loads(open(sys.argv[2]).read())
+    summary = json.loads(open(sys.argv[3]).read())
     help_items = minidom.parse(
-        sys.argv[3]).documentElement.getElementsByTagName("item")
-    cname = json.loads(open(sys.argv[4]).read())
+        sys.argv[4]).documentElement.getElementsByTagName("item")
+    cname = json.loads(open(sys.argv[5]).read())
     mirrorz = {}
     mirrorz["site"] = site
     mirrorz["info"] = []
     mirrors = []
+    sources = {item["name"]: item.get("source", "") for item in lug["repos"]}
     for worker, param in summary["WorkerStatus"].items():
         if worker.startswith(".") or worker == 'sjtug-internal' or worker == 'test':
             continue
@@ -81,7 +82,7 @@ def main():
             "url": "/" + worker,
             "status": f"{status(param)}{int(parse(param['LastFinished']).timestamp())}",
             "help": help(worker, help_items),
-            "upstream": ""
+            "upstream": sources.get(worker, "")
         }
         mirrors.append(mirror)
 

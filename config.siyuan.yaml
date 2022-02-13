@@ -460,6 +460,7 @@ repos:
     interval: 300
     target: https://mirrorz.org/
     serve_mode: ignore
+    unified: disable
     name: .mirrorz
   - type: external
     name: nix-channels/store
