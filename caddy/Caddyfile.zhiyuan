@@ -821,6 +821,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /debian-cd
         redir * https://repo.huaweicloud.com/debian-cd/{uri} 302
     }
+    redir /centos /centos/ 301
+    route /centos/* {
+        uri strip_prefix /centos
+        redir * https://repo.huaweicloud.com/centos/{uri} 302
+    }
 
     route /git/homebrew-core.git/* {
         reverse_proxy git-backend
@@ -1024,6 +1029,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /github/SJTUThesis/*
         not path /ubuntu-cd/*
         not path /debian-cd/*
+        not path /centos/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
