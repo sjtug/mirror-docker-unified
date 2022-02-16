@@ -768,6 +768,11 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /debian-cd
         redir * https://repo.huaweicloud.com/debian-cd/{uri} 302
     }
+    redir /centos /centos/ 301
+    route /centos/* {
+        uri strip_prefix /centos
+        redir * https://repo.huaweicloud.com/centos/{uri} 302
+    }
     redir /putty /putty/ 301
     route /putty/* {
         uri strip_prefix /putty
@@ -1093,6 +1098,7 @@ mirror.sjtu.edu.cn {
         not path /github/SJTUThesis/*
         not path /ubuntu-cd/*
         not path /debian-cd/*
+        not path /centos/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
