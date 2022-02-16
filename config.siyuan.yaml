@@ -17,14 +17,14 @@ dummy:
 
 repos:
   # centos
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/centos/
-    interval: 5800
-    path: /srv/disk3/centos
-    name: centos
-    no_redir_http: true
-    <<: *oneshot_common
+  # - type: shell_script
+  #   script: /worker-script/rsync.sh
+  #   source: rsync://mirrors.kernel.org/centos/
+  #   interval: 5800
+  #   path: /srv/disk3/centos
+  #   name: centos
+  #   no_redir_http: true
+  #   <<: *oneshot_common
   # debian
   - type: shell_script
     script: /worker-script/debian.sh
@@ -35,13 +35,13 @@ repos:
     no_redir_http: true
     <<: *oneshot_common
   # debian-cd
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/debian-cd/
-    interval: 23600
-    path: /srv/disk1/debian-cd
-    name: debian-cd
-    <<: *oneshot_common
+  # - type: shell_script
+  #   script: /worker-script/rsync.sh
+  #   source: rsync://mirrors.kernel.org/debian-cd/
+  #   interval: 23600
+  #   path: /srv/disk1/debian-cd
+  #   name: debian-cd
+  #   <<: *oneshot_common
   # debian-security
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -181,13 +181,13 @@ repos:
     no_redir_http: true
     <<: *oneshot_common
   # ubuntu-cd
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://rsync.releases.ubuntu.com/releases/
-    interval: 24600
-    path: /srv/disk3/ubuntu-cd
-    name: ubuntu-cd
-    <<: *oneshot_common
+  # - type: shell_script
+  #   script: /worker-script/rsync.sh
+  #   source: rsync://rsync.releases.ubuntu.com/releases/
+  #   interval: 24600
+  #   path: /srv/disk3/ubuntu-cd
+  #   name: ubuntu-cd
+  #   <<: *oneshot_common
   # ubuntu-cdimage
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -772,4 +772,16 @@ repos:
     name: github/SJTUThesis
     target: /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list
     serve_mode: redir_force
+    <<: *oneshot_common
+  - type: external
+    name: ubuntu-cd
+    serve_mode: redir
+    target: https://repo.huaweicloud.com/ubuntu-cdimage/
+    disabled: true
+    <<: *oneshot_common
+  - type: external
+    name: debian-cd
+    serve_mode: redir
+    target: https://repo.huaweicloud.com/debian-cd/
+    disabled: true
     <<: *oneshot_common
