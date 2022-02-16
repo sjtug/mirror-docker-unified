@@ -785,4 +785,3 @@ repos:
     target: https://repo.huaweicloud.com/debian-cd/
     disabled: true
     <<: *oneshot_common
-    
