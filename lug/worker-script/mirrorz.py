@@ -87,7 +87,28 @@ def main():
         mirrors.append(mirror)
 
     mirrorz["mirrors"] = mirrors
-    print(json.dumps(mirrorz))
+    mirrorz["extension"] = "D"
+    mirrorz["endpoints"] = [{
+        "label": "sjtug-" + site["tag"],
+        "public": True,
+        "resolve": site["url"],
+        "filter": ["V4", "V6", "SSL", "NOSSL"],
+        "range": [
+            "202.120.0.0/18",
+            "59.78.0.0/18",
+            "111.186.0.0/18",
+            "211.80.32.0/19",
+            "211.80.80.0/20",
+            "2001:250:6000::/48",
+            "2001:251:7801::/48",
+            "2001:256:100:2000::/56",
+            "2001:da8:8000::/48",
+            "2403:d400::/32",
+            "2408:8026:380::/52",
+        ]
+    }]
+
+    print(json.dumps(mirrorz, indent=2))
 
 
 if __name__ == '__main__':
