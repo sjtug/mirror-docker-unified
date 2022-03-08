@@ -389,6 +389,11 @@ mirror.sjtu.edu.cn {
         root /srv/disk1
         hide .*
     }
+    redir /debian-cd /debian-cd/ 301
+    file_server /debian-cd/* browse {
+        root /srv/disk1
+        hide .*
+    }
     redir /debian-security /debian-security/ 301
     file_server /debian-security/* browse {
         root /srv/disk1
@@ -452,6 +457,11 @@ mirror.sjtu.edu.cn {
     redir /ubuntu /ubuntu/ 301
     file_server /ubuntu/* browse {
         root /srv/disk2
+        hide .*
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    file_server /ubuntu-cd/* browse {
+        root /srv/disk3
         hide .*
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
@@ -757,16 +767,6 @@ mirror.sjtu.edu.cn {
     route /github/SJTUThesis/* {
         uri strip_prefix /github/SJTUThesis
         redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
-    }
-    redir /ubuntu-cd /ubuntu-cd/ 301
-    route /ubuntu-cd/* {
-        uri strip_prefix /ubuntu-cd
-        redir * https://repo.huaweicloud.com/ubuntu-cdimage/{uri} 302
-    }
-    redir /debian-cd /debian-cd/ 301
-    route /debian-cd/* {
-        uri strip_prefix /debian-cd
-        redir * https://repo.huaweicloud.com/debian-cd/{uri} 302
     }
     redir /centos /centos/ 301
     route /centos/* {
@@ -1096,8 +1096,6 @@ mirror.sjtu.edu.cn {
         not path /git/SJTUThesis.git/*
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
-        not path /ubuntu-cd/*
-        not path /debian-cd/*
         not path /centos/*
         not path /putty/*
         not path /archlinux-cn/*

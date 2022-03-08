@@ -446,6 +446,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /debian
         redir * https://mirror.sjtu.edu.cn/debian{uri} 302
     }
+    redir /debian-cd /debian-cd/ 301
+    route /debian-cd/* {
+        uri strip_prefix /debian-cd
+        redir * https://mirror.sjtu.edu.cn/debian-cd{uri} 302
+    }
     redir /debian-security /debian-security/ 301
     route /debian-security/* {
         uri strip_prefix /debian-security
@@ -510,6 +515,11 @@ mirrors.sjtug.sjtu.edu.cn {
     route /ubuntu/* {
         uri strip_prefix /ubuntu
         redir * https://mirror.sjtu.edu.cn/ubuntu{uri} 302
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    route /ubuntu-cd/* {
+        uri strip_prefix /ubuntu-cd
+        redir * https://mirror.sjtu.edu.cn/ubuntu-cd{uri} 302
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     route /ubuntu-cdimage/* {
@@ -811,16 +821,6 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /github/SJTUThesis
         redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
     }
-    redir /ubuntu-cd /ubuntu-cd/ 301
-    route /ubuntu-cd/* {
-        uri strip_prefix /ubuntu-cd
-        redir * https://repo.huaweicloud.com/ubuntu-cdimage/{uri} 302
-    }
-    redir /debian-cd /debian-cd/ 301
-    route /debian-cd/* {
-        uri strip_prefix /debian-cd
-        redir * https://repo.huaweicloud.com/debian-cd/{uri} 302
-    }
     redir /centos /centos/ 301
     route /centos/* {
         uri strip_prefix /centos
@@ -934,6 +934,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /google-fonts/*
         not path /anaconda/*
         not path /debian/*
+        not path /debian-cd/*
         not path /debian-security/*
         not path /deepin/*
         not path /deepin-cd/*
@@ -947,6 +948,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /remi/*
         not path /scientific/*
         not path /ubuntu/*
+        not path /ubuntu-cd/*
         not path /ubuntu-cdimage/*
         not path /ubuntu-ports/*
         not path /openwrt/*
@@ -1027,8 +1029,6 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/SJTUThesis.git/*
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
-        not path /ubuntu-cd/*
-        not path /debian-cd/*
         not path /centos/*
     }
     encode @gzip_enabled gzip zstd

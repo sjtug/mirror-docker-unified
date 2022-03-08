@@ -35,13 +35,13 @@ repos:
     no_redir_http: true
     <<: *oneshot_common
   # debian-cd
-  # - type: shell_script
-  #   script: /worker-script/rsync.sh
-  #   source: rsync://mirrors.kernel.org/debian-cd/
-  #   interval: 23600
-  #   path: /srv/disk1/debian-cd
-  #   name: debian-cd
-  #   <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://mirrors.kernel.org/debian-cd/
+    interval: 23600
+    path: /srv/disk1/debian-cd
+    name: debian-cd
+    <<: *oneshot_common
   # debian-security
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -181,13 +181,13 @@ repos:
     no_redir_http: true
     <<: *oneshot_common
   # ubuntu-cd
-  # - type: shell_script
-  #   script: /worker-script/rsync.sh
-  #   source: rsync://rsync.releases.ubuntu.com/releases/
-  #   interval: 24600
-  #   path: /srv/disk3/ubuntu-cd
-  #   name: ubuntu-cd
-  #   <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.releases.ubuntu.com/releases/
+    interval: 24600
+    path: /srv/disk3/ubuntu-cd
+    name: ubuntu-cd
+    <<: *oneshot_common
   # ubuntu-cdimage
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -272,6 +272,8 @@ repos:
     serve_mode: mirror_intel
     interval: 4000
     name: flutter_infra
+    # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
+    source: https://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra
     <<: *oneshot_common
   # ghcup
   - type: shell_script
@@ -415,21 +417,21 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh GNS3/gns3-gui 3
-    interval: 4800
+    interval: 86400
     name: github/GNS3
     target: /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list
     serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh FreeCAD/FreeCAD 5
-    interval: 4800
+    interval: 86400
     name: github/FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
     serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/prometheus.sh
-    interval: 7200
+    interval: 86400
     name: github/prometheus
     target: /github-release/prometheus/?mirror_intel_list
     serve_mode: redir_force
@@ -571,6 +573,8 @@ repos:
     serve_mode: mirror_intel
     interval: 32400
     name: voidlinux
+    # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
+    source: https://mirrors.tuna.tsinghua.edu.cn/voidlinux
     <<: *oneshot_common
   - type: shell_script
     name: archlinux
@@ -585,12 +589,16 @@ repos:
     serve_mode: mirror_intel
     interval: 54000
     name: bioconductor
+    # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
+    source: https://mirrors.tuna.tsinghua.edu.cn/bioconductor
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix wireshark --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://2.na.dl.wireshark.org --rsync-base rsync://rsync.wireshark.org/wsdl
     serve_mode: mirror_intel
     interval: 86400
     name: wireshark
+    # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
+    source: https://2.na.dl.wireshark.org
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/test.sh
@@ -603,6 +611,8 @@ repos:
     serve_mode: mirror_intel
     interval: 86400
     name: macports
+    # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
+    source: https://mirrors.tuna.tsinghua.edu.cn/macports
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh VSCodium/vscodium 3
@@ -615,16 +625,10 @@ repos:
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix gimp --s3-buffer-path /var/cache --print-plan 100 rsync --http-base http://www.mirrorservice.org/sites/ftp.gimp.org/pub/gimp --rsync-base rsync://rsync.mirrorservice.org/ftp.gimp.org/pub/gimp/
     serve_mode: mirror_intel
     interval: 86400
+    # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
+    source: http://www.mirrorservice.org/sites/ftp.gimp.org/pub/gimp
     name: gimp
     <<: *oneshot_common
-  # We will enable flutter_infra_release later. Currently, we just set original upstream of flutter_infra to
-  # flutter_infra_release, and redirect users to that URL.
-  # - type: shell_script
-  #   script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra_release --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra_release --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra_release/
-  #   serve_mode: mirror_intel
-  #   interval: 10800
-  #   name: flutter_infra_release
-  #   <<: *oneshot_common
   - type: external
     name: flutter_infra_release
     serve_mode: redir
@@ -656,6 +660,8 @@ repos:
     serve_mode: mirror_intel
     interval: 86400
     name: kernel
+    # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
+    source: https://mirrors.tuna.tsinghua.edu.cn/kernel
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
@@ -772,18 +778,6 @@ repos:
     name: github/SJTUThesis
     target: /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
-  - type: external
-    name: ubuntu-cd
-    serve_mode: redir
-    target: https://repo.huaweicloud.com/ubuntu-cdimage/
-    disabled: true
-    <<: *oneshot_common
-  - type: external
-    name: debian-cd
-    serve_mode: redir
-    target: https://repo.huaweicloud.com/debian-cd/
-    disabled: true
     <<: *oneshot_common
   - type: external
     name: centos
