@@ -180,14 +180,14 @@ repos:
     name: ubuntu
     no_redir_http: true
     <<: *oneshot_common
-  # ubuntu-cd
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://rsync.releases.ubuntu.com/releases/
-    interval: 24600
-    path: /srv/disk3/ubuntu-cd
-    name: ubuntu-cd
-    <<: *oneshot_common
+  # # ubuntu-cd
+  # - type: shell_script
+  #   script: /worker-script/rsync.sh
+  #   source: rsync://rsync.releases.ubuntu.com/releases/
+  #   interval: 24600
+  #   path: /srv/disk3/ubuntu-cd
+  #   name: ubuntu-cd
+  #   <<: *oneshot_common
   # ubuntu-cdimage
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -783,5 +783,11 @@ repos:
     name: centos
     serve_mode: redir
     target: https://repo.huaweicloud.com/centos/
+    disabled: true
+    <<: *oneshot_common
+  - type: external
+    name: ubuntu-cd
+    serve_mode: redir
+    target: https://repo.huaweicloud.com/ubuntu-cdimage/
     disabled: true
     <<: *oneshot_common

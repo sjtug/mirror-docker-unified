@@ -459,11 +459,6 @@ mirror.sjtu.edu.cn {
         root /srv/disk2
         hide .*
     }
-    redir /ubuntu-cd /ubuntu-cd/ 301
-    file_server /ubuntu-cd/* browse {
-        root /srv/disk3
-        hide .*
-    }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     file_server /ubuntu-cdimage/* browse {
         root /srv/disk3
@@ -772,6 +767,11 @@ mirror.sjtu.edu.cn {
     route /centos/* {
         uri strip_prefix /centos
         redir * https://repo.huaweicloud.com/centos/{uri} 302
+    }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    route /ubuntu-cd/* {
+        uri strip_prefix /ubuntu-cd
+        redir * https://repo.huaweicloud.com/ubuntu-cdimage/{uri} 302
     }
     redir /putty /putty/ 301
     route /putty/* {
@@ -1097,6 +1097,7 @@ mirror.sjtu.edu.cn {
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
         not path /centos/*
+        not path /ubuntu-cd/*
         not path /putty/*
         not path /archlinux-cn/*
         not path /archlinuxarm/*
