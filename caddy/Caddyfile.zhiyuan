@@ -516,11 +516,6 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /ubuntu
         redir * https://mirror.sjtu.edu.cn/ubuntu{uri} 302
     }
-    redir /ubuntu-cd /ubuntu-cd/ 301
-    route /ubuntu-cd/* {
-        uri strip_prefix /ubuntu-cd
-        redir * https://mirror.sjtu.edu.cn/ubuntu-cd{uri} 302
-    }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     route /ubuntu-cdimage/* {
         uri strip_prefix /ubuntu-cdimage
@@ -826,6 +821,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /centos
         redir * https://repo.huaweicloud.com/centos/{uri} 302
     }
+    redir /ubuntu-cd /ubuntu-cd/ 301
+    route /ubuntu-cd/* {
+        uri strip_prefix /ubuntu-cd
+        redir * https://repo.huaweicloud.com/ubuntu-cdimage/{uri} 302
+    }
 
     route /git/homebrew-core.git/* {
         reverse_proxy git-backend
@@ -948,7 +948,6 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /remi/*
         not path /scientific/*
         not path /ubuntu/*
-        not path /ubuntu-cd/*
         not path /ubuntu-cdimage/*
         not path /ubuntu-ports/*
         not path /openwrt/*
@@ -1030,6 +1029,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
         not path /centos/*
+        not path /ubuntu-cd/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
