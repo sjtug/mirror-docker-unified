@@ -89,9 +89,9 @@ def main():
     mirrorz["mirrors"] = mirrors
     mirrorz["extension"] = "D"
     mirrorz["endpoints"] = [{
-        "label": "sjtug-" + site["tag"],
+        "label": "sjtug" + site["tag"],
         "public": True,
-        "resolve": site["url"],
+        "resolve": site["url"].strip("https://"),
         "filter": ["V4", "V6", "SSL", "NOSSL"],
         "range": [
             "202.120.0.0/18",
