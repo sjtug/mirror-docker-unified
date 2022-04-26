@@ -28,7 +28,7 @@ repos:
   # debian
   - type: shell_script
     script: /worker-script/debian.sh
-    source: mirrors.sfo.kernel.org
+    source: sv.mirrors.kernel.org
     interval: 5400
     path: /srv/disk1/debian
     name: debian
