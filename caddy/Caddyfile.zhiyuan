@@ -383,11 +383,6 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
-    redir /download.flutter.io /download.flutter.io/ 301
-    file_server /download.flutter.io/* browse {
-        root /mnt
-        hide .*
-    }
     redir /k8s.gcr.io /k8s.gcr.io/ 301
     route /k8s.gcr.io/* {
         uri strip_prefix /k8s.gcr.io
@@ -440,6 +435,11 @@ mirrors.sjtug.sjtu.edu.cn {
     route /archlinuxarm/* {
         uri strip_prefix /archlinuxarm
         redir * https://mirror.sjtu.edu.cn/archlinuxarm{uri} 302
+    }
+    redir /download.flutter.io /download.flutter.io/ 301
+    route /download.flutter.io/* {
+        uri strip_prefix /download.flutter.io
+        redir * https://mirror.sjtu.edu.cn/download.flutter.io{uri} 302
     }
     redir /debian /debian/ 301
     route /debian/* {
@@ -934,6 +934,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /google-fonts/*
         not path /anaconda/*
         not path /archlinuxarm/*
+        not path /download.flutter.io/*
         not path /debian/*
         not path /debian-cd/*
         not path /debian-security/*

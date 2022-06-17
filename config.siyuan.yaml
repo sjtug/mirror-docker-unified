@@ -33,6 +33,14 @@ repos:
     path: /srv/disk3/archlinuxarm
     name: archlinuxarm
     exclude_hidden: true
+  # flutter
+  - type: shell_script
+    name: download.flutter.io
+    script: /worker-script/rsync.sh
+    path: /srv/disk3/download.flutter.io
+    interval: 7200
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/
+    <<: *oneshot_common
   # debian
   - type: shell_script
     script: /worker-script/debian.sh

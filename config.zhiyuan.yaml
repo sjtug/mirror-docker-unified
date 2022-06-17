@@ -267,13 +267,6 @@ repos:
     path: /mnt/linuxliteos
     name: linuxliteos
     <<: *oneshot_common
-  - type: shell_script
-    name: download.flutter.io
-    script: /worker-script/rsync.sh
-    path: /mnt/download.flutter.io
-    interval: 7200
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/
-    <<: *oneshot_common
   - type: external
     name: k8s.gcr.io
     proxy_to: gcr-registry:80
