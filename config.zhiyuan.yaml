@@ -31,13 +31,6 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.dotsrc.org/archlinuxarm/
-    interval: 3900
-    path: /mnt/archlinuxarm
-    name: archlinuxarm
-    exclude_hidden: true
-  - type: shell_script
-    script: /worker-script/rsync.sh
     source: rsync://rsync11.us.gentoo.org/gentoo-portage/
     interval: 3600
     path: /mnt/gentoo

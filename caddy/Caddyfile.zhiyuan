@@ -252,11 +252,6 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
-    redir /archlinuxarm /archlinuxarm/ 301
-    file_server /archlinuxarm/* browse {
-        root /mnt
-        hide .*
-    }
     redir /gentoo /gentoo/ 301
     file_server /gentoo/* browse {
         root /mnt
@@ -440,6 +435,11 @@ mirrors.sjtug.sjtu.edu.cn {
     file_server /rocky/* browse {
         root /mnt
         hide .*
+    }
+    redir /archlinuxarm /archlinuxarm/ 301
+    route /archlinuxarm/* {
+        uri strip_prefix /archlinuxarm
+        redir * https://mirror.sjtu.edu.cn/archlinuxarm{uri} 302
     }
     redir /debian /debian/ 301
     route /debian/* {
@@ -933,6 +933,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /archlinuxarm/*
         not path /debian/*
         not path /debian-cd/*
         not path /debian-security/*
