@@ -384,6 +384,11 @@ mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    redir /archlinuxarm /archlinuxarm/ 301
+    file_server /archlinuxarm/* browse {
+        root /srv/disk3
+        hide .*
+    }
     redir /debian /debian/ 301
     file_server /debian/* browse {
         root /srv/disk1
@@ -783,11 +788,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /archlinux-cn
         redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn{uri} 302
     }
-    redir /archlinuxarm /archlinuxarm/ 301
-    route /archlinuxarm/* {
-        uri strip_prefix /archlinuxarm
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinuxarm{uri} 302
-    }
     redir /gentoo /gentoo/ 301
     route /gentoo/* {
         uri strip_prefix /gentoo
@@ -1100,7 +1100,6 @@ mirror.sjtu.edu.cn {
         not path /ubuntu-cd/*
         not path /putty/*
         not path /archlinux-cn/*
-        not path /archlinuxarm/*
         not path /gentoo/*
         not path /vim/*
         not path /alpine/*
