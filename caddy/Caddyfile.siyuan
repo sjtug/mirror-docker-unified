@@ -391,7 +391,7 @@ mirror.sjtu.edu.cn {
     }
     redir /archlinux-cn /archlinux-cn/ 301
     file_server /archlinux-cn/* browse {
-        root /mnt
+        root /srv/disk3
         hide .*
     }
     redir /debian /debian/ 301
