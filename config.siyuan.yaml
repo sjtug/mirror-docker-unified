@@ -37,7 +37,7 @@ repos:
   - type: shell_script
     name: archlinux-cn
     interval: 6000
-    path: /mnt/archlinux-cn
+    path: /srv/disk3/archlinux-cn
     script: /worker-script/zhiyuan/worker-script/archlinux-cn.sh
     <<: *oneshot_common
   # debian
