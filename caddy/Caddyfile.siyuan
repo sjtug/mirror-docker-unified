@@ -922,7 +922,7 @@ mirror.sjtu.edu.cn {
     redir /download.flutter.io /download.flutter.io/ 301
     route /download.flutter.io/* {
         uri strip_prefix /download.flutter.io
-        redir * https://mirrors.sjtug.sjtu.edu.cn/download.flutter.io{uri} 302
+        redir * https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/{uri} 302
     }
     redir /google-fonts /google-fonts/ 301
     route /google-fonts/* {
