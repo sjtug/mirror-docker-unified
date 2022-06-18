@@ -141,13 +141,11 @@ repos:
     name: linuxmint-cd
     <<: *oneshot_common
   # mageia
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/mageia/
-    interval: 21200
-    path: /srv/disk2/mageia
+  - type: external
     name: mageia
-    rsync_extra_flags: --exclude "*/devel/*"
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/mageia/
+    disabled: true
     <<: *oneshot_common
   # opensuse
   - type: shell_script

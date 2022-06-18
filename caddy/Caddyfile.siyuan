@@ -440,9 +440,9 @@ mirror.sjtu.edu.cn {
         hide .*
     }
     redir /mageia /mageia/ 301
-    file_server /mageia/* browse {
-        root /srv/disk2
-        hide .*
+    route /mageia/* {
+        uri strip_prefix /mageia
+        redir * https://ftp.sjtu.edu.cn/mageia/{uri} 302
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
@@ -1038,6 +1038,7 @@ mirror.sjtu.edu.cn {
     }
     @gzip_enabled {
         not path /speedtest/*
+        not path /mageia/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*

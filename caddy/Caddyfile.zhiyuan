@@ -489,7 +489,7 @@ mirrors.sjtug.sjtu.edu.cn {
     redir /mageia /mageia/ 301
     route /mageia/* {
         uri strip_prefix /mageia
-        redir * https://mirror.sjtu.edu.cn/mageia{uri} 302
+        redir * https://ftp.sjtu.edu.cn/mageia/{uri} 302
     }
     redir /opensuse /opensuse/ 301
     route /opensuse/* {
