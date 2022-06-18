@@ -24,12 +24,6 @@ repos:
     name: putty
     <<: *oneshot_common
   - type: shell_script
-    name: archlinux-cn
-    interval: 6000
-    path: /mnt/archlinux-cn
-    script: /worker-script/zhiyuan/worker-script/archlinux-cn.sh
-    <<: *oneshot_common
-  - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync11.us.gentoo.org/gentoo-portage/
     interval: 3600
