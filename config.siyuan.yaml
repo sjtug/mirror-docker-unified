@@ -33,6 +33,13 @@ repos:
     path: /srv/disk3/archlinuxarm
     name: archlinuxarm
     exclude_hidden: true
+  # archlinux-cn
+  - type: shell_script
+    name: archlinux-cn
+    interval: 6000
+    path: /mnt/archlinux-cn
+    script: /worker-script/zhiyuan/worker-script/archlinux-cn.sh
+    <<: *oneshot_common
   # debian
   - type: shell_script
     script: /worker-script/debian.sh

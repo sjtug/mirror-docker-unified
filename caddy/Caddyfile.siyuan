@@ -389,6 +389,11 @@ mirror.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /archlinux-cn /archlinux-cn/ 301
+    file_server /archlinux-cn/* browse {
+        root /mnt
+        hide .*
+    }
     redir /debian /debian/ 301
     file_server /debian/* browse {
         root /srv/disk1
@@ -783,11 +788,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /putty
         redir * https://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
     }
-    redir /archlinux-cn /archlinux-cn/ 301
-    route /archlinux-cn/* {
-        uri strip_prefix /archlinux-cn
-        redir * https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn{uri} 302
-    }
     redir /gentoo /gentoo/ 301
     route /gentoo/* {
         uri strip_prefix /gentoo
@@ -1099,7 +1099,6 @@ mirror.sjtu.edu.cn {
         not path /centos/*
         not path /ubuntu-cd/*
         not path /putty/*
-        not path /archlinux-cn/*
         not path /gentoo/*
         not path /vim/*
         not path /alpine/*
