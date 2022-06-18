@@ -379,9 +379,9 @@ mirrors.sjtug.sjtu.edu.cn {
         hide .*
     }
     redir /download.flutter.io /download.flutter.io/ 301
-    file_server /download.flutter.io/* browse {
-        root /mnt
-        hide .*
+    route /download.flutter.io/* {
+        uri strip_prefix /download.flutter.io
+        redir * https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/{uri} 302
     }
     redir /k8s.gcr.io /k8s.gcr.io/ 301
     route /k8s.gcr.io/* {
@@ -929,6 +929,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/crates.io-index/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
+        not path /download.flutter.io/*
         not path /k8s.gcr.io/*
         not path /docker-registry/*
         not path /google-fonts/*
