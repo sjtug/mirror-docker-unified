@@ -19,8 +19,8 @@ services:
       - "./config.siyuan.yaml:/config.yaml:ro"
     environment:
       MIRROR_CLONE_SITE: "mirror.sjtu.edu.cn"
-    mem_limit: 20G
-    memswap_limit: 20G
+    mem_limit: 30G
+    # memswap_limit: 20G
 
   logspout:
     container_name: siyuan-logspout
