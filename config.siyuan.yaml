@@ -117,7 +117,7 @@ repos:
   # fedora-secondary
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/fedora-secondary/
+    source: rsync://download-ib01.fedoraproject.org/fedora-secondary/
     interval: 5000
     path: /srv/disk1/fedora-secondary
     name: fedora-secondary
