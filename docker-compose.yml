@@ -150,7 +150,7 @@ services:
       context: ./mirror-intel
       args:
         - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.27
+        - INTEL_VERSION=v0.1.28
     networks:
       - ipv6-service-net
     expose:
@@ -159,7 +159,7 @@ services:
     env_file:
       - './secrets/mirror-intel.env'
     environment:
-      RUST_LOG: warn
+      RUST_LOG: info
     logging:
       options:
         max-size: "4M"
