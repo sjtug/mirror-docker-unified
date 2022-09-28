@@ -150,7 +150,7 @@ services:
       context: ./mirror-intel
       args:
         - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.28
+        - INTEL_VERSION=v0.1.29
     networks:
       - ipv6-service-net
     expose:
