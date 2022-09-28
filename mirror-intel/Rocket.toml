@@ -6,12 +6,12 @@ direct_stream_size_kb = 4
 download_timeout = 300
 file_threshold_mb = 20
 ignore_threshold_mb = 4096
-log_level = "off"
 max_pending_task = 65536
 read_only = false
 ttl = 3
 user_agent = "mirror-intel / 0.1 (mirror.sjtu.edu.cn)"
 workers = 8
+buffer_path = "/mnt/cache/"
 
 [default.github_release]
 allow = [
@@ -56,5 +56,7 @@ s3_only = [
 ]
 
 [default.s3]
+name = "jCloud S3"
 bucket = "899a892efef34b1b944a19981040f55b-oss01"
 endpoint = "https://s3.jcloud.sjtu.edu.cn"
+website_endpoint = "https://s3.jcloud.sjtu.edu.cn"
