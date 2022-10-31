@@ -119,7 +119,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://download-ib01.fedoraproject.org/fedora-secondary/
     interval: 5000
-    path: /srv/disk1/fedora-secondary
+    path: /srv/disk3/fedora-secondary
     name: fedora-secondary
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
