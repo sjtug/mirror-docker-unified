@@ -124,7 +124,7 @@ http://mirror.sjtu.edu.cn/fedora-secondary {
 http://mirror.sjtu.edu.cn/fedora-secondary/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     @hidden {
@@ -426,7 +426,7 @@ mirror.sjtu.edu.cn {
     }
     redir /fedora-secondary /fedora-secondary/ 301
     file_server /fedora-secondary/* browse {
-        root /srv/disk1
+        root /srv/disk3
         hide .*
     }
     redir /linuxmint /linuxmint/ 301
