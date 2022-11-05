@@ -48,7 +48,7 @@ services:
       args:
         - USE_SJTUG=true
         - CLONE_VERSION=v0.1.18
-        - CLONE_V2_VERSION=v0.2.27
+        - CLONE_V2_VERSION=v0.2.28
         - LUG_VERSION=v0.12.7
     expose:
       - 8081
@@ -150,7 +150,7 @@ services:
       context: ./mirror-intel
       args:
         - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.31
+        - INTEL_VERSION=v0.1.32
     networks:
       - ipv6-service-net
     expose:
