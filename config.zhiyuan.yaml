@@ -91,14 +91,14 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.nluug.nl/kali/
+    source: rsync://ftp.jaist.ac.jp/kali/
     interval: 10800
     path: /mnt/kali
     name: kali
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.nluug.nl/kali-images/
+    source: rsync://ftp.jaist.ac.jp/kali-images/
     interval: 10800
     path: /mnt/kali-images
     name: kali-images
