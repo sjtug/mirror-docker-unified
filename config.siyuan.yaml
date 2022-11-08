@@ -732,7 +732,7 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://ftp.kr.debian.org/debian-ports/
+    source: rsync://ftp.de.debian.org/debian-ports/
     interval: 9000
     path: /srv/disk2/debian-ports
     name: debian-ports
