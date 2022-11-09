@@ -292,11 +292,6 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
-    redir /kali /kali/ 301
-    file_server /kali/* browse {
-        root /mnt
-        hide .*
-    }
     redir /kali-images /kali-images/ 301
     file_server /kali-images/* browse {
         root /mnt
@@ -475,6 +470,11 @@ mirrors.sjtug.sjtu.edu.cn {
     route /fedora-secondary/* {
         uri strip_prefix /fedora-secondary
         redir * https://mirror.sjtu.edu.cn/fedora-secondary{uri} 302
+    }
+    redir /kali /kali/ 301
+    route /kali/* {
+        uri strip_prefix /kali
+        redir * https://mirror.sjtu.edu.cn/kali{uri} 302
     }
     redir /linuxmint /linuxmint/ 301
     route /linuxmint/* {
@@ -943,6 +943,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /deepin-cd/*
         not path /docker-ce/*
         not path /fedora-secondary/*
+        not path /kali/*
         not path /linuxmint/*
         not path /linuxmint-cd/*
         not path /mageia/*
