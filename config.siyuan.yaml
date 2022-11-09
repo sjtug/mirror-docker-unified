@@ -124,6 +124,14 @@ repos:
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
     <<: *oneshot_common
+  # kali
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://ftp.jaist.ac.jp/kali/
+    interval: 10800
+    path: /srv/disk2/kali
+    name: kali
+    <<: *oneshot_common
   # linuxmint
   - type: shell_script
     script: /worker-script/rsync.sh

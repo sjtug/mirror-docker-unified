@@ -429,6 +429,11 @@ mirror.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /kali /kali/ 301
+    file_server /kali/* browse {
+        root /srv/disk2
+        hide .*
+    }
     redir /linuxmint /linuxmint/ 301
     file_server /linuxmint/* browse {
         root /srv/disk1
@@ -833,11 +838,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /ros
         redir * https://mirrors.sjtug.sjtu.edu.cn/ros{uri} 302
     }
-    redir /kali /kali/ 301
-    route /kali/* {
-        uri strip_prefix /kali
-        redir * https://mirrors.sjtug.sjtu.edu.cn/kali{uri} 302
-    }
     redir /kali-images /kali-images/ 301
     route /kali-images/* {
         uri strip_prefix /kali-images
@@ -1109,7 +1109,6 @@ mirror.sjtu.edu.cn {
         not path /gnu/*
         not path /cygwin/*
         not path /ros/*
-        not path /kali/*
         not path /kali-images/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
