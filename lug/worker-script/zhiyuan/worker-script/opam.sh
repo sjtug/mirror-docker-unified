@@ -6,7 +6,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 $DIR/pre-git.sh
 
 pushd "$LUG_path"
-echo '\narchive-mirrors = "https://mirrors.sjtug.sjtu.edu.cn/opam-cache"' >> repo
+printf '\narchive-mirrors: "https://mirrors.sjtug.sjtu.edu.cn/opam-cache"\n' >> repo
 git config user.name 'SJTUG mirrors'
 git config user.email 'mirrors@sjtug.org'
 git add .
