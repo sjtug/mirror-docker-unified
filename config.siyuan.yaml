@@ -54,7 +54,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/debian-cd/
     interval: 23600
-    path: /srv/disk1/debian-cd
+    path: /srv/disk2/debian-cd
     name: debian-cd
     <<: *oneshot_common
   # debian-security
@@ -80,7 +80,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.deepin.com/cdimage/
     interval: 6000
-    path: /srv/disk1/deepin-cd
+    path: /srv/disk2/deepin-cd
     name: deepin-cd
     <<: *oneshot_common
   # docker-ce
