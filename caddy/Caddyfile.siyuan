@@ -441,7 +441,7 @@ mirror.sjtu.edu.cn {
     }
     redir /linuxmint-cd /linuxmint-cd/ 301
     file_server /linuxmint-cd/* browse {
-        root /srv/disk1
+        root /srv/disk2
         hide .*
     }
     redir /mageia /mageia/ 301
