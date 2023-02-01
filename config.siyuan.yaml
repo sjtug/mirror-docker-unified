@@ -145,7 +145,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/linuxmint/
     interval: 21000
-    path: /srv/disk1/linuxmint-cd
+    path: /srv/disk2/linuxmint-cd
     name: linuxmint-cd
     <<: *oneshot_common
   # mageia
