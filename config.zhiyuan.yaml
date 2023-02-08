@@ -132,6 +132,10 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/crates.io-index.git
     serve_mode: git
     <<: *oneshot_common
+  - type: external
+    name: crates.io-index
+    path: /mnt/git/crates.io-index
+    disabled: true
   - type: shell_script
     name: raspbian
     script: /worker-script/rsync.sh

@@ -301,6 +301,11 @@ mirrors.sjtug.sjtu.edu.cn {
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
     redir /git/brew.git /git/brew.git/ 301
     redir /git/crates.io-index /git/crates.io-index/ 301
+    redir /crates.io-index /crates.io-index/ 301
+    file_server /crates.io-index/* browse {
+        root /mnt/git
+        hide .*
+    }
     redir /raspbian /raspbian/ 301
     file_server /raspbian/* browse {
         root /mnt
