@@ -847,6 +847,11 @@ mirror.sjtu.edu.cn {
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
     redir /git/brew.git /git/brew.git/ 301
     redir /git/crates.io-index /git/crates.io-index/ 301
+    redir /crates.io-index /crates.io-index/ 301
+    route /crates.io-index/* {
+        uri strip_prefix /crates.io-index
+        redir * https://mirrors.sjtug.sjtu.edu.cn/crates.io-index{uri} 302
+    }
     redir /raspbian /raspbian/ 301
     route /raspbian/* {
         uri strip_prefix /raspbian
@@ -1114,6 +1119,7 @@ mirror.sjtu.edu.cn {
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
         not path /git/crates.io-index/*
+        not path /crates.io-index/*
         not path /raspbian/*
         not path /parrot/*
         not path /raspberrypi/*
