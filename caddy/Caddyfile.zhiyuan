@@ -441,6 +441,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /archlinux-cn
         redir * https://mirror.sjtu.edu.cn/archlinux-cn{uri} 302
     }
+    redir /opencloudos /opencloudos/ 301
+    route /opencloudos/* {
+        uri strip_prefix /opencloudos
+        redir * https://mirror.sjtu.edu.cn/opencloudos{uri} 302
+    }
     redir /debian /debian/ 301
     route /debian/* {
         uri strip_prefix /debian
@@ -941,6 +946,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /anaconda/*
         not path /archlinuxarm/*
         not path /archlinux-cn/*
+        not path /opencloudos/*
         not path /debian/*
         not path /debian-cd/*
         not path /debian-security/*
