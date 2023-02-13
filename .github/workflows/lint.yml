@@ -69,3 +69,16 @@ jobs:
           touch ./secrets/lug-secrets.sh
       - name: validate Caddyfile
         run: docker-compose build caddy && make caddy-verify-config
+  test-gateway-file:
+    runs-on: ubuntu-latest
+    name: rsync-gateway config up-to-date
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.9"
+      - uses: dschep/install-pipenv-action@v1
+      - name: setup Pipenv
+        run: cd gateway-gen && pipenv install
+      - name: check if rsync-gateway config.toml is latest version
+        run: make gateway-gen && git diff --exit-code

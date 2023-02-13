@@ -17,6 +17,20 @@ services:
     mem_limit: 10G
     memswap_limit: 10G
 
+  rsync-gateway:
+    container_name: zhiyuan-rsync-gateway
+    volumes:
+      - "./rsync-gateway/config.zhiyuan.toml:/config.toml:ro"
+    mem_limit: 5G
+    memswap_limit: 5G
+
+  redis:
+    container_name: zhiyuan-redis
+    volumes:
+      - "/mnt/data12T/redis-persist:/data"
+    mem_limit: 10G
+    memswap_limit: 10G
+
   cadvisor:
     container_name: zhiyuan-cadvisor
 
