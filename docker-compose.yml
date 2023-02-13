@@ -43,12 +43,14 @@ services:
     networks: 
       - ipv6-service-net
       - proxy-net
+      - redis-net
     build:
       context: ./lug
       args:
         - USE_SJTUG=true
         - CLONE_VERSION=v0.1.18
         - CLONE_V2_VERSION=v0.2.32
+        - RSYNC_SJTUG_VERSION=v0.2.0
         - LUG_VERSION=v0.12.7
     expose:
       - 8081
@@ -81,6 +83,51 @@ services:
       nofile:
         soft: 80000
         hard: 120000
+
+  rsync-gateway:
+    build:
+      context: ./rsync-gateway
+      args:
+        - USE_SJTUG=true
+        - RSYNC_SJTUG_VERSION=v0.2.0
+    networks:
+      - ipv6-service-net
+      - redis-net
+    expose:
+      - 8000
+    restart: unless-stopped
+    env_file:
+      - './secrets/mirror-intel.env'
+    environment:
+      RUST_LOG: info
+      RUST_BACKTRACE: 1
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+
+  redis:
+    restart: unless-stopped
+    image: redis:7-bullseye
+    command: redis-server --save 60 1 --loglevel warning
+    networks:
+      - redis-net
+    expose:
+      - 6379
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 30G
+    memswap_limit: 30G
 
   logspout:
     restart: unless-stopped
@@ -228,3 +275,4 @@ networks:
       driver: default
       config:
       -  subnet: fd01::/80
+  redis-net:

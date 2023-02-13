@@ -98,6 +98,8 @@ def dict_to_repo(repo: dict) -> Repo:
         return FileServerRepo(name, path)
     if serve_mode == 'mirror_intel':
         return ProxyRepo(repo['name'], 'mirror-intel:8000', False, False)
+    if serve_mode == 'rsync_gateway':
+        return ProxyRepo(repo['name'], 'rsync-gateway:8000', False, False)
     if serve_mode == 'proxy':
         if repo.get('strip_prefix', False):
             return ProxyRepo(repo['name'], repo['proxy_to'], False, True)
@@ -231,6 +233,13 @@ def rewrite_config(repo: dict, site: str):
         return {
             'name': repo['name'],
             'serve_mode': serve_mode
+        }
+    if serve_mode == 'rsync_gateway':
+        name = repo['name']
+        return {
+            'name': name,
+            'serve_mode': 'redir',
+            'target': f'https://{BASES[site][0]}/{name}'
         }
     if serve_mode == 'proxy':
         return {

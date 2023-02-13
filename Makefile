@@ -23,6 +23,9 @@ format-config: # You need to install prettier from npm to use this functionality
 integration-test:
 	cd integration-test && pipenv run pytest
 
+gateway-gen:
+	cd gateway-gen && pipenv run python src/gateway-gen.py -i ../ -o ../rsync-gateway --site siyuan,zhiyuan
+
 up:
 	docker-compose up -d --build
 
@@ -41,4 +44,4 @@ build-zhiyuan:
 build:
 	docker-compose build
 
-.PHONY: caddy-gen integration-test
+.PHONY: caddy-gen gateway-gen integration-test

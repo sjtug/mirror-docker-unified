@@ -80,4 +80,12 @@ RUN mkdir v2 && cd v2 && /app/build-script/from-cache.sh \
     tmp.tar.gz \
         && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
+ARG RSYNC_SJTUG_VERSION
+RUN /app/build-script/from-cache.sh \
+    https://mirror.sjtu.edu.cn/sjtug-internal/rsync-sjtug/releases/download/${RSYNC_SJTUG_VERSION}/rsync-sjtug-x86_64-unknown-linux-musl.tar.gz \
+    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/rsync-sjtug/releases/download/${RSYNC_SJTUG_VERSION}/rsync-sjtug-x86_64-unknown-linux-musl.tar.gz \
+    https://github.com/sjtug/rsync-sjtug/releases/download/${RSYNC_SJTUG_VERSION}/rsync-sjtug-x86_64-unknown-linux-musl.tar.gz \
+    tmp.tar.gz \
+        && tar -xvf tmp.tar.gz && rm tmp.tar.gz
+
 ENTRYPOINT ["./lug"]
