@@ -394,6 +394,10 @@ mirror.sjtu.edu.cn {
         root /srv/disk3
         hide .*
     }
+    redir /opencloudos /opencloudos/ 301
+    route /opencloudos/* {
+        reverse_proxy rsync-gateway:8000
+    }
     redir /debian /debian/ 301
     file_server /debian/* browse {
         root /srv/disk1
@@ -1043,6 +1047,7 @@ mirror.sjtu.edu.cn {
     }
     @gzip_enabled {
         not path /speedtest/*
+        not path /opencloudos/*
         not path /mageia/*
         not path /homebrew-bottles/*
         not path /rust-static/*

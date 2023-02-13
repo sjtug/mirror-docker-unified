@@ -14,6 +14,13 @@ dummy:
   oneshot_common: &oneshot_common
     retry: 5
     retry_interval: 60
+  rsync_fetcher_common: &rsync_fetcher_common
+    s3_api: "https://s3.jcloud.sjtu.edu.cn"
+    s3_region: "jCloud S3"
+    s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
+    redis: "redis://redis/"
+    gateway: "https://mirror.sjtu.edu.cn"
+    keep: 2 # keep two old revisions
 
 repos:
   # centos
@@ -40,6 +47,14 @@ repos:
     path: /srv/disk3/archlinux-cn
     script: /worker-script/zhiyuan/worker-script/archlinux-cn.sh
     <<: *oneshot_common
+  # opencloudos
+  - type: shell_script
+    script: /worker-script/rsync-fetcher.sh
+    source: rsync://106.55.200.193/opencloudos
+    interval: 5400
+    name: opencloudos
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
   # debian
   - type: shell_script
     script: /worker-script/debian.sh
