@@ -33,6 +33,15 @@ repos:
   #   name: centos
   #   no_redir_http: true
   #   <<: *oneshot_common
+  # raspberry-pi-os-images
+  - type: shell_script
+    name: raspberry-pi-os-images
+    script: /worker-script/rsync-fetcher.sh
+    interval: 10801
+    source: rsync://mirrors6.tuna.tsinghua.edu.cn/raspberry-pi-os-images/
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # archlinuxarm
   - type: shell_script
     script: /worker-script/rsync.sh
