@@ -20,6 +20,7 @@ dummy:
     s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
     redis: "redis://redis/"
     gateway: "https://mirror.sjtu.edu.cn"
+    tmp_path: "/srv/disk1/rsync_fetcher_tmp"
     keep: 2 # keep two old revisions
 
 repos:
