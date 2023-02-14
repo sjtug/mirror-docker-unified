@@ -14,6 +14,14 @@ dummy:
   oneshot_common: &oneshot_common
     retry: 5
     retry_interval: 60
+  rsync_fetcher_common: &rsync_fetcher_common
+    s3_api: "https://s3.jcloud.sjtu.edu.cn"
+    s3_region: "jCloud S3"
+    s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
+    redis: "redis://redis/"
+    gateway: "https://mirrors.sjtug.sjtu.edu.cn"
+    tmp_path: "/mnt/rsync_fetcher_tmp"
+    keep: 2 # keep two old revisions
 
 repos:
   - type: shell_script
@@ -218,13 +226,6 @@ repos:
     interval: 9200
     path: /mnt/julia-releases
     name: julia-releases
-    <<: *oneshot_common
-  - type: shell_script
-    name: raspberry-pi-os-images
-    script: /worker-script/rsync.sh
-    path: /mnt/raspberry-pi-os-images
-    interval: 10801
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/raspberry-pi-os-images/
     <<: *oneshot_common
   - type: shell_script
     name: msys2

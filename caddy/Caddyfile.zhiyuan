@@ -361,11 +361,6 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
-    redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
-    file_server /raspberry-pi-os-images/* browse {
-        root /mnt
-        hide .*
-    }
     redir /msys2 /msys2/ 301
     file_server /msys2/* browse {
         root /mnt
@@ -430,6 +425,11 @@ mirrors.sjtug.sjtu.edu.cn {
     file_server /rocky/* browse {
         root /mnt
         hide .*
+    }
+    redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
+    route /raspberry-pi-os-images/* {
+        uri strip_prefix /raspberry-pi-os-images
+        redir * https://mirror.sjtu.edu.cn/raspberry-pi-os-images{uri} 302
     }
     redir /archlinuxarm /archlinuxarm/ 301
     route /archlinuxarm/* {
@@ -944,6 +944,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /raspberry-pi-os-images/*
         not path /archlinuxarm/*
         not path /archlinux-cn/*
         not path /opencloudos/*
