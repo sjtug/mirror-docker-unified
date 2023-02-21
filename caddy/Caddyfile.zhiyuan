@@ -80,31 +80,6 @@ packagist.mirrors.sjtug.sjtu.edu.cn {
     header * x-sjtug-mirror-id zhiyuan
 }
 
-http://mirrors.sjtug.sjtu.edu.cn/qt {
-    redir /qt /qt/ 301
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-}
-
-http://mirrors.sjtug.sjtu.edu.cn/qt/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /mnt
-        hide .*
-    }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
-    log {
-        output stdout
-        format single_field common_log  # log in v1 style
-    }
-    header * x-sjtug-mirror-id zhiyuan
-}
-
 k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn {
     log {
         output stdout
@@ -341,11 +316,6 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
-    redir /qt /qt/ 301
-    file_server /qt/* browse {
-        root /mnt
-        hide .*
-    }
     redir /julia /julia/ 301
     file_server /julia/* browse {
         root /mnt
@@ -445,6 +415,11 @@ mirrors.sjtug.sjtu.edu.cn {
     route /opencloudos/* {
         uri strip_prefix /opencloudos
         redir * https://mirror.sjtu.edu.cn/opencloudos{uri} 302
+    }
+    redir /qt /qt/ 301
+    route /qt/* {
+        uri strip_prefix /qt
+        redir * https://mirror.sjtu.edu.cn/qt{uri} 302
     }
     redir /debian /debian/ 301
     route /debian/* {
@@ -948,6 +923,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /archlinuxarm/*
         not path /archlinux-cn/*
         not path /opencloudos/*
+        not path /qt/*
         not path /debian/*
         not path /debian-cd/*
         not path /debian-security/*
