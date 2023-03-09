@@ -144,6 +144,7 @@ repos:
     name: crates.io-index
     path: /mnt/git/crates.io-index
     disabled: true
+    z_link_to: git/crates.io-index
   - type: shell_script
     name: raspbian
     script: /worker-script/rsync.sh
