@@ -55,6 +55,25 @@ def help(name, items):
             return item.getElementsByTagName("link")[0].childNodes[0].data
     return ""
 
+def mirror_item(worker, param, help_items, sources):
+    mirror = {
+        "cname": name(worker),
+        "desc": "",
+        "url": "/" + worker,
+        "status": f"{status(param)}{int(parse(param['LastFinished']).timestamp())}",
+        "help": help(worker, help_items),
+        "upstream": sources.get(worker, "")
+    }
+    return mirror
+
+def link_to(lug, summary, mirrors, help_items, sources):
+    for item in lug["repos"]:
+        if "z_link_to" in item:
+            for worker, param in summary["WorkerStatus"].items():
+                if worker == item["z_link_to"]:
+                    # use item name instead of worker, still use worker param
+                    mirror = mirror_item(item["name"], param, help_items, sources)
+                    mirrors.append(mirror)
 
 def main():
     global options
@@ -76,15 +95,10 @@ def main():
     for worker, param in summary["WorkerStatus"].items():
         if worker.startswith(".") or worker == 'sjtug-internal' or worker == 'test':
             continue
-        mirror = {
-            "cname": name(worker),
-            "desc": "",
-            "url": "/" + worker,
-            "status": f"{status(param)}{int(parse(param['LastFinished']).timestamp())}",
-            "help": help(worker, help_items),
-            "upstream": sources.get(worker, "")
-        }
+        mirror = mirror_item(worker, param, help_items, sources)
         mirrors.append(mirror)
+
+    link_to(lug, summary, mirrors, help_items, sources)
 
     mirrorz["mirrors"] = mirrors
     mirrorz["extension"] = "D"
