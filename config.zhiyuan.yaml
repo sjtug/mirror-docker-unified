@@ -334,3 +334,4 @@ repos:
     no_redir_http: true
     serve_mode: ignore
     unified: disable
+    hidden: true
