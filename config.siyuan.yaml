@@ -119,12 +119,13 @@ repos:
     <<: *oneshot_common
   # docker-ce
   - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce/
+    script: /worker-script/rsync-fetcher.sh
+    source: rsync://mirrors6.tuna.tsinghua.edu.cn/docker-ce/
     interval: 4900
-    path: /srv/disk3/docker-ce
     name: docker-ce
     no_redir_http: true
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # fedora/linux
   - type: shell_script

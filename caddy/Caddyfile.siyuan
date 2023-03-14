@@ -97,15 +97,9 @@ http://mirror.sjtu.edu.cn/docker-ce {
 }
 
 http://mirror.sjtu.edu.cn/docker-ce/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /srv/disk3
-        hide .*
+    route /docker-ce/* {
+        reverse_proxy rsync-gateway:8000
     }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -432,9 +426,8 @@ mirror.sjtu.edu.cn {
         hide .*
     }
     redir /docker-ce /docker-ce/ 301
-    file_server /docker-ce/* browse {
-        root /srv/disk3
-        hide .*
+    route /docker-ce/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /fedora-secondary /fedora-secondary/ 301
     file_server /fedora-secondary/* browse {
@@ -1048,6 +1041,7 @@ mirror.sjtu.edu.cn {
         not path /raspberry-pi-os-images/*
         not path /opencloudos/*
         not path /qt/*
+        not path /docker-ce/*
         not path /mageia/*
         not path /homebrew-bottles/*
         not path /rust-static/*

@@ -14,3 +14,8 @@ s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss
 redis = "redis://redis/"
 redis_namespace = "qt"
 s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/qt"
+
+[endpoints.docker-ce]
+redis = "redis://redis/"
+redis_namespace = "docker-ce"
+s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/docker-ce"
