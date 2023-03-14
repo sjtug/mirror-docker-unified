@@ -332,9 +332,8 @@ mirrors.sjtug.sjtu.edu.cn {
         hide .*
     }
     redir /msys2 /msys2/ 301
-    file_server /msys2/* browse {
-        root /mnt
-        hide .*
+    route /msys2/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /git/opam-repository.git /git/opam-repository.git/ 301
     redir /git/qemu.git /git/qemu.git/ 301
@@ -912,6 +911,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
         not path /git/crates.io-index/*
+        not path /msys2/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
         not path /download.flutter.io/*

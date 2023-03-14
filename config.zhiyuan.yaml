@@ -222,10 +222,11 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     name: msys2
-    script: /worker-script/rsync.sh
-    path: /mnt/msys2
+    script: /worker-script/rsync-fetcher.sh
     interval: 12001
     source: rsync://repo.msys2.org/builds
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/opam.sh
