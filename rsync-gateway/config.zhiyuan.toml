@@ -1,3 +1,6 @@
 bind = [ "0.0.0.0:8000",]
 
-[endpoints]
+[endpoints.msys2]
+redis = "redis://redis/"
+redis_namespace = "msys2"
+s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/msys2"
