@@ -599,8 +599,8 @@ repos:
     target: https://git.sjtu.edu.cn/sjtug/homebrew-install.git
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/rsync_password.sh
-    source: rsync://root@121.36.97.194/openeuler
+    script: /worker-script/rsync.sh
+    source: rsync://repo.openeuler.openatom.cn/openeuler/
     interval: 5200
     path: /srv/disk1/openeuler
     name: openeuler
