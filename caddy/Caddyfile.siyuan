@@ -406,9 +406,8 @@ mirror.sjtu.edu.cn {
         hide .*
     }
     redir /debian-cd /debian-cd/ 301
-    file_server /debian-cd/* browse {
-        root /srv/disk2
-        hide .*
+    route /debian-cd/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /debian-security /debian-security/ 301
     file_server /debian-security/* browse {
@@ -421,9 +420,8 @@ mirror.sjtu.edu.cn {
         hide .*
     }
     redir /deepin-cd /deepin-cd/ 301
-    file_server /deepin-cd/* browse {
-        root /srv/disk2
-        hide .*
+    route /deepin-cd/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /docker-ce /docker-ce/ 301
     route /docker-ce/* {
@@ -445,9 +443,8 @@ mirror.sjtu.edu.cn {
         hide .*
     }
     redir /linuxmint-cd /linuxmint-cd/ 301
-    file_server /linuxmint-cd/* browse {
-        root /srv/disk2
-        hide .*
+    route /linuxmint-cd/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /mageia /mageia/ 301
     route /mageia/* {
@@ -1041,7 +1038,10 @@ mirror.sjtu.edu.cn {
         not path /raspberry-pi-os-images/*
         not path /opencloudos/*
         not path /qt/*
+        not path /debian-cd/*
+        not path /deepin-cd/*
         not path /docker-ce/*
+        not path /linuxmint-cd/*
         not path /mageia/*
         not path /homebrew-bottles/*
         not path /rust-static/*

@@ -85,11 +85,12 @@ repos:
     <<: *oneshot_common
   # debian-cd
   - type: shell_script
-    script: /worker-script/rsync.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://mirrors.kernel.org/debian-cd/
     interval: 23600
-    path: /srv/disk2/debian-cd
     name: debian-cd
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # debian-security
   - type: shell_script
@@ -111,11 +112,12 @@ repos:
     <<: *oneshot_common
   # deepin-cd
   - type: shell_script
-    script: /worker-script/rsync.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://rsync.deepin.com/cdimage/
     interval: 6000
-    path: /srv/disk2/deepin-cd
     name: deepin-cd
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # docker-ce
   - type: shell_script
@@ -177,11 +179,12 @@ repos:
     <<: *oneshot_common
   # linuxmint-cd
   - type: shell_script
-    script: /worker-script/rsync.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://mirrors.kernel.org/linuxmint/
     interval: 21000
-    path: /srv/disk2/linuxmint-cd
     name: linuxmint-cd
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # mageia
   - type: external
