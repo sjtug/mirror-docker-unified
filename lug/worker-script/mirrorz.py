@@ -108,6 +108,9 @@ def main():
         "resolve": site["url"].strip("https://"),
         "filter": ["V4", "V6", "SSL", "NOSSL"],
         "range": [
+            "COUNTRY:CN",
+            "REGION:SH",
+            "ISP:CERNET",
             "202.120.0.0/18",
             "59.78.0.0/18",
             "111.186.0.0/18",
