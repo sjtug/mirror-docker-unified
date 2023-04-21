@@ -132,7 +132,7 @@ repos:
   # fedora/linux
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://download-ib01.fedoraproject.org/fedora-enchilada/linux/
+    source: rsync://dl.fedoraproject.org/fedora-enchilada/linux/
     interval: 5000
     path: /srv/disk1/fedora/linux
     name: fedora/linux
@@ -154,7 +154,7 @@ repos:
   # fedora-secondary
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://download-ib01.fedoraproject.org/fedora-secondary/
+    source: rsync://dl.fedoraproject.org/fedora-secondary/
     interval: 5000
     path: /srv/disk3/fedora-secondary
     name: fedora-secondary
