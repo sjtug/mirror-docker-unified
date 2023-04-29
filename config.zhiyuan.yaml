@@ -98,11 +98,13 @@ repos:
     name: ros
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/rsync.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://ftp.jaist.ac.jp/kali-images/
     interval: 10800
     path: /mnt/kali-images
     name: kali-images
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh

@@ -268,9 +268,8 @@ mirrors.sjtug.sjtu.edu.cn {
         hide .*
     }
     redir /kali-images /kali-images/ 301
-    file_server /kali-images/* browse {
-        root /mnt
-        hide .*
+    route /kali-images/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
     redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
@@ -907,6 +906,7 @@ mirrors.sjtug.sjtu.edu.cn {
     }
     @gzip_enabled {
         not path /speedtest/*
+        not path /kali-images/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
