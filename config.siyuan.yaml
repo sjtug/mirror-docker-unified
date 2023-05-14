@@ -20,7 +20,7 @@ dummy:
     s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
     redis: "redis://redis/"
     gateway: "https://mirror.sjtu.edu.cn"
-    tmp_path: "/srv/disk1/rsync_fetcher_tmp"
+    tmp_path: "/srv/data32T/rsync_fetcher_tmp"
     keep: 2 # keep two old revisions
 
 repos:
@@ -29,7 +29,7 @@ repos:
   #   script: /worker-script/rsync.sh
   #   source: rsync://mirrors.kernel.org/centos/
   #   interval: 5800
-  #   path: /srv/disk3/centos
+  #   path: /srv/data32T/centos
   #   name: centos
   #   no_redir_http: true
   #   <<: *oneshot_common
@@ -47,14 +47,14 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.dotsrc.org/archlinuxarm/
     interval: 3900
-    path: /srv/disk3/archlinuxarm
+    path: /srv/data32T/archlinuxarm
     name: archlinuxarm
     exclude_hidden: true
   # archlinux-cn
   - type: shell_script
     name: archlinux-cn
     interval: 6000
-    path: /srv/disk3/archlinux-cn
+    path: /srv/data32T/archlinux-cn
     script: /worker-script/zhiyuan/worker-script/archlinux-cn.sh
     <<: *oneshot_common
   # opencloudos
@@ -65,6 +65,7 @@ repos:
     name: opencloudos
     serve_mode: rsync_gateway
     <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # qt
   - type: shell_script
     script: /worker-script/rsync-fetcher.sh
@@ -74,12 +75,13 @@ repos:
     name: qt
     serve_mode: rsync_gateway
     <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # debian
   - type: shell_script
     script: /worker-script/debian.sh
     source: sv.mirrors.kernel.org
     interval: 5400
-    path: /srv/disk1/debian
+    path: /srv/data32T/debian
     name: debian
     no_redir_http: true
     <<: *oneshot_common
@@ -97,7 +99,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.security.debian.org/debian-security/
     interval: 6700
-    path: /srv/disk1/debian-security
+    path: /srv/data32T/debian-security
     name: debian-security
     no_redir_http: true
     <<: *oneshot_common
@@ -106,7 +108,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.deepin.com/deepin/
     interval: 6200
-    path: /srv/disk1/deepin
+    path: /srv/data32T/deepin
     name: deepin
     no_redir_http: true
     <<: *oneshot_common
@@ -134,7 +136,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://dl.fedoraproject.org/fedora-enchilada/linux/
     interval: 5000
-    path: /srv/disk1/fedora/linux
+    path: /srv/data32T/fedora/linux
     name: fedora/linux
     serve_mode: ignore
     rsync_extra_flags: --exclude "extras/*" --exclude "*/debug/*"
@@ -145,7 +147,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/fedora-epel/
     interval: 5000
-    path: /srv/disk1/fedora/epel
+    path: /srv/data32T/fedora/epel
     name: fedora/epel
     serve_mode: ignore
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
@@ -156,7 +158,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://dl.fedoraproject.org/fedora-secondary/
     interval: 5000
-    path: /srv/disk3/fedora-secondary
+    path: /srv/data32T/fedora-secondary
     name: fedora-secondary
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
@@ -166,7 +168,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.jaist.ac.jp/kali/
     interval: 10800
-    path: /srv/disk2/kali
+    path: /srv/data32T/kali
     name: kali
     <<: *oneshot_common
   # linuxmint
@@ -174,7 +176,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.kernel.org/linuxmint-packages/
     interval: 6500
-    path: /srv/disk1/linuxmint
+    path: /srv/data32T/linuxmint
     name: linuxmint
     <<: *oneshot_common
   # linuxmint-cd
@@ -199,7 +201,7 @@ repos:
     source: rsync://fr2.rpmfind.net/linux/opensuse/
     interval: 8000
     rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*" --exclude "ports/zsystems/*" --exclude "ports/riscv/*" --exclude "ports/update/*"
-    path: /srv/disk3/opensuse
+    path: /srv/data32T/opensuse
     name: opensuse
     no_redir_http: true
     <<: *oneshot_common
@@ -208,7 +210,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://download.openvz.org/openvz-download
     interval: 43600 # may be wrong
-    path: /srv/disk2/openvz
+    path: /srv/data32T/openvz
     name: openvz
     <<: *oneshot_common
   # remi
@@ -216,7 +218,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://remi.mirror.karneval.cz/remi
     interval: 43000
-    path: /srv/disk2/remi
+    path: /srv/data32T/remi
     name: remi
     no_redir_http: true
     <<: *oneshot_common
@@ -225,7 +227,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirror.aarnet.edu.au/pub/scientific/
     interval: 21600 # may be wrong
-    path: /srv/disk2/scientific
+    path: /srv/data32T/scientific
     name: scientific
     rsync_extra_flags: --exclude "*/obsolete/*" --exclude "obsolete" --exclude "stats"
     ignore_vanish: true
@@ -235,7 +237,7 @@ repos:
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://archive.ubuntu.com/ubuntu/
     interval: 4500
-    path: /srv/disk2/ubuntu
+    path: /srv/data32T/ubuntu
     name: ubuntu
     no_redir_http: true
     <<: *oneshot_common
@@ -244,7 +246,7 @@ repos:
   #   script: /worker-script/rsync.sh
   #   source: rsync://rsync.releases.ubuntu.com/releases/
   #   interval: 24600
-  #   path: /srv/disk3/ubuntu-cd
+  #   path: /srv/data32T/ubuntu-cd
   #   name: ubuntu-cd
   #   <<: *oneshot_common
   # ubuntu-cdimage
@@ -252,7 +254,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://cdimage.ubuntu.com/cdimage/
     interval: 24900
-    path: /srv/disk3/ubuntu-cdimage
+    path: /srv/data32T/ubuntu-cdimage
     name: ubuntu-cdimage
     <<: *oneshot_common
   # ubuntu-ports
@@ -260,7 +262,7 @@ repos:
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://ports.ubuntu.com/ubuntu-ports/
     interval: 7800
-    path: /srv/disk3/ubuntu-ports
+    path: /srv/data32T/ubuntu-ports
     name: ubuntu-ports
     no_redir_http: true
     <<: *oneshot_common
@@ -269,7 +271,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://downloads.openwrt.org/downloads/
     interval: 6900
-    path: /srv/disk2/openwrt
+    path: /srv/data32T/openwrt
     rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
     name: openwrt
     no_redir_http: true
@@ -279,7 +281,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirror.de.leaseweb.net/rpmfusion/
     interval: 5500
-    path: /srv/disk1/rpmfusion
+    path: /srv/data32T/rpmfusion
     name: rpmfusion
     no_redir_http: true
     <<: *oneshot_common
@@ -346,7 +348,7 @@ repos:
     interval: 3600
     name: git/linuxbrew-core.git
     source: https://github.com/Homebrew/linuxbrew-core.git
-    path: /srv/disk2/git/linuxbrew-core.git
+    path: /srv/data32T/git/linuxbrew-core.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git
     <<: *oneshot_common
@@ -355,7 +357,7 @@ repos:
     interval: 3601
     name: git/homebrew-services.git
     source: https://github.com/Homebrew/homebrew-services.git
-    path: /srv/disk2/git/homebrew-services.git
+    path: /srv/data32T/git/homebrew-services.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-services.git
     <<: *oneshot_common
@@ -364,7 +366,7 @@ repos:
     interval: 3602
     name: git/homebrew-cask-drivers.git
     source: https://github.com/Homebrew/homebrew-cask-drivers.git
-    path: /srv/disk2/git/homebrew-cask-drivers.git
+    path: /srv/data32T/git/homebrew-cask-drivers.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git
     <<: *oneshot_common
@@ -373,7 +375,7 @@ repos:
     interval: 3603
     name: git/homebrew-cask-fonts.git
     source: https://github.com/Homebrew/homebrew-cask-fonts.git
-    path: /srv/disk2/git/homebrew-cask-fonts.git
+    path: /srv/data32T/git/homebrew-cask-fonts.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git
     <<: *oneshot_common
@@ -382,7 +384,7 @@ repos:
     interval: 3604
     name: git/homebrew-cask-versions.git
     source: https://github.com/Homebrew/homebrew-cask-versions.git
-    path: /srv/disk2/git/homebrew-cask-versions.git
+    path: /srv/data32T/git/homebrew-cask-versions.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
     <<: *oneshot_common
@@ -397,7 +399,7 @@ repos:
     interval: 3608
     name: git/guix.git
     source: https://git.savannah.gnu.org/git/guix.git
-    path: /srv/disk2/git/guix.git
+    path: /srv/data32T/git/guix.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/guix.git
     <<: *oneshot_common
@@ -406,7 +408,7 @@ repos:
     interval: 3700
     name: git/llvm-project.git
     source: https://github.com/llvm/llvm-project.git
-    path: /srv/disk2/git/llvm-project.git
+    path: /srv/data32T/git/llvm-project.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/llvm-project.git
     <<: *oneshot_common
@@ -415,7 +417,7 @@ repos:
     interval: 3650
     name: git/flutter-sdk.git
     source: https://github.com/flutter/flutter.git
-    path: /srv/disk2/git/flutter-sdk.git
+    path: /srv/data32T/git/flutter-sdk.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/flutter-sdk.git
     <<: *oneshot_common
@@ -423,7 +425,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.apache.org/apache-dist/
     interval: 7200
-    path: /srv/disk2/apache
+    path: /srv/data32T/apache
     name: apache
     <<: *oneshot_common
   - type: shell_script
@@ -431,7 +433,7 @@ repos:
     interval: 7200
     name: git/ohmyzsh.git
     source: https://github.com/ohmyzsh/ohmyzsh.git
-    path: /srv/disk2/git/ohmyzsh.git
+    path: /srv/data32T/git/ohmyzsh.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/ohmyzsh.git
   - type: shell_script
@@ -439,7 +441,7 @@ repos:
     interval: 7200
     name: git/spacemacs.git
     source: https://github.com/syl20bnr/spacemacs.git
-    path: /srv/disk2/git/spacemacs.git
+    path: /srv/data32T/git/spacemacs.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/spacemacs.git
   - type: shell_script
@@ -447,14 +449,14 @@ repos:
     interval: 7200
     name: git/doom-emacs.git
     source: https://github.com/hlissner/doom-emacs.git
-    path: /srv/disk2/git/doom-emacs.git
+    path: /srv/data32T/git/doom-emacs.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/doom-emacs.git
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.jaist.ac.jp/pub/DragonFly/iso-images/
     interval: 25600
-    path: /srv/disk2/dragonflybsd/iso-images
+    path: /srv/data32T/dragonflybsd/iso-images
     name: dragonflybsd/iso-images
     rsync_extra_flags: --exclude "tmp"
     serve_mode: ignore
@@ -463,7 +465,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.jaist.ac.jp/pub/DragonFly/dports/
     interval: 9800
-    path: /srv/disk2/dragonflybsd/dports
+    path: /srv/data32T/dragonflybsd/dports
     name: dragonflybsd/dports
     serve_mode: ignore
     <<: *oneshot_common
@@ -471,7 +473,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://www.blackarch.org/blackarch/
     interval: 20000
-    path: /srv/disk2/blackarch
+    path: /srv/data32T/blackarch
     name: blackarch
     <<: *oneshot_common
   - type: shell_script
@@ -513,7 +515,7 @@ repos:
     script: /worker-script/rsync.sh
     source: ftp.ibiblio.org::ldp_mirror
     interval: 5800
-    path: /srv/disk1/sites/tldp.org
+    path: /srv/data32T/sites/tldp.org
     name: sites/tldp.org
     <<: *oneshot_common
   - type: shell_script
@@ -563,7 +565,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://himiko.rfc1925.org/repositories
     interval: 7200
-    path: /srv/disk1/sury
+    path: /srv/data32T/sury
     name: sury
     <<: *oneshot_common
   - type: external
@@ -577,7 +579,7 @@ repos:
     interval: 4900
     name: git/dpdk.git
     source: http://dpdk.org/git/dpdk
-    path: /srv/disk2/git/dpdk.git
+    path: /srv/data32T/git/dpdk.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/dpdk.git
     <<: *oneshot_common
@@ -588,7 +590,7 @@ repos:
     name: gradle/distributions
     <<: *oneshot_common
   - type: external
-    path: /srv/disk2/dragonflybsd
+    path: /srv/data32T/dragonflybsd
     name: dragonflybsd
     disabled: true
     <<: *oneshot_common
@@ -597,7 +599,7 @@ repos:
     interval: 4900
     name: git/homebrew-install.git
     source: https://github.com/Homebrew/install.git
-    path: /srv/disk2/git/homebrew-install.git
+    path: /srv/data32T/git/homebrew-install.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-install.git
     <<: *oneshot_common
@@ -605,11 +607,11 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://repo.openeuler.openatom.cn/openeuler/
     interval: 5200
-    path: /srv/disk1/openeuler
+    path: /srv/data32T/openeuler
     name: openeuler
     <<: *oneshot_common
   - type: external
-    path: /srv/disk1/fedora
+    path: /srv/data32T/fedora
     name: fedora
     disabled: true
     no_redir_http: true
@@ -618,7 +620,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.ocf.berkeley.edu/manjaro
     interval: 3600
-    path: /srv/disk2/manjaro
+    path: /srv/data32T/manjaro
     name: manjaro
     exclude_hidden: true
     <<: *oneshot_common
@@ -638,7 +640,7 @@ repos:
   - type: shell_script
     name: archlinux
     interval: 5300
-    path: /srv/disk2/archlinux
+    path: /srv/data32T/archlinux
     script: /worker-script/zhiyuan/worker-script/archlinux.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/archlinux/
     lastupdate: https://mirrors.tuna.tsinghua.edu.cn/archlinux/lastupdate
@@ -662,7 +664,7 @@ repos:
   - type: shell_script
     script: /worker-script/test.sh
     interval: 300
-    path: /srv/disk1/test
+    path: /srv/data32T/test
     name: test
     <<: *oneshot_common
   - type: shell_script
@@ -704,14 +706,14 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.armbian.com/apt
     interval: 28800
-    path: /srv/disk2/armbian
+    path: /srv/data32T/armbian
     name: armbian
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.repo.almalinux.org/almalinux/
     interval: 28800
-    path: /srv/disk2/almalinux
+    path: /srv/data32T/almalinux
     name: almalinux
     <<: *oneshot_common
   - type: shell_script
@@ -727,14 +729,14 @@ repos:
     name: git/linux.git
     source: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
     interval: 4700
-    path: /srv/disk2/git/linux.git
+    path: /srv/data32T/git/linux.git
     target: https://git.sjtu.edu.cn/sjtug/linux.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
     name: raspbian-addons
     script: /worker-script/rsync.sh
-    path: /srv/disk3/raspbian-addons
+    path: /srv/data32T/raspbian-addons
     interval: 10000
     source: rsync://mirrors.tuna.tsinghua.edu.cn/osdn/storage/g/r/ra/raspbian-addons/
     <<: *oneshot_common
@@ -742,14 +744,14 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/OpenBSD
     interval: 50000
-    path: /srv/disk2/OpenBSD
+    path: /srv/data32T/OpenBSD
     name: OpenBSD
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://cdimage.ubuntukylin.com/releases/
     interval: 86400
-    path: /srv/disk2/ubuntukylin-cdimage
+    path: /srv/data32T/ubuntukylin-cdimage
     name: ubuntukylin-cdimage
     rsync_extra_flags: --exclude "professional/"
     <<: *oneshot_common
@@ -757,7 +759,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://archive.ubuntukylin.com/ubuntukylin/
     interval: 6000
-    path: /srv/disk2/ubuntukylin
+    path: /srv/data32T/ubuntukylin
     name: ubuntukylin
     rsync_extra_flags: --exclude "*partner*/"
     <<: *oneshot_common
@@ -765,14 +767,14 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirror.zorinos.com/isos/
     interval: 86400
-    path: /srv/disk3/zorinos-isos
+    path: /srv/data32T/zorinos-isos
     name: zorinos-isos
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://cloud-images.ubuntu.com/cloud-images/
     interval: 86400
-    path: /srv/disk3/ubuntu-cloud-images
+    path: /srv/data32T/ubuntu-cloud-images
     name: ubuntu-cloud-images
     rsync_extra_flags: --exclude "releases/" --exclude ".bzr/" --exclude "lost+found/"
     <<: *oneshot_common
@@ -780,7 +782,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.de.debian.org/debian-ports/
     interval: 9000
-    path: /srv/disk2/debian-ports
+    path: /srv/data32T/debian-ports
     name: debian-ports
     rsync_extra_flags: --exclude "pool-alpha" --exclude "pool-hppa" --exclude "pool-hurd-i386" --exclude "pool-ia64" --exclude "pool-kfreebsd-amd64" --exclude "pool-kfreebsd-i386" --exclude "pool-m68k" --exclude "pool-powerpc" --exclude "pool-ppc64" --exclude "pool-sh4" --exclude "pool-sparc64" --exclude "pool-x32"
     <<: *oneshot_common
@@ -789,7 +791,7 @@ repos:
     interval: 7200
     name: git/homebrew-bundle.git
     source: https://github.com/Homebrew/homebrew-bundle.git
-    path: /srv/disk2/git/homebrew-bundle.git
+    path: /srv/data32T/git/homebrew-bundle.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -797,7 +799,7 @@ repos:
     interval: 7200
     name: git/spdk.git
     source: https://github.com/spdk/spdk
-    path: /srv/disk2/git/spdk.git
+    path: /srv/data32T/git/spdk.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -805,7 +807,7 @@ repos:
     interval: 7200
     name: git/SJTUBeamer.git
     source: https://github.com/sjtug/SJTUBeamer
-    path: /srv/disk2/git/SJTUBeamer.git
+    path: /srv/data32T/git/SJTUBeamer.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -813,7 +815,7 @@ repos:
     interval: 7200
     name: git/SJTUTeX.git
     source: https://github.com/sjtug/SJTUTeX
-    path: /srv/disk2/git/SJTUTeX.git
+    path: /srv/data32T/git/SJTUTeX.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -821,7 +823,7 @@ repos:
     interval: 7200
     name: git/SJTUThesis.git
     source: https://github.com/sjtug/SJTUThesis
-    path: /srv/disk2/git/SJTUThesis.git
+    path: /srv/data32T/git/SJTUThesis.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
