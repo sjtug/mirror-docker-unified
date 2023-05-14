@@ -149,11 +149,12 @@ repos:
     z_link_to: git/crates.io-index
   - type: shell_script
     name: raspbian
-    script: /worker-script/rsync.sh
-    path: /mnt/raspbian
+    script: /worker-script/rsync-fetcher.sh
     interval: 10801
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/raspbian/
+    source: rsync://mirrors6.tuna.tsinghua.edu.cn/raspbian/
     no_redir_http: true
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     name: parrot
