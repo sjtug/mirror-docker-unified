@@ -47,15 +47,9 @@ http://mirrors.sjtug.sjtu.edu.cn/raspbian {
 }
 
 http://mirrors.sjtug.sjtu.edu.cn/raspbian/* {
-    encode /* gzip zstd
-    file_server /* browse {
-        root /mnt
-        hide .*
+    route /raspbian/* {
+        reverse_proxy rsync-gateway:8000
     }
-    @hidden {
-        path */.*
-    }
-    respond @hidden 404
     log {
         output stdout
         format single_field common_log  # log in v1 style
@@ -281,9 +275,8 @@ mirrors.sjtug.sjtu.edu.cn {
         hide .*
     }
     redir /raspbian /raspbian/ 301
-    file_server /raspbian/* browse {
-        root /mnt
-        hide .*
+    route /raspbian/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /parrot /parrot/ 301
     file_server /parrot/* browse {
@@ -911,6 +904,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
         not path /git/crates.io-index/*
+        not path /raspbian/*
         not path /msys2/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*

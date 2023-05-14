@@ -5,6 +5,11 @@ redis = "redis://redis/"
 redis_namespace = "kali-images"
 s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/kali-images"
 
+[endpoints.raspbian]
+redis = "redis://redis/"
+redis_namespace = "raspbian"
+s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/raspbian"
+
 [endpoints.msys2]
 redis = "redis://redis/"
 redis_namespace = "msys2"
