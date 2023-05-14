@@ -1,5 +1,5 @@
 # small is beautiful
-FROM debian:9
+FROM debian:bullseye
 
 MAINTAINER Anthony Hogg anthony@hogg.fr
 
@@ -9,6 +9,11 @@ EXPOSE 80
 # This is where the repositories will be stored, and
 # should be mounted from the host (or a volume container)
 VOLUME ["/git"]
+
+ARG USE_SJTUG
+
+RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list ; fi
+RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/http:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list ; fi
 
 # We need the following:
 # - git, because that gets us the git-http-backend CGI script

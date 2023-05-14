@@ -234,6 +234,8 @@ services:
   git-backend:
     build:
       context: ./git-backend
+      args:
+        - USE_SJTUG=true
     logging:
       options:
         max-size: "2M"

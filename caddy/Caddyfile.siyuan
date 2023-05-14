@@ -24,7 +24,7 @@ http://mirror.sjtu.edu.cn/debian {
 http://mirror.sjtu.edu.cn/debian/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -49,7 +49,7 @@ http://mirror.sjtu.edu.cn/debian-security {
 http://mirror.sjtu.edu.cn/debian-security/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -74,7 +74,7 @@ http://mirror.sjtu.edu.cn/deepin {
 http://mirror.sjtu.edu.cn/deepin/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -118,7 +118,7 @@ http://mirror.sjtu.edu.cn/fedora-secondary {
 http://mirror.sjtu.edu.cn/fedora-secondary/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -143,7 +143,7 @@ http://mirror.sjtu.edu.cn/opensuse {
 http://mirror.sjtu.edu.cn/opensuse/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -168,7 +168,7 @@ http://mirror.sjtu.edu.cn/remi {
 http://mirror.sjtu.edu.cn/remi/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -193,7 +193,7 @@ http://mirror.sjtu.edu.cn/ubuntu {
 http://mirror.sjtu.edu.cn/ubuntu/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -218,7 +218,7 @@ http://mirror.sjtu.edu.cn/ubuntu-ports {
 http://mirror.sjtu.edu.cn/ubuntu-ports/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -243,7 +243,7 @@ http://mirror.sjtu.edu.cn/openwrt {
 http://mirror.sjtu.edu.cn/openwrt/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -268,7 +268,7 @@ http://mirror.sjtu.edu.cn/rpmfusion {
 http://mirror.sjtu.edu.cn/rpmfusion/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -293,7 +293,7 @@ http://mirror.sjtu.edu.cn/fedora {
 http://mirror.sjtu.edu.cn/fedora/* {
     encode /* gzip zstd
     file_server /* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     @hidden {
@@ -384,12 +384,12 @@ mirror.sjtu.edu.cn {
     }
     redir /archlinuxarm /archlinuxarm/ 301
     file_server /archlinuxarm/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /archlinux-cn /archlinux-cn/ 301
     file_server /archlinux-cn/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /opencloudos /opencloudos/ 301
@@ -402,7 +402,7 @@ mirror.sjtu.edu.cn {
     }
     redir /debian /debian/ 301
     file_server /debian/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /debian-cd /debian-cd/ 301
@@ -411,12 +411,12 @@ mirror.sjtu.edu.cn {
     }
     redir /debian-security /debian-security/ 301
     file_server /debian-security/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /deepin /deepin/ 301
     file_server /deepin/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /deepin-cd /deepin-cd/ 301
@@ -429,17 +429,17 @@ mirror.sjtu.edu.cn {
     }
     redir /fedora-secondary /fedora-secondary/ 301
     file_server /fedora-secondary/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /kali /kali/ 301
     file_server /kali/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /linuxmint /linuxmint/ 301
     file_server /linuxmint/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /linuxmint-cd /linuxmint-cd/ 301
@@ -453,47 +453,47 @@ mirror.sjtu.edu.cn {
     }
     redir /opensuse /opensuse/ 301
     file_server /opensuse/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /openvz /openvz/ 301
     file_server /openvz/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /remi /remi/ 301
     file_server /remi/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /scientific /scientific/ 301
     file_server /scientific/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /ubuntu /ubuntu/ 301
     file_server /ubuntu/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     file_server /ubuntu-cdimage/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     file_server /ubuntu-ports/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /openwrt /openwrt/ 301
     file_server /openwrt/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /rpmfusion /rpmfusion/ 301
     file_server /rpmfusion/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /homebrew-bottles /homebrew-bottles/ 301
@@ -543,7 +543,7 @@ mirror.sjtu.edu.cn {
     redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
     redir /apache /apache/ 301
     file_server /apache/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
@@ -551,7 +551,7 @@ mirror.sjtu.edu.cn {
     redir /git/doom-emacs.git /git/doom-emacs.git/ 301
     redir /blackarch /blackarch/ 301
     file_server /blackarch/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /github/GNS3 /github/GNS3/ 301
@@ -581,7 +581,7 @@ mirror.sjtu.edu.cn {
     }
     redir /sites/tldp.org /sites/tldp.org/ 301
     file_server /sites/tldp.org/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /nix-channels/store /nix-channels/store/ 301
@@ -629,7 +629,7 @@ mirror.sjtu.edu.cn {
     }
     redir /sury /sury/ 301
     file_server /sury/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /opam-cache /opam-cache/ 301
@@ -647,23 +647,23 @@ mirror.sjtu.edu.cn {
     }
     redir /dragonflybsd /dragonflybsd/ 301
     file_server /dragonflybsd/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /git/homebrew-install.git /git/homebrew-install.git/ 301
     redir /openeuler /openeuler/ 301
     file_server /openeuler/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /fedora /fedora/ 301
     file_server /fedora/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /manjaro /manjaro/ 301
     file_server /manjaro/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /manjarostable /manjarostable/ 301
@@ -677,7 +677,7 @@ mirror.sjtu.edu.cn {
     }
     redir /archlinux /archlinux/ 301
     file_server /archlinux/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /bioconductor /bioconductor/ 301
@@ -690,7 +690,7 @@ mirror.sjtu.edu.cn {
     }
     redir /test /test/ 301
     file_server /test/* browse {
-        root /srv/disk1
+        root /srv/data32T
         hide .*
     }
     redir /macports /macports/ 301
@@ -717,12 +717,12 @@ mirror.sjtu.edu.cn {
     }
     redir /armbian /armbian/ 301
     file_server /armbian/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /almalinux /almalinux/ 301
     file_server /almalinux/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /kernel /kernel/ 301
@@ -732,37 +732,37 @@ mirror.sjtu.edu.cn {
     redir /git/linux.git /git/linux.git/ 301
     redir /raspbian-addons /raspbian-addons/ 301
     file_server /raspbian-addons/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /OpenBSD /OpenBSD/ 301
     file_server /OpenBSD/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /ubuntukylin-cdimage /ubuntukylin-cdimage/ 301
     file_server /ubuntukylin-cdimage/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /ubuntukylin /ubuntukylin/ 301
     file_server /ubuntukylin/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /zorinos-isos /zorinos-isos/ 301
     file_server /zorinos-isos/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
     file_server /ubuntu-cloud-images/* browse {
-        root /srv/disk3
+        root /srv/data32T
         hide .*
     }
     redir /debian-ports /debian-ports/ 301
     file_server /debian-ports/* browse {
-        root /srv/disk2
+        root /srv/data32T
         hide .*
     }
     redir /git/homebrew-bundle.git /git/homebrew-bundle.git/ 301
