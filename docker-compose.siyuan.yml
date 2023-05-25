@@ -87,16 +87,8 @@ services:
       device_read_bps:
         - path: /dev/vdb
           rate: '10mb'
-        - path: /dev/vdc
-          rate: '10mb'
-        - path: /dev/vdd
-          rate: '10mb'
       device_read_iops:
         - path: /dev/vdb
-          rate: 20
-        - path: /dev/vdc
-          rate: 20
-        - path: /dev/vdd
           rate: 20
 
   git-backend:
