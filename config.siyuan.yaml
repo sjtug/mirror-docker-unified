@@ -33,6 +33,15 @@ repos:
   #   name: centos
   #   no_redir_http: true
   #   <<: *oneshot_common
+  # rocky
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/
+    interval: 40000
+    path: /srv/data32T/rocky
+    name: rocky
+    rsync_extra_flags: --exclude "*/debug/*"
+    <<: *oneshot_common
   # raspberry-pi-os-images
   - type: shell_script
     name: raspberry-pi-os-images
