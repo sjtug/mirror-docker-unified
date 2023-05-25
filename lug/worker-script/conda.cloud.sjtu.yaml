@@ -1,0 +1,36 @@
+base: https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/anaconda/cloud
+repos:
+  - conda-forge/noarch
+  - conda-forge/linux-64
+  - conda-forge/osx-64
+  - conda-forge/win-64
+  - conda-forge/osx-arm64
+  - bioconda/noarch
+  - bioconda/linux-64
+  - bioconda/osx-64
+  - menpo/noarch
+  - menpo/linux-64
+  - menpo/osx-64
+  - menpo/win-64
+  - matsci/noarch
+  - matsci/linux-64
+  - matsci/osx-64
+  - matsci/win-64
+  - soumith/linux-64
+  - soumith/osx-64
+  - soumith/noarch
+  - viscid-hub/noarch
+  - viscid-hub/linux-64
+  - viscid-hub/osx-64
+  - viscid-hub/win-64
+  - atztogo/linux-64
+  - pytorch/linux-64
+  - pytorch/osx-64
+  - pytorch/win-64
+  - pytorch/win-32
+  - pytorch/noarch
+  - pytorch-test/linux-64
+  - pytorch-test/osx-64
+  - pytorch-test/win-64
+  - pytorch-test/win-32
+  - pytorch-test/noarch
