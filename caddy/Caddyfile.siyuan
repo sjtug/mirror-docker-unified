@@ -378,6 +378,11 @@ mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    redir /rocky /rocky/ 301
+    file_server /rocky/* browse {
+        root /srv/data32T
+        hide .*
+    }
     redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
     route /raspberry-pi-os-images/* {
         reverse_proxy rsync-gateway:8000
@@ -946,11 +951,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /ctan
         redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
-    redir /rocky /rocky/ 301
-    route /rocky/* {
-        uri strip_prefix /rocky
-        redir * https://mirrors.sjtug.sjtu.edu.cn/rocky{uri} 302
-    }
 
     route /git/linuxbrew-core.git/* {
         reverse_proxy git-backend
@@ -1139,7 +1139,6 @@ mirror.sjtu.edu.cn {
         not path /CRAN/*
         not path /CTAN/*
         not path /ctan/*
-        not path /rocky/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308

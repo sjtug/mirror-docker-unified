@@ -314,14 +314,6 @@ repos:
     name: ctan
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/
-    interval: 40000
-    path: /mnt/rocky
-    name: rocky
-    rsync_extra_flags: --exclude "*/debug/*"
-    <<: *oneshot_common
-  - type: shell_script
     script: /worker-script/mirrorz.sh
     interval: 300
     target: https://mirrorz.org/

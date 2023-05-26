@@ -383,9 +383,9 @@ mirrors.sjtug.sjtu.edu.cn {
         hide .*
     }
     redir /rocky /rocky/ 301
-    file_server /rocky/* browse {
-        root /mnt
-        hide .*
+    route /rocky/* {
+        uri strip_prefix /rocky
+        redir * https://mirror.sjtu.edu.cn/rocky{uri} 302
     }
     redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
     route /raspberry-pi-os-images/* {
@@ -913,6 +913,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /rocky/*
         not path /raspberry-pi-os-images/*
         not path /archlinuxarm/*
         not path /archlinux-cn/*
