@@ -476,6 +476,11 @@ mirror.sjtu.edu.cn {
         root /srv/data32T
         hide .*
     }
+    redir /termux /termux/ 301
+    file_server /termux/* browse {
+        root /srv/data32T
+        hide .*
+    }
     redir /ubuntu /ubuntu/ 301
     file_server /ubuntu/* browse {
         root /srv/data32T
