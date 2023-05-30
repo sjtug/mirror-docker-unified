@@ -241,6 +241,15 @@ repos:
     rsync_extra_flags: --exclude "*/obsolete/*" --exclude "obsolete" --exclude "stats"
     ignore_vanish: true
     <<: *oneshot_common
+  # termux
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://packages.termux.dev/termux
+    interval: 5100
+    path: /srv/data32T/termux
+    name: termux
+    rsync_extra_flags: --exclude "termux-main-21"
+    <<: *oneshot_common
   #ubuntu
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh

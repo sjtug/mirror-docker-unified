@@ -487,6 +487,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /scientific
         redir * https://mirror.sjtu.edu.cn/scientific{uri} 302
     }
+    redir /termux /termux/ 301
+    route /termux/* {
+        uri strip_prefix /termux
+        redir * https://mirror.sjtu.edu.cn/termux{uri} 302
+    }
     redir /ubuntu /ubuntu/ 301
     route /ubuntu/* {
         uri strip_prefix /ubuntu
@@ -934,6 +939,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /openvz/*
         not path /remi/*
         not path /scientific/*
+        not path /termux/*
         not path /ubuntu/*
         not path /ubuntu-cdimage/*
         not path /ubuntu-ports/*
