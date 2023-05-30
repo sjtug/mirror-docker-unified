@@ -472,6 +472,16 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /opensuse
         redir * https://mirror.sjtu.edu.cn/opensuse{uri} 302
     }
+    redir /openkylin /openkylin/ 301
+    route /openkylin/* {
+        uri strip_prefix /openkylin
+        redir * https://mirror.sjtu.edu.cn/openkylin{uri} 302
+    }
+    redir /openkylin-cdimage /openkylin-cdimage/ 301
+    route /openkylin-cdimage/* {
+        uri strip_prefix /openkylin-cdimage
+        redir * https://mirror.sjtu.edu.cn/openkylin-cdimage{uri} 302
+    }
     redir /openvz /openvz/ 301
     route /openvz/* {
         uri strip_prefix /openvz
@@ -936,6 +946,8 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /linuxmint-cd/*
         not path /mageia/*
         not path /opensuse/*
+        not path /openkylin/*
+        not path /openkylin-cdimage/*
         not path /openvz/*
         not path /remi/*
         not path /scientific/*
