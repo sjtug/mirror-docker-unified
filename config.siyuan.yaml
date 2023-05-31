@@ -789,12 +789,13 @@ repos:
     name: zorinos-isos
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/rsync.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://cloud-images.ubuntu.com/cloud-images/
     interval: 86400
-    path: /srv/data32T/ubuntu-cloud-images
     name: ubuntu-cloud-images
     rsync_extra_flags: --exclude "releases/" --exclude ".bzr/" --exclude "lost+found/"
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
