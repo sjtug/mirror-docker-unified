@@ -766,9 +766,8 @@ mirror.sjtu.edu.cn {
         hide .*
     }
     redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
-    file_server /ubuntu-cloud-images/* browse {
-        root /srv/data32T
-        hide .*
+    route /ubuntu-cloud-images/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /debian-ports /debian-ports/ 301
     file_server /debian-ports/* browse {
@@ -1099,6 +1098,7 @@ mirror.sjtu.edu.cn {
         not path /anaconda/*
         not path /kernel/*
         not path /git/linux.git/*
+        not path /ubuntu-cloud-images/*
         not path /git/homebrew-bundle.git/*
         not path /git/spdk.git/*
         not path /git/SJTUBeamer.git/*
