@@ -6,6 +6,8 @@ export $(cat /secrets_s3 | xargs)
 export RUST_LOG=info
 export RUST_BACKTRACE=1
 
+export RSYNC_PASSWORD=$LUG_password
+
 mkdir -p "${LUG_tmp_path}"
 
 LUG_timeout="${LUG_timeout:-4h}"
