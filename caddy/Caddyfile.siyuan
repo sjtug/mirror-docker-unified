@@ -461,6 +461,14 @@ mirror.sjtu.edu.cn {
         root /srv/data32T
         hide .*
     }
+    redir /openkylin /openkylin/ 301
+    route /openkylin/* {
+        reverse_proxy rsync-gateway:8000
+    }
+    redir /openkylin-cdimage /openkylin-cdimage/ 301
+    route /openkylin-cdimage/* {
+        reverse_proxy rsync-gateway:8000
+    }
     redir /openvz /openvz/ 301
     file_server /openvz/* browse {
         root /srv/data32T
@@ -1047,6 +1055,8 @@ mirror.sjtu.edu.cn {
         not path /docker-ce/*
         not path /linuxmint-cd/*
         not path /mageia/*
+        not path /openkylin/*
+        not path /openkylin-cdimage/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*

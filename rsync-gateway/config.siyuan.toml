@@ -35,6 +35,16 @@ redis = "redis://redis/"
 redis_namespace = "linuxmint-cd"
 s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/linuxmint-cd"
 
+[endpoints.openkylin]
+redis = "redis://redis/"
+redis_namespace = "openkylin"
+s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/openkylin"
+
+[endpoints.openkylin-cdimage]
+redis = "redis://redis/"
+redis_namespace = "openkylin-cdimage"
+s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/openkylin-cdimage"
+
 [endpoints.ubuntu-cloud-images]
 redis = "redis://redis/"
 redis_namespace = "ubuntu-cloud-images"

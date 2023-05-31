@@ -214,6 +214,30 @@ repos:
     name: opensuse
     no_redir_http: true
     <<: *oneshot_common
+  # openkylin
+  - type: shell_script
+    name: openkylin
+    script: /worker-script/rsync-fetcher.sh
+    interval: 10701
+    source: rsync://openkylin@archive.openkylin.top/openkylin/
+    # Password is made public at #316
+    # So we do not hide it behind secrets
+    password: b85b3ab60822.11ed-Ok
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
+  # openkylin-cdimage
+  - type: shell_script
+    name: openkylin-cdimage
+    script: /worker-script/rsync-fetcher.sh
+    interval: 10701
+    source: rsync://openkylin@releases.openkylin.top/releases/
+    # Password is made public at #316
+    # So we do not hide it behind secrets
+    password: b85b3ab60822.11ed-Ok
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # openvz
   - type: shell_script
     script: /worker-script/rsync.sh
