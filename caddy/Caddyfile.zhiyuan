@@ -382,6 +382,11 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
+    redir /immortalwrt /immortalwrt/ 301
+    route /immortalwrt/* {
+        uri strip_prefix /immortalwrt
+        redir * https://mirror.sjtu.edu.cn/immortalwrt{uri} 302
+    }
     redir /rocky /rocky/ 301
     route /rocky/* {
         uri strip_prefix /rocky
@@ -928,6 +933,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /immortalwrt/*
         not path /rocky/*
         not path /raspberry-pi-os-images/*
         not path /archlinuxarm/*
