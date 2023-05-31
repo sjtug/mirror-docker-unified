@@ -27,3 +27,8 @@ services:
     build:
       args:
         - USE_SJTUG=false
+
+  git-backend:
+    build:
+      args:
+        - USE_SJTUG=false
