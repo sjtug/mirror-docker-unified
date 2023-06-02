@@ -51,6 +51,9 @@ RUN /app/build-script/from-cache.sh \
 COPY build-script/misc/ftpsync.patch .
 RUN git clone https://salsa.debian.org/mirror-team/archvsync.git && cd archvsync && git checkout 57af581ff28a452f053f40639721bb279e1f2cdb && git apply /app/ftpsync.patch
 
+# apt-mirror
+RUN apt-get install apt-mirror -y
+
 # general config
 RUN mkdir /root/.ssh && ssh-keyscan cran.r-project.org >> /root/.ssh/known_hosts
 RUN git config --global credential.helper store
