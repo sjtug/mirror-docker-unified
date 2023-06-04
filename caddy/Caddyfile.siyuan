@@ -378,6 +378,11 @@ mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    redir /immortalwrt /immortalwrt/ 301
+    file_server /immortalwrt/* browse {
+        root /srv/data32T
+        hide .*
+    }
     redir /rocky /rocky/ 301
     file_server /rocky/* browse {
         root /srv/data32T
