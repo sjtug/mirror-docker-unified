@@ -52,8 +52,10 @@ COPY build-script/misc/ftpsync.patch .
 RUN git clone https://salsa.debian.org/mirror-team/archvsync.git && cd archvsync && git checkout 57af581ff28a452f053f40639721bb279e1f2cdb && git apply /app/ftpsync.patch
 
 # apt-mirror
+COPY build-script/misc/apt-mirror-icon2x.patch .
 RUN cd $(mktemp -d) && \
     wget -O apt-mirror https://raw.githubusercontent.com/apt-mirror/apt-mirror/088fa51357602ed4cea263b8eeff5c5365fcac63/apt-mirror && \
+    patch apt-mirror /app/apt-mirror-icon2x.patch && \
     install -m 755 apt-mirror /usr/bin/apt-mirror
 
 # general config
