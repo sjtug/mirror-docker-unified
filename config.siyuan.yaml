@@ -40,7 +40,7 @@ repos:
   - type: shell_script
     script: /worker-script/apt.sh
     source: https://apt.pop-os.org
-    arch: "all,arm64,amd64"
+    arch: "all,arm64,amd64,i386,src"
     # REMARK generate this list by script/popos_dists.sh
     repo: "proprietary:bionic:main,proprietary:disco:main,proprietary:eoan:main,proprietary:focal:main,proprietary:groovy:main,proprietary:hirsute:main,proprietary:impish:main,proprietary:jammy:main,release:impish:main,release:jammy:main,staging/master:bionic:main,staging/master:focal:main,staging/master:jammy:main,staging-proprietary:bionic:main,staging-proprietary:disco:main,staging-proprietary:eoan:main,staging-proprietary:focal:main,staging-proprietary:groovy:main,staging-proprietary:hirsute:main,staging-proprietary:impish:main,staging-proprietary:jammy:main"
     interval: 10601
