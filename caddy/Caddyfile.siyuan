@@ -378,6 +378,10 @@ mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    redir /packman /packman/ 301
+    route /packman/* {
+        reverse_proxy rsync-gateway:8000
+    }
     redir /pop-os /pop-os/ 301
     file_server /pop-os/* browse {
         root /srv/data32T
@@ -1057,6 +1061,7 @@ mirror.sjtu.edu.cn {
     }
     @gzip_enabled {
         not path /speedtest/*
+        not path /packman/*
         not path /raspberry-pi-os-images/*
         not path /opencloudos/*
         not path /qt/*

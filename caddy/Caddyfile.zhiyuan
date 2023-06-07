@@ -382,6 +382,11 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
+    redir /packman /packman/ 301
+    route /packman/* {
+        uri strip_prefix /packman
+        redir * https://mirror.sjtu.edu.cn/packman{uri} 302
+    }
     redir /pop-os /pop-os/ 301
     route /pop-os/* {
         uri strip_prefix /pop-os
@@ -938,6 +943,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /packman/*
         not path /pop-os/*
         not path /immortalwrt/*
         not path /rocky/*
