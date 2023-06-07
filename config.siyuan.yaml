@@ -14,6 +14,8 @@ dummy:
   oneshot_common: &oneshot_common
     retry: 5
     retry_interval: 60
+  apt_common: &apt_common
+    apt_mirror_path: /srv/data32T/apt_mirror_path
   rsync_fetcher_common: &rsync_fetcher_common
     s3_api: "https://s3.jcloud.sjtu.edu.cn"
     s3_region: "jCloud S3"
@@ -33,6 +35,19 @@ repos:
   #   name: centos
   #   no_redir_http: true
   #   <<: *oneshot_common
+
+  # pop
+  - type: shell_script
+    script: /worker-script/apt.sh
+    source: https://apt.pop-os.org
+    arch: "all,arm64,amd64"
+    # REMARK generate this list by script/popos_dists.sh
+    repo: "proprietary:bionic:main,proprietary:disco:main,proprietary:eoan:main,proprietary:focal:main,proprietary:groovy:main,proprietary:hirsute:main,proprietary:impish:main,proprietary:jammy:main,release:impish:main,release:jammy:main,staging/master:bionic:main,staging/master:focal:main,staging/master:jammy:main,staging-proprietary:bionic:main,staging-proprietary:disco:main,staging-proprietary:eoan:main,staging-proprietary:focal:main,staging-proprietary:groovy:main,staging-proprietary:hirsute:main,staging-proprietary:impish:main,staging-proprietary:jammy:main"
+    interval: 10601
+    path: /srv/data32T/pop-os
+    name: pop-os
+    <<: *oneshot_common
+    <<: *apt_common
   # immortalwrt
   - type: shell_script
     script: /worker-script/rsync_password.sh
