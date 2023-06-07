@@ -36,6 +36,15 @@ repos:
   #   no_redir_http: true
   #   <<: *oneshot_common
 
+  # packman
+  - type: shell_script
+    name: packman
+    script: /worker-script/rsync-fetcher.sh
+    interval: 10701
+    source: rsync://mirror.karneval.cz/packman/
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # pop
   - type: shell_script
     script: /worker-script/apt.sh
