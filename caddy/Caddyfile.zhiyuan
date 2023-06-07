@@ -412,6 +412,11 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
+    redir /debian-cdimage /debian-cdimage/ 301
+    route /debian-cdimage/* {
+        uri strip_prefix /debian-cdimage
+        redir * https://mirror.sjtu.edu.cn/debian-cdimage{uri} 302
+    }
     redir /packman /packman/ 301
     route /packman/* {
         uri strip_prefix /packman
@@ -969,6 +974,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /debian-cdimage/*
         not path /packman/*
         not path /pop-os/*
         not path /immortalwrt/*

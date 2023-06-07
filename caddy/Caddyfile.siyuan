@@ -378,6 +378,10 @@ mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    redir /debian-cdimage /debian-cdimage/ 301
+    route /debian-cdimage/* {
+        reverse_proxy rsync-gateway:8000
+    }
     redir /packman /packman/ 301
     route /packman/* {
         reverse_proxy rsync-gateway:8000
@@ -1062,6 +1066,7 @@ mirror.sjtu.edu.cn {
     }
     @gzip_enabled {
         not path /speedtest/*
+        not path /debian-cdimage/*
         not path /packman/*
         not path /raspberry-pi-os-images/*
         not path /opencloudos/*
