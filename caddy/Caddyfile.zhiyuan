@@ -728,7 +728,8 @@ mirrors.sjtug.sjtu.edu.cn {
     }
     redir /bioconductor /bioconductor/ 301
     route /bioconductor/* {
-        reverse_proxy mirror-intel:8000
+        uri strip_prefix /bioconductor
+        redir * https://mirror.sjtu.edu.cn/bioconductor{uri} 302
     }
     redir /wireshark /wireshark/ 301
     route /wireshark/* {

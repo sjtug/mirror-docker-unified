@@ -723,13 +723,14 @@ repos:
     source: rsync://mirrors.tuna.tsinghua.edu.cn/archlinux/
     lastupdate: https://mirrors.tuna.tsinghua.edu.cn/archlinux/lastupdate
     <<: *oneshot_common
+  # bioconductor
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix bioconductor --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/bioconductor --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/bioconductor
-    serve_mode: mirror_intel
-    interval: 54000
     name: bioconductor
-    # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
-    source: https://mirrors.tuna.tsinghua.edu.cn/bioconductor
+    script: /worker-script/rsync-fetcher.sh
+    interval: 40801
+    source: rsync://mirrors6.tuna.tsinghua.edu.cn/bioconductor/
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix wireshark --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://2.na.dl.wireshark.org --rsync-base rsync://rsync.wireshark.org/wsdl
