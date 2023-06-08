@@ -111,16 +111,16 @@ repos:
     serve_mode: rsync_gateway
     <<: *rsync_fetcher_common
     <<: *oneshot_common
-  # qt
-  - type: shell_script
-    script: /worker-script/rsync-fetcher.sh
-    source: rsync://master.qt.io/qt-all
-    interval: 6000
-    rsync_extra_flags: --exclude "snapshots/*"
-    name: qt
-    serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+  # qt (s3)
+  # - type: shell_script
+  #   script: /worker-script/rsync-fetcher.sh
+  #   source: rsync://master.qt.io/qt-all
+  #   interval: 6000
+  #   rsync_extra_flags: --exclude "snapshots/*"
+  #   name: qt
+  #   serve_mode: rsync_gateway
+  #   <<: *rsync_fetcher_common
+  #   <<: *oneshot_common
   # debian
   - type: shell_script
     script: /worker-script/debian.sh
