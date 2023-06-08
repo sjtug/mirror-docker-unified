@@ -714,7 +714,7 @@ mirror.sjtu.edu.cn {
     }
     redir /bioconductor /bioconductor/ 301
     route /bioconductor/* {
-        reverse_proxy mirror-intel:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /wireshark /wireshark/ 301
     route /wireshark/* {
