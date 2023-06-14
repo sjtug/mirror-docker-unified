@@ -134,7 +134,7 @@ repos:
   # debian
   - type: shell_script
     script: /worker-script/debian.sh
-    source: sv.mirrors.kernel.org
+    source: mirrors6.tuna.tsinghua.edu.cn
     interval: 5400
     path: /srv/data32T/debian
     name: debian
@@ -143,7 +143,7 @@ repos:
   # debian-cd
   - type: shell_script
     script: /worker-script/rsync-fetcher.sh
-    source: rsync://mirrors.kernel.org/debian-cd/
+    source: rsync://cdimage.debian.org/debian-cd/
     interval: 23600
     name: debian-cd
     serve_mode: rsync_gateway
@@ -200,7 +200,7 @@ repos:
   # fedora/epel
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/fedora-epel/
+    source: rsync://dl-iad01.fedoraproject.org/fedora-epel/
     interval: 5000
     path: /srv/data32T/fedora/epel
     name: fedora/epel
@@ -229,7 +229,7 @@ repos:
   # linuxmint
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.kernel.org/linuxmint-packages/
+    source: rsync://rsync-packages.linuxmint.com/packages/
     interval: 6500
     path: /srv/data32T/linuxmint
     name: linuxmint
@@ -237,7 +237,7 @@ repos:
   # linuxmint-cd
   - type: shell_script
     script: /worker-script/rsync-fetcher.sh
-    source: rsync://mirrors.kernel.org/linuxmint/
+    source: rsync://pub.linuxmint.com/pub/
     interval: 21000
     name: linuxmint-cd
     serve_mode: rsync_gateway
