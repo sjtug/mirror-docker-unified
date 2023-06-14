@@ -325,9 +325,9 @@ repos:
     source: master.qt.io::qt-all
     interval: 6000
     path: /mnt/qt
-    name: qt
+    name: qt_rsync
     rsync_extra_flags: --exclude "snapshots/*"
     no_redir_http: true
-    # serve_mode: ignore
-    # unified: disable
-    # hidden: true
+    serve_mode: ignore
+    unified: disable
+    hidden: true
