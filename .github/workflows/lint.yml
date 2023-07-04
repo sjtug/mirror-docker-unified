@@ -35,6 +35,7 @@ jobs:
         run: |
           cp docker-compose.ci.yml docker-compose.override.yml 
           cp ./secrets/caddy.env.example ./secrets/caddy.env
+          cp ./secrets/mirror-clone.env.example ./secrets/mirror-clone.env
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
@@ -63,6 +64,7 @@ jobs:
         run: |
           cp docker-compose.ci.yml docker-compose.override.yml 
           cp ./secrets/caddy.env.example ./secrets/caddy.env
+          cp ./secrets/mirror-clone.env.example ./secrets/mirror-clone.env
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
