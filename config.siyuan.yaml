@@ -390,6 +390,7 @@ repos:
   # pypi
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix pypi-packages --s3-buffer-path /var/cache --print-plan 100 --no-delete --s3-prefix-hint-mode pypi pypi --bq-query --keep-recent 10
+    use_proxy: true
     serve_mode: mirror_intel
     interval: 86400
     name: pypi-packages
