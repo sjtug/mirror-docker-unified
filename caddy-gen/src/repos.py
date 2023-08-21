@@ -1,3 +1,4 @@
+from typing import List
 from loguru import logger
 import dataclasses as dc
 
@@ -26,6 +27,7 @@ class Repo:
 class FileServerRepo(Repo):
     name: str = ''
     path: str = ''
+    extra_directives: List[Node] = dc.field(default_factory=list)
 
     def as_repo(self) -> list[Node]:
         real_root = self.path[:-len(self.name)][:-1]
@@ -33,7 +35,8 @@ class FileServerRepo(Repo):
         return [
             Node(f'file_server {base} browse', [
                 Node(f'root {real_root}'),
-                Node(f'hide .*')
+                Node('hide .*'),
+                *self.extra_directives
             ])]
 
     def enable_repo_gzip(self) -> bool:
@@ -42,16 +45,18 @@ class FileServerRepo(Repo):
     def as_site(self) -> list[Node]:
         real_root = self.path[:-len(self.name)][:-1]
         return gzip('/*') + [
-            Node(f'file_server /* browse', [
+            Node('file_server /* browse', [
                 Node(f'root {real_root}'),
-                Node(f'hide .*')
+                Node('hide .*'),
+                *self.extra_directives
             ])] + hidden() + log()
 
     def as_subdomain(self) -> list[Node]:
         return gzip('/*') + log() + [
-            Node(f'file_server /* browse', [
+            Node('file_server /* browse', [
                 Node(f'root {self.path}'),
-                Node(f'hide .*')
+                Node('hide .*'),
+                *self.extra_directives
             ])] + hidden()
 
     def get_name(self) -> str:
@@ -64,6 +69,7 @@ class ProxyRepo:
     proxy_to: str = ''
     strip_prefix: bool = False
     rewrite_host: bool = True
+    extra_directives: List[Node] = dc.field(default_factory=list)
 
     def as_repo(self) -> list[Node]:
         proxy_node = Node(f'reverse_proxy {self.proxy_to}', [
@@ -71,9 +77,9 @@ class ProxyRepo:
         ] if self.rewrite_host else [])
         strip_prefix = Node(f'uri strip_prefix /{self.name}')
         if self.strip_prefix:
-            return [Node(f'route /{self.name}/*', [strip_prefix, proxy_node])]
+            return [Node(f'route /{self.name}/*', [strip_prefix, proxy_node, *self.extra_directives])]
         else:
-            return [Node(f'route /{self.name}/*', [proxy_node])]
+            return [Node(f'route /{self.name}/*', [proxy_node, *self.extra_directives])]
 
     def enable_repo_gzip(self) -> bool:
         return False
@@ -88,9 +94,9 @@ class ProxyRepo:
         proxy_node_prefix = [
             Node(f'rewrite * /{self.name}{{uri}}'), Node(f'reverse_proxy {self.proxy_to}')]
         if self.strip_prefix:
-            return log() + [proxy_node]
+            return log() + [proxy_node, *self.extra_directives]
         else:
-            return log() + proxy_node_prefix
+            return log() + [*proxy_node_prefix, *self.extra_directives]
 
     def get_name(self) -> str:
         return self.name
@@ -101,15 +107,16 @@ class RedirRepo:
     name: str = ''
     target: str = ''
     always_target: bool = False
+    extra_directives: List[Node] = dc.field(default_factory=list)
 
     def as_repo(self) -> list[Node]:
         redir_always_node = Node(f'redir * {self.target} 302')
         redir_node = Node(f'redir * {self.target}{{uri}} 302')
         strip_prefix = Node(f'uri strip_prefix /{self.name}')
         if self.always_target:
-            return [Node(f'route /{self.name}/*', [strip_prefix, redir_always_node])]
+            return [Node(f'route /{self.name}/*', [strip_prefix, redir_always_node, *self.extra_directives])]
         else:
-            return [Node(f'route /{self.name}/*', [strip_prefix, redir_node])]
+            return [Node(f'route /{self.name}/*', [strip_prefix, redir_node, *self.extra_directives])]
 
     def enable_repo_gzip(self) -> bool:
         return False
@@ -122,9 +129,9 @@ class RedirRepo:
         redir_always_node = Node(f'redir * {self.target} 302')
         redir_node = Node(f'redir * {self.target}{{uri}} 302')
         if self.always_target:
-            return log() + [redir_always_node]
+            return log() + [redir_always_node, *self.extra_directives]
         else:
-            return log() + [redir_node]
+            return log() + [redir_node, *self.extra_directives]
 
     def get_name(self) -> str:
         return self.name

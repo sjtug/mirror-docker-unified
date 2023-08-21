@@ -83,11 +83,12 @@ def repo_no_redir(base: str, repo: Repo, site: str) -> list[Node]:
 
 
 def dict_to_repo(repo: dict) -> Repo:
+    extra_directives = [Node(directive) for directive in repo.get('extra_directives', list())]
     serve_mode = repo.get('serve_mode', 'default')
     if serve_mode == 'redir':
-        return RedirRepo(repo['name'], repo['target'], False)
+        return RedirRepo(repo['name'], repo['target'], False, extra_directives)
     if serve_mode == 'redir_force':
-        return RedirRepo(repo['name'], repo['target'], True)
+        return RedirRepo(repo['name'], repo['target'], True, extra_directives)
     if serve_mode == 'default':
         path = repo['path']
         name = repo['name']
@@ -95,18 +96,18 @@ def dict_to_repo(repo: dict) -> Repo:
             logger.error(
                 f'repo "{name}": {path} should have the same suffix as {name}, ignored')
             return None
-        return FileServerRepo(name, path)
+        return FileServerRepo(name, path, extra_directives)
     if serve_mode == 'mirror_intel':
-        return ProxyRepo(repo['name'], 'mirror-intel:8000', False, False)
+        return ProxyRepo(repo['name'], 'mirror-intel:8000', False, False, extra_directives)
     if serve_mode == 'rsync_gateway':
-        return ProxyRepo(repo['name'], 'rsync-gateway:8000', False, False)
+        return ProxyRepo(repo['name'], 'rsync-gateway:8000', False, False, extra_directives)
     if serve_mode == 'proxy':
         if repo.get('strip_prefix', False):
-            return ProxyRepo(repo['name'], repo['proxy_to'], False, True)
+            return ProxyRepo(repo['name'], repo['proxy_to'], False, True, extra_directives)
         else:
-            return ProxyRepo(repo['name'], repo['proxy_to'], True, True)
+            return ProxyRepo(repo['name'], repo['proxy_to'], True, True, extra_directives)
     if serve_mode == 'git':
-        return ProxyRepo(repo['name'], 'git-backend', False, False)
+        return ProxyRepo(repo['name'], 'git-backend', False, False, extra_directives)
     if serve_mode == 'ignore':
         return None
     logger.error(
