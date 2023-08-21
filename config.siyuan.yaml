@@ -24,6 +24,14 @@ dummy:
     gateway: "https://mirror.sjtu.edu.cn"
     tmp_path: "/srv/data32T/rsync_fetcher_tmp"
     keep: 2 # keep two old revisions
+  rsync_fetcher_v4_common: &rsync_fetcher_v4_common
+    s3_api: "https://s3.jcloud.sjtu.edu.cn"
+    s3_region: "jCloud S3"
+    s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
+    pg: "postgres://rsync-sjtug@postgres/rsync-sjtug"
+    tmp_path: "/srv/data32T/rsync_fetcher_tmp"
+    keep: 2
+    partial: 5
 
 repos:
   # centos

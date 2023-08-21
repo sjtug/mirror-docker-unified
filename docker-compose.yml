@@ -44,6 +44,7 @@ services:
       - ipv6-service-net
       - proxy-net
       - redis-net
+      - postgres-net
     build:
       context: ./lug
       args:
@@ -51,6 +52,7 @@ services:
         - CLONE_VERSION=v0.1.18
         - CLONE_V2_VERSION=v0.2.34
         - RSYNC_SJTUG_VERSION=v0.3.1
+        - RSYNC_SJTUG_V4_VERSION=v0.4.1
         - LUG_VERSION=v0.12.8-post.2
     expose:
       - 8081
@@ -113,6 +115,32 @@ services:
         soft: 80000
         hard: 120000
 
+  rsync-gateway-v4:
+    build:
+      context: ./rsync-gateway-v4
+      args:
+        - USE_SJTUG=true
+        - RSYNC_SJTUG_V4_VERSION=v0.4.1
+    networks:
+      - ipv6-service-net
+      - postgres-net
+    expose:
+      - 8000
+    restart: unless-stopped
+    env_file:
+      - './secrets/mirror-intel.env'
+    environment:
+      RUST_LOG: info
+      RUST_BACKTRACE: 1
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+
   redis:
     restart: unless-stopped
     image: redis:7-bullseye
@@ -121,6 +149,24 @@ services:
       - redis-net
     expose:
       - 6379
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 30G
+    memswap_limit: 30G
+  
+  postgres:
+    restart: unless-stopped
+    image: photonquantum/postgres-rsync-sjtug:latest
+    networks:
+      - postgres-net
+    expose:
+      - 5432
     logging:
       options:
         max-size: "4M"
@@ -281,3 +327,4 @@ networks:
       config:
       -  subnet: fd01::/80
   redis-net:
+  postgres-net:
