@@ -3,6 +3,8 @@
 set -e
 
 export $(cat /secrets_s3 | xargs)
+export $(cat /secrets_pg | xargs)
+
 export RUST_LOG=info
 export RUST_BACKTRACE=1
 

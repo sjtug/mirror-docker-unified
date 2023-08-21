@@ -39,6 +39,7 @@ jobs:
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
+          cp ./secrets/pg.env.example ./secrets/pg.env
           touch ./secrets/lug-secrets.sh
           touch ./speedtest/settings.toml
       - name: verify config
@@ -68,6 +69,7 @@ jobs:
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
           cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
+          cp ./secrets/pg.env.example ./secrets/pg.env
           touch ./secrets/lug-secrets.sh
       - name: validate Caddyfile
         run: docker-compose build caddy && make caddy-verify-config

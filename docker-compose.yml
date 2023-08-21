@@ -66,6 +66,7 @@ services:
       - "./secrets/ssh:/secrets_ssh:ro"
       - "./secrets/mirror-intel.env:/secrets_s3:ro"
       - "./secrets/gcp:/secrets_gcp:ro"
+      - "./secrets/pg.env:/secrets_pg:ro"
       - "./common/gai.conf:/etc/gai.conf:ro"
       - "./config.siyuan.yaml:/config.siyuan.yaml:ro"
       - "./config.zhiyuan.yaml:/config.zhiyuan.yaml:ro"
@@ -129,6 +130,7 @@ services:
     restart: unless-stopped
     env_file:
       - './secrets/mirror-intel.env'
+      - './secrets/pg.env'
     environment:
       RUST_LOG: info
       RUST_BACKTRACE: 1
@@ -167,6 +169,8 @@ services:
       - postgres-net
     expose:
       - 5432
+    env_file:
+      - './secrets/pg.env'
     logging:
       options:
         max-size: "4M"
