@@ -24,10 +24,25 @@ services:
     mem_limit: 5G
     memswap_limit: 5G
 
+  rsync-gateway-v4:
+    container_name: zhiyuan-rsync-gateway-v4
+    volumes:
+      - "./rsync-gateway-v4/config.zhiyuan.toml:/app/config.toml:ro"
+    mem_limit: 5G
+    memswap_limit: 5G
+
   redis:
     container_name: zhiyuan-redis
     volumes:
       - "/mnt/data12T/redis-persist:/data"
+    mem_limit: 10G
+    memswap_limit: 10G
+
+  postgres:
+    container_name: zhiyuan-postgres
+    volumes:
+      - './postgresql.zhiyuan.conf:/etc/postgresql/postgresql.conf:ro'
+      - "/mnt/data12T/postgres-data:/var/lib/postgresql/data"
     mem_limit: 10G
     memswap_limit: 10G
 
