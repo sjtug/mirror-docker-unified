@@ -66,6 +66,7 @@ packagist.mirrors.sjtug.sjtu.edu.cn {
     file_server /* browse {
         root /mnt/packagist
         hide .*
+        precompressed gzip
     }
     @hidden {
         path */.*
@@ -327,6 +328,7 @@ mirrors.sjtug.sjtu.edu.cn {
     file_server /packagist/* browse {
         root /mnt
         hide .*
+        precompressed gzip
     }
     redir /mongodb /mongodb/ 301
     file_server /mongodb/* browse {
