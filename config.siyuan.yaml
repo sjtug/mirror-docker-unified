@@ -51,6 +51,7 @@ repos:
     interval: 30001
     source: rsync://leopard.sh/html
     serve_mode: rsync_gateway_v4
+    rsync_extra_flags: --exclude=/misc/ --exclude=.DS_Store
     <<: *rsync_fetcher_v4_common
     <<: *oneshot_common
   # debian-cdimage
