@@ -414,6 +414,11 @@ mirrors.sjtug.sjtu.edu.cn {
         root /mnt
         hide .*
     }
+    redir /leopardsh /leopardsh/ 301
+    route /leopardsh/* {
+        uri strip_prefix /leopardsh
+        redir * https://mirror.sjtu.edu.cn/leopardsh{uri} 302
+    }
     redir /debian-cdimage /debian-cdimage/ 301
     route /debian-cdimage/* {
         uri strip_prefix /debian-cdimage
@@ -976,6 +981,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /leopardsh/*
         not path /debian-cdimage/*
         not path /packman/*
         not path /pop-os/*
