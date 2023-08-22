@@ -37,6 +37,7 @@ def common() -> list[Node]:
         *reverse_proxy('/monitor/cadvisor', CADVISOR_ADDR),
         *reverse_proxy('/monitor/lug', LUG_EXPORTER_ADDR),
         *reverse_proxy('/monitor/mirror-intel', MIRROR_INTEL_ADDR),
+        *reverse_proxy('/monitor/rsync-gateway-v4', RSYNC_GATEWAY_V4_ADDR),
         *reverse_proxy('/monitor/docker-gcr', 'siyuan-gcr-registry:5001'),
         *reverse_proxy('/monitor/docker-registry', 'siyuan-docker-registry:5001')
     ]
