@@ -356,6 +356,10 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /monitor/mirror-intel
         reverse_proxy mirror-intel:8000
     }
+    route /monitor/rsync-gateway-v4/* {
+        uri strip_prefix /monitor/rsync-gateway-v4
+        reverse_proxy rsync-gateway-v4:8000
+    }
     route /monitor/docker-gcr/* {
         uri strip_prefix /monitor/docker-gcr
         reverse_proxy siyuan-gcr-registry:5001
