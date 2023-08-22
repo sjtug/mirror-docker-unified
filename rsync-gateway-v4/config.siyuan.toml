@@ -3,4 +3,7 @@ s3_url = "https://s3.jcloud.sjtu.edu.cn"
 s3_region = "sjtug"
 database_url = "postgres://rsync-sjtug@postgres/rsync-sjtug"
 
-[endpoints]
+[endpoints.leopardsh]
+namespace = "leopardsh"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/leopardsh"

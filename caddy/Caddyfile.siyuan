@@ -378,6 +378,10 @@ mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    redir /leopardsh /leopardsh/ 301
+    route /leopardsh/* {
+        reverse_proxy rsync-gateway-v4:8000
+    }
     redir /debian-cdimage /debian-cdimage/ 301
     route /debian-cdimage/* {
         reverse_proxy rsync-gateway:8000
@@ -1066,6 +1070,7 @@ mirror.sjtu.edu.cn {
     }
     @gzip_enabled {
         not path /speedtest/*
+        not path /leopardsh/*
         not path /debian-cdimage/*
         not path /packman/*
         not path /raspberry-pi-os-images/*
