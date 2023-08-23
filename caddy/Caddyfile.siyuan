@@ -425,7 +425,7 @@ mirror.sjtu.edu.cn {
     }
     redir /opencloudos /opencloudos/ 301
     route /opencloudos/* {
-        reverse_proxy rsync-gateway:8000
+        reverse_proxy rsync-gateway-v4:8000
     }
     redir /debian /debian/ 301
     file_server /debian/* browse {
