@@ -382,6 +382,10 @@ mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    redir /anthon /anthon/ 301
+    route /anthon/* {
+        reverse_proxy rsync-gateway-v4:8000
+    }
     redir /leopardsh /leopardsh/ 301
     route /leopardsh/* {
         reverse_proxy rsync-gateway-v4:8000
@@ -1074,6 +1078,7 @@ mirror.sjtu.edu.cn {
     }
     @gzip_enabled {
         not path /speedtest/*
+        not path /anthon/*
         not path /leopardsh/*
         not path /debian-cdimage/*
         not path /packman/*
