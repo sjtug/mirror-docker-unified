@@ -431,6 +431,10 @@ mirror.sjtu.edu.cn {
     route /opencloudos/* {
         reverse_proxy rsync-gateway-v4:8000
     }
+    redir /qt /qt/ 301
+    route /qt/* {
+        reverse_proxy rsync-gateway:8000
+    }
     redir /debian /debian/ 301
     file_server /debian/* browse {
         root /srv/data32T
@@ -989,11 +993,6 @@ mirror.sjtu.edu.cn {
         uri strip_prefix /ctan
         redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
-    redir /qt /qt/ 301
-    route /qt/* {
-        uri strip_prefix /qt
-        redir * https://mirrors.sjtug.sjtu.edu.cn/qt{uri} 302
-    }
 
     route /git/linuxbrew-core.git/* {
         reverse_proxy git-backend
@@ -1084,6 +1083,7 @@ mirror.sjtu.edu.cn {
         not path /packman/*
         not path /raspberry-pi-os-images/*
         not path /opencloudos/*
+        not path /qt/*
         not path /debian-cd/*
         not path /deepin-cd/*
         not path /docker-ce/*
@@ -1188,7 +1188,6 @@ mirror.sjtu.edu.cn {
         not path /CRAN/*
         not path /CTAN/*
         not path /ctan/*
-        not path /qt/*
     }
     encode @gzip_enabled gzip zstd
     redir /speedtest /speedtest/ 308
