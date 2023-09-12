@@ -433,7 +433,7 @@ mirror.sjtu.edu.cn {
     }
     redir /qt /qt/ 301
     route /qt/* {
-        reverse_proxy rsync-gateway:8000
+        reverse_proxy rsync-gateway-v4:8000
     }
     redir /debian /debian/ 301
     file_server /debian/* browse {

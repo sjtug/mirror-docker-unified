@@ -15,11 +15,6 @@ redis = "redis://redis/"
 redis_namespace = "raspberry-pi-os-images"
 s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/raspberry-pi-os-images"
 
-[endpoints.qt]
-redis = "redis://redis/"
-redis_namespace = "qt"
-s3_website = "https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/rsync/qt"
-
 [endpoints.debian-cd]
 redis = "redis://redis/"
 redis_namespace = "debian-cd"
