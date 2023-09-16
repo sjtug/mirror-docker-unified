@@ -390,6 +390,10 @@ mirror.sjtu.edu.cn {
     route /leopardsh/* {
         reverse_proxy rsync-gateway-v4:8000
     }
+    redir /endeavouros /endeavouros/ 301
+    route /endeavouros/* {
+        reverse_proxy rsync-gateway-v4:8000
+    }
     redir /debian-cdimage /debian-cdimage/ 301
     route /debian-cdimage/* {
         reverse_proxy rsync-gateway:8000
@@ -1079,6 +1083,7 @@ mirror.sjtu.edu.cn {
         not path /speedtest/*
         not path /anthon/*
         not path /leopardsh/*
+        not path /endeavouros/*
         not path /debian-cdimage/*
         not path /packman/*
         not path /raspberry-pi-os-images/*

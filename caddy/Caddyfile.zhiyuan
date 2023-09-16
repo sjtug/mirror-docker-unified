@@ -398,6 +398,11 @@ mirrors.sjtug.sjtu.edu.cn {
         uri strip_prefix /leopardsh
         redir * https://mirror.sjtu.edu.cn/leopardsh{uri} 302
     }
+    redir /endeavouros /endeavouros/ 301
+    route /endeavouros/* {
+        uri strip_prefix /endeavouros
+        redir * https://mirror.sjtu.edu.cn/endeavouros{uri} 302
+    }
     redir /debian-cdimage /debian-cdimage/ 301
     route /debian-cdimage/* {
         uri strip_prefix /debian-cdimage
@@ -967,6 +972,7 @@ mirrors.sjtug.sjtu.edu.cn {
         not path /anaconda/*
         not path /anthon/*
         not path /leopardsh/*
+        not path /endeavouros/*
         not path /debian-cdimage/*
         not path /packman/*
         not path /pop-os/*
