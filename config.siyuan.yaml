@@ -63,6 +63,15 @@ repos:
     rsync_extra_flags: --exclude=/misc/ --exclude=.DS_Store
     <<: *rsync_fetcher_v4_common
     <<: *oneshot_common
+  # endeavouros
+  - type: shell_script
+    name: endeavouros
+    script: /worker-script/rsync-fetcher-v4.sh
+    interval: 5494
+    source: rsync://alpix.eu.rsync.endeavouros.com/endeavouros
+    serve_mode: rsync_gateway_v4
+    <<: *rsync_fetcher_v4_common
+    <<: *oneshot_common
   # debian-cdimage
   - type: shell_script
     name: debian-cdimage
