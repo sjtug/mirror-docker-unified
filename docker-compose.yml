@@ -3,7 +3,7 @@ services:
   caddy:
     command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
     restart: unless-stopped
-    networks: 
+    networks:
       - ipv6-service-net
       - monitor-net
       - host-monitor-net
@@ -40,7 +40,7 @@ services:
   lug:
     restart: unless-stopped
     command: -c /config.yaml
-    networks: 
+    networks:
       - ipv6-service-net
       - proxy-net
       - redis-net
@@ -50,7 +50,7 @@ services:
       args:
         - USE_SJTUG=true
         - CLONE_VERSION=v0.1.18
-        - CLONE_V2_VERSION=v0.2.34
+        - CLONE_V2_VERSION=v0.2.35
         - RSYNC_SJTUG_VERSION=v0.3.1
         - RSYNC_SJTUG_V4_VERSION=v0.4.8
         - LUG_VERSION=v0.12.9
@@ -161,7 +161,7 @@ services:
         hard: 120000
     mem_limit: 30G
     memswap_limit: 30G
-  
+
   postgres:
     restart: unless-stopped
     image: photonquantum/postgres-rsync-sjtug:latest
@@ -202,7 +202,7 @@ services:
 
   cadvisor:
     restart: unless-stopped
-    networks: 
+    networks:
       - monitor-net
     image: google/cadvisor:latest
     expose:
@@ -222,7 +222,7 @@ services:
         hard: 120000
     mem_limit: 2G
     memswap_limit: 2G
-    
+
   clash:
     build:
       context: ./clash
@@ -296,7 +296,7 @@ services:
     restart: unless-stopped
     networks:
       - ipv6-service-net
-  
+
   speedtest:
     build:
       context: ./speedtest
