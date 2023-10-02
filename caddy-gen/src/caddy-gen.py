@@ -18,19 +18,24 @@ def is_local(base: str):
 
 
 def common() -> list[Node]:
-    frontends = [
+    frontends = Node("handle", [
         Node('file_server /*', [
             Node(f'root {FRONTEND_DIR}')
         ]),
         Node('rewrite /docs/* /', comment='for react app'),
-    ]
-
-    lug = Node(f'reverse_proxy /lug/* {LUG_ADDR}', [
-        Node('header_down Access-Control-Allow-Origin *'),
-        Node('header_down Access-Control-Request-Method GET'),
+        *hidden()
     ])
 
-    monitors = [
+    lug = Node("handle /lug/*", [
+        Node(f'reverse_proxy /lug/* {LUG_ADDR}', [
+            Node('header_down Access-Control-Allow-Origin *'),
+            Node('header_down Access-Control-Request-Method GET'),
+        ]),
+        Node('@reject_lug_api', [Node('path /lug/v1/admin/*')]),
+        Node('respond @reject_lug_api 403')
+    ])
+
+    monitors = Node("handle /monitor/*", [
         *auth_guard('/monitor/*', '{$MONITOR_USER}',
                     '{$MONITOR_PASSWORD_HASHED}'),
         *reverse_proxy('/monitor/node_exporter', NODE_EXPORTER_ADDR),
@@ -40,7 +45,8 @@ def common() -> list[Node]:
         *reverse_proxy('/monitor/rsync-gateway-v4', RSYNC_GATEWAY_V4_ADDR),
         *reverse_proxy('/monitor/docker-gcr', 'siyuan-gcr-registry:5001'),
         *reverse_proxy('/monitor/docker-registry', 'siyuan-docker-registry:5001')
-    ]
+        # *metrics("/monitor/caddy")    # enable metrics in global config
+    ])
 
     crawler_rewrite = Node('rewrite', [
         Node('if_op or'),
@@ -58,33 +64,33 @@ def common() -> list[Node]:
         Node('reverse_proxy https://service.prerender.io')
     ])
 
-    reject_lug_api = Node('@reject_lug_api', [Node('path /lug/v1/admin/*')])
-    reject_lug_api_respond = Node('respond @reject_lug_api 403')
-
     return \
         log() + \
         [BLANK_NODE] + \
-        frontends + [BLANK_NODE] + \
+        [frontends] + [BLANK_NODE] + \
         [lug] + [BLANK_NODE] + \
-        monitors + [BLANK_NODE] + \
-        hidden() + \
-        [reject_lug_api, reject_lug_api_respond]
+        [monitors]
+
+
+def common_http() -> list[Node]:
+    http_redirect_to_https = Node("handle", [
+        Node("redir https://{hostport}{uri} 308", [],
+             "redirect remaining http requests to https")
+    ])
+    return log() + [BLANK_NODE] + [http_redirect_to_https]
+
+
+def handle(repo: Repo, children: list[Node]) -> list[Node]:
+    return [Node(f"handle /{repo.get_name()}", children)]
 
 
 def repo_redir(repo: Repo) -> list[Node]:
     return [Node(f'redir /{repo.get_name()} /{repo.get_name()}/ 301')]
 
 
-def repo_no_redir(base: str, repo: Repo, site: str) -> list[Node]:
-    return [
-        Node(f'http://{base}/{repo.get_name()}', repo_redir(repo) + log()),
-        Node(f'http://{base}/{repo.get_name()}/*',
-             repo.as_site() + [sjtug_mirror_id(site)])
-    ]
-
-
 def dict_to_repo(repo: dict) -> Repo:
-    extra_directives = [Node(directive) for directive in repo.get('extra_directives', list())]
+    extra_directives = [Node(directive)
+                        for directive in repo.get('extra_directives', list())]
     serve_mode = repo.get('serve_mode', 'default')
     if serve_mode == 'redir':
         return RedirRepo(repo['name'], repo['target'], False, extra_directives)
@@ -118,12 +124,16 @@ def dict_to_repo(repo: dict) -> Repo:
     return None
 
 
-def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list[Node], list[Node]]:
+def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list[Node], list[Node], list[Node]]:
     outer_nodes = []
-    file_server_nodes = []
-    git_server_nodes = []
 
-    gzip_disabled_list = ["speedtest"]
+    http_file_server_nodes = []
+    http_git_server_nodes = []
+    http_gzip_disabled_list = ["speedtest"]
+
+    https_file_server_nodes = []
+    https_git_server_nodes = []
+    https_gzip_disabled_list = ["speedtest"]
 
     for repo_ in repos:
         repo = dict_to_repo(repo_)
@@ -131,26 +141,35 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
             if repo_.get('no_direct_serve', False):
                 continue
 
+            no_redir_http = False
             if repo_.get('no_redir_http', False):
                 if is_local(base):
                     logger.warning(
                         f'repo "{repo["name"]}": BASE "{base}" might be a local url, "no_redir_http" will be ignored')
                 else:
-                    outer_nodes += repo_no_redir(base, repo, site)
-            file_server_nodes += repo_redir(repo)
+                    no_redir_http = True
+
+            leaf = repo_redir(repo) + repo.as_repo()
             if repo.get_name().startswith('git/'):
-                git_server_nodes += repo.as_repo()
+                if no_redir_http:
+                    http_git_server_nodes += leaf
+                https_git_server_nodes += leaf
             else:
-                file_server_nodes += repo.as_repo()
+                if no_redir_http:
+                    http_file_server_nodes += leaf
+                https_file_server_nodes += leaf
 
             if 'subdomain' in repo_ and first_site:
                 outer_nodes += [Node(repo_['subdomain'],
                                      repo.as_subdomain() + [sjtug_mirror_id(site)])]
 
             if not repo.enable_repo_gzip():
-                gzip_disabled_list.append(repo.get_name())
+                if no_redir_http:
+                    http_gzip_disabled_list.append(repo.get_name())
+                https_gzip_disabled_list.append(repo.get_name())
 
-    file_server_nodes += [BLANK_NODE]
+    http_file_server_nodes += [BLANK_NODE]
+    https_file_server_nodes += [BLANK_NODE]
 
     # libgit2 patches -- libgit2 doesn't support 301 redirect
     # file_server_nodes += [Node('@git_libgit2', [Node(f'path /git/*'),
@@ -160,32 +179,29 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
     #                                            Node(f'not header User-Agent *libgit2*')])]
     # file_server_nodes += [Node('route @git_normal', git_server_nodes)]
 
-    file_server_nodes += git_server_nodes
+    http_file_server_nodes += http_git_server_nodes
+    https_file_server_nodes += https_git_server_nodes
+
+    speed_test_nodes = [BLANK_NODE,
+                        Node('redir /speedtest /speedtest/ 308'),
+                        Node('handle_path /speedtest/*', [
+                            Node(f'reverse_proxy {SPEEDTEST_ADDR}')
+                        ])]
+    http_file_server_nodes += speed_test_nodes
+    https_file_server_nodes += speed_test_nodes
 
     # disable gzip for all proxy repos
-    gzip_disabled = [Node(
-        '@gzip_enabled', [Node(f'not path /{prefix}/*') for prefix in gzip_disabled_list])]
-    file_server_nodes += gzip_disabled
-    file_server_nodes += gzip('@gzip_enabled')
+    http_gzip_disabled = [Node(
+        '@gzip_enabled', [Node(f'not path /{prefix}/*') for prefix in http_gzip_disabled_list])]
+    http_file_server_nodes = [
+        *http_gzip_disabled, *gzip('@gzip_enabled'), BLANK_NODE] + http_file_server_nodes
 
-    file_server_nodes += [
-        Node('redir /speedtest /speedtest/ 308'),
-        Node(f'route /speedtest/*', [
-            Node('uri strip_prefix /speedtest'),
-            Node(f'reverse_proxy {SPEEDTEST_ADDR}')
-        ])
-    ]
+    https_gzip_disabled = [Node(
+        '@gzip_enabled', [Node(f'not path /{prefix}/*') for prefix in https_gzip_disabled_list])]
+    https_file_server_nodes = [*https_gzip_disabled, *
+                               gzip('@gzip_enabled'), BLANK_NODE] + https_file_server_nodes
 
-    outer_nodes += [
-        Node(f'http://{base}/speedtest',
-             [Node(f'redir /speedtest /speedtest/ 308')] + log()),
-        Node(f'http://{base}/speedtest/*', [
-            Node('uri strip_prefix /speedtest'),
-            Node(f'reverse_proxy {SPEEDTEST_ADDR}')
-        ] + [sjtug_mirror_id(site)])
-    ]
-
-    return outer_nodes, file_server_nodes
+    return outer_nodes, http_file_server_nodes, https_file_server_nodes
 
 
 def sjtug_mirror_id(site: str) -> Node:
@@ -193,22 +209,24 @@ def sjtug_mirror_id(site: str) -> Node:
 
 
 def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
-    common_nodes = common()
-    no_redir_nodes, file_server_nodes = gen_repos(
+    no_redir_nodes, http_file_server_nodes, https_file_server_nodes = gen_repos(
         base, config_yaml['repos'], first_site, site)
 
-    main_children = common_nodes + [BLANK_NODE]
-    main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
-    main_children += cors("/mirrorz/*")   # mirrorz.org protocol support
-    main_children += [BLANK_NODE] + file_server_nodes
-    main_node = Node(f'{base}', main_children)
-    http_base = Node(f'http://{base}/', log() + [
-        Node(f'redir / https://{base}/ 308')
-    ])
+    http_main_children = common_http() + [BLANK_NODE]
+    http_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
+    http_main_children += [BLANK_NODE] + http_file_server_nodes
+    http_main_node = Node(f'http://{base}', http_main_children)
+
+    https_main_children = common() + [BLANK_NODE]
+    https_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
+    https_main_children += cors("/mirrorz/*")   # mirrorz.org protocol support
+    https_main_children += [BLANK_NODE] + https_file_server_nodes
+    https_main_node = Node(f'https://{base}', https_main_children)
+
     return Node('',
-                [http_base] +
                 no_redir_nodes +
-                [main_node])
+                [http_main_node] +
+                [https_main_node])
 
 
 def rewrite_config(repo: dict, site: str):
@@ -313,7 +331,8 @@ if __name__ == "__main__":
             Node('key_type rsa4096'),
             Node('email sjtug-mirror-maintainers@googlegroups.com'),
             Node('preferred_chains smallest'),
-            Node('cert_issuer acme')
+            Node('cert_issuer acme'),
+            # Node('metrics')   # has performance issue
         ]))
 
         for (idx, base) in enumerate(BASES[site]):

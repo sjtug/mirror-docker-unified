@@ -33,23 +33,18 @@ class FileServerRepo(Repo):
         real_root = self.path[:-len(self.name)][:-1]
         base = f'/{self.name}/*'
         return [
-            Node(f'file_server {base} browse', [
-                Node(f'root {real_root}'),
-                Node('hide .*'),
-                *self.extra_directives
-            ])]
+            Node(f"handle {base}", [
+                Node(f'file_server browse', [
+                    Node(f'root {real_root}'),
+                    Node('hide .*'),
+                    *self.extra_directives
+                ]),
+                *hidden()
+            ])
+        ]
 
     def enable_repo_gzip(self) -> bool:
         return True
-
-    def as_site(self) -> list[Node]:
-        real_root = self.path[:-len(self.name)][:-1]
-        return gzip('/*') + [
-            Node('file_server /* browse', [
-                Node(f'root {real_root}'),
-                Node('hide .*'),
-                *self.extra_directives
-            ])] + hidden() + log()
 
     def as_subdomain(self) -> list[Node]:
         return gzip('/*') + log() + [
@@ -75,11 +70,8 @@ class ProxyRepo:
         proxy_node = Node(f'reverse_proxy {self.proxy_to}', [
             Node('header_up Host {http.reverse_proxy.upstream.hostport}')
         ] if self.rewrite_host else [])
-        strip_prefix = Node(f'uri strip_prefix /{self.name}')
-        if self.strip_prefix:
-            return [Node(f'route /{self.name}/*', [strip_prefix, proxy_node, *self.extra_directives])]
-        else:
-            return [Node(f'route /{self.name}/*', [proxy_node, *self.extra_directives])]
+        directive = "handle_path" if self.strip_prefix else "handle"
+        return [Node(f'{directive} /{self.name}/*', [proxy_node, *self.extra_directives])]
 
     def enable_repo_gzip(self) -> bool:
         return False
@@ -112,11 +104,10 @@ class RedirRepo:
     def as_repo(self) -> list[Node]:
         redir_always_node = Node(f'redir * {self.target} 302')
         redir_node = Node(f'redir * {self.target}{{uri}} 302')
-        strip_prefix = Node(f'uri strip_prefix /{self.name}')
         if self.always_target:
-            return [Node(f'route /{self.name}/*', [strip_prefix, redir_always_node, *self.extra_directives])]
+            return [Node(f'handle_path /{self.name}/*', [redir_always_node, *self.extra_directives])]
         else:
-            return [Node(f'route /{self.name}/*', [strip_prefix, redir_node, *self.extra_directives])]
+            return [Node(f'handle_path /{self.name}/*', [redir_node, *self.extra_directives])]
 
     def enable_repo_gzip(self) -> bool:
         return False
