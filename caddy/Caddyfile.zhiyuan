@@ -298,6 +298,14 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /github/SJTUThesis/*
         not path /centos/*
         not path /ubuntu-cd/*
+        not path /git/lean4-packages/std4/*
+        not path /git/lean4-packages/lean4-cli/*
+        not path /git/lean4-packages/ProofWidgets4/*
+        not path /git/lean4-packages/aesop/*
+        not path /git/lean4-packages/quote4/*
+        not path /git/lean4-packages/mathlib4/*
+        not path /git/lean4-packages/doc-gen4/*
+        not path /git/lean4-packages/mathematics_in_lean_source/*
     }
     encode @gzip_enabled gzip zstd
 
@@ -1047,6 +1055,38 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
     handle_path /git/SJTUThesis.git/* {
         redir * https://mirror.sjtu.edu.cn/git/SJTUThesis.git{uri} 302
+    }
+    redir /git/lean4-packages/std4 /git/lean4-packages/std4/ 301
+    handle_path /git/lean4-packages/std4/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/std4{uri} 302
+    }
+    redir /git/lean4-packages/lean4-cli /git/lean4-packages/lean4-cli/ 301
+    handle_path /git/lean4-packages/lean4-cli/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/lean4-cli{uri} 302
+    }
+    redir /git/lean4-packages/ProofWidgets4 /git/lean4-packages/ProofWidgets4/ 301
+    handle_path /git/lean4-packages/ProofWidgets4/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/ProofWidgets4{uri} 302
+    }
+    redir /git/lean4-packages/aesop /git/lean4-packages/aesop/ 301
+    handle_path /git/lean4-packages/aesop/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/aesop{uri} 302
+    }
+    redir /git/lean4-packages/quote4 /git/lean4-packages/quote4/ 301
+    handle_path /git/lean4-packages/quote4/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/quote4{uri} 302
+    }
+    redir /git/lean4-packages/mathlib4 /git/lean4-packages/mathlib4/ 301
+    handle_path /git/lean4-packages/mathlib4/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/mathlib4{uri} 302
+    }
+    redir /git/lean4-packages/doc-gen4 /git/lean4-packages/doc-gen4/ 301
+    handle_path /git/lean4-packages/doc-gen4/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/doc-gen4{uri} 302
+    }
+    redir /git/lean4-packages/mathematics_in_lean_source /git/lean4-packages/mathematics_in_lean_source/ 301
+    handle_path /git/lean4-packages/mathematics_in_lean_source/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/mathematics_in_lean_source{uri} 302
     }
 
     redir /speedtest /speedtest/ 308
