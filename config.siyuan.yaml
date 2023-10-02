@@ -986,3 +986,60 @@ repos:
     target: https://repo.huaweicloud.com/ubuntu-cdimage/
     disabled: true
     <<: *oneshot_common
+  # mathlib
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/std4
+    source: https://github.com/leanprover/std4.git
+    path: /srv/data32T/git/lean4-packages/std4.git
+    serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/lean4-cli
+    source: https://github.com/leanprover/lean4-cli.git
+    path: /srv/data32T/git/lean4-packages/lean4-cli.git
+    serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/ProofWidgets4
+    source: https://github.com/EdAyers/ProofWidgets4.git
+    path: /srv/data32T/git/lean4-packages/ProofWidgets4.git
+    serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/aesop
+    source: https://github.com/JLimperg/aesop.git
+    path: /srv/data32T/git/lean4-packages/aesop.git
+    serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/quote4
+    source: https://github.com/gebner/quote4.git
+    path: /srv/data32T/git/lean4-packages/quote4.git
+    serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/mathlib4
+    source: https://github.com/leanprover-community/mathlib4.git
+    path: /srv/data32T/git/lean4-packages/mathlib4.git
+    serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/doc-gen4
+    source: https://github.com/leanprover/doc-gen4.git
+    path: /srv/data32T/git/lean4-packages/doc-gen4.git
+    serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/mathematics_in_lean_source
+    source: https://github.com/avigad/mathematics_in_lean_source.git
+    path: /srv/data32T/git/lean4-packages/mathematics_in_lean_source.git
+    serve_mode: git
