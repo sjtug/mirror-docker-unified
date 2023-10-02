@@ -19,21 +19,25 @@ def auth_guard(matcher: str, username: str, password: str) -> list[Node]:
 
 
 def hidden() -> list[Node]:
-    return [Node('@hidden', [Node('path */.*')]),  # hide dot files
-            Node('respond @hidden 404')]
+    return [
+        Node('@hidden path */.*'),
+        Node('respond @hidden 404')
+    ]
 
 
 def log() -> list[Node]:
     return [Node('log', [
         Node('output stdout'),
-        Node('format single_field common_log', comment='log in v1 style')
+        Node('format transform "{common_log}"',
+             comment='log in v1 style, caddyserver/transform-encoder required')
     ])]
 
 
-def reverse_proxy(prefix: str, target: str, strip_prifix=True) -> list[Node]:
-    node_list = []
-    if strip_prifix:
-        node_list.append(Node(f'uri strip_prefix {prefix}'))
-    node_list.append(Node(f'reverse_proxy {target}'))
+def reverse_proxy(prefix: str, target: str, strip_prefix=True) -> list[Node]:
+    directive = "handle_path" if strip_prefix else "handle"
 
-    return [Node(f'route {prefix}/*', node_list)]
+    return [Node(f"{directive} {prefix}/*", [Node(f"reverse_proxy {target}")])]
+
+
+def metrics(prefix: str) -> list[Node]:
+    return [Node(f"metrics {prefix}")]
