@@ -204,7 +204,7 @@ services:
     restart: unless-stopped
     networks:
       - monitor-net
-    image: google/cadvisor:latest
+    image: gcr.dockerproxy.com/cadvisor/cadvisor:v0.47.2
     expose:
       - 8080
     volumes:
