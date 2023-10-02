@@ -468,6 +468,13 @@ repos:
     interval: 7000
     name: ghcup
     <<: *oneshot_common
+  # elan
+  - type: shell_script
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix elan --s3-buffer-path /var/cache --s3-scan-metadata --print-plan 100 elan --retain-elan-versions 2 --retain-lean-versions 20
+    serve_mode: mirror_intel
+    interval: 7000
+    name: elan
+    <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600

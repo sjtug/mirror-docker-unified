@@ -52,6 +52,7 @@ s3_only = [
     "macports/",
     "gimp/",
     "ghcup/",
+    "elan/",
     "kernel/"
 ]
 

@@ -216,6 +216,7 @@ https://mirror.sjtu.edu.cn {
         not path /crates.io/*
         not path /flutter_infra/*
         not path /ghcup/*
+        not path /elan/*
         not path /git/linuxbrew-core.git/*
         not path /git/homebrew-services.git/*
         not path /git/homebrew-cask-drivers.git/*
@@ -587,6 +588,10 @@ https://mirror.sjtu.edu.cn {
     }
     redir /ghcup /ghcup/ 301
     handle /ghcup/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /elan /elan/ 301
+    handle /elan/* {
         reverse_proxy mirror-intel:8000
     }
     redir /linuxbrew-bottles /linuxbrew-bottles/ 301
