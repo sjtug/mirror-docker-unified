@@ -18,6 +18,21 @@ namespace = "endeavouros"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
 s3_prefix = "rsync/endeavouros"
 
+[endpoints.debian-cdimage]
+namespace = "debian-cdimage"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/debian-cdimage"
+
+[endpoints.packman]
+namespace = "packman"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/packman"
+
+[endpoints.raspberry-pi-os-images]
+namespace = "raspberry-pi-os-images"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/raspberry-pi-os-images"
+
 [endpoints.opencloudos]
 namespace = "opencloudos"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
@@ -27,3 +42,43 @@ s3_prefix = "rsync/opencloudos"
 namespace = "qt"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
 s3_prefix = "rsync/qt"
+
+[endpoints.debian-cd]
+namespace = "debian-cd"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/debian-cd"
+
+[endpoints.deepin-cd]
+namespace = "deepin-cd"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/deepin-cd"
+
+[endpoints.docker-ce]
+namespace = "docker-ce"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/docker-ce"
+
+[endpoints.linuxmint-cd]
+namespace = "linuxmint-cd"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/linuxmint-cd"
+
+[endpoints.openkylin]
+namespace = "openkylin"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/openkylin"
+
+[endpoints.openkylin-cdimage]
+namespace = "openkylin-cdimage"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/openkylin-cdimage"
+
+[endpoints.bioconductor]
+namespace = "bioconductor"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/bioconductor"
+
+[endpoints.ubuntu-cloud-images]
+namespace = "ubuntu-cloud-images"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/ubuntu-cloud-images"
