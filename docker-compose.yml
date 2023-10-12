@@ -52,7 +52,7 @@ services:
         - CLONE_VERSION=v0.1.18
         - CLONE_V2_VERSION=v0.2.35
         - RSYNC_SJTUG_VERSION=v0.3.1
-        - RSYNC_SJTUG_V4_VERSION=v0.4.9
+        - RSYNC_SJTUG_V4_VERSION=v0.4.10
         - LUG_VERSION=v0.12.9
     expose:
       - 8081
@@ -121,7 +121,7 @@ services:
       context: ./rsync-gateway-v4
       args:
         - USE_SJTUG=true
-        - RSYNC_SJTUG_V4_VERSION=v0.4.9
+        - RSYNC_SJTUG_V4_VERSION=v0.4.10
     networks:
       - ipv6-service-net
       - postgres-net
