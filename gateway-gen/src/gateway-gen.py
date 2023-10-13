@@ -39,7 +39,10 @@ if __name__ == "__main__":
         "bind": ["0.0.0.0:8000"],
         "s3_url": S3_API_URL,
         "s3_region": S3_REGION,
-        "database_url": DATABASE_URL
+        "database_url": DATABASE_URL,
+        "log": {
+            "format": "json",
+        }
     }
     gateway_configs = dict()
 
@@ -79,6 +82,7 @@ if __name__ == "__main__":
 
         if v4:
             config_toml = {**base_config_v4, **gateway_configs[site]}
+            config_toml["log"]["target"] = f"tcp://tunnel:{LOG_PORT[site]}"
         else:
             config_toml = {**base_config, **gateway_configs[site]}
 
