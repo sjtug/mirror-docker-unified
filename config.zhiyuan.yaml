@@ -158,17 +158,19 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     name: parrot
-    script: /worker-script/rsync.sh
-    path: /mnt/parrot
+    script: /worker-script/rsync-fetcher.sh
     interval: 3802
-    source: rsync://archive.parrotsec.org:/parrot
+    source: rsync://archive.parrotsec.org/parrot
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     name: raspberrypi
-    script: /worker-script/rsync.sh
-    path: /mnt/raspberrypi
+    script: /worker-script/rsync-fetcher.sh
     interval: 10801
-    source: apt-repo.raspberrypi.org::archive
+    source: rsync://apt-repo.raspberrypi.org/archive
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     name: mx-isos

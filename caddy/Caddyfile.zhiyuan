@@ -175,6 +175,8 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /git/brew.git/*
         not path /git/crates.io-index/*
         not path /raspbian/*
+        not path /parrot/*
+        not path /raspberrypi/*
         not path /msys2/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
@@ -419,21 +421,11 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /parrot /parrot/ 301
     handle /parrot/* {
-        file_server browse {
-            root /mnt
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+        reverse_proxy rsync-gateway:8000
     }
     redir /raspberrypi /raspberrypi/ 301
     handle /raspberrypi/* {
-        file_server browse {
-            root /mnt
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+        reverse_proxy rsync-gateway:8000
     }
     redir /mx-isos /mx-isos/ 301
     handle /mx-isos/* {
