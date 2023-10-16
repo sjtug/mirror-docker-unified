@@ -14,10 +14,6 @@ services:
     build:
       args:
         - USE_SJTUG=false
-  rsync-gateway-v4:
-    build:
-      args:
-        - USE_SJTUG=false
   mirror-intel:
     build:
       args:

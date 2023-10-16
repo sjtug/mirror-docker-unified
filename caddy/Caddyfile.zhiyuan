@@ -91,7 +91,7 @@ http://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /raspbian /raspbian/ 301
     handle /raspbian/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /ctan /ctan/ 301
     handle /ctan/* {
@@ -152,8 +152,8 @@ https://mirrors.sjtug.sjtu.edu.cn {
         handle_path /monitor/mirror-intel/* {
             reverse_proxy mirror-intel:8000
         }
-        handle_path /monitor/rsync-gateway-v4/* {
-            reverse_proxy rsync-gateway-v4:8000
+        handle_path /monitor/rsync-gateway/* {
+            reverse_proxy rsync-gateway:8000
         }
         handle_path /monitor/docker-gcr/* {
             reverse_proxy siyuan-gcr-registry:5001
@@ -401,7 +401,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /kali-images /kali-images/ 301
     handle /kali-images/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /crates.io-index /crates.io-index/ 301
     handle /crates.io-index/* {
@@ -414,7 +414,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /raspbian /raspbian/ 301
     handle /raspbian/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /parrot /parrot/ 301
     handle /parrot/* {
@@ -500,7 +500,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /msys2 /msys2/ 301
     handle /msys2/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /linuxliteos /linuxliteos/ 301
     handle /linuxliteos/* {
