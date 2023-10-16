@@ -18,14 +18,6 @@ dummy:
     s3_api: "https://s3.jcloud.sjtu.edu.cn"
     s3_region: "jCloud S3"
     s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
-    redis: "redis://redis/"
-    gateway: "https://mirrors.sjtug.sjtu.edu.cn"
-    tmp_path: "/mnt/rsync_fetcher_tmp"
-    keep: 2 # keep two old revisions
-  rsync_fetcher_v4_common: &rsync_fetcher_v4_common
-    s3_api: "https://s3.jcloud.sjtu.edu.cn"
-    s3_region: "jCloud S3"
-    s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
     pg: "postgres://rsync-sjtug@postgres/rsync-sjtug"
     tmp_path: "/mnt/rsync_fetcher_tmp"
     keep: 2
@@ -106,13 +98,13 @@ repos:
     name: ros
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://ftp.jaist.ac.jp/kali-images/
     interval: 10800
     path: /mnt/kali-images
     name: kali-images
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
@@ -157,12 +149,12 @@ repos:
     z_link_to: git/crates.io-index
   - type: shell_script
     name: raspbian
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 10801
     source: rsync://mirrors6.tuna.tsinghua.edu.cn/raspbian/
     no_redir_http: true
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     name: parrot
@@ -235,11 +227,11 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     name: msys2
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 12001
     source: rsync://repo.msys2.org/builds
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/opam.sh

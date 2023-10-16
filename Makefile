@@ -25,7 +25,6 @@ integration-test:
 
 gateway-gen:
 	cd gateway-gen && pipenv run python src/gateway-gen.py -i ../ -o ../rsync-gateway --site siyuan,zhiyuan
-	cd gateway-gen && pipenv run python src/gateway-gen.py -i ../ -o ../rsync-gateway-v4 --site siyuan,zhiyuan --v4
 
 up:
 	docker-compose up -d --build

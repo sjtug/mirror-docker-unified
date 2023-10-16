@@ -42,7 +42,7 @@ def common() -> list[Node]:
         *reverse_proxy('/monitor/cadvisor', CADVISOR_ADDR),
         *reverse_proxy('/monitor/lug', LUG_EXPORTER_ADDR),
         *reverse_proxy('/monitor/mirror-intel', MIRROR_INTEL_ADDR),
-        *reverse_proxy('/monitor/rsync-gateway-v4', RSYNC_GATEWAY_V4_ADDR),
+        *reverse_proxy('/monitor/rsync-gateway', RSYNC_GATEWAY_ADDR),
         *reverse_proxy('/monitor/docker-gcr', 'siyuan-gcr-registry:5001'),
         *reverse_proxy('/monitor/docker-registry', 'siyuan-docker-registry:5001')
         # *metrics("/monitor/caddy")    # enable metrics in global config
@@ -108,8 +108,6 @@ def dict_to_repo(repo: dict) -> Repo:
         return ProxyRepo(repo['name'], 'mirror-intel:8000', False, False, extra_directives)
     if serve_mode == 'rsync_gateway':
         return ProxyRepo(repo['name'], 'rsync-gateway:8000', False, False, extra_directives)
-    if serve_mode == 'rsync_gateway_v4':
-        return ProxyRepo(repo['name'], 'rsync-gateway-v4:8000', False, False, extra_directives)
     if serve_mode == 'proxy':
         if repo.get('strip_prefix', False):
             return ProxyRepo(repo['name'], repo['proxy_to'], False, True, extra_directives)
@@ -256,7 +254,7 @@ def rewrite_config(repo: dict, site: str):
             'name': repo['name'],
             'serve_mode': serve_mode
         }
-    if serve_mode == 'rsync_gateway' or serve_mode == 'rsync_gateway_v4':
+    if serve_mode == 'rsync_gateway':
         name = repo['name']
         return {
             'name': name,

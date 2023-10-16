@@ -52,7 +52,7 @@ http://mirror.sjtu.edu.cn {
     }
     redir /docker-ce /docker-ce/ 301
     handle /docker-ce/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
@@ -176,8 +176,8 @@ https://mirror.sjtu.edu.cn {
         handle_path /monitor/mirror-intel/* {
             reverse_proxy mirror-intel:8000
         }
-        handle_path /monitor/rsync-gateway-v4/* {
-            reverse_proxy rsync-gateway-v4:8000
+        handle_path /monitor/rsync-gateway/* {
+            reverse_proxy rsync-gateway:8000
         }
         handle_path /monitor/docker-gcr/* {
             reverse_proxy siyuan-gcr-registry:5001
@@ -319,23 +319,23 @@ https://mirror.sjtu.edu.cn {
 
     redir /anthon /anthon/ 301
     handle /anthon/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /leopardsh /leopardsh/ 301
     handle /leopardsh/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /endeavouros /endeavouros/ 301
     handle /endeavouros/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /debian-cdimage /debian-cdimage/ 301
     handle /debian-cdimage/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /packman /packman/ 301
     handle /packman/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /pop-os /pop-os/ 301
     handle /pop-os/* {
@@ -366,7 +366,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
     handle /raspberry-pi-os-images/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /archlinuxarm /archlinuxarm/ 301
     handle /archlinuxarm/* {
@@ -388,11 +388,11 @@ https://mirror.sjtu.edu.cn {
     }
     redir /opencloudos /opencloudos/ 301
     handle /opencloudos/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /qt /qt/ 301
     handle /qt/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /debian /debian/ 301
     handle /debian/* {
@@ -405,7 +405,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /debian-cd /debian-cd/ 301
     handle /debian-cd/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /debian-security /debian-security/ 301
     handle /debian-security/* {
@@ -427,11 +427,11 @@ https://mirror.sjtu.edu.cn {
     }
     redir /deepin-cd /deepin-cd/ 301
     handle /deepin-cd/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /docker-ce /docker-ce/ 301
     handle /docker-ce/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
@@ -462,7 +462,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /linuxmint-cd /linuxmint-cd/ 301
     handle /linuxmint-cd/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /mageia /mageia/ 301
     handle_path /mageia/* {
@@ -479,11 +479,11 @@ https://mirror.sjtu.edu.cn {
     }
     redir /openkylin /openkylin/ 301
     handle /openkylin/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /openkylin-cdimage /openkylin-cdimage/ 301
     handle /openkylin-cdimage/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /openvz /openvz/ 301
     handle /openvz/* {
@@ -769,7 +769,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /bioconductor /bioconductor/ 301
     handle /bioconductor/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /wireshark /wireshark/ 301
     handle /wireshark/* {
@@ -873,7 +873,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
     handle /ubuntu-cloud-images/* {
-        reverse_proxy rsync-gateway-v4:8000
+        reverse_proxy rsync-gateway:8000
     }
     redir /debian-ports /debian-ports/ 301
     handle /debian-ports/* {

@@ -20,14 +20,6 @@ dummy:
     s3_api: "https://s3.jcloud.sjtu.edu.cn"
     s3_region: "jCloud S3"
     s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
-    redis: "redis://redis/"
-    gateway: "https://mirror.sjtu.edu.cn"
-    tmp_path: "/srv/data32T/rsync_fetcher_tmp"
-    keep: 2 # keep two old revisions
-  rsync_fetcher_v4_common: &rsync_fetcher_v4_common
-    s3_api: "https://s3.jcloud.sjtu.edu.cn"
-    s3_region: "jCloud S3"
-    s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
     pg: "postgres://rsync-sjtug@postgres/rsync-sjtug"
     tmp_path: "/srv/data32T/rsync_fetcher_tmp"
     keep: 2
@@ -47,49 +39,49 @@ repos:
   # anthon
   - type: shell_script
     name: anthon
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 5601
     source: rsync://repo.aosc.io/anthon
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # leopard.sh
   - type: shell_script
     name: leopardsh
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 30001
     source: rsync://leopard.sh/html
-    serve_mode: rsync_gateway_v4
+    serve_mode: rsync_gateway
     rsync_extra_flags: --exclude=/misc/ --exclude=.DS_Store
-    <<: *rsync_fetcher_v4_common
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # endeavouros
   - type: shell_script
     name: endeavouros
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 5494
     source: rsync://alpix.eu.rsync.endeavouros.com/endeavouros
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # debian-cdimage
   - type: shell_script
     name: debian-cdimage
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 30401
     source: rsync://cdimage.debian.org/cdimage/
-    serve_mode: rsync_gateway_v4
+    serve_mode: rsync_gateway
     rsync_extra_flags: --exclude=archive/ --exclude="daily-*/" --exclude=source/ --exclude=".*/" --exclude="*alpha*" --exclude="*-edu-*" --exclude=/blends-live --exclude=/cd-sources --exclude=/release --exclude=/experimental-live --exclude="/snapshot*" --exclude="/stretch*" --exclude=/tmp --include=/unofficial/non-free --exclude="/unofficial/*" --exclude="/project*" --exclude=/cloud/test --exclude="/cloud/**/daily"
-    <<: *rsync_fetcher_v4_common
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # packman
   - type: shell_script
     name: packman
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 10701
     source: rsync://mirror.karneval.cz/packman/
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # pop
   - type: shell_script
@@ -127,11 +119,11 @@ repos:
   # raspberry-pi-os-images
   - type: shell_script
     name: raspberry-pi-os-images
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 10801
     source: rsync://mirrors6.tuna.tsinghua.edu.cn/raspberry-pi-os-images/
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # archlinuxarm
   - type: shell_script
@@ -150,22 +142,22 @@ repos:
     <<: *oneshot_common
   # opencloudos
   - type: shell_script
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://106.55.200.193/opencloudos
     interval: 5400
     name: opencloudos
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # qt
   - type: shell_script
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://master.qt.io/qt-all
     interval: 6000
     rsync_extra_flags: --exclude "snapshots/*"
     name: qt
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # debian
   - type: shell_script
@@ -178,12 +170,12 @@ repos:
     <<: *oneshot_common
   # debian-cd
   - type: shell_script
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://cdimage.debian.org/debian-cd/
     interval: 23600
     name: debian-cd
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # debian-security
   - type: shell_script
@@ -205,22 +197,22 @@ repos:
     <<: *oneshot_common
   # deepin-cd
   - type: shell_script
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://rsync.deepin.com/cdimage/
     interval: 6000
     name: deepin-cd
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # docker-ce
   - type: shell_script
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://mirrors6.tuna.tsinghua.edu.cn/docker-ce/
     interval: 4900
     name: docker-ce
     no_redir_http: true
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # fedora/linux
   - type: shell_script
@@ -272,12 +264,12 @@ repos:
     <<: *oneshot_common
   # linuxmint-cd
   - type: shell_script
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://pub.linuxmint.com/pub/
     interval: 21000
     name: linuxmint-cd
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # mageia
   - type: external
@@ -299,26 +291,26 @@ repos:
   # openkylin
   - type: shell_script
     name: openkylin
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 10701
     source: rsync://openkylin@archive.openkylin.top/openkylin/
     # Password is made public at #316
     # So we do not hide it behind secrets
     password: b85b3ab60822.11ed-Ok
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # openkylin-cdimage
   - type: shell_script
     name: openkylin-cdimage
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 10701
     source: rsync://openkylin@releases.openkylin.top/releases/
     # Password is made public at #316
     # So we do not hide it behind secrets
     password: b85b3ab60822.11ed-Ok
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # openvz
   - type: shell_script
@@ -780,11 +772,11 @@ repos:
   # bioconductor
   - type: shell_script
     name: bioconductor
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     interval: 40801
     source: rsync://mirrors6.tuna.tsinghua.edu.cn/bioconductor/
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix wireshark --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://2.na.dl.wireshark.org --rsync-base rsync://rsync.wireshark.org/wsdl
@@ -904,13 +896,13 @@ repos:
     name: zorinos-isos
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/rsync-fetcher-v4.sh
+    script: /worker-script/rsync-fetcher.sh
     source: rsync://cloud-images.ubuntu.com/cloud-images/
     interval: 86400
     name: ubuntu-cloud-images
     rsync_extra_flags: --exclude "releases/" --exclude ".bzr/" --exclude "lost+found/"
-    serve_mode: rsync_gateway_v4
-    <<: *rsync_fetcher_v4_common
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
