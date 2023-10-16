@@ -312,6 +312,18 @@ repos:
     serve_mode: rsync_gateway
     <<: *rsync_fetcher_common
     <<: *oneshot_common
+  # mx-packages
+  - type: shell_script
+    name: mx-packages
+    script: /worker-script/rsync-fetcher.sh
+    interval: 9602
+    source: rsync://rsuser@iso.mxrepo.com/workspace
+    # Password is made public at https://mxlinux.org/wiki/rsyncserver/mirroring-mx-antix-linux/
+    # So we do not hide it behind secrets
+    password: T1tpw4rstmr
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # openvz
   - type: shell_script
     script: /worker-script/rsync.sh

@@ -208,6 +208,7 @@ https://mirror.sjtu.edu.cn {
         not path /mageia/*
         not path /openkylin/*
         not path /openkylin-cdimage/*
+        not path /mx-packages/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -298,7 +299,6 @@ https://mirror.sjtu.edu.cn {
         not path /parrot/*
         not path /raspberrypi/*
         not path /mx-isos/*
-        not path /mx-packages/*
         not path /packagist/*
         not path /mongodb/*
         not path /julia/*
@@ -483,6 +483,10 @@ https://mirror.sjtu.edu.cn {
     }
     redir /openkylin-cdimage /openkylin-cdimage/ 301
     handle /openkylin-cdimage/* {
+        reverse_proxy rsync-gateway:8000
+    }
+    redir /mx-packages /mx-packages/ 301
+    handle /mx-packages/* {
         reverse_proxy rsync-gateway:8000
     }
     redir /openvz /openvz/ 301
@@ -963,10 +967,6 @@ https://mirror.sjtu.edu.cn {
     redir /mx-isos /mx-isos/ 301
     handle_path /mx-isos/* {
         redir * https://mirrors.sjtug.sjtu.edu.cn/mx-isos{uri} 302
-    }
-    redir /mx-packages /mx-packages/ 301
-    handle_path /mx-packages/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/mx-packages{uri} 302
     }
     redir /packagist /packagist/ 301
     handle_path /packagist/* {

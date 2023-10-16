@@ -181,16 +181,6 @@ repos:
     password: dstuPwd
     <<: *oneshot_common
   - type: shell_script
-    name: mx-packages
-    script: /worker-script/rsync_password.sh
-    path: /mnt/mx-packages
-    interval: 9602
-    source: rsuser@iso.mxrepo.com::workspace
-    # Password is made public at https://mxlinux.org/wiki/rsyncserver/mirroring-mx-antix-linux/
-    # So we do not hide it behind secrets
-    password: T1tpw4rstmr
-    <<: *oneshot_common
-  - type: shell_script
     script: /worker-script/zhiyuan/worker-script/packagist.sh
     interval: 4800
     path: /mnt/packagist

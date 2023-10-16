@@ -77,6 +77,11 @@ namespace = "openkylin-cdimage"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
 s3_prefix = "rsync/openkylin-cdimage"
 
+[endpoints.mx-packages]
+namespace = "mx-packages"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/mx-packages"
+
 [endpoints.bioconductor]
 namespace = "bioconductor"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"

@@ -210,6 +210,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /opensuse/*
         not path /openkylin/*
         not path /openkylin-cdimage/*
+        not path /mx-packages/*
         not path /openvz/*
         not path /remi/*
         not path /scientific/*
@@ -443,15 +444,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         @hidden path */.*
         respond @hidden 404
     }
-    redir /mx-packages /mx-packages/ 301
-    handle /mx-packages/* {
-        file_server browse {
-            root /mnt
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /packagist /packagist/ 301
     handle /packagist/* {
         file_server browse {
@@ -678,6 +670,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /openkylin-cdimage /openkylin-cdimage/ 301
     handle_path /openkylin-cdimage/* {
         redir * https://mirror.sjtu.edu.cn/openkylin-cdimage{uri} 302
+    }
+    redir /mx-packages /mx-packages/ 301
+    handle_path /mx-packages/* {
+        redir * https://mirror.sjtu.edu.cn/mx-packages{uri} 302
     }
     redir /openvz /openvz/ 301
     handle_path /openvz/* {
