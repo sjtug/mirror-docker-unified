@@ -1047,3 +1047,10 @@ repos:
     source: https://github.com/avigad/mathematics_in_lean_source.git
     path: /srv/data32T/git/lean4-packages/mathematics_in_lean_source.git
     serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/mathematics_in_lean
+    source: https://github.com/leanprover-community/mathematics_in_lean.git
+    path: /srv/data32T/git/lean4-packages/mathematics_in_lean.git
+    serve_mode: git
