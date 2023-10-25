@@ -309,6 +309,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /git/lean4-packages/mathlib4/*
         not path /git/lean4-packages/doc-gen4/*
         not path /git/lean4-packages/mathematics_in_lean_source/*
+        not path /git/lean4-packages/mathematics_in_lean/*
     }
     encode @gzip_enabled gzip zstd
 
@@ -1075,6 +1076,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /git/lean4-packages/mathematics_in_lean_source /git/lean4-packages/mathematics_in_lean_source/ 301
     handle_path /git/lean4-packages/mathematics_in_lean_source/* {
         redir * https://mirror.sjtu.edu.cn/git/lean4-packages/mathematics_in_lean_source{uri} 302
+    }
+    redir /git/lean4-packages/mathematics_in_lean /git/lean4-packages/mathematics_in_lean/ 301
+    handle_path /git/lean4-packages/mathematics_in_lean/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/mathematics_in_lean{uri} 302
     }
 
     redir /speedtest /speedtest/ 308

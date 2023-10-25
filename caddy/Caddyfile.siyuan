@@ -279,6 +279,7 @@ https://mirror.sjtu.edu.cn {
         not path /git/lean4-packages/mathlib4/*
         not path /git/lean4-packages/doc-gen4/*
         not path /git/lean4-packages/mathematics_in_lean_source/*
+        not path /git/lean4-packages/mathematics_in_lean/*
         not path /putty/*
         not path /gentoo/*
         not path /vim/*
@@ -1127,6 +1128,10 @@ https://mirror.sjtu.edu.cn {
     }
     redir /git/lean4-packages/mathematics_in_lean_source /git/lean4-packages/mathematics_in_lean_source/ 301
     handle /git/lean4-packages/mathematics_in_lean_source/* {
+        reverse_proxy git-backend
+    }
+    redir /git/lean4-packages/mathematics_in_lean /git/lean4-packages/mathematics_in_lean/ 301
+    handle /git/lean4-packages/mathematics_in_lean/* {
         reverse_proxy git-backend
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
