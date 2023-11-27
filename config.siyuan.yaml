@@ -419,6 +419,7 @@ repos:
     serve_mode: mirror_intel
     interval: 10800
     name: homebrew-bottles
+    z_url: "/homebrew-bottles/bottles"
     <<: *oneshot_common
   # rust-static
   - type: shell_script

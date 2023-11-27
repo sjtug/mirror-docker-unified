@@ -66,7 +66,7 @@ def mirror_item(worker, param, help_items, sources):
     }
     return mirror
 
-def link_to(lug, summary, mirrors, help_items, sources):
+def z_adhocs(lug, summary, mirrors, help_items, sources):
     for item in lug["repos"]:
         if "z_link_to" in item:
             for worker, param in summary["WorkerStatus"].items():
@@ -74,6 +74,10 @@ def link_to(lug, summary, mirrors, help_items, sources):
                     # use item name instead of worker, still use worker param
                     mirror = mirror_item(item["name"], param, help_items, sources)
                     mirrors.append(mirror)
+        if "z_url" in item:
+            for mirror in mirrors:
+                if mirror["cname"] == name(item["name"]):
+                    mirror["url"] = item["z_url"]
 
 def main():
     global options
@@ -98,7 +102,7 @@ def main():
         mirror = mirror_item(worker, param, help_items, sources)
         mirrors.append(mirror)
 
-    link_to(lug, summary, mirrors, help_items, sources)
+    z_adhocs(lug, summary, mirrors, help_items, sources)
 
     mirrorz["mirrors"] = mirrors
     mirrorz["extension"] = "D"
