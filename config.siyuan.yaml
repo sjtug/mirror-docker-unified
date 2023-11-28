@@ -25,11 +25,6 @@ dummy:
     keep: 2
     partial: 5
 
-# adhoc settings for mirrorz.json generation
-mirrorz_adhoc:
-  homebrew-bottles:
-    url: "/homebrew-bottles/bottles"
-
 repos:
   # centos
   # - type: shell_script

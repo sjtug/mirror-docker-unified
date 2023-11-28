@@ -92,14 +92,10 @@ def main():
     mirrorz["info"] = []
     mirrors = []
     sources = {item["name"]: item.get("source", "") for item in lug["repos"]}
-    adhoc = lug.get("mirrorz_adhoc", {})
     for worker, param in summary["WorkerStatus"].items():
         if worker.startswith(".") or worker == 'sjtug-internal' or worker == 'test':
             continue
         mirror = mirror_item(worker, param, help_items, sources)
-        if worker in adhoc:
-            for key, value in adhoc[worker].items():
-                mirror[key] = value
         mirrors.append(mirror)
 
     link_to(lug, summary, mirrors, help_items, sources)
