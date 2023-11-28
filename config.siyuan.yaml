@@ -76,7 +76,7 @@ repos:
     interval: 30401
     source: rsync://cdimage.debian.org/cdimage/
     serve_mode: rsync_gateway
-    rsync_extra_flags: --exclude=archive/ --exclude="daily-*/" --exclude=source/ --exclude=".*/" --exclude="*alpha*" --exclude="*-edu-*" --exclude=/blends-live --exclude=/cd-sources --exclude=/release --exclude=/experimental-live --exclude="/snapshot*" --exclude="/stretch*" --exclude=/tmp --include=/unofficial/non-free --exclude="/unofficial/*" --exclude="/project*" --exclude=/cloud/test --exclude="/cloud/**/daily"
+    rsync_extra_flags: --exclude=archive/ --exclude="daily-*/" --exclude=source/ --include=".latest" --exclude=".*/" --exclude="*alpha*" --exclude="*-edu-*" --exclude=/blends-live --exclude=/cd-sources --exclude=/release --exclude=/experimental-live --exclude="/snapshot*" --exclude="/stretch*" --exclude=/tmp --include=/unofficial/non-free --exclude="/unofficial/*" --exclude="/project*" --exclude=/cloud/test --exclude="/cloud/**/daily"
     <<: *rsync_fetcher_common
     <<: *oneshot_common
   # packman
