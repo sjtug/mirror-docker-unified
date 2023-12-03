@@ -235,6 +235,7 @@ https://mirror.sjtu.edu.cn {
         not path /github/prometheus/*
         not path /github/rubyinstaller2/*
         not path /github/PowerShell/*
+        not path /github/Office-Tool/*
         not path /nix-channels/store/*
         not path /guix/*
         not path /sjtug-internal/*
@@ -648,6 +649,10 @@ https://mirror.sjtu.edu.cn {
     redir /github/PowerShell /github/PowerShell/ 301
     handle_path /github/PowerShell/* {
         redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
+    }
+    redir /github/Office-Tool /github/Office-Tool/ 301
+    handle_path /github/Office-Tool/* {
+        redir * /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list 302
     }
     redir /sites/tldp.org /sites/tldp.org/ 301
     handle /sites/tldp.org/* {
