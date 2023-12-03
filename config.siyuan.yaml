@@ -649,6 +649,13 @@ repos:
     serve_mode: redir_force
     <<: *oneshot_common
   - type: shell_script
+    script: /worker-script/github-release.sh YerongAI/Office-Tool 5
+    interval: 86400
+    name: github/Office-Tool
+    target: /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list
+    serve_mode: redir_force
+    <<: *oneshot_common
+  - type: shell_script
     script: /worker-script/rsync.sh
     source: ftp.ibiblio.org::ldp_mirror
     interval: 5800
