@@ -199,11 +199,16 @@ repos:
     path: /mnt/mongodb
     name: mongodb
     <<: *oneshot_common
-  - type: shell_script
-    script: julia -t auto /worker-script/zhiyuan/worker-script/julia.jl
-    interval: 8000
-    path: /mnt/julia
+  # - type: shell_script
+  #   script: julia -t auto /worker-script/zhiyuan/worker-script/julia.jl
+  #   interval: 8000
+  #   path: /mnt/julia
+  #   name: julia
+  - type: external
     name: julia
+    serve_mode: redir
+    target: https://mirrors.pku.edu.cn/julia/
+    disabled: true
   - type: shell_script
     name: emacs-elpa
     script: /worker-script/rsync.sh

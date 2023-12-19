@@ -177,6 +177,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /raspbian/*
         not path /parrot/*
         not path /raspberrypi/*
+        not path /julia/*
         not path /msys2/*
         not path /git/opam-repository.git/*
         not path /git/qemu.git/*
@@ -458,13 +459,8 @@ https://mirrors.sjtug.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /julia /julia/ 301
-    handle /julia/* {
-        file_server browse {
-            root /mnt
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /julia/* {
+        redir * https://mirrors.pku.edu.cn/julia/{uri} 302
     }
     redir /emacs-elpa /emacs-elpa/ 301
     handle /emacs-elpa/* {
