@@ -984,7 +984,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /julia /julia/ 301
     handle_path /julia/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/julia{uri} 302
+        redir * https://mirrors.pku.edu.cn/julia/{uri} 302
     }
     redir /emacs-elpa /emacs-elpa/ 301
     handle_path /emacs-elpa/* {
