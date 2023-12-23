@@ -186,6 +186,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /nspawn/*
         not path /anthon/*
         not path /leopardsh/*
         not path /endeavouros/*
@@ -552,6 +553,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
         }
         @hidden path */.*
         respond @hidden 404
+    }
+    redir /nspawn /nspawn/ 301
+    handle_path /nspawn/* {
+        redir * https://mirror.sjtu.edu.cn/nspawn{uri} 302
     }
     redir /anthon /anthon/ 301
     handle_path /anthon/* {

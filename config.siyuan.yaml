@@ -36,6 +36,15 @@ repos:
   #   no_redir_http: true
   #   <<: *oneshot_common
 
+  # nspawn
+  - type: shell_script
+    name: nspawn
+    script: /worker-script/rsync-fetcher.sh
+    interval: 6901
+    source: rsync://hub.nspawn.org/containers
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # anthon
   - type: shell_script
     name: anthon

@@ -193,6 +193,7 @@ https://mirror.sjtu.edu.cn {
 
     @gzip_enabled {
         not path /speedtest/*
+        not path /nspawn/*
         not path /anthon/*
         not path /leopardsh/*
         not path /endeavouros/*
@@ -319,6 +320,10 @@ https://mirror.sjtu.edu.cn {
     }
     encode @gzip_enabled gzip zstd
 
+    redir /nspawn /nspawn/ 301
+    handle /nspawn/* {
+        reverse_proxy rsync-gateway:8000
+    }
     redir /anthon /anthon/ 301
     handle /anthon/* {
         reverse_proxy rsync-gateway:8000
