@@ -18,7 +18,6 @@ http://mirror.sjtu.edu.cn {
     header * x-sjtug-mirror-id siyuan
 
     @gzip_enabled {
-        not path /speedtest/*
         not path /docker-ce/*
     }
     encode @gzip_enabled gzip zstd
@@ -127,11 +126,6 @@ http://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
 
-
-    redir /speedtest /speedtest/ 308
-    handle_path /speedtest/* {
-        reverse_proxy speedtest:8989
-    }
 }
 
 https://mirror.sjtu.edu.cn {
@@ -192,7 +186,6 @@ https://mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Request-Method GET
 
     @gzip_enabled {
-        not path /speedtest/*
         not path /nspawn/*
         not path /anthon/*
         not path /leopardsh/*
@@ -1167,11 +1160,6 @@ https://mirror.sjtu.edu.cn {
     redir /git/qemu.git /git/qemu.git/ 301
     handle_path /git/qemu.git/* {
         redir * https://mirrors.sjtug.sjtu.edu.cn/git/qemu.git{uri} 302
-    }
-
-    redir /speedtest /speedtest/ 308
-    handle_path /speedtest/* {
-        reverse_proxy speedtest:8989
     }
 }
 

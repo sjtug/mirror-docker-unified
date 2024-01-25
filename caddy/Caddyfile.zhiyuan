@@ -75,7 +75,6 @@ http://mirrors.sjtug.sjtu.edu.cn {
     header * x-sjtug-mirror-id zhiyuan
 
     @gzip_enabled {
-        not path /speedtest/*
         not path /raspbian/*
     }
     encode @gzip_enabled gzip zstd
@@ -103,11 +102,6 @@ http://mirrors.sjtug.sjtu.edu.cn {
         respond @hidden 404
     }
 
-
-    redir /speedtest /speedtest/ 308
-    handle_path /speedtest/* {
-        reverse_proxy speedtest:8989
-    }
 }
 
 https://mirrors.sjtug.sjtu.edu.cn {
@@ -168,7 +162,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Request-Method GET
 
     @gzip_enabled {
-        not path /speedtest/*
         not path /kali-images/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
@@ -1086,11 +1079,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /git/lean4-packages/mathematics_in_lean /git/lean4-packages/mathematics_in_lean/ 301
     handle_path /git/lean4-packages/mathematics_in_lean/* {
         redir * https://mirror.sjtu.edu.cn/git/lean4-packages/mathematics_in_lean{uri} 302
-    }
-
-    redir /speedtest /speedtest/ 308
-    handle_path /speedtest/* {
-        reverse_proxy speedtest:8989
     }
 }
 
