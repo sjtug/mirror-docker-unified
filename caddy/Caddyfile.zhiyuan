@@ -186,7 +186,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /debian-cdimage/*
         not path /packman/*
         not path /pop-os/*
-        not path /immortalwrt/*
         not path /rocky/*
         not path /raspberry-pi-os-images/*
         not path /archlinuxarm/*
@@ -309,6 +308,15 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     encode @gzip_enabled gzip zstd
 
+    redir /immortalwrt /immortalwrt/ 301
+    handle /immortalwrt/* {
+        file_server browse {
+            root /mnt
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
     redir /putty /putty/ 301
     handle /putty/* {
         file_server browse {
@@ -574,10 +582,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /pop-os /pop-os/ 301
     handle_path /pop-os/* {
         redir * https://mirror.sjtu.edu.cn/pop-os{uri} 302
-    }
-    redir /immortalwrt /immortalwrt/ 301
-    handle_path /immortalwrt/* {
-        redir * https://mirror.sjtu.edu.cn/immortalwrt{uri} 302
     }
     redir /rocky /rocky/ 301
     handle_path /rocky/* {
