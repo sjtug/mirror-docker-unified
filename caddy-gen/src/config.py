@@ -5,7 +5,6 @@ BASES = {
 }
 
 LUG_ADDR = 'lug:7001'
-SPEEDTEST_ADDR = 'speedtest:8989'
 FRONTEND_DIR = '/dists'
 NODE_EXPORTER_ADDR = '172.31.0.1:9100'
 CADVISOR_ADDR = 'cadvisor:8080'

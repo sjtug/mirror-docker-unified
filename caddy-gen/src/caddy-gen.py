@@ -127,11 +127,11 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
 
     http_file_server_nodes = []
     http_git_server_nodes = []
-    http_gzip_disabled_list = ["speedtest"]
+    http_gzip_disabled_list = []
 
     https_file_server_nodes = []
     https_git_server_nodes = []
-    https_gzip_disabled_list = ["speedtest"]
+    https_gzip_disabled_list = []
 
     for repo_ in repos:
         repo = dict_to_repo(repo_)
@@ -179,14 +179,6 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
 
     http_file_server_nodes += http_git_server_nodes
     https_file_server_nodes += https_git_server_nodes
-
-    speed_test_nodes = [BLANK_NODE,
-                        Node('redir /speedtest /speedtest/ 308'),
-                        Node('handle_path /speedtest/*', [
-                            Node(f'reverse_proxy {SPEEDTEST_ADDR}')
-                        ])]
-    http_file_server_nodes += speed_test_nodes
-    https_file_server_nodes += speed_test_nodes
 
     # disable gzip for all proxy repos
     http_gzip_disabled = [Node(

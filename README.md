@@ -10,4 +10,4 @@ For more information, refer to our [Wiki](https://github.com/sjtug/mirror-docker
 
 ## License
 
-Apache 2.0, except `speedtest`, which is licensed under GPL 3.
+Apache 2.0

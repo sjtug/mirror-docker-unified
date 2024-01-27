@@ -5,5 +5,4 @@ docker-compose.override.yml
 .env
 /secrets
 .pytest_cache/
-speedtest/settings.toml
 venv/

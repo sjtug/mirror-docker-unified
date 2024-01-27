@@ -23,11 +23,6 @@ services:
       args:
         - USE_SJTUG=false
 
-  speedtest:
-    build:
-      args:
-        - USE_SJTUG=false
-
   git-backend:
     build:
       args:

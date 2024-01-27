@@ -252,22 +252,6 @@ services:
     networks:
       - ipv6-service-net
 
-  speedtest:
-    build:
-      context: ./speedtest
-      args:
-        - USE_SJTUG=true
-        - SPEEDTEST_URL=v1.1.3/speedtest-go_1.1.3_linux_amd64.tar.gz
-    expose:
-      - 8989
-    logging:
-      options:
-        max-size: "2M"
-        max-file: "10"
-    restart: unless-stopped
-    networks:
-      - ipv6-service-net
-
 networks:
   host-monitor-net:
     driver: bridge
