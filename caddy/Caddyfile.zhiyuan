@@ -200,7 +200,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /deepin-cd/*
         not path /docker-ce/*
         not path /fedora-secondary/*
-        not path /kali/*
         not path /linuxmint/*
         not path /linuxmint-cd/*
         not path /mageia/*
@@ -277,7 +276,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /gimp/*
         not path /flutter_infra_release/*
         not path /armbian/*
-        not path /almalinux/*
         not path /kernel/*
         not path /git/linux.git/*
         not path /raspbian-addons/*
@@ -310,6 +308,24 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     encode @gzip_enabled gzip zstd
 
+    redir /kali /kali/ 301
+    handle /kali/* {
+        file_server browse {
+            root /mnt
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
+    redir /almalinux /almalinux/ 301
+    handle /almalinux/* {
+        file_server browse {
+            root /mnt
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
     redir /immortalwrt /immortalwrt/ 301
     handle /immortalwrt/* {
         file_server browse {
@@ -641,10 +657,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle_path /fedora-secondary/* {
         redir * https://mirror.sjtu.edu.cn/fedora-secondary{uri} 302
     }
-    redir /kali /kali/ 301
-    handle_path /kali/* {
-        redir * https://mirror.sjtu.edu.cn/kali{uri} 302
-    }
     redir /linuxmint /linuxmint/ 301
     handle_path /linuxmint/* {
         redir * https://mirror.sjtu.edu.cn/linuxmint{uri} 302
@@ -896,10 +908,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /armbian /armbian/ 301
     handle_path /armbian/* {
         redir * https://mirror.sjtu.edu.cn/armbian{uri} 302
-    }
-    redir /almalinux /almalinux/ 301
-    handle_path /almalinux/* {
-        redir * https://mirror.sjtu.edu.cn/almalinux{uri} 302
     }
     redir /kernel /kernel/ 301
     handle /kernel/* {

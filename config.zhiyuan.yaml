@@ -24,6 +24,22 @@ dummy:
     partial: 5
 
 repos:
+  # kali
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://ftp.jaist.ac.jp/kali/
+    interval: 10800
+    path: /mnt/kali
+    name: kali
+    <<: *oneshot_common
+  # almalinux
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.repo.almalinux.org/almalinux/
+    interval: 28800
+    path: /mnt/almalinux
+    name: almalinux
+    <<: *oneshot_common
   # immortalwrt
   - type: shell_script
     script: /worker-script/rsync_password.sh

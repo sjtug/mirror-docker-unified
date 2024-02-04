@@ -253,14 +253,6 @@ repos:
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
     <<: *oneshot_common
-  # kali
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://ftp.jaist.ac.jp/kali/
-    interval: 10800
-    path: /srv/data32T/kali
-    name: kali
-    <<: *oneshot_common
   # linuxmint
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -860,13 +852,6 @@ repos:
     interval: 28800
     path: /srv/data32T/armbian
     name: armbian
-    <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://rsync.repo.almalinux.org/almalinux/
-    interval: 28800
-    path: /srv/data32T/almalinux
-    name: almalinux
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix kernel --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/kernel --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/kernel/
