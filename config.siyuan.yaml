@@ -104,18 +104,6 @@ repos:
     name: pop-os
     <<: *oneshot_common
     <<: *apt_common
-  # immortalwrt
-  - type: shell_script
-    script: /worker-script/rsync_password.sh
-    source: rsync://firmwarepublic@rsync-mirror.infra.immortalwrt.org/firmware-public
-    interval: 40401
-    path: /srv/data32T/immortalwrt
-    name: immortalwrt
-    # Password is made public at #319
-    # So we do not hide it behind secrets
-    password: immortalwrt-org
-    rsync_extra_flags: --exclude "/snapshots/" --exclude "/releases/*18.06*"
-    <<: *oneshot_common
   # rocky
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -351,15 +339,15 @@ repos:
     no_redir_http: true
     <<: *oneshot_common
   # scientific
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://mirror.aarnet.edu.au/pub/scientific/
-    interval: 21600 # may be wrong
-    path: /srv/data32T/scientific
-    name: scientific
-    rsync_extra_flags: --exclude "*/obsolete/*" --exclude "obsolete" --exclude "stats"
-    ignore_vanish: true
-    <<: *oneshot_common
+  # - type: shell_script
+  #   script: /worker-script/rsync.sh
+  #   source: rsync://mirror.aarnet.edu.au/pub/scientific/
+  #   interval: 21600 # may be wrong
+  #   path: /srv/data32T/scientific
+  #   name: scientific
+  #   rsync_extra_flags: --exclude "*/obsolete/*" --exclude "obsolete" --exclude "stats"
+  #   ignore_vanish: true
+  #   <<: *oneshot_common
   # termux
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -1005,6 +993,12 @@ repos:
     name: ubuntu-cd
     serve_mode: redir
     target: https://repo.huaweicloud.com/ubuntu-cdimage/
+    disabled: true
+    <<: *oneshot_common
+  - type: external
+    name: scientific
+    serve_mode: redir
+    target: https://mirrors.ustc.edu.cn/scientificlinux/
     disabled: true
     <<: *oneshot_common
   # mathlib

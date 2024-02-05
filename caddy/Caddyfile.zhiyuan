@@ -186,7 +186,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /debian-cdimage/*
         not path /packman/*
         not path /pop-os/*
-        not path /immortalwrt/*
         not path /rocky/*
         not path /raspberry-pi-os-images/*
         not path /archlinuxarm/*
@@ -210,7 +209,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /mx-packages/*
         not path /openvz/*
         not path /remi/*
-        not path /scientific/*
         not path /termux/*
         not path /ubuntu/*
         not path /ubuntu-cdimage/*
@@ -297,6 +295,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /github/SJTUThesis/*
         not path /centos/*
         not path /ubuntu-cd/*
+        not path /scientific/*
         not path /git/lean4-packages/std4/*
         not path /git/lean4-packages/lean4-cli/*
         not path /git/lean4-packages/ProofWidgets4/*
@@ -310,6 +309,15 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     encode @gzip_enabled gzip zstd
 
+    redir /immortalwrt /immortalwrt/ 301
+    handle /immortalwrt/* {
+        file_server browse {
+            root /mnt
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
     redir /putty /putty/ 301
     handle /putty/* {
         file_server browse {
@@ -576,10 +584,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle_path /pop-os/* {
         redir * https://mirror.sjtu.edu.cn/pop-os{uri} 302
     }
-    redir /immortalwrt /immortalwrt/ 301
-    handle_path /immortalwrt/* {
-        redir * https://mirror.sjtu.edu.cn/immortalwrt{uri} 302
-    }
     redir /rocky /rocky/ 301
     handle_path /rocky/* {
         redir * https://mirror.sjtu.edu.cn/rocky{uri} 302
@@ -671,10 +675,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /remi /remi/ 301
     handle_path /remi/* {
         redir * https://mirror.sjtu.edu.cn/remi{uri} 302
-    }
-    redir /scientific /scientific/ 301
-    handle_path /scientific/* {
-        redir * https://mirror.sjtu.edu.cn/scientific{uri} 302
     }
     redir /termux /termux/ 301
     handle_path /termux/* {
@@ -943,6 +943,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /ubuntu-cd /ubuntu-cd/ 301
     handle_path /ubuntu-cd/* {
         redir * https://repo.huaweicloud.com/ubuntu-cdimage/{uri} 302
+    }
+    redir /scientific /scientific/ 301
+    handle_path /scientific/* {
+        redir * https://mirrors.ustc.edu.cn/scientificlinux/{uri} 302
     }
 
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301

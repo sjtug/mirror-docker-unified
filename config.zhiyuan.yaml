@@ -24,6 +24,18 @@ dummy:
     partial: 5
 
 repos:
+  # immortalwrt
+  - type: shell_script
+    script: /worker-script/rsync_password.sh
+    source: rsync://firmwarepublic@rsync-mirror.infra.immortalwrt.org/firmware-public
+    interval: 40401
+    path: /mnt/immortalwrt
+    name: immortalwrt
+    # Password is made public at #319
+    # So we do not hide it behind secrets
+    password: immortalwrt-org
+    rsync_extra_flags: --exclude "/snapshots/" --exclude "/releases/*18.06*"
+    <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.chiark.greenend.org.uk/ftp/users/sgtatham/putty-website-mirror/

@@ -266,6 +266,7 @@ https://mirror.sjtu.edu.cn {
         not path /github/SJTUThesis/*
         not path /centos/*
         not path /ubuntu-cd/*
+        not path /scientific/*
         not path /git/lean4-packages/std4/*
         not path /git/lean4-packages/lean4-cli/*
         not path /git/lean4-packages/ProofWidgets4/*
@@ -276,6 +277,7 @@ https://mirror.sjtu.edu.cn {
         not path /git/lean4-packages/mathematics_in_lean_source/*
         not path /git/lean4-packages/mathematics_in_lean/*
         not path /git/lean4-packages/import-graph/*
+        not path /immortalwrt/*
         not path /putty/*
         not path /gentoo/*
         not path /vim/*
@@ -340,15 +342,6 @@ https://mirror.sjtu.edu.cn {
     }
     redir /pop-os /pop-os/ 301
     handle /pop-os/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /immortalwrt /immortalwrt/ 301
-    handle /immortalwrt/* {
         file_server browse {
             root /srv/data32T
             hide .*
@@ -501,15 +494,6 @@ https://mirror.sjtu.edu.cn {
     }
     redir /remi /remi/ 301
     handle /remi/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /scientific /scientific/ 301
-    handle /scientific/* {
         file_server browse {
             root /srv/data32T
             hide .*
@@ -908,6 +892,14 @@ https://mirror.sjtu.edu.cn {
     redir /ubuntu-cd /ubuntu-cd/ 301
     handle_path /ubuntu-cd/* {
         redir * https://repo.huaweicloud.com/ubuntu-cdimage/{uri} 302
+    }
+    redir /scientific /scientific/ 301
+    handle_path /scientific/* {
+        redir * https://mirrors.ustc.edu.cn/scientificlinux/{uri} 302
+    }
+    redir /immortalwrt /immortalwrt/ 301
+    handle_path /immortalwrt/* {
+        redir * https://mirrors.sjtug.sjtu.edu.cn/immortalwrt{uri} 302
     }
     redir /putty /putty/ 301
     handle_path /putty/* {
