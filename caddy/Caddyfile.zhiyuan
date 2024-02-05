@@ -1089,10 +1089,5 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle_path /git/lean4-packages/import-graph/* {
         redir * https://mirror.sjtu.edu.cn/git/lean4-packages/import-graph{uri} 302
     }
-
-    redir /speedtest /speedtest/ 308
-    handle_path /speedtest/* {
-        reverse_proxy speedtest:8989
-    }
 }
 
