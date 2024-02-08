@@ -278,6 +278,8 @@ https://mirror.sjtu.edu.cn {
         not path /git/lean4-packages/mathematics_in_lean_source/*
         not path /git/lean4-packages/mathematics_in_lean/*
         not path /git/lean4-packages/import-graph/*
+        not path /kali/*
+        not path /almalinux/*
         not path /immortalwrt/*
         not path /putty/*
         not path /gentoo/*
@@ -434,15 +436,6 @@ https://mirror.sjtu.edu.cn {
     }
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /kali /kali/ 301
-    handle /kali/* {
         file_server browse {
             root /srv/data32T
             hide .*
@@ -811,15 +804,6 @@ https://mirror.sjtu.edu.cn {
         @hidden path */.*
         respond @hidden 404
     }
-    redir /almalinux /almalinux/ 301
-    handle /almalinux/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /kernel /kernel/ 301
     handle /kernel/* {
         reverse_proxy mirror-intel:8000
@@ -901,6 +885,14 @@ https://mirror.sjtu.edu.cn {
     redir /scientific /scientific/ 301
     handle_path /scientific/* {
         redir * https://mirrors.ustc.edu.cn/scientificlinux/{uri} 302
+    }
+    redir /kali /kali/ 301
+    handle_path /kali/* {
+        redir * https://mirrors.sjtug.sjtu.edu.cn/kali{uri} 302
+    }
+    redir /almalinux /almalinux/ 301
+    handle_path /almalinux/* {
+        redir * https://mirrors.sjtug.sjtu.edu.cn/almalinux{uri} 302
     }
     redir /immortalwrt /immortalwrt/ 301
     handle_path /immortalwrt/* {
