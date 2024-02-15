@@ -94,8 +94,8 @@ services:
     memswap_limit: 1G
 
 
-  gcr-registry:
-    container_name: zhiyuan-gcr-registry
+  k8s-registry:
+    container_name: zhiyuan-k8s-registry
     restart: unless-stopped
     image: registry:2.8
     networks:
@@ -105,7 +105,7 @@ services:
       - 80
       - 5001
     volumes:
-      - "./secrets/gcr-registry.yml:/etc/docker/registry/config.yml"
+      - "./secrets/k8s-registry.yml:/etc/docker/registry/config.yml"
     environment:
       http_proxy: http://clash:8080
       https_proxy: http://clash:8080

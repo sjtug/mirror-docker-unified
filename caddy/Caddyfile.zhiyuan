@@ -26,7 +26,16 @@ k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn {
         output stdout
         format transform "{common_log}"  # log in v1 style, caddyserver/transform-encoder required
     }
-    reverse_proxy gcr-registry:80 {
+    redir * https://mirrors.sjtug.sjtu.edu.cn/registry.k8s.io{uri} 302
+    header * x-sjtug-mirror-id zhiyuan
+}
+
+registry-k8s-io.mirrors.sjtug.sjtu.edu.cn {
+    log {
+        output stdout
+        format transform "{common_log}"  # log in v1 style, caddyserver/transform-encoder required
+    }
+    reverse_proxy k8s-registry:80 {
         header_up Host {http.reverse_proxy.upstream.hostport}
     }
     header * x-sjtug-mirror-id zhiyuan
@@ -176,6 +185,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /git/qemu.git/*
         not path /download.flutter.io/*
         not path /k8s.gcr.io/*
+        not path /registry.k8s.io/*
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
@@ -519,7 +529,11 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /k8s.gcr.io /k8s.gcr.io/ 301
     handle_path /k8s.gcr.io/* {
-        reverse_proxy gcr-registry:80 {
+        redir * https://mirrors.sjtug.sjtu.edu.cn/registry.k8s.io{uri} 302
+    }
+    redir /registry.k8s.io /registry.k8s.io/ 301
+    handle_path /registry.k8s.io/* {
+        reverse_proxy k8s-registry:80 {
             header_up Host {http.reverse_proxy.upstream.hostport}
         }
     }
