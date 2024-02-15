@@ -297,8 +297,14 @@ repos:
     disabled: true
   - type: external
     name: k8s.gcr.io
-    proxy_to: gcr-registry:80
     subdomain: k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn
+    serve_mode: redir
+    target: https://mirrors.sjtug.sjtu.edu.cn/registry.k8s.io
+    disabled: true
+  - type: external
+    name: registry.k8s.io
+    subdomain: registry-k8s-io.mirrors.sjtug.sjtu.edu.cn
+    proxy_to: k8s-registry:80
     unified: disable
     serve_mode: proxy
   - type: external

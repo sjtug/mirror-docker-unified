@@ -311,6 +311,7 @@ https://mirror.sjtu.edu.cn {
         not path /git/qemu.git/*
         not path /linuxliteos/*
         not path /download.flutter.io/*
+        not path /k8s.gcr.io/*
         not path /google-fonts/*
         not path /CPAN/*
         not path /CRAN/*
@@ -993,6 +994,10 @@ https://mirror.sjtu.edu.cn {
     redir /download.flutter.io /download.flutter.io/ 301
     handle_path /download.flutter.io/* {
         redir * https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/{uri} 302
+    }
+    redir /k8s.gcr.io /k8s.gcr.io/ 301
+    handle_path /k8s.gcr.io/* {
+        redir * https://mirrors.sjtug.sjtu.edu.cn/registry.k8s.io{uri} 302
     }
     redir /google-fonts /google-fonts/ 301
     handle_path /google-fonts/* {
