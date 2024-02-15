@@ -95,4 +95,6 @@ RUN mkdir rsync_sjtug && cd rsync_sjtug && /app/build-script/from-cache.sh \
     tmp.tar.gz \
         && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
-ENTRYPOINT ["./lug"]
+COPY entrypoint.sh ./entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
