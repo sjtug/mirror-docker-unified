@@ -189,6 +189,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /docker-registry/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /bmclapi/*
         not path /alhp/*
         not path /nspawn/*
         not path /anthon/*
@@ -586,6 +587,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
         }
         @hidden path */.*
         respond @hidden 404
+    }
+    redir /bmclapi /bmclapi/ 301
+    handle_path /bmclapi/* {
+        redir * https://mirror.sjtu.edu.cn/bmclapi{uri} 302
     }
     redir /alhp /alhp/ 301
     handle_path /alhp/* {

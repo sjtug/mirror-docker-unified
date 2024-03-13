@@ -186,6 +186,7 @@ https://mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Request-Method GET
 
     @gzip_enabled {
+        not path /bmclapi/*
         not path /alhp/*
         not path /nspawn/*
         not path /anthon/*
@@ -320,6 +321,10 @@ https://mirror.sjtu.edu.cn {
     }
     encode @gzip_enabled gzip zstd
 
+    redir /bmclapi /bmclapi/ 301
+    handle /bmclapi/* {
+        reverse_proxy rsync-gateway:8000
+    }
     redir /alhp /alhp/ 301
     handle /alhp/* {
         reverse_proxy rsync-gateway:8000
