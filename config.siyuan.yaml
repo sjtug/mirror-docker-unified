@@ -36,6 +36,16 @@ repos:
   #   no_redir_http: true
   #   <<: *oneshot_common
 
+  # bmclapi
+  - type: shell_script
+    name: bmclapi
+    script: /worker-script/rsync-fetcher.sh
+    interval: 12901
+    source: rsync://rsync.mirrors.ustc.edu.cn/bmclapi
+    serve_mode: rsync_gateway
+    rsync_extra_flags: --exclude='*.links.tar.gz*' --exclude='/other' --exclude='/sources' --exclude='/logs'
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # alhp
   - type: shell_script
     name: alhp
