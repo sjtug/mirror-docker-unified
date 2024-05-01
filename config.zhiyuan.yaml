@@ -36,7 +36,7 @@ repos:
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.repo.almalinux.org/almalinux/
-    interval: 28800
+    interval: 10903
     path: /mnt/almalinux
     name: almalinux
     <<: *oneshot_common
