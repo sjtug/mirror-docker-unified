@@ -279,6 +279,7 @@ https://mirror.sjtu.edu.cn {
         not path /git/lean4-packages/mathematics_in_lean_source/*
         not path /git/lean4-packages/mathematics_in_lean/*
         not path /git/lean4-packages/import-graph/*
+        not path /git/lean4-packages/batteries/*
         not path /kali/*
         not path /almalinux/*
         not path /immortalwrt/*
@@ -1139,6 +1140,10 @@ https://mirror.sjtu.edu.cn {
     }
     redir /git/lean4-packages/import-graph /git/lean4-packages/import-graph/ 301
     handle /git/lean4-packages/import-graph/* {
+        reverse_proxy git-backend
+    }
+    redir /git/lean4-packages/batteries /git/lean4-packages/batteries/ 301
+    handle /git/lean4-packages/batteries/* {
         reverse_proxy git-backend
     }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
