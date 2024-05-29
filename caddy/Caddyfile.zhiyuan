@@ -316,6 +316,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /git/lean4-packages/mathematics_in_lean_source/*
         not path /git/lean4-packages/mathematics_in_lean/*
         not path /git/lean4-packages/import-graph/*
+        not path /git/lean4-packages/batteries/*
     }
     encode @gzip_enabled gzip zstd
 
@@ -1120,6 +1121,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /git/lean4-packages/import-graph /git/lean4-packages/import-graph/ 301
     handle_path /git/lean4-packages/import-graph/* {
         redir * https://mirror.sjtu.edu.cn/git/lean4-packages/import-graph{uri} 302
+    }
+    redir /git/lean4-packages/batteries /git/lean4-packages/batteries/ 301
+    handle_path /git/lean4-packages/batteries/* {
+        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/batteries{uri} 302
     }
 }
 

@@ -1077,3 +1077,10 @@ repos:
     source: https://github.com/leanprover-community/import-graph.git
     path: /srv/data32T/git/lean4-packages/import-graph.git
     serve_mode: git
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 3600
+    name: git/lean4-packages/batteries
+    source: https://github.com/leanprover-community/batteries.git
+    path: /srv/data32T/git/lean4-packages/batteries.git
+    serve_mode: git
