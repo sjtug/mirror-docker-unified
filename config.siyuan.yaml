@@ -389,7 +389,7 @@ repos:
   # ubuntu-cdimage
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://cdimage.ubuntu.com/cdimage/
+    source: rsync://mirrors6.tuna.tsinghua.edu.cn/ubuntu-cdimage/
     interval: 24900
     path: /srv/data32T/ubuntu-cdimage
     name: ubuntu-cdimage
