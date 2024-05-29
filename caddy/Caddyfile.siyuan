@@ -217,7 +217,6 @@ https://mirror.sjtu.edu.cn {
         not path /flutter_infra/*
         not path /ghcup/*
         not path /elan/*
-        not path /git/linuxbrew-core.git/*
         not path /git/homebrew-services.git/*
         not path /git/homebrew-cask-drivers.git/*
         not path /git/homebrew-cask-fonts.git/*
@@ -1038,10 +1037,6 @@ https://mirror.sjtu.edu.cn {
         redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
     }
 
-    redir /git/linuxbrew-core.git /git/linuxbrew-core.git/ 301
-    handle /git/linuxbrew-core.git/* {
-        reverse_proxy git-backend
-    }
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     handle /git/homebrew-services.git/* {
         reverse_proxy git-backend
