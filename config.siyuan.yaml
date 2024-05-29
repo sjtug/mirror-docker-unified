@@ -406,7 +406,7 @@ repos:
   # openwrt
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://downloads.openwrt.org/downloads/
+    source: rsync://rsync.openwrt.org/downloads/
     interval: 6900
     path: /srv/data32T/openwrt
     rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
