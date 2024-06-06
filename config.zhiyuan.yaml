@@ -307,12 +307,12 @@ repos:
     proxy_to: k8s-registry:80
     unified: disable
     serve_mode: proxy
-  - type: external
-    name: docker-registry
-    proxy_to: docker-registry:80
-    subdomain: docker.mirrors.sjtug.sjtu.edu.cn
-    unified: disable
-    serve_mode: proxy
+  # - type: external
+  #   name: docker-registry
+  #   proxy_to: docker-registry:80
+  #   subdomain: docker.mirrors.sjtug.sjtu.edu.cn
+  #   unified: disable
+  #   serve_mode: proxy
   - type: external
     name: google-fonts
     subdomain: google-fonts.mirrors.sjtug.sjtu.edu.cn
