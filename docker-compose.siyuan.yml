@@ -1,5 +1,8 @@
 services:
   frontend:
+    build:
+      args:
+        - SITE_NAME=Siyuan
     container_name: siyuan-frontend
     mem_limit: 1G
     memswap_limit: 1G
