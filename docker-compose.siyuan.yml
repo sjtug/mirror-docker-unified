@@ -1,4 +1,9 @@
 services:
+  frontend:
+    container_name: siyuan-frontend
+    mem_limit: 1G
+    memswap_limit: 1G
+
   caddy:
     container_name: siyuan-caddy
     volumes:

@@ -19,11 +19,7 @@ def is_local(base: str):
 
 def common() -> list[Node]:
     frontends = Node("handle", [
-        Node('file_server /*', [
-            Node(f'root {FRONTEND_DIR}')
-        ]),
-        Node('rewrite /docs/* /', comment='for react app'),
-        *hidden()
+        Node('reverse_proxy /* frontend:3000'),
     ])
 
     lug = Node("handle /lug/*", [
