@@ -37,6 +37,29 @@ services:
         soft: 80000
         hard: 120000
 
+  frontend:
+    restart: unless-stopped
+    build:
+      context: ./frontend
+    networks:
+      - ipv6-service-net
+    expose:
+      - 3000
+    healthcheck:
+      test: curl -f http://localhost || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+
   lug:
     restart: unless-stopped
     command: -c /config.yaml
