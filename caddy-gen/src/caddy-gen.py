@@ -22,6 +22,13 @@ def common() -> list[Node]:
         Node('reverse_proxy /* frontend:3000'),
     ])
 
+    mirrorz = Node("handle /mirrorz/*", [
+        Node('uri strip_prefix /mirrorz'),
+        Node('file_server', [
+            Node('root /var/www/mirrorz'),
+        ])
+    ])
+
     lug = Node("handle /lug/*", [
         Node(f'reverse_proxy /lug/* {LUG_ADDR}', [
             Node('header_down Access-Control-Allow-Origin *'),
@@ -64,6 +71,7 @@ def common() -> list[Node]:
         log() + \
         [BLANK_NODE] + \
         [frontends] + [BLANK_NODE] + \
+        [mirrorz] + [BLANK_NODE] + \
         [lug] + [BLANK_NODE] + \
         [monitors]
 

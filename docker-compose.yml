@@ -16,7 +16,7 @@ services:
     volumes:
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"
-      - "./data/caddy/dists:/dists:ro"
+      - "mirrorz-volume:/var/www/mirrorz:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile.siyuan:ro"
       - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile.zhiyuan:ro"
     ports:
@@ -82,7 +82,7 @@ services:
     volumes:
       - "./lug/worker-script:/worker-script:ro"
       - "./data/lug:/data"
-      - "./data/caddy/dists/mirrorz:/mirrorz"
+      - "mirrorz-volume:/mirrorz"
       - "./secrets/git-credentials:/root/.git-credentials:ro"
       - "./secrets/lug-secrets.sh:/root/lug-secrets.sh:ro"
       - "./secrets/ssh:/secrets_ssh:ro"
@@ -294,3 +294,6 @@ networks:
       -  subnet: fd01::/80
   redis-net:
   postgres-net:
+
+volumes:
+  mirrorz-volume:

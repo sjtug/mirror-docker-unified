@@ -112,6 +112,13 @@ https://mirrors.sjtug.sjtu.edu.cn {
         reverse_proxy /* frontend:3000
     }
 
+    handle /mirrorz/* {
+        uri strip_prefix /mirrorz
+        file_server {
+            root /var/www/mirrorz
+        }
+    }
+
     handle /lug/* {
         reverse_proxy /lug/* lug:7001 {
             header_down Access-Control-Allow-Origin *
