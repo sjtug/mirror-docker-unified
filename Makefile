@@ -2,8 +2,8 @@ caddy-update-dist:
 	./scripts/download_latest_frontend.sh
 
 caddy-verify-config:
-	docker-compose run --rm caddy caddy validate --config /etc/caddy/Caddyfile.siyuan
-	docker-compose run --rm caddy caddy validate --config /etc/caddy/Caddyfile.zhiyuan
+	docker-compose run --rm caddy caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile.siyuan
+	docker-compose run --rm caddy caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile.zhiyuan
 
 caddy-gen:
 	cd caddy-gen && pipenv run python src/caddy-gen.py -i ../ -o ../caddy --site siyuan,zhiyuan

@@ -31,6 +31,8 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
       - name: use CI config for docker-compose
         run: |
           cp docker-compose.ci.yml docker-compose.override.yml 
