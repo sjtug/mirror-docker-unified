@@ -1,8 +1,8 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 ARG USE_SJTUG
-RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list ; fi
-RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/http:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list ; fi
+RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list.d/debian.sources ; fi
+RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/http:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list.d/debian.sources ; fi
 
 WORKDIR /app
 RUN apt-get update && apt-get install rsync wget git jq curl unzip -y
@@ -28,7 +28,7 @@ RUN /app/build-script/setup-julia.sh
 ENV PATH="/app/julia-1.5.0/bin:${PATH}"
 
 # Python packages
-RUN if [ "$USE_SJTUG" = true ] ; then pip3 install python-dateutil -i https://mirror.sjtu.edu.cn/pypi/web/simple; else pip3 install python-dateutil ; fi
+RUN apt-get install python3-dateutil -y
 
 # StorageMirrorServer.jl
 COPY build-script/setup-julia-mirror.sh build-script/setup-julia-mirror.sh
