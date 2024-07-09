@@ -500,15 +500,6 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
-    interval: 3600
-    name: git/linuxbrew-core.git
-    source: https://github.com/Homebrew/linuxbrew-core.git
-    path: /srv/data32T/git/linuxbrew-core.git
-    serve_mode: git
-    target: https://git.sjtu.edu.cn/sjtug/linuxbrew-core.git
-    <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/git.sh
     interval: 3601
     name: git/homebrew-services.git
     source: https://github.com/Homebrew/homebrew-services.git
