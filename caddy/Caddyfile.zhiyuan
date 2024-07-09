@@ -227,9 +227,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /ghcup/*
         not path /elan/*
         not path /git/homebrew-services.git/*
-        not path /git/homebrew-cask-drivers.git/*
-        not path /git/homebrew-cask-fonts.git/*
-        not path /git/homebrew-cask-versions.git/*
         not path /linuxbrew-bottles/*
         not path /git/guix.git/*
         not path /git/llvm-project.git/*
@@ -1002,18 +999,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /git/homebrew-services.git /git/homebrew-services.git/ 301
     handle_path /git/homebrew-services.git/* {
         redir * https://mirror.sjtu.edu.cn/git/homebrew-services.git{uri} 302
-    }
-    redir /git/homebrew-cask-drivers.git /git/homebrew-cask-drivers.git/ 301
-    handle_path /git/homebrew-cask-drivers.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/homebrew-cask-drivers.git{uri} 302
-    }
-    redir /git/homebrew-cask-fonts.git /git/homebrew-cask-fonts.git/ 301
-    handle_path /git/homebrew-cask-fonts.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/homebrew-cask-fonts.git{uri} 302
-    }
-    redir /git/homebrew-cask-versions.git /git/homebrew-cask-versions.git/ 301
-    handle_path /git/homebrew-cask-versions.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/homebrew-cask-versions.git{uri} 302
     }
     redir /git/guix.git /git/guix.git/ 301
     handle_path /git/guix.git/* {

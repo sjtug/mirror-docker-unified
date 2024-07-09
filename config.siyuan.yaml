@@ -507,33 +507,6 @@ repos:
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-services.git
     <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/git.sh
-    interval: 3602
-    name: git/homebrew-cask-drivers.git
-    source: https://github.com/Homebrew/homebrew-cask-drivers.git
-    path: /srv/data32T/git/homebrew-cask-drivers.git
-    serve_mode: git
-    target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-drivers.git
-    <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/git.sh
-    interval: 3603
-    name: git/homebrew-cask-fonts.git
-    source: https://github.com/Homebrew/homebrew-cask-fonts.git
-    path: /srv/data32T/git/homebrew-cask-fonts.git
-    serve_mode: git
-    target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-fonts.git
-    <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/git.sh
-    interval: 3604
-    name: git/homebrew-cask-versions.git
-    source: https://github.com/Homebrew/homebrew-cask-versions.git
-    path: /srv/data32T/git/homebrew-cask-versions.git
-    serve_mode: git
-    target: https://git.sjtu.edu.cn/sjtug/homebrew-cask-versions.git
-    <<: *oneshot_common
   - type: external
     name: linuxbrew-bottles
     serve_mode: redir
