@@ -179,6 +179,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /registry.k8s.io/*
         not path /google-fonts/*
         not path /anaconda/*
+        not path /racket/*
         not path /bmclapi/*
         not path /alhp/*
         not path /nspawn/*
@@ -572,6 +573,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
         }
         @hidden path */.*
         respond @hidden 404
+    }
+    redir /racket /racket/ 301
+    handle_path /racket/* {
+        redir * https://mirror.sjtu.edu.cn/racket{uri} 302
     }
     redir /bmclapi /bmclapi/ 301
     handle_path /bmclapi/* {

@@ -7,6 +7,11 @@ database_url = "postgres://rsync-sjtug@postgres/rsync-sjtug"
 format = "json"
 target = "tcp://tunnel:5007"
 
+[endpoints.racket]
+namespace = "racket"
+s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
+s3_prefix = "rsync/racket"
+
 [endpoints.bmclapi]
 namespace = "bmclapi"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
