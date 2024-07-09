@@ -36,6 +36,15 @@ repos:
   #   no_redir_http: true
   #   <<: *oneshot_common
 
+  # racket
+  - type: shell_script
+    name: racket
+    script: /worker-script/rsync-fetcher.sh
+    interval: 13271
+    source: rsync://mirror.csclub.uwaterloo.ca/racket/racket-installers
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # bmclapi
   - type: shell_script
     name: bmclapi
