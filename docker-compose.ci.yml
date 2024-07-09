@@ -4,8 +4,7 @@ services:
       args:
         - USE_SJTUG=false
     volumes:
-      - "./lug/config.local.yaml:/config.local.yaml:ro"
-    command: -c /config.local.yaml
+      - "./lug/config.local.yaml:/config/0-base.yaml:ro"
   caddy:
     build:
       args:

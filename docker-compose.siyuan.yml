@@ -20,7 +20,8 @@ services:
     container_name: siyuan-lug
     volumes:
       - "/mnt/data32T:/srv/data32T"
-      - "./config.siyuan.yaml:/config.yaml:ro"
+      - "./config.siyuan.yaml:/config/0-base.yaml:ro"
+      - "./secrets/secrets.siyuan.yaml:/config/99-secrets.yaml:ro"
     environment:
       MIRROR_CLONE_SITE: "mirror.sjtu.edu.cn"
     mem_limit: 30G
