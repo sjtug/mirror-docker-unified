@@ -984,6 +984,13 @@ repos:
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
+    script: /worker-script/github-release.sh Nuullll/intel-extension-for-pytorch 30
+    interval: 86400
+    name: github/intel-extension-for-pytorch
+    target: /github-release/Nuullll/intel-extension-for-pytorch/releases/download/?mirror_intel_list
+    serve_mode: redir_force
+    <<: *oneshot_common
+  - type: shell_script
     script: /worker-script/github-release.sh sjtug/SJTUBeamer 30
     interval: 86400
     name: github/SJTUBeamer

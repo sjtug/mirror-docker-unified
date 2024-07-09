@@ -292,6 +292,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /git/SJTUBeamer.git/*
         not path /git/SJTUTeX.git/*
         not path /git/SJTUThesis.git/*
+        not path /github/intel-extension-for-pytorch/*
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
         not path /centos/*
@@ -949,6 +950,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /debian-ports /debian-ports/ 301
     handle_path /debian-ports/* {
         redir * https://mirror.sjtu.edu.cn/debian-ports{uri} 302
+    }
+    redir /github/intel-extension-for-pytorch /github/intel-extension-for-pytorch/ 301
+    handle_path /github/intel-extension-for-pytorch/* {
+        redir * /github-release/Nuullll/intel-extension-for-pytorch/releases/download/?mirror_intel_list 302
     }
     redir /github/SJTUBeamer /github/SJTUBeamer/ 301
     handle_path /github/SJTUBeamer/* {
