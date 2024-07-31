@@ -188,6 +188,7 @@ https://mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Request-Method GET
 
     @gzip_enabled {
+        not path /keyarchos/*
         not path /racket/*
         not path /bmclapi/*
         not path /alhp/*
@@ -322,6 +323,10 @@ https://mirror.sjtu.edu.cn {
     }
     encode @gzip_enabled gzip zstd
 
+    redir /keyarchos /keyarchos/ 301
+    handle /keyarchos/* {
+        reverse_proxy rsync-gateway:8000
+    }
     redir /racket /racket/ 301
     handle /racket/* {
         reverse_proxy rsync-gateway:8000

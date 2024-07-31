@@ -36,6 +36,16 @@ repos:
   #   no_redir_http: true
   #   <<: *oneshot_common
 
+  # keyarchos
+  - type: shell_script
+    name: keyarchos
+    script: /worker-script/rsync-fetcher.sh
+    interval: 29291
+    source: rsync://kos.ieisystem.com/wwwroot
+    password: Keyarchos_yum
+    serve_mode: rsync_gateway
+    <<: *rsync_fetcher_common
+    <<: *oneshot_common
   # racket
   - type: shell_script
     name: racket
