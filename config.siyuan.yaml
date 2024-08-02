@@ -41,7 +41,7 @@ repos:
     name: keyarchos
     script: /worker-script/rsync-fetcher.sh
     interval: 29291
-    source: rsync://kos.ieisystem.com/wwwroot
+    source: rsync://root@kos.ieisystem.com/wwwroot
     password: Keyarchos_yum
     serve_mode: rsync_gateway
     <<: *rsync_fetcher_common
