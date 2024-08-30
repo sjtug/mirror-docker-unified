@@ -195,7 +195,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /archlinuxarm/*
         not path /archlinux-cn/*
         not path /opencloudos/*
-        not path /qt/*
         not path /debian/*
         not path /debian-cd/*
         not path /debian-security/*
@@ -572,6 +571,15 @@ https://mirrors.sjtug.sjtu.edu.cn {
         @hidden path */.*
         respond @hidden 404
     }
+    redir /qt /qt/ 301
+    handle /qt/* {
+        file_server browse {
+            root /mnt
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
     redir /keyarchos /keyarchos/ 301
     handle_path /keyarchos/* {
         redir * https://mirror.sjtu.edu.cn/keyarchos{uri} 302
@@ -635,10 +643,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /opencloudos /opencloudos/ 301
     handle_path /opencloudos/* {
         redir * https://mirror.sjtu.edu.cn/opencloudos{uri} 302
-    }
-    redir /qt /qt/ 301
-    handle_path /qt/* {
-        redir * https://mirror.sjtu.edu.cn/qt{uri} 302
     }
     redir /debian /debian/ 301
     handle_path /debian/* {
