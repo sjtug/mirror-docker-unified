@@ -67,11 +67,6 @@ namespace = "opencloudos"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
 s3_prefix = "rsync/opencloudos"
 
-[endpoints.qt]
-namespace = "qt"
-s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
-s3_prefix = "rsync/qt"
-
 [endpoints.debian-cd]
 namespace = "debian-cd"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
