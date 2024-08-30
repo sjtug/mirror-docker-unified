@@ -44,9 +44,9 @@ jobs:
           cp ./secrets/pg.env.example ./secrets/pg.env
           touch ./secrets/lug-secrets.sh
       - name: verify config
-        run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
-      - name: docker-compose build
-        run: docker-compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml -f docker-compose.ci.yml build --parallel
+        run: docker compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
+      - name: docker compose build
+        run: docker compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml -f docker-compose.ci.yml build --parallel
       - name: validate Caddyfile
         run: make caddy-verify-config
   test-caddy-file:
@@ -73,7 +73,7 @@ jobs:
           cp ./secrets/pg.env.example ./secrets/pg.env
           touch ./secrets/lug-secrets.sh
       - name: validate Caddyfile
-        run: docker-compose build caddy && make caddy-verify-config
+        run: docker compose build caddy && make caddy-verify-config
   test-gateway-file:
     runs-on: ubuntu-latest
     name: rsync-gateway config up-to-date
