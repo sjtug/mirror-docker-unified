@@ -213,6 +213,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /remi/*
         not path /termux/*
         not path /ubuntu/*
+        not path /ubuntu-releases/*
         not path /ubuntu-cdimage/*
         not path /ubuntu-ports/*
         not path /openwrt/*
@@ -715,6 +716,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /ubuntu /ubuntu/ 301
     handle_path /ubuntu/* {
         redir * https://mirror.sjtu.edu.cn/ubuntu{uri} 302
+    }
+    redir /ubuntu-releases /ubuntu-releases/ 301
+    handle_path /ubuntu-releases/* {
+        redir * https://mirror.sjtu.edu.cn/ubuntu-releases{uri} 302
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     handle_path /ubuntu-cdimage/* {
