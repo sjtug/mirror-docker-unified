@@ -397,14 +397,14 @@ repos:
     name: ubuntu
     no_redir_http: true
     <<: *oneshot_common
-  # # ubuntu-cd
-  # - type: shell_script
-  #   script: /worker-script/rsync.sh
-  #   source: rsync://rsync.releases.ubuntu.com/releases/
-  #   interval: 24600
-  #   path: /srv/data32T/ubuntu-cd
-  #   name: ubuntu-cd
-  #   <<: *oneshot_common
+  # ubuntu-releases
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.releases.ubuntu.com/releases/
+    interval: 24600
+    path: /srv/data32T/ubuntu-releases
+    name: ubuntu-releases
+    <<: *oneshot_common
   # ubuntu-cdimage
   - type: shell_script
     script: /worker-script/rsync.sh

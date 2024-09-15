@@ -529,6 +529,15 @@ https://mirror.sjtu.edu.cn {
         @hidden path */.*
         respond @hidden 404
     }
+    redir /ubuntu-releases /ubuntu-releases/ 301
+    handle /ubuntu-releases/* {
+        file_server browse {
+            root /srv/data32T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     handle /ubuntu-cdimage/* {
         file_server browse {
