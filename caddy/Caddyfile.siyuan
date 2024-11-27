@@ -18,40 +18,42 @@ http://mirror.sjtu.edu.cn {
     header * x-sjtug-mirror-id siyuan
 
     @gzip_enabled {
+        not path /debian/*
+        not path /debian-security/*
+        not path /deepin/*
         not path /docker-ce/*
+        not path /fedora/linux/*
+        not path /fedora/epel/*
+        not path /opensuse/*
+        not path /remi/*
+        not path /ubuntu/*
+        not path /fedora/*
     }
     encode @gzip_enabled gzip zstd
 
     redir /debian /debian/ 301
-    handle /debian/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /debian/* {
+        redir * https://ftp.sjtu.edu.cn/debian/{uri} 302
     }
     redir /debian-security /debian-security/ 301
-    handle /debian-security/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /debian-security/* {
+        redir * https://ftp.sjtu.edu.cn/debian-security/{uri} 302
     }
     redir /deepin /deepin/ 301
-    handle /deepin/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /deepin/* {
+        redir * https://ftp.sjtu.edu.cn/deepin/{uri} 302
     }
     redir /docker-ce /docker-ce/ 301
-    handle /docker-ce/* {
-        reverse_proxy rsync-gateway:8000
+    handle_path /docker-ce/* {
+        redir * https://ftp.sjtu.edu.cn/docker-ce/{uri} 302
+    }
+    redir /fedora/linux /fedora/linux/ 301
+    handle_path /fedora/linux/* {
+        redir * https://ftp.sjtu.edu.cn/fedora/linux/{uri} 302
+    }
+    redir /fedora/epel /fedora/epel/ 301
+    handle_path /fedora/epel/* {
+        redir * https://ftp.sjtu.edu.cn/fedora/epel/{uri} 302
     }
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
@@ -63,31 +65,16 @@ http://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /opensuse /opensuse/ 301
-    handle /opensuse/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /opensuse/* {
+        redir * https://ftp.sjtu.edu.cn/opensuse/{uri} 302
     }
     redir /remi /remi/ 301
-    handle /remi/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /remi/* {
+        redir * https://ftp.sjtu.edu.cn/remi/{uri} 302
     }
     redir /ubuntu /ubuntu/ 301
-    handle /ubuntu/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /ubuntu/* {
+        redir * https://ftp.sjtu.edu.cn/ubuntu/{uri} 302
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     handle /ubuntu-ports/* {
@@ -117,13 +104,8 @@ http://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /fedora /fedora/ 301
-    handle /fedora/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /fedora/* {
+        redir * https://ftp.sjtu.edu.cn/fedora/{uri} 302
     }
 
 }
@@ -200,14 +182,25 @@ https://mirror.sjtu.edu.cn {
         not path /packman/*
         not path /raspberry-pi-os-images/*
         not path /opencloudos/*
+        not path /debian/*
         not path /debian-cd/*
+        not path /debian-security/*
+        not path /deepin/*
         not path /deepin-cd/*
         not path /docker-ce/*
+        not path /fedora/linux/*
+        not path /fedora/epel/*
+        not path /linuxmint/*
         not path /linuxmint-cd/*
         not path /mageia/*
+        not path /opensuse/*
         not path /openkylin/*
         not path /openkylin-cdimage/*
         not path /mx-packages/*
+        not path /openvz/*
+        not path /remi/*
+        not path /ubuntu/*
+        not path /ubuntu-cdimage/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -246,8 +239,10 @@ https://mirror.sjtu.edu.cn {
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
         not path /git/homebrew-install.git/*
+        not path /fedora/*
         not path /manjarostable/*
         not path /voidlinux/*
+        not path /archlinux/*
         not path /bioconductor/*
         not path /wireshark/*
         not path /macports/*
@@ -356,8 +351,8 @@ https://mirror.sjtu.edu.cn {
         reverse_proxy rsync-gateway:8000
     }
     redir /debian-cdimage /debian-cdimage/ 301
-    handle /debian-cdimage/* {
-        reverse_proxy rsync-gateway:8000
+    handle_path /debian-cdimage/* {
+        redir * https://ftp.sjtu.edu.cn/debian-cd/{uri} 302
     }
     redir /packman /packman/ 301
     handle /packman/* {
@@ -408,43 +403,36 @@ https://mirror.sjtu.edu.cn {
         reverse_proxy rsync-gateway:8000
     }
     redir /debian /debian/ 301
-    handle /debian/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /debian/* {
+        redir * https://ftp.sjtu.edu.cn/debian/{uri} 302
     }
     redir /debian-cd /debian-cd/ 301
-    handle /debian-cd/* {
-        reverse_proxy rsync-gateway:8000
+    handle_path /debian-cd/* {
+        redir * https://ftp.sjtu.edu.cn/debian-cd/{uri} 302
     }
     redir /debian-security /debian-security/ 301
-    handle /debian-security/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /debian-security/* {
+        redir * https://ftp.sjtu.edu.cn/debian-security/{uri} 302
     }
     redir /deepin /deepin/ 301
-    handle /deepin/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /deepin/* {
+        redir * https://ftp.sjtu.edu.cn/deepin/{uri} 302
     }
     redir /deepin-cd /deepin-cd/ 301
-    handle /deepin-cd/* {
-        reverse_proxy rsync-gateway:8000
+    handle_path /deepin-cd/* {
+        redir * https://ftp.sjtu.edu.cn/deepin-cd/{uri} 302
     }
     redir /docker-ce /docker-ce/ 301
-    handle /docker-ce/* {
-        reverse_proxy rsync-gateway:8000
+    handle_path /docker-ce/* {
+        redir * https://ftp.sjtu.edu.cn/docker-ce/{uri} 302
+    }
+    redir /fedora/linux /fedora/linux/ 301
+    handle_path /fedora/linux/* {
+        redir * https://ftp.sjtu.edu.cn/fedora/linux/{uri} 302
+    }
+    redir /fedora/epel /fedora/epel/ 301
+    handle_path /fedora/epel/* {
+        redir * https://ftp.sjtu.edu.cn/fedora/epel/{uri} 302
     }
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
@@ -456,30 +444,20 @@ https://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /linuxmint /linuxmint/ 301
-    handle /linuxmint/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /linuxmint/* {
+        redir * https://ftp.sjtu.edu.cn/linuxmint/packages/{uri} 302
     }
     redir /linuxmint-cd /linuxmint-cd/ 301
-    handle /linuxmint-cd/* {
-        reverse_proxy rsync-gateway:8000
+    handle_path /linuxmint-cd/* {
+        redir * https://ftp.sjtu.edu.cn/linuxmint-cd/{uri} 302
     }
     redir /mageia /mageia/ 301
     handle_path /mageia/* {
         redir * https://ftp.sjtu.edu.cn/mageia/{uri} 302
     }
     redir /opensuse /opensuse/ 301
-    handle /opensuse/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /opensuse/* {
+        redir * https://ftp.sjtu.edu.cn/opensuse/{uri} 302
     }
     redir /openkylin /openkylin/ 301
     handle /openkylin/* {
@@ -494,22 +472,12 @@ https://mirror.sjtu.edu.cn {
         reverse_proxy rsync-gateway:8000
     }
     redir /openvz /openvz/ 301
-    handle /openvz/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /openvz/* {
+        redir * https://ftp.sjtu.edu.cn/openvz/{uri} 302
     }
     redir /remi /remi/ 301
-    handle /remi/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /remi/* {
+        redir * https://ftp.sjtu.edu.cn/remi/{uri} 302
     }
     redir /termux /termux/ 301
     handle /termux/* {
@@ -521,13 +489,8 @@ https://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /ubuntu /ubuntu/ 301
-    handle /ubuntu/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /ubuntu/* {
+        redir * https://ftp.sjtu.edu.cn/ubuntu/{uri} 302
     }
     redir /ubuntu-releases /ubuntu-releases/ 301
     handle /ubuntu-releases/* {
@@ -539,13 +502,8 @@ https://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
-    handle /ubuntu-cdimage/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /ubuntu-cdimage/* {
+        redir * https://ftp.sjtu.edu.cn/ubuntu-cd/{uri} 302
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     handle /ubuntu-ports/* {
@@ -745,13 +703,8 @@ https://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /fedora /fedora/ 301
-    handle /fedora/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /fedora/* {
+        redir * https://ftp.sjtu.edu.cn/fedora/{uri} 302
     }
     redir /manjaro /manjaro/ 301
     handle /manjaro/* {
@@ -771,13 +724,8 @@ https://mirror.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     redir /archlinux /archlinux/ 301
-    handle /archlinux/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /archlinux/* {
+        redir * https://ftp.sjtu.edu.cn/archlinux/{uri} 302
     }
     redir /bioconductor /bioconductor/ 301
     handle /bioconductor/* {

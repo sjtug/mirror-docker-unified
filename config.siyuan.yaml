@@ -113,14 +113,10 @@ repos:
     <<: *rsync_fetcher_common
     <<: *oneshot_common
   # debian-cdimage
-  - type: shell_script
+  - type: external
     name: debian-cdimage
-    script: /worker-script/rsync-fetcher.sh
-    interval: 30401
-    source: rsync://cdimage.debian.org/cdimage/
-    serve_mode: rsync_gateway
-    rsync_extra_flags: --exclude=archive/ --exclude="daily-*/" --exclude=source/ --include=".latest" --exclude=".*/" --exclude="*alpha*" --exclude="*-edu-*" --exclude=/blends-live --exclude=/cd-sources --exclude=/release --exclude=/experimental-live --exclude="/snapshot*" --exclude="/stretch*" --exclude=/tmp --include=/unofficial/non-free --exclude="/unofficial/*" --exclude="/project*" --exclude=/cloud/test --exclude="/cloud/**/daily"
-    <<: *rsync_fetcher_common
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/debian-cd/
     <<: *oneshot_common
   # packman
   - type: shell_script
@@ -196,80 +192,57 @@ repos:
     #  <<: *rsync_fetcher_common
     #  <<: *oneshot_common
   # debian
-  - type: shell_script
-    script: /worker-script/debian.sh
-    source: mirrors6.tuna.tsinghua.edu.cn
-    interval: 5400
-    path: /srv/data32T/debian
+  - type: external
     name: debian
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/debian/
     no_redir_http: true
     <<: *oneshot_common
   # debian-cd
-  - type: shell_script
-    script: /worker-script/rsync-fetcher.sh
-    source: rsync://cdimage.debian.org/debian-cd/
-    interval: 23600
+  - type: external
     name: debian-cd
-    serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/debian-cd/
     <<: *oneshot_common
   # debian-security
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://rsync.security.debian.org/debian-security/
-    interval: 6700
-    path: /srv/data32T/debian-security
+  - type: external
     name: debian-security
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/debian-security/
     no_redir_http: true
     <<: *oneshot_common
   # deepin
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://rsync.deepin.com/deepin/
-    interval: 6200
-    path: /srv/data32T/deepin
+  - type: external
     name: deepin
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/deepin/
     no_redir_http: true
     <<: *oneshot_common
   # deepin-cd
-  - type: shell_script
-    script: /worker-script/rsync-fetcher.sh
-    source: rsync://rsync.deepin.com/cdimage/
-    interval: 6000
+  - type: external
     name: deepin-cd
-    serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/deepin-cd/
     <<: *oneshot_common
   # docker-ce
-  - type: shell_script
-    script: /worker-script/rsync-fetcher.sh
-    source: rsync://mirrors6.tuna.tsinghua.edu.cn/docker-ce/
-    interval: 4900
+  - type: external
     name: docker-ce
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/docker-ce/
     no_redir_http: true
-    serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # fedora/linux
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://dl.fedoraproject.org/fedora-enchilada/linux/
-    interval: 5000
-    path: /srv/data32T/fedora/linux
+  - type: external
     name: fedora/linux
-    serve_mode: ignore
-    rsync_extra_flags: --exclude "extras/*" --exclude "*/debug/*"
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/fedora/linux/
     no_redir_http: true
     <<: *oneshot_common
   # fedora/epel
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://dl-iad01.fedoraproject.org/fedora-epel/
-    interval: 5000
-    path: /srv/data32T/fedora/epel
+  - type: external
     name: fedora/epel
-    serve_mode: ignore
-    rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/fedora/epel/
     no_redir_http: true
     <<: *oneshot_common
   # fedora-secondary
@@ -283,21 +256,16 @@ repos:
     no_redir_http: true
     <<: *oneshot_common
   # linuxmint
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://rsync-packages.linuxmint.com/packages/
-    interval: 6500
-    path: /srv/data32T/linuxmint
+  - type: external
     name: linuxmint
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/linuxmint/packages/
     <<: *oneshot_common
   # linuxmint-cd
-  - type: shell_script
-    script: /worker-script/rsync-fetcher.sh
-    source: rsync://pub.linuxmint.com/pub/
-    interval: 21000
+  - type: external
     name: linuxmint-cd
-    serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/linuxmint-cd/
     <<: *oneshot_common
   # mageia
   - type: external
@@ -307,13 +275,10 @@ repos:
     disabled: true
     <<: *oneshot_common
   # opensuse
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://fr2.rpmfind.net/linux/opensuse/
-    interval: 8000
-    rsync_extra_flags: --exclude "history/*" --exclude "source/*" --exclude "debug/*" --exclude "ports/zsystems/*" --exclude "ports/riscv/*" --exclude "ports/update/*"
-    path: /srv/data32T/opensuse
+  - type: external
     name: opensuse
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/opensuse/
     no_redir_http: true
     <<: *oneshot_common
   # openkylin
@@ -353,20 +318,16 @@ repos:
     <<: *rsync_fetcher_common
     <<: *oneshot_common
   # openvz
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://download.openvz.org/openvz-download
-    interval: 43600 # may be wrong
-    path: /srv/data32T/openvz
+  - type: external
     name: openvz
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/openvz/
     <<: *oneshot_common
   # remi
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://remi.mirror.karneval.cz/remi
-    interval: 43000
-    path: /srv/data32T/remi
+  - type: external
     name: remi
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/remi/
     no_redir_http: true
     <<: *oneshot_common
   # scientific
@@ -389,12 +350,10 @@ repos:
     rsync_extra_flags: --exclude "termux-main-21"
     <<: *oneshot_common
   #ubuntu
-  - type: shell_script
-    script: /worker-script/ubuntu-debian-rsync.sh
-    source: rsync://archive.ubuntu.com/ubuntu/
-    interval: 4500
-    path: /srv/data32T/ubuntu
+  - type: external
     name: ubuntu
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/ubuntu/
     no_redir_http: true
     <<: *oneshot_common
   # ubuntu-releases
@@ -406,12 +365,10 @@ repos:
     name: ubuntu-releases
     <<: *oneshot_common
   # ubuntu-cdimage
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://mirrors6.tuna.tsinghua.edu.cn/ubuntu-cdimage/
-    interval: 24900
-    path: /srv/data32T/ubuntu-cdimage
+  - type: external
     name: ubuntu-cdimage
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/ubuntu-cd/
     <<: *oneshot_common
   # ubuntu-ports
   - type: shell_script
@@ -747,9 +704,9 @@ repos:
     name: openeuler
     <<: *oneshot_common
   - type: external
-    path: /srv/data32T/fedora
     name: fedora
-    disabled: true
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/fedora/
     no_redir_http: true
     <<: *oneshot_common
   - type: shell_script
@@ -773,13 +730,10 @@ repos:
     # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
     source: https://mirrors.tuna.tsinghua.edu.cn/voidlinux
     <<: *oneshot_common
-  - type: shell_script
+  - type: external
     name: archlinux
-    interval: 5300
-    path: /srv/data32T/archlinux
-    script: /worker-script/zhiyuan/worker-script/archlinux.sh
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/archlinux/
-    lastupdate: https://mirrors.tuna.tsinghua.edu.cn/archlinux/lastupdate
+    serve_mode: redir
+    target: https://ftp.sjtu.edu.cn/archlinux/
     <<: *oneshot_common
   # bioconductor
   - type: shell_script
