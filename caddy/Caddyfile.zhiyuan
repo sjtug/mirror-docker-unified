@@ -741,7 +741,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /openwrt /openwrt/ 301
     handle_path /openwrt/* {
-        redir * https://mirror.sjtu.edu.cn/openwrt{uri} 302
+        redir * https://mirrors.cernet.edu.cn/openwrt{uri} 302
     }
     redir /rpmfusion /rpmfusion/ 301
     handle_path /rpmfusion/* {
@@ -885,7 +885,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /openeuler /openeuler/ 301
     handle_path /openeuler/* {
-        redir * https://mirror.sjtu.edu.cn/openeuler{uri} 302
+        redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
     }
     redir /fedora /fedora/ 301
     handle_path /fedora/* {

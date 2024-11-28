@@ -250,7 +250,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://dl.fedoraproject.org/fedora-secondary/
     interval: 5000
-    path: /srv/data32T/fedora-secondary
+    path: /srv/nfs27T/fedora-secondary
     name: fedora-secondary
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
@@ -361,7 +361,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.releases.ubuntu.com/releases/
     interval: 24600
-    path: /srv/data32T/ubuntu-releases
+    path: /srv/nfs27T/ubuntu-releases
     name: ubuntu-releases
     <<: *oneshot_common
   # ubuntu-cdimage
@@ -375,18 +375,16 @@ repos:
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://ports.ubuntu.com/ubuntu-ports/
     interval: 7800
-    path: /srv/data32T/ubuntu-ports
+    path: /srv/nfs27T/ubuntu-ports
     name: ubuntu-ports
     no_redir_http: true
     <<: *oneshot_common
   # openwrt
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://rsync.openwrt.org/downloads/
-    interval: 6900
-    path: /srv/data32T/openwrt
-    rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
+  - type: external
     name: openwrt
+    serve_mode: redir
+    target: https://mirrors.cernet.edu.cn/openwrt
+    disabled: true
     no_redir_http: true
     <<: *oneshot_common
   # rpmfusion
@@ -696,12 +694,12 @@ repos:
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-install.git
     <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://repo.openeuler.openatom.cn/openeuler/
-    interval: 5200
-    path: /srv/data32T/openeuler
+  - type: external
     name: openeuler
+    serve_mode: redir
+    target: https://mirrors.cernet.edu.cn/openeuler
+    disabled: true
+    no_redir_http: true
     <<: *oneshot_common
   - type: external
     name: fedora
