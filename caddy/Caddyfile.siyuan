@@ -97,7 +97,7 @@ http://mirror.sjtu.edu.cn {
     redir /rpmfusion /rpmfusion/ 301
     handle /rpmfusion/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -361,7 +361,7 @@ https://mirror.sjtu.edu.cn {
     redir /pop-os /pop-os/ 301
     handle /pop-os/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -370,7 +370,7 @@ https://mirror.sjtu.edu.cn {
     redir /rocky /rocky/ 301
     handle /rocky/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -383,7 +383,7 @@ https://mirror.sjtu.edu.cn {
     redir /archlinuxarm /archlinuxarm/ 301
     handle /archlinuxarm/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -392,7 +392,7 @@ https://mirror.sjtu.edu.cn {
     redir /archlinux-cn /archlinux-cn/ 301
     handle /archlinux-cn/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -482,7 +482,7 @@ https://mirror.sjtu.edu.cn {
     redir /termux /termux/ 301
     handle /termux/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -526,7 +526,7 @@ https://mirror.sjtu.edu.cn {
     redir /rpmfusion /rpmfusion/ 301
     handle /rpmfusion/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -575,7 +575,7 @@ https://mirror.sjtu.edu.cn {
     redir /apache /apache/ 301
     handle /apache/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -584,7 +584,7 @@ https://mirror.sjtu.edu.cn {
     redir /blackarch /blackarch/ 301
     handle /blackarch/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -617,7 +617,7 @@ https://mirror.sjtu.edu.cn {
     redir /sites/tldp.org /sites/tldp.org/ 301
     handle /sites/tldp.org/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -666,7 +666,7 @@ https://mirror.sjtu.edu.cn {
     redir /sury /sury/ 301
     handle /sury/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -687,7 +687,7 @@ https://mirror.sjtu.edu.cn {
     redir /dragonflybsd /dragonflybsd/ 301
     handle /dragonflybsd/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -709,7 +709,7 @@ https://mirror.sjtu.edu.cn {
     redir /manjaro /manjaro/ 301
     handle /manjaro/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -738,7 +738,7 @@ https://mirror.sjtu.edu.cn {
     redir /test /test/ 301
     handle /test/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -767,7 +767,7 @@ https://mirror.sjtu.edu.cn {
     redir /armbian /armbian/ 301
     handle /armbian/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -780,7 +780,7 @@ https://mirror.sjtu.edu.cn {
     redir /raspbian-addons /raspbian-addons/ 301
     handle /raspbian-addons/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -789,7 +789,7 @@ https://mirror.sjtu.edu.cn {
     redir /OpenBSD /OpenBSD/ 301
     handle /OpenBSD/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -798,7 +798,7 @@ https://mirror.sjtu.edu.cn {
     redir /ubuntukylin-cdimage /ubuntukylin-cdimage/ 301
     handle /ubuntukylin-cdimage/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -807,7 +807,7 @@ https://mirror.sjtu.edu.cn {
     redir /ubuntukylin /ubuntukylin/ 301
     handle /ubuntukylin/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -816,7 +816,7 @@ https://mirror.sjtu.edu.cn {
     redir /zorinos-isos /zorinos-isos/ 301
     handle /zorinos-isos/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -829,7 +829,7 @@ https://mirror.sjtu.edu.cn {
     redir /debian-ports /debian-ports/ 301
     handle /debian-ports/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
