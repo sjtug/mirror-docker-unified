@@ -33,27 +33,27 @@ http://mirror.sjtu.edu.cn {
 
     redir /debian /debian/ 301
     handle_path /debian/* {
-        redir * https://ftp.sjtu.edu.cn/debian/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/debian{uri} 302
     }
     redir /debian-security /debian-security/ 301
     handle_path /debian-security/* {
-        redir * https://ftp.sjtu.edu.cn/debian-security/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/debian-security{uri} 302
     }
     redir /deepin /deepin/ 301
     handle_path /deepin/* {
-        redir * https://ftp.sjtu.edu.cn/deepin/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/deepin{uri} 302
     }
     redir /docker-ce /docker-ce/ 301
     handle_path /docker-ce/* {
-        redir * https://ftp.sjtu.edu.cn/docker-ce/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/docker-ce{uri} 302
     }
     redir /fedora/linux /fedora/linux/ 301
     handle_path /fedora/linux/* {
-        redir * https://ftp.sjtu.edu.cn/fedora/linux/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/fedora/linux{uri} 302
     }
     redir /fedora/epel /fedora/epel/ 301
     handle_path /fedora/epel/* {
-        redir * https://ftp.sjtu.edu.cn/fedora/epel/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/fedora/epel{uri} 302
     }
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
@@ -66,11 +66,11 @@ http://mirror.sjtu.edu.cn {
     }
     redir /opensuse /opensuse/ 301
     handle_path /opensuse/* {
-        redir * https://ftp.sjtu.edu.cn/opensuse/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/opensuse{uri} 302
     }
     redir /remi /remi/ 301
     handle_path /remi/* {
-        redir * https://ftp.sjtu.edu.cn/remi/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/remi{uri} 302
     }
     redir /ubuntu /ubuntu/ 301
     handle_path /ubuntu/* {
@@ -105,7 +105,7 @@ http://mirror.sjtu.edu.cn {
     }
     redir /fedora /fedora/ 301
     handle_path /fedora/* {
-        redir * https://ftp.sjtu.edu.cn/fedora/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/fedora{uri} 302
     }
 
 }
@@ -352,7 +352,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /debian-cdimage /debian-cdimage/ 301
     handle_path /debian-cdimage/* {
-        redir * https://ftp.sjtu.edu.cn/debian-cd/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/debian-cd{uri} 302
     }
     redir /packman /packman/ 301
     handle /packman/* {
@@ -404,35 +404,35 @@ https://mirror.sjtu.edu.cn {
     }
     redir /debian /debian/ 301
     handle_path /debian/* {
-        redir * https://ftp.sjtu.edu.cn/debian/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/debian{uri} 302
     }
     redir /debian-cd /debian-cd/ 301
     handle_path /debian-cd/* {
-        redir * https://ftp.sjtu.edu.cn/debian-cd/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/debian-cd{uri} 302
     }
     redir /debian-security /debian-security/ 301
     handle_path /debian-security/* {
-        redir * https://ftp.sjtu.edu.cn/debian-security/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/debian-security{uri} 302
     }
     redir /deepin /deepin/ 301
     handle_path /deepin/* {
-        redir * https://ftp.sjtu.edu.cn/deepin/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/deepin{uri} 302
     }
     redir /deepin-cd /deepin-cd/ 301
     handle_path /deepin-cd/* {
-        redir * https://ftp.sjtu.edu.cn/deepin-cd/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/deepin-cd{uri} 302
     }
     redir /docker-ce /docker-ce/ 301
     handle_path /docker-ce/* {
-        redir * https://ftp.sjtu.edu.cn/docker-ce/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/docker-ce{uri} 302
     }
     redir /fedora/linux /fedora/linux/ 301
     handle_path /fedora/linux/* {
-        redir * https://ftp.sjtu.edu.cn/fedora/linux/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/fedora/linux{uri} 302
     }
     redir /fedora/epel /fedora/epel/ 301
     handle_path /fedora/epel/* {
-        redir * https://ftp.sjtu.edu.cn/fedora/epel/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/fedora/epel{uri} 302
     }
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
@@ -445,19 +445,19 @@ https://mirror.sjtu.edu.cn {
     }
     redir /linuxmint /linuxmint/ 301
     handle_path /linuxmint/* {
-        redir * https://ftp.sjtu.edu.cn/linuxmint/packages/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/linuxmint/packages{uri} 302
     }
     redir /linuxmint-cd /linuxmint-cd/ 301
     handle_path /linuxmint-cd/* {
-        redir * https://ftp.sjtu.edu.cn/linuxmint-cd/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/linuxmint-cd{uri} 302
     }
     redir /mageia /mageia/ 301
     handle_path /mageia/* {
-        redir * https://ftp.sjtu.edu.cn/mageia/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/mageia{uri} 302
     }
     redir /opensuse /opensuse/ 301
     handle_path /opensuse/* {
-        redir * https://ftp.sjtu.edu.cn/opensuse/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/opensuse{uri} 302
     }
     redir /openkylin /openkylin/ 301
     handle /openkylin/* {
@@ -473,11 +473,11 @@ https://mirror.sjtu.edu.cn {
     }
     redir /openvz /openvz/ 301
     handle_path /openvz/* {
-        redir * https://ftp.sjtu.edu.cn/openvz/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/openvz{uri} 302
     }
     redir /remi /remi/ 301
     handle_path /remi/* {
-        redir * https://ftp.sjtu.edu.cn/remi/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/remi{uri} 302
     }
     redir /termux /termux/ 301
     handle /termux/* {
@@ -503,7 +503,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     handle_path /ubuntu-cdimage/* {
-        redir * https://ftp.sjtu.edu.cn/ubuntu-cd/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/ubuntu-cd{uri} 302
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     handle /ubuntu-ports/* {
@@ -704,7 +704,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /fedora /fedora/ 301
     handle_path /fedora/* {
-        redir * https://ftp.sjtu.edu.cn/fedora/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/fedora{uri} 302
     }
     redir /manjaro /manjaro/ 301
     handle /manjaro/* {
@@ -725,7 +725,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /archlinux /archlinux/ 301
     handle_path /archlinux/* {
-        redir * https://ftp.sjtu.edu.cn/archlinux/{uri} 302
+        redir * https://ftp.sjtu.edu.cn/archlinux{uri} 302
     }
     redir /bioconductor /bioconductor/ 301
     handle /bioconductor/* {
