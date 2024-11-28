@@ -11,6 +11,7 @@ services:
     container_name: siyuan-caddy
     volumes:
       - "/mnt/data32T:/srv/data32T:ro"
+      - "/mnt/nfs27T:/srv/nfs27T:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile:ro"
       - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
     mem_limit: 20G
@@ -20,6 +21,7 @@ services:
     container_name: siyuan-lug
     volumes:
       - "/mnt/data32T:/srv/data32T"
+      - "/mnt/nfs27T:/srv/nfs27T"
       - "./config.siyuan.yaml:/config.yaml:ro"
     environment:
       MIRROR_CLONE_SITE: "mirror.sjtu.edu.cn"
@@ -56,7 +58,7 @@ services:
   mirror-intel:
     container_name: siyuan-mirror-intel
     volumes:
-      - "/mnt/data32T/mirror-intel-cache:/mnt/cache"
+      - "/mnt/nfs27T/mirror-intel-cache:/mnt/cache"
     mem_limit: 15G
     memswap_limit: 15G
 
@@ -91,6 +93,7 @@ services:
     volumes:
       - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
       - /mnt/data32T:/srv/data32T:ro
+      - /mnt/nfs27T:/srv/nfs27T:ro
       - ./rsyncd/motd.siyuan:/etc/rsync/motd:ro
     blkio_config:
       weight: 10
