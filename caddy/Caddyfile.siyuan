@@ -27,6 +27,8 @@ http://mirror.sjtu.edu.cn {
         not path /opensuse/*
         not path /remi/*
         not path /ubuntu/*
+        not path /openwrt/*
+        not path /openeuler/*
         not path /fedora/*
     }
     encode @gzip_enabled gzip zstd
@@ -58,7 +60,7 @@ http://mirror.sjtu.edu.cn {
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -79,20 +81,15 @@ http://mirror.sjtu.edu.cn {
     redir /ubuntu-ports /ubuntu-ports/ 301
     handle /ubuntu-ports/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
         respond @hidden 404
     }
     redir /openwrt /openwrt/ 301
-    handle /openwrt/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /openwrt/* {
+        redir * https://mirrors.cernet.edu.cn/openwrt{uri} 302
     }
     redir /rpmfusion /rpmfusion/ 301
     handle /rpmfusion/* {
@@ -102,6 +99,10 @@ http://mirror.sjtu.edu.cn {
         }
         @hidden path */.*
         respond @hidden 404
+    }
+    redir /openeuler /openeuler/ 301
+    handle_path /openeuler/* {
+        redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
     }
     redir /fedora /fedora/ 301
     handle_path /fedora/* {
@@ -201,6 +202,7 @@ https://mirror.sjtu.edu.cn {
         not path /remi/*
         not path /ubuntu/*
         not path /ubuntu-cdimage/*
+        not path /openwrt/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -239,6 +241,7 @@ https://mirror.sjtu.edu.cn {
         not path /git/dpdk.git/*
         not path /gradle/distributions/*
         not path /git/homebrew-install.git/*
+        not path /openeuler/*
         not path /fedora/*
         not path /manjarostable/*
         not path /voidlinux/*
@@ -437,7 +440,7 @@ https://mirror.sjtu.edu.cn {
     redir /fedora-secondary /fedora-secondary/ 301
     handle /fedora-secondary/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -495,7 +498,7 @@ https://mirror.sjtu.edu.cn {
     redir /ubuntu-releases /ubuntu-releases/ 301
     handle /ubuntu-releases/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
@@ -508,20 +511,15 @@ https://mirror.sjtu.edu.cn {
     redir /ubuntu-ports /ubuntu-ports/ 301
     handle /ubuntu-ports/* {
         file_server browse {
-            root /srv/data32T
+            root /srv/nfs27T
             hide .*
         }
         @hidden path */.*
         respond @hidden 404
     }
     redir /openwrt /openwrt/ 301
-    handle /openwrt/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /openwrt/* {
+        redir * https://mirrors.cernet.edu.cn/openwrt{uri} 302
     }
     redir /rpmfusion /rpmfusion/ 301
     handle /rpmfusion/* {
@@ -694,13 +692,8 @@ https://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /openeuler /openeuler/ 301
-    handle /openeuler/* {
-        file_server browse {
-            root /srv/data32T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /openeuler/* {
+        redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
     }
     redir /fedora /fedora/ 301
     handle_path /fedora/* {
