@@ -10,7 +10,6 @@ services:
   caddy:
     container_name: siyuan-caddy
     volumes:
-      - "/mnt/data32T:/srv/data32T:ro"
       - "/mnt/nfs27T:/srv/nfs27T:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile:ro"
       - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
@@ -20,7 +19,6 @@ services:
   lug:
     container_name: siyuan-lug
     volumes:
-      - "/mnt/data32T:/srv/data32T"
       - "/mnt/nfs27T:/srv/nfs27T"
       - "./config.siyuan.yaml:/config.yaml:ro"
     environment:
@@ -92,7 +90,6 @@ services:
     container_name: siyuan-rsyncd
     volumes:
       - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
-      - /mnt/data32T:/srv/data32T:ro
       - /mnt/nfs27T:/srv/nfs27T:ro
       - ./rsyncd/motd.siyuan:/etc/rsync/motd:ro
     blkio_config:
