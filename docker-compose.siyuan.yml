@@ -39,7 +39,7 @@ services:
     container_name: siyuan-postgres
     volumes:
       - './postgresql.siyuan.conf:/etc/postgresql/postgresql.conf:ro'
-      - "/mnt/data32T/postgres-data:/var/lib/postgresql/data"
+      - "/mnt/nfs27T/postgres-data:/var/lib/postgresql/data"
     mem_limit: 30G
     memswap_limit: 30G
 
@@ -107,7 +107,7 @@ services:
   git-backend:
     container_name: siyuan-git-backend
     volumes:
-      - "/mnt/data32T/git:/git:z"
+      - "/mnt/nfs27T/git:/git:z"
     mem_limit: 1G
     memswap_limit: 1G
 
