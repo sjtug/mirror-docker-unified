@@ -617,7 +617,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /debian-cdimage /debian-cdimage/ 301
     handle_path /debian-cdimage/* {
-        redir * https://ftp.sjtu.edu.cn/debian-cd{uri} 302
+        redir * https://mirror.sjtu.edu.cn/debian-cdimage{uri} 302
     }
     redir /packman /packman/ 301
     handle_path /packman/* {
@@ -741,7 +741,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /openwrt /openwrt/ 301
     handle_path /openwrt/* {
-        redir * https://mirrors.cernet.edu.cn/openwrt{uri} 302
+        redir * https://mirror.sjtu.edu.cn/openwrt{uri} 302
     }
     redir /rpmfusion /rpmfusion/ 301
     handle_path /rpmfusion/* {
