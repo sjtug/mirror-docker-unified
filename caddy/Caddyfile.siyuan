@@ -27,7 +27,6 @@ http://mirror.sjtu.edu.cn {
         not path /opensuse/*
         not path /remi/*
         not path /ubuntu/*
-        not path /openwrt/*
         not path /openeuler/*
         not path /fedora/*
     }
@@ -88,8 +87,13 @@ http://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /openwrt /openwrt/ 301
-    handle_path /openwrt/* {
-        redir * https://mirrors.cernet.edu.cn/openwrt{uri} 302
+    handle /openwrt/* {
+        file_server browse {
+            root /srv/nfs27T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
     }
     redir /rpmfusion /rpmfusion/ 301
     handle /rpmfusion/* {
@@ -202,7 +206,6 @@ https://mirror.sjtu.edu.cn {
         not path /remi/*
         not path /ubuntu/*
         not path /ubuntu-cdimage/*
-        not path /openwrt/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -354,8 +357,8 @@ https://mirror.sjtu.edu.cn {
         reverse_proxy rsync-gateway:8000
     }
     redir /debian-cdimage /debian-cdimage/ 301
-    handle_path /debian-cdimage/* {
-        redir * https://ftp.sjtu.edu.cn/debian-cd{uri} 302
+    handle /debian-cdimage/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /packman /packman/ 301
     handle /packman/* {
@@ -518,8 +521,13 @@ https://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /openwrt /openwrt/ 301
-    handle_path /openwrt/* {
-        redir * https://mirrors.cernet.edu.cn/openwrt{uri} 302
+    handle /openwrt/* {
+        file_server browse {
+            root /srv/nfs27T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
     }
     redir /rpmfusion /rpmfusion/ 301
     handle /rpmfusion/* {
