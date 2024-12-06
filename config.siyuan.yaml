@@ -199,54 +199,54 @@ repos:
   - type: external
     name: debian
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/debian
+    target: "{scheme}://ftp.sjtu.edu.cn/debian"
     no_redir_http: true
     <<: *oneshot_common
   # debian-cd
   - type: external
     name: debian-cd
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/debian-cd
+    target: "{scheme}://ftp.sjtu.edu.cn/debian-cd"
     <<: *oneshot_common
   # debian-security
   - type: external
     name: debian-security
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/debian-security
+    target: "{scheme}://ftp.sjtu.edu.cn/debian-security"
     no_redir_http: true
     <<: *oneshot_common
   # deepin
   - type: external
     name: deepin
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/deepin
+    target: "{scheme}://ftp.sjtu.edu.cn/deepin"
     no_redir_http: true
     <<: *oneshot_common
   # deepin-cd
   - type: external
     name: deepin-cd
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/deepin-cd
+    target: "{scheme}://ftp.sjtu.edu.cn/deepin-cd"
     <<: *oneshot_common
   # docker-ce
   - type: external
     name: docker-ce
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/docker-ce
+    target: "{scheme}://ftp.sjtu.edu.cn/docker-ce"
     no_redir_http: true
     <<: *oneshot_common
   # fedora/linux
   - type: external
     name: fedora/linux
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/fedora/linux
+    target: "{scheme}://ftp.sjtu.edu.cn/fedora/linux"
     no_redir_http: true
     <<: *oneshot_common
   # fedora/epel
   - type: external
     name: fedora/epel
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/fedora/epel
+    target: "{scheme}://ftp.sjtu.edu.cn/fedora/epel"
     no_redir_http: true
     <<: *oneshot_common
   # fedora-secondary
@@ -263,26 +263,26 @@ repos:
   - type: external
     name: linuxmint
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/linuxmint/packages
+    target: "{scheme}://ftp.sjtu.edu.cn/linuxmint/packages"
     <<: *oneshot_common
   # linuxmint-cd
   - type: external
     name: linuxmint-cd
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/linuxmint-cd
+    target: "{scheme}://ftp.sjtu.edu.cn/linuxmint-cd"
     <<: *oneshot_common
   # mageia
   - type: external
     name: mageia
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/mageia
+    target: "{scheme}://ftp.sjtu.edu.cn/mageia"
     disabled: true
     <<: *oneshot_common
   # opensuse
   - type: external
     name: opensuse
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/opensuse
+    target: "{scheme}://ftp.sjtu.edu.cn/opensuse"
     no_redir_http: true
     <<: *oneshot_common
   # openkylin
@@ -325,13 +325,13 @@ repos:
   - type: external
     name: openvz
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/openvz
+    target: "{scheme}://ftp.sjtu.edu.cn/openvz"
     <<: *oneshot_common
   # remi
   - type: external
     name: remi
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/remi
+    target: "{scheme}://ftp.sjtu.edu.cn/remi"
     no_redir_http: true
     <<: *oneshot_common
   # scientific
@@ -357,7 +357,7 @@ repos:
   - type: external
     name: ubuntu
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/ubuntu/
+    target: "{scheme}://ftp.sjtu.edu.cn/ubuntu/"
     no_redir_http: true
     <<: *oneshot_common
   # ubuntu-releases
@@ -372,7 +372,7 @@ repos:
   - type: external
     name: ubuntu-cdimage
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/ubuntu-cd
+    target: "{scheme}://ftp.sjtu.edu.cn/ubuntu-cd"
     <<: *oneshot_common
   # ubuntu-ports
   - type: shell_script
@@ -710,7 +710,7 @@ repos:
   - type: external
     name: fedora
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/fedora
+    target: "{scheme}://ftp.sjtu.edu.cn/fedora"
     no_redir_http: true
     <<: *oneshot_common
   - type: shell_script
@@ -737,7 +737,7 @@ repos:
   - type: external
     name: archlinux
     serve_mode: redir
-    target: https://ftp.sjtu.edu.cn/archlinux
+    target: "{scheme}://ftp.sjtu.edu.cn/archlinux"
     <<: *oneshot_common
   # bioconductor
   - type: shell_script
