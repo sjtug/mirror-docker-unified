@@ -92,14 +92,6 @@ services:
       - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
       - /mnt/nfs27T:/srv/nfs27T:ro
       - ./rsyncd/motd.siyuan:/etc/rsync/motd:ro
-    blkio_config:
-      weight: 10
-      device_read_bps:
-        - path: /dev/vdb
-          rate: '10mb'
-      device_read_iops:
-        - path: /dev/vdb
-          rate: 20
 
   git-backend:
     container_name: siyuan-git-backend
