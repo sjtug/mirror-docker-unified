@@ -137,7 +137,7 @@ repos:
     source: https://apt.pop-os.org
     arch: "all,arm64,amd64,i386,src"
     # REMARK generate this list by script/popos_dists.sh
-    repo: "proprietary:bionic:main,proprietary:disco:main,proprietary:eoan:main,proprietary:focal:main,proprietary:groovy:main,proprietary:hirsute:main,proprietary:impish:main,proprietary:jammy:main,release:impish:main,release:jammy:main,staging/master:bionic:main,staging/master:focal:main,staging/master:jammy:main,staging-proprietary:bionic:main,staging-proprietary:disco:main,staging-proprietary:eoan:main,staging-proprietary:focal:main,staging-proprietary:groovy:main,staging-proprietary:hirsute:main,staging-proprietary:impish:main,staging-proprietary:jammy:main"
+    repo: "proprietary:bionic:main,proprietary:disco:main,proprietary:eoan:main,proprietary:focal:main,proprietary:groovy:main,proprietary:hirsute:main,proprietary:impish:main,proprietary:jammy:main,proprietary:noble:main,release:impish:main,release:jammy:main,release:noble:main,staging/master:focal:main,staging/master:jammy:main,staging/master:noble:main,staging-proprietary:bionic:main,staging-proprietary:disco:main,staging-proprietary:eoan:main,staging-proprietary:focal:main,staging-proprietary:groovy:main,staging-proprietary:hirsute:main,staging-proprietary:impish:main,staging-proprietary:jammy:main,staging-proprietary:noble:main"
     interval: 10601
     path: /srv/nfs27T/pop-os
     name: pop-os
