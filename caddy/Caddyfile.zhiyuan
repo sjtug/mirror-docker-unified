@@ -669,7 +669,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /docker-ce /docker-ce/ 301
     handle_path /docker-ce/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/docker-ce{uri} 302
+        redir * https://mirror.sjtu.edu.cn/docker-ce{uri} 302
     }
     redir /fedora/linux /fedora/linux/ 301
     handle_path /fedora/linux/* {
