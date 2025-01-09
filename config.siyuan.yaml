@@ -229,11 +229,14 @@ repos:
     target: "{scheme}://ftp.sjtu.edu.cn/deepin-cd"
     <<: *oneshot_common
   # docker-ce
-  - type: external
+  - type: shell_script
     name: docker-ce
-    serve_mode: redir
-    target: "{scheme}://ftp.sjtu.edu.cn/docker-ce"
+    script: /worker-script/rsync-fetcher.sh
+    source: rsync://mirrors6.tuna.tsinghua.edu.cn/docker-ce/
+    interval: 4900
+    serve_mode: rsync_gateway
     no_redir_http: true
+    <<: *rsync_fetcher_common
     <<: *oneshot_common
   # fedora/linux
   - type: external

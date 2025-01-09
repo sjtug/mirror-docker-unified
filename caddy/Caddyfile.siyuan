@@ -45,8 +45,8 @@ http://mirror.sjtu.edu.cn {
         redir * {scheme}://ftp.sjtu.edu.cn/deepin{uri} 302
     }
     redir /docker-ce /docker-ce/ 301
-    handle_path /docker-ce/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/docker-ce{uri} 302
+    handle /docker-ce/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /fedora/linux /fedora/linux/ 301
     handle_path /fedora/linux/* {
@@ -429,8 +429,8 @@ https://mirror.sjtu.edu.cn {
         redir * {scheme}://ftp.sjtu.edu.cn/deepin-cd{uri} 302
     }
     redir /docker-ce /docker-ce/ 301
-    handle_path /docker-ce/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/docker-ce{uri} 302
+    handle /docker-ce/* {
+        reverse_proxy rsync-gateway:8000
     }
     redir /fedora/linux /fedora/linux/ 301
     handle_path /fedora/linux/* {
