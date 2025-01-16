@@ -15,13 +15,13 @@ dummy:
     retry: 5
     retry_interval: 60
   apt_common: &apt_common
-    apt_mirror_path: /srv/nfs27T/apt_mirror_path
+    apt_mirror_path: /srv/data55T/apt_mirror_path
   rsync_fetcher_common: &rsync_fetcher_common
     s3_api: "https://s3.jcloud.sjtu.edu.cn"
     s3_region: "jCloud S3"
     s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
     pg: "postgres://rsync-sjtug@postgres/rsync-sjtug"
-    tmp_path: "/srv/nfs27T/rsync_fetcher_tmp"
+    tmp_path: "/srv/data55T/rsync_fetcher_tmp"
     keep: 2
     partial: 5
 
@@ -139,7 +139,7 @@ repos:
     # REMARK generate this list by script/popos_dists.sh
     repo: "proprietary:bionic:main,proprietary:disco:main,proprietary:eoan:main,proprietary:focal:main,proprietary:groovy:main,proprietary:hirsute:main,proprietary:impish:main,proprietary:jammy:main,proprietary:noble:main,release:impish:main,release:jammy:main,release:noble:main,staging/master:focal:main,staging/master:jammy:main,staging/master:noble:main,staging-proprietary:bionic:main,staging-proprietary:disco:main,staging-proprietary:eoan:main,staging-proprietary:focal:main,staging-proprietary:groovy:main,staging-proprietary:hirsute:main,staging-proprietary:impish:main,staging-proprietary:jammy:main,staging-proprietary:noble:main"
     interval: 10601
-    path: /srv/nfs27T/pop-os
+    path: /srv/data55T/pop-os
     name: pop-os
     <<: *oneshot_common
     <<: *apt_common
@@ -148,7 +148,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/
     interval: 40000
-    path: /srv/nfs27T/rocky
+    path: /srv/data55T/rocky
     name: rocky
     rsync_extra_flags: --exclude "*/debug/*"
     <<: *oneshot_common
@@ -166,14 +166,14 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.dotsrc.org/archlinuxarm/
     interval: 3900
-    path: /srv/nfs27T/archlinuxarm
+    path: /srv/data55T/archlinuxarm
     name: archlinuxarm
     exclude_hidden: true
   # archlinux-cn
   - type: shell_script
     name: archlinux-cn
     interval: 6000
-    path: /srv/nfs27T/archlinux-cn
+    path: /srv/data55T/archlinux-cn
     script: /worker-script/zhiyuan/worker-script/archlinux-cn.sh
     <<: *oneshot_common
   # opencloudos
@@ -257,7 +257,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://dl.fedoraproject.org/fedora-secondary/
     interval: 5000
-    path: /srv/nfs27T/fedora-secondary
+    path: /srv/data55T/fedora-secondary
     name: fedora-secondary
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
@@ -352,7 +352,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://packages.termux.dev/termux
     interval: 5100
-    path: /srv/nfs27T/termux
+    path: /srv/data55T/termux
     name: termux
     rsync_extra_flags: --exclude "termux-main-21"
     <<: *oneshot_common
@@ -368,7 +368,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.releases.ubuntu.com/releases/
     interval: 24600
-    path: /srv/nfs27T/ubuntu-releases
+    path: /srv/data55T/ubuntu-releases
     name: ubuntu-releases
     <<: *oneshot_common
   # ubuntu-cdimage
@@ -382,7 +382,7 @@ repos:
     script: /worker-script/ubuntu-debian-rsync.sh
     source: rsync://ports.ubuntu.com/ubuntu-ports/
     interval: 7800
-    path: /srv/nfs27T/ubuntu-ports
+    path: /srv/data55T/ubuntu-ports
     name: ubuntu-ports
     no_redir_http: true
     <<: *oneshot_common
@@ -391,7 +391,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.openwrt.org/downloads/
     interval: 6900
-    path: /srv/nfs27T/openwrt
+    path: /srv/data55T/openwrt
     rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
     name: openwrt
     no_redir_http: true
@@ -401,7 +401,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirror.de.leaseweb.net/rpmfusion/
     interval: 5500
-    path: /srv/nfs27T/rpmfusion
+    path: /srv/data55T/rpmfusion
     name: rpmfusion
     no_redir_http: true
     <<: *oneshot_common
@@ -477,7 +477,7 @@ repos:
     interval: 3601
     name: git/homebrew-services.git
     source: https://github.com/Homebrew/homebrew-services.git
-    path: /srv/nfs27T/git/homebrew-services.git
+    path: /srv/data55T/git/homebrew-services.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-services.git
     <<: *oneshot_common
@@ -492,7 +492,7 @@ repos:
     interval: 3608
     name: git/guix.git
     source: https://git.savannah.gnu.org/git/guix.git
-    path: /srv/nfs27T/git/guix.git
+    path: /srv/data55T/git/guix.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/guix.git
     <<: *oneshot_common
@@ -501,7 +501,7 @@ repos:
     interval: 3700
     name: git/llvm-project.git
     source: https://github.com/llvm/llvm-project.git
-    path: /srv/nfs27T/git/llvm-project.git
+    path: /srv/data55T/git/llvm-project.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/llvm-project.git
     <<: *oneshot_common
@@ -510,7 +510,7 @@ repos:
     interval: 3650
     name: git/flutter-sdk.git
     source: https://github.com/flutter/flutter.git
-    path: /srv/nfs27T/git/flutter-sdk.git
+    path: /srv/data55T/git/flutter-sdk.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/flutter-sdk.git
     <<: *oneshot_common
@@ -518,7 +518,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.apache.org/apache-dist/
     interval: 7200
-    path: /srv/nfs27T/apache
+    path: /srv/data55T/apache
     name: apache
     <<: *oneshot_common
   - type: shell_script
@@ -526,7 +526,7 @@ repos:
     interval: 7200
     name: git/ohmyzsh.git
     source: https://github.com/ohmyzsh/ohmyzsh.git
-    path: /srv/nfs27T/git/ohmyzsh.git
+    path: /srv/data55T/git/ohmyzsh.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/ohmyzsh.git
   - type: shell_script
@@ -534,7 +534,7 @@ repos:
     interval: 7200
     name: git/spacemacs.git
     source: https://github.com/syl20bnr/spacemacs.git
-    path: /srv/nfs27T/git/spacemacs.git
+    path: /srv/data55T/git/spacemacs.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/spacemacs.git
   - type: shell_script
@@ -542,14 +542,14 @@ repos:
     interval: 7200
     name: git/doom-emacs.git
     source: https://github.com/hlissner/doom-emacs.git
-    path: /srv/nfs27T/git/doom-emacs.git
+    path: /srv/data55T/git/doom-emacs.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/doom-emacs.git
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.jaist.ac.jp/pub/DragonFly/iso-images/
     interval: 25600
-    path: /srv/nfs27T/dragonflybsd/iso-images
+    path: /srv/data55T/dragonflybsd/iso-images
     name: dragonflybsd/iso-images
     rsync_extra_flags: --exclude "tmp"
     serve_mode: ignore
@@ -558,7 +558,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.jaist.ac.jp/pub/DragonFly/dports/
     interval: 9800
-    path: /srv/nfs27T/dragonflybsd/dports
+    path: /srv/data55T/dragonflybsd/dports
     name: dragonflybsd/dports
     serve_mode: ignore
     <<: *oneshot_common
@@ -566,7 +566,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://www.blackarch.org/blackarch/
     interval: 20000
-    path: /srv/nfs27T/blackarch
+    path: /srv/data55T/blackarch
     name: blackarch
     <<: *oneshot_common
   - type: shell_script
@@ -615,7 +615,7 @@ repos:
     script: /worker-script/rsync.sh
     source: ftp.ibiblio.org::ldp_mirror
     interval: 5800
-    path: /srv/nfs27T/sites/tldp.org
+    path: /srv/data55T/sites/tldp.org
     name: sites/tldp.org
     <<: *oneshot_common
   - type: shell_script
@@ -665,7 +665,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://himiko.rfc1925.org/repositories
     interval: 7200
-    path: /srv/nfs27T/sury
+    path: /srv/data55T/sury
     name: sury
     <<: *oneshot_common
   - type: external
@@ -679,7 +679,7 @@ repos:
     interval: 4900
     name: git/dpdk.git
     source: http://dpdk.org/git/dpdk
-    path: /srv/nfs27T/git/dpdk.git
+    path: /srv/data55T/git/dpdk.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/dpdk.git
     <<: *oneshot_common
@@ -690,7 +690,7 @@ repos:
     name: gradle/distributions
     <<: *oneshot_common
   - type: external
-    path: /srv/nfs27T/dragonflybsd
+    path: /srv/data55T/dragonflybsd
     name: dragonflybsd
     disabled: true
     <<: *oneshot_common
@@ -699,7 +699,7 @@ repos:
     interval: 4900
     name: git/homebrew-install.git
     source: https://github.com/Homebrew/install.git
-    path: /srv/nfs27T/git/homebrew-install.git
+    path: /srv/data55T/git/homebrew-install.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-install.git
     <<: *oneshot_common
@@ -720,7 +720,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.ocf.berkeley.edu/manjaro
     interval: 3600
-    path: /srv/nfs27T/manjaro
+    path: /srv/data55T/manjaro
     name: manjaro
     exclude_hidden: true
     <<: *oneshot_common
@@ -762,7 +762,7 @@ repos:
   - type: shell_script
     script: /worker-script/test.sh
     interval: 300
-    path: /srv/nfs27T/test
+    path: /srv/data55T/test
     name: test
     <<: *oneshot_common
   - type: shell_script
@@ -804,7 +804,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://rsync.armbian.com/apt
     interval: 28800
-    path: /srv/nfs27T/armbian
+    path: /srv/data55T/armbian
     name: armbian
     <<: *oneshot_common
   - type: shell_script
@@ -820,14 +820,14 @@ repos:
     name: git/linux.git
     source: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
     interval: 4700
-    path: /srv/nfs27T/git/linux.git
+    path: /srv/data55T/git/linux.git
     target: https://git.sjtu.edu.cn/sjtug/linux.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
     name: raspbian-addons
     script: /worker-script/rsync.sh
-    path: /srv/nfs27T/raspbian-addons
+    path: /srv/data55T/raspbian-addons
     interval: 10000
     source: rsync://mirrors.tuna.tsinghua.edu.cn/osdn/storage/g/r/ra/raspbian-addons/
     <<: *oneshot_common
@@ -835,14 +835,14 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/OpenBSD
     interval: 50000
-    path: /srv/nfs27T/OpenBSD
+    path: /srv/data55T/OpenBSD
     name: OpenBSD
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://cdimage.ubuntukylin.com/releases/
     interval: 86400
-    path: /srv/nfs27T/ubuntukylin-cdimage
+    path: /srv/data55T/ubuntukylin-cdimage
     name: ubuntukylin-cdimage
     rsync_extra_flags: --exclude "professional/"
     <<: *oneshot_common
@@ -850,7 +850,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://archive.ubuntukylin.com/ubuntukylin/
     interval: 6000
-    path: /srv/nfs27T/ubuntukylin
+    path: /srv/data55T/ubuntukylin
     name: ubuntukylin
     rsync_extra_flags: --exclude "*partner*/"
     <<: *oneshot_common
@@ -858,7 +858,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://mirror.zorinos.com/isos/
     interval: 86400
-    path: /srv/nfs27T/zorinos-isos
+    path: /srv/data55T/zorinos-isos
     name: zorinos-isos
     <<: *oneshot_common
   - type: shell_script
@@ -874,7 +874,7 @@ repos:
     script: /worker-script/rsync.sh
     source: rsync://ftp.de.debian.org/debian-ports/
     interval: 9000
-    path: /srv/nfs27T/debian-ports
+    path: /srv/data55T/debian-ports
     name: debian-ports
     rsync_extra_flags: --exclude "pool-alpha" --exclude "pool-hppa" --exclude "pool-hurd-i386" --exclude "pool-ia64" --exclude "pool-kfreebsd-amd64" --exclude "pool-kfreebsd-i386" --exclude "pool-m68k" --exclude "pool-powerpc" --exclude "pool-ppc64" --exclude "pool-sh4" --exclude "pool-sparc64" --exclude "pool-x32"
     <<: *oneshot_common
@@ -883,7 +883,7 @@ repos:
     interval: 7200
     name: git/homebrew-bundle.git
     source: https://github.com/Homebrew/homebrew-bundle.git
-    path: /srv/nfs27T/git/homebrew-bundle.git
+    path: /srv/data55T/git/homebrew-bundle.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -891,7 +891,7 @@ repos:
     interval: 7200
     name: git/spdk.git
     source: https://github.com/spdk/spdk
-    path: /srv/nfs27T/git/spdk.git
+    path: /srv/data55T/git/spdk.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -899,7 +899,7 @@ repos:
     interval: 7200
     name: git/SJTUBeamer.git
     source: https://github.com/sjtug/SJTUBeamer
-    path: /srv/nfs27T/git/SJTUBeamer.git
+    path: /srv/data55T/git/SJTUBeamer.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -907,7 +907,7 @@ repos:
     interval: 7200
     name: git/SJTUTeX.git
     source: https://github.com/sjtug/SJTUTeX
-    path: /srv/nfs27T/git/SJTUTeX.git
+    path: /srv/data55T/git/SJTUTeX.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -915,7 +915,7 @@ repos:
     interval: 7200
     name: git/SJTUThesis.git
     source: https://github.com/sjtug/SJTUThesis
-    path: /srv/nfs27T/git/SJTUThesis.git
+    path: /srv/data55T/git/SJTUThesis.git
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
@@ -963,75 +963,75 @@ repos:
     interval: 3600
     name: git/lean4-packages/std4
     source: https://github.com/leanprover/std4.git
-    path: /srv/nfs27T/git/lean4-packages/std4.git
+    path: /srv/data55T/git/lean4-packages/std4.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/lean4-cli
     source: https://github.com/leanprover/lean4-cli.git
-    path: /srv/nfs27T/git/lean4-packages/lean4-cli.git
+    path: /srv/data55T/git/lean4-packages/lean4-cli.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/ProofWidgets4
     source: https://github.com/EdAyers/ProofWidgets4.git
-    path: /srv/nfs27T/git/lean4-packages/ProofWidgets4.git
+    path: /srv/data55T/git/lean4-packages/ProofWidgets4.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/aesop
     source: https://github.com/JLimperg/aesop.git
-    path: /srv/nfs27T/git/lean4-packages/aesop.git
+    path: /srv/data55T/git/lean4-packages/aesop.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/quote4
     source: https://github.com/gebner/quote4.git
-    path: /srv/nfs27T/git/lean4-packages/quote4.git
+    path: /srv/data55T/git/lean4-packages/quote4.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/mathlib4
     source: https://github.com/leanprover-community/mathlib4.git
-    path: /srv/nfs27T/git/lean4-packages/mathlib4.git
+    path: /srv/data55T/git/lean4-packages/mathlib4.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/doc-gen4
     source: https://github.com/leanprover/doc-gen4.git
-    path: /srv/nfs27T/git/lean4-packages/doc-gen4.git
+    path: /srv/data55T/git/lean4-packages/doc-gen4.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/mathematics_in_lean_source
     source: https://github.com/avigad/mathematics_in_lean_source.git
-    path: /srv/nfs27T/git/lean4-packages/mathematics_in_lean_source.git
+    path: /srv/data55T/git/lean4-packages/mathematics_in_lean_source.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/mathematics_in_lean
     source: https://github.com/leanprover-community/mathematics_in_lean.git
-    path: /srv/nfs27T/git/lean4-packages/mathematics_in_lean.git
+    path: /srv/data55T/git/lean4-packages/mathematics_in_lean.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/import-graph
     source: https://github.com/leanprover-community/import-graph.git
-    path: /srv/nfs27T/git/lean4-packages/import-graph.git
+    path: /srv/data55T/git/lean4-packages/import-graph.git
     serve_mode: git
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3600
     name: git/lean4-packages/batteries
     source: https://github.com/leanprover-community/batteries.git
-    path: /srv/nfs27T/git/lean4-packages/batteries.git
+    path: /srv/data55T/git/lean4-packages/batteries.git
     serve_mode: git
