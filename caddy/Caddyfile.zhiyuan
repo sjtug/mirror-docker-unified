@@ -308,6 +308,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /git/lean4-packages/mathematics_in_lean/*
         not path /git/lean4-packages/import-graph/*
         not path /git/lean4-packages/batteries/*
+        not path /ros/*
     }
     encode @gzip_enabled gzip zstd
 
@@ -412,15 +413,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /cygwin /cygwin/ 301
     handle /cygwin/* {
-        file_server browse {
-            root /mnt
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /ros /ros/ 301
-    handle /ros/* {
         file_server browse {
             root /mnt
             hide .*
@@ -994,6 +986,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /scientific /scientific/ 301
     handle_path /scientific/* {
         redir * https://mirrors.ustc.edu.cn/scientificlinux/{uri} 302
+    }
+    redir /ros /ros/ 301
+    handle_path /ros/* {
+        redir * https://mirror.sjtu.edu.cn/ros{uri} 302
     }
 
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
