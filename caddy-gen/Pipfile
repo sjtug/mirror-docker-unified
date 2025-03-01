@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pyyaml = "*"
 loguru = "*"
+pyyaml = "*"
 
 [dev-packages]
 pytest = "*"

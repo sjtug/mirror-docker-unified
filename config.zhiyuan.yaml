@@ -118,14 +118,6 @@ repos:
     name: cygwin
     <<: *oneshot_common
   - type: shell_script
-    script: /worker-script/zhiyuan/worker-script/rsync.sh
-    source: rsync.osuosl.org::ros-main
-    interval: 3600
-    path: /mnt/ros
-    mirror_path: /mnt/ros/ubuntu
-    name: ros
-    <<: *oneshot_common
-  - type: shell_script
     script: /worker-script/rsync-fetcher.sh
     source: rsync://ftp.jaist.ac.jp/kali-images/
     interval: 10800

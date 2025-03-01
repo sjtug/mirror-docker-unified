@@ -5,8 +5,8 @@ name = "pypi"
 
 [packages]
 pyyaml = "*"
-toml = "*"
 loguru = "*"
+toml = "*"
 
 [dev-packages]
 pytest = "*"

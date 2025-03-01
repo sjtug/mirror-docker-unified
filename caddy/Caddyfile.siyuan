@@ -293,7 +293,6 @@ https://mirror.sjtu.edu.cn {
         not path /ctex/*
         not path /gnu/*
         not path /cygwin/*
-        not path /ros/*
         not path /kali-images/*
         not path /git/homebrew-core.git/*
         not path /git/homebrew-cask.git/*
@@ -860,6 +859,15 @@ https://mirror.sjtu.edu.cn {
     handle_path /scientific/* {
         redir * https://mirrors.ustc.edu.cn/scientificlinux/{uri} 302
     }
+    redir /ros /ros/ 301
+    handle /ros/* {
+        file_server browse {
+            root /srv/data55T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
     redir /kali /kali/ 301
     handle_path /kali/* {
         redir * https://mirrors.sjtug.sjtu.edu.cn/kali{uri} 302
@@ -907,10 +915,6 @@ https://mirror.sjtu.edu.cn {
     redir /cygwin /cygwin/ 301
     handle_path /cygwin/* {
         redir * https://mirrors.sjtug.sjtu.edu.cn/cygwin{uri} 302
-    }
-    redir /ros /ros/ 301
-    handle_path /ros/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ros{uri} 302
     }
     redir /kali-images /kali-images/ 301
     handle_path /kali-images/* {

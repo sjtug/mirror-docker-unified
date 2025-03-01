@@ -337,17 +337,6 @@ repos:
     target: "{scheme}://ftp.sjtu.edu.cn/remi"
     no_redir_http: true
     <<: *oneshot_common
-  # scientific
-  # - type: shell_script
-  #   script: /worker-script/rsync.sh
-  #   source: rsync://mirror.aarnet.edu.au/pub/scientific/
-  #   interval: 21600 # may be wrong
-  #   path: /srv/data32T/scientific
-  #   name: scientific
-  #   rsync_extra_flags: --exclude "*/obsolete/*" --exclude "obsolete" --exclude "stats"
-  #   ignore_vanish: true
-  #   <<: *oneshot_common
-  # termux
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://packages.termux.dev/termux
@@ -1035,3 +1024,11 @@ repos:
     source: https://github.com/leanprover-community/batteries.git
     path: /srv/data55T/git/lean4-packages/batteries.git
     serve_mode: git
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync.osuosl.org::ros-main
+    interval: 3600
+    path: /srv/data55T/ros
+    mirror_path: /srv/data55T/ros/ubuntu
+    name: ros
+    <<: *oneshot_common
