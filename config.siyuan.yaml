@@ -1032,3 +1032,12 @@ repos:
     mirror_path: /srv/data55T/ros/ubuntu
     name: ros
     <<: *oneshot_common
+  # alpine
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.alpinelinux.org/alpine/
+    interval: 3600
+    path: /srv/data55T/alpine
+    name: alpine
+    no_redir_http: true
+    <<: *oneshot_common

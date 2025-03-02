@@ -112,6 +112,15 @@ http://mirror.sjtu.edu.cn {
     handle_path /fedora/* {
         redir * {scheme}://ftp.sjtu.edu.cn/fedora{uri} 302
     }
+    redir /alpine /alpine/ 301
+    handle /alpine/* {
+        file_server browse {
+            root /srv/data55T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
 
 }
 
@@ -287,7 +296,6 @@ https://mirror.sjtu.edu.cn {
         not path /putty/*
         not path /gentoo/*
         not path /vim/*
-        not path /alpine/*
         not path /cpan/*
         not path /cran/*
         not path /ctex/*
@@ -868,6 +876,15 @@ https://mirror.sjtu.edu.cn {
         @hidden path */.*
         respond @hidden 404
     }
+    redir /alpine /alpine/ 301
+    handle /alpine/* {
+        file_server browse {
+            root /srv/data55T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
     redir /kali /kali/ 301
     handle_path /kali/* {
         redir * https://mirrors.sjtug.sjtu.edu.cn/kali{uri} 302
@@ -891,10 +908,6 @@ https://mirror.sjtu.edu.cn {
     redir /vim /vim/ 301
     handle_path /vim/* {
         redir * https://mirrors.sjtug.sjtu.edu.cn/vim{uri} 302
-    }
-    redir /alpine /alpine/ 301
-    handle_path /alpine/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/alpine{uri} 302
     }
     redir /cpan /cpan/ 301
     handle_path /cpan/* {

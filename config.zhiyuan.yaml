@@ -75,14 +75,6 @@ repos:
     <<: *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://rsync.alpinelinux.org/alpine/
-    interval: 3600
-    path: /mnt/alpine
-    name: alpine
-    no_redir_http: true
-    <<: *oneshot_common
-  - type: shell_script
-    script: /worker-script/rsync.sh
     source: cpan-rsync.perl.org::CPAN
     interval: 3600
     path: /mnt/cpan
