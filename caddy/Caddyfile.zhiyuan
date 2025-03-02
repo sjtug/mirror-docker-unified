@@ -77,15 +77,6 @@ http://mirrors.sjtug.sjtu.edu.cn {
     }
     encode @gzip_enabled gzip zstd
 
-    redir /alpine /alpine/ 301
-    handle /alpine/* {
-        file_server browse {
-            root /mnt
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /raspbian /raspbian/ 301
     handle /raspbian/* {
         reverse_proxy rsync-gateway:8000
@@ -309,6 +300,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /git/lean4-packages/import-graph/*
         not path /git/lean4-packages/batteries/*
         not path /ros/*
+        not path /alpine/*
     }
     encode @gzip_enabled gzip zstd
 
@@ -359,15 +351,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /vim /vim/ 301
     handle /vim/* {
-        file_server browse {
-            root /mnt
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /alpine /alpine/ 301
-    handle /alpine/* {
         file_server browse {
             root /mnt
             hide .*
@@ -990,6 +973,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /ros /ros/ 301
     handle_path /ros/* {
         redir * https://mirror.sjtu.edu.cn/ros{uri} 302
+    }
+    redir /alpine /alpine/ 301
+    handle_path /alpine/* {
+        redir * https://mirror.sjtu.edu.cn/alpine{uri} 302
     }
 
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
