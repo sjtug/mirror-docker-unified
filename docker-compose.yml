@@ -19,6 +19,7 @@ services:
       - "mirrorz-volume:/var/www/mirrorz:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile.siyuan:ro"
       - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile.zhiyuan:ro"
+      - "./secrets/well-known:/var/www/.well-known:ro"
     ports:
       - 80:80
       - 443:443
