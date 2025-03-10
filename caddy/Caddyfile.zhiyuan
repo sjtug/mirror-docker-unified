@@ -148,6 +148,13 @@ https://mirrors.sjtug.sjtu.edu.cn {
         }
     }
 
+    handle /.well-known/* {
+        uri strip_prefix /.well-known
+        file_server {
+            root /var/www/.well-known
+        }
+    }
+
     header * x-sjtug-mirror-id zhiyuan
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET

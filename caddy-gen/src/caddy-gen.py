@@ -29,6 +29,13 @@ def common() -> list[Node]:
         ])
     ])
 
+    well_known = Node("handle /.well-known/*", [
+        Node('uri strip_prefix /.well-known'),
+        Node('file_server', [
+            Node('root /var/www/.well-known'),
+        ])
+    ])
+
     lug = Node("handle /lug/*", [
         Node(f'reverse_proxy /lug/* {LUG_ADDR}', [
             Node('header_down Access-Control-Allow-Origin *'),
@@ -73,7 +80,8 @@ def common() -> list[Node]:
         [frontends] + [BLANK_NODE] + \
         [mirrorz] + [BLANK_NODE] + \
         [lug] + [BLANK_NODE] + \
-        [monitors]
+        [monitors] + [BLANK_NODE] + \
+        [well_known]
 
 
 def common_http() -> list[Node]:
