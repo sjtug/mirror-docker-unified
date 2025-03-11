@@ -1116,3 +1116,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
 }
 
+http:// {
+    abort
+}
+
