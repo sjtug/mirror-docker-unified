@@ -340,6 +340,10 @@ if __name__ == "__main__":
         for (idx, base) in enumerate(BASES[site]):
             roots.append(build_root(base, config_yaml, idx == 0, site))
 
+        roots.append(Node("http://", [
+            Node("abort"),
+        ]))
+
         output = f'{args.output}/Caddyfile.{site}'
         with open(output, 'w') as fp:
             for root in roots:

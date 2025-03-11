@@ -1151,3 +1151,7 @@ https://mirror.sjtu.edu.cn {
     }
 }
 
+http:// {
+    abort
+}
+
