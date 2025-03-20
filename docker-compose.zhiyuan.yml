@@ -56,7 +56,7 @@ services:
   tunnel:
     container_name: zhiyuan-tunnel
     restart: unless-stopped
-    image: v2ray/official
+    image: teddysun/xray
     expose:
       - 5000
       - 5001
@@ -67,7 +67,7 @@ services:
     networks:
       - tunnel-net
     volumes: 
-      - "./secrets/v2ray.json:/etc/v2ray/config.json:z,ro"
+      - "./secrets/xray.json:/etc/xray/config.json:z,ro"
     logging:
       options:
         max-size: "4M"
