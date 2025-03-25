@@ -13,7 +13,7 @@ def gzip(matcher: str) -> list[Node]:
 
 
 def auth_guard(matcher: str, username: str, password: str) -> list[Node]:
-    return [Node(f'basicauth {matcher}', [
+    return [Node(f'basic_auth {matcher}', [
         Node(f'{username} {password}')
     ])]
 
