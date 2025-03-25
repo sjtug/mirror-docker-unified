@@ -13,6 +13,7 @@ services:
       context: ./caddy
       args:
         - USE_SJTUG=true
+        - USE_GOPROXY=true
     volumes:
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"
