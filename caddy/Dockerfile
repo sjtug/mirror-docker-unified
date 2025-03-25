@@ -1,5 +1,6 @@
 FROM caddy:2.9-builder AS builder
 
+ARG USE_GOPROXY
 RUN if [ "$USE_GOPROXY" = true ] ; then go env -w GO111MODULE=on && go env -w GOPROXY=https://goproxy.cn,direct ; fi
 
 RUN xcaddy build \

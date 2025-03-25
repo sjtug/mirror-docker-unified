@@ -10,6 +10,7 @@ services:
     build:
       args:
         - USE_SJTUG=false
+        - USE_GOPROXY=false
   rsync-gateway:
     build:
       args:
