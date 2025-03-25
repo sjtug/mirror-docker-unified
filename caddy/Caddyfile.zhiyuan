@@ -187,7 +187,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /endeavouros/*
         not path /debian-cdimage/*
         not path /packman/*
-        not path /pop-os/*
         not path /rocky/*
         not path /raspberry-pi-os-images/*
         not path /archlinuxarm/*
@@ -201,7 +200,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /docker-ce/*
         not path /fedora/linux/*
         not path /fedora/epel/*
-        not path /fedora-secondary/*
         not path /linuxmint/*
         not path /linuxmint-cd/*
         not path /mageia/*
@@ -213,11 +211,9 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /remi/*
         not path /termux/*
         not path /ubuntu/*
-        not path /ubuntu-releases/*
         not path /ubuntu-cdimage/*
         not path /ubuntu-ports/*
         not path /openwrt/*
-        not path /rpmfusion/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -227,15 +223,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /flutter_infra/*
         not path /ghcup/*
         not path /elan/*
-        not path /git/homebrew-services.git/*
         not path /linuxbrew-bottles/*
-        not path /git/guix.git/*
-        not path /git/llvm-project.git/*
-        not path /git/flutter-sdk.git/*
-        not path /apache/*
-        not path /git/ohmyzsh.git/*
-        not path /git/spacemacs.git/*
-        not path /git/doom-emacs.git/*
         not path /blackarch/*
         not path /github/GNS3/*
         not path /github/FreeCAD/*
@@ -243,7 +231,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /github/rubyinstaller2/*
         not path /github/PowerShell/*
         not path /github/Office-Tool/*
-        not path /sites/tldp.org/*
         not path /nix-channels/store/*
         not path /guix/*
         not path /sjtug-internal/*
@@ -254,13 +241,9 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /npm-registry/*
         not path /nodejs-release/*
         not path /maven-central/*
-        not path /sury/*
         not path /opam-cache/*
         not path /pypi/web/simple/*
-        not path /git/dpdk.git/*
         not path /gradle/distributions/*
-        not path /dragonflybsd/*
-        not path /git/homebrew-install.git/*
         not path /openeuler/*
         not path /fedora/*
         not path /manjaro/*
@@ -269,45 +252,20 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /archlinux/*
         not path /bioconductor/*
         not path /wireshark/*
-        not path /test/*
         not path /macports/*
         not path /github/vscodium/*
         not path /gimp/*
         not path /flutter_infra_release/*
         not path /armbian/*
         not path /kernel/*
-        not path /git/linux.git/*
-        not path /raspbian-addons/*
-        not path /OpenBSD/*
-        not path /ubuntukylin-cdimage/*
-        not path /ubuntukylin/*
-        not path /zorinos-isos/*
         not path /ubuntu-cloud-images/*
-        not path /debian-ports/*
-        not path /git/homebrew-bundle.git/*
-        not path /git/spdk.git/*
-        not path /git/SJTUBeamer.git/*
-        not path /git/SJTUTeX.git/*
-        not path /git/SJTUThesis.git/*
         not path /github/intel-extension-for-pytorch/*
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
         not path /centos/*
         not path /ubuntu-cd/*
         not path /scientific/*
-        not path /git/lean4-packages/std4/*
-        not path /git/lean4-packages/lean4-cli/*
-        not path /git/lean4-packages/ProofWidgets4/*
-        not path /git/lean4-packages/aesop/*
-        not path /git/lean4-packages/quote4/*
-        not path /git/lean4-packages/mathlib4/*
-        not path /git/lean4-packages/doc-gen4/*
-        not path /git/lean4-packages/mathematics_in_lean_source/*
-        not path /git/lean4-packages/mathematics_in_lean/*
-        not path /git/lean4-packages/import-graph/*
-        not path /git/lean4-packages/batteries/*
         not path /ros/*
-        not path /alpine/*
     }
     encode @gzip_enabled gzip zstd
 
@@ -605,13 +563,9 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle_path /packman/* {
         redir * https://mirror.sjtu.edu.cn/packman{uri} 302
     }
-    redir /pop-os /pop-os/ 301
-    handle_path /pop-os/* {
-        redir * https://mirror.sjtu.edu.cn/pop-os{uri} 302
-    }
     redir /rocky /rocky/ 301
     handle_path /rocky/* {
-        redir * https://mirror.sjtu.edu.cn/rocky{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/rocky{uri} 302
     }
     redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
     handle_path /raspberry-pi-os-images/* {
@@ -619,11 +573,11 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /archlinuxarm /archlinuxarm/ 301
     handle_path /archlinuxarm/* {
-        redir * https://mirror.sjtu.edu.cn/archlinuxarm{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/archlinuxarm{uri} 302
     }
     redir /archlinux-cn /archlinux-cn/ 301
     handle_path /archlinux-cn/* {
-        redir * https://mirror.sjtu.edu.cn/archlinux-cn{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/archlinuxcn{uri} 302
     }
     redir /opencloudos /opencloudos/ 301
     handle_path /opencloudos/* {
@@ -660,10 +614,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /fedora/epel /fedora/epel/ 301
     handle_path /fedora/epel/* {
         redir * {scheme}://ftp.sjtu.edu.cn/fedora/epel{uri} 302
-    }
-    redir /fedora-secondary /fedora-secondary/ 301
-    handle_path /fedora-secondary/* {
-        redir * https://mirror.sjtu.edu.cn/fedora-secondary{uri} 302
     }
     redir /linuxmint /linuxmint/ 301
     handle_path /linuxmint/* {
@@ -703,15 +653,11 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /termux /termux/ 301
     handle_path /termux/* {
-        redir * https://mirror.sjtu.edu.cn/termux{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/termux{uri} 302
     }
     redir /ubuntu /ubuntu/ 301
     handle_path /ubuntu/* {
         redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
-    }
-    redir /ubuntu-releases /ubuntu-releases/ 301
-    handle_path /ubuntu-releases/* {
-        redir * https://mirror.sjtu.edu.cn/ubuntu-releases{uri} 302
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     handle_path /ubuntu-cdimage/* {
@@ -719,15 +665,11 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     handle_path /ubuntu-ports/* {
-        redir * https://mirror.sjtu.edu.cn/ubuntu-ports{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/ubuntu-ports{uri} 302
     }
     redir /openwrt /openwrt/ 301
     handle_path /openwrt/* {
-        redir * https://mirror.sjtu.edu.cn/openwrt{uri} 302
-    }
-    redir /rpmfusion /rpmfusion/ 301
-    handle_path /rpmfusion/* {
-        redir * https://mirror.sjtu.edu.cn/rpmfusion{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/openwrt{uri} 302
     }
     redir /homebrew-bottles /homebrew-bottles/ 301
     handle /homebrew-bottles/* {
@@ -769,13 +711,9 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle_path /linuxbrew-bottles/* {
         redir * https://mirror.sjtu.edu.cn/homebrew-bottles{uri} 302
     }
-    redir /apache /apache/ 301
-    handle_path /apache/* {
-        redir * https://mirror.sjtu.edu.cn/apache{uri} 302
-    }
     redir /blackarch /blackarch/ 301
     handle_path /blackarch/* {
-        redir * https://mirror.sjtu.edu.cn/blackarch{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/blackarch{uri} 302
     }
     redir /github/GNS3 /github/GNS3/ 301
     handle_path /github/GNS3/* {
@@ -800,10 +738,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /github/Office-Tool /github/Office-Tool/ 301
     handle_path /github/Office-Tool/* {
         redir * /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list 302
-    }
-    redir /sites/tldp.org /sites/tldp.org/ 301
-    handle_path /sites/tldp.org/* {
-        redir * https://mirror.sjtu.edu.cn/sites/tldp.org{uri} 302
     }
     redir /nix-channels/store /nix-channels/store/ 301
     handle /nix-channels/store/* {
@@ -845,10 +779,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle_path /maven-central/* {
         redir * https://repo.maven.apache.org/maven2{uri} 302
     }
-    redir /sury /sury/ 301
-    handle_path /sury/* {
-        redir * https://mirror.sjtu.edu.cn/sury{uri} 302
-    }
     redir /opam-cache /opam-cache/ 301
     handle /opam-cache/* {
         reverse_proxy mirror-intel:8000
@@ -861,10 +791,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle /gradle/distributions/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /dragonflybsd /dragonflybsd/ 301
-    handle_path /dragonflybsd/* {
-        redir * https://mirror.sjtu.edu.cn/dragonflybsd{uri} 302
-    }
     redir /openeuler /openeuler/ 301
     handle_path /openeuler/* {
         redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
@@ -875,7 +801,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /manjaro /manjaro/ 301
     handle_path /manjaro/* {
-        redir * https://mirror.sjtu.edu.cn/manjaro{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/manjaro{uri} 302
     }
     redir /manjarostable /manjarostable/ 301
     handle_path /manjarostable/* {
@@ -897,10 +823,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle /wireshark/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /test /test/ 301
-    handle_path /test/* {
-        redir * https://mirror.sjtu.edu.cn/test{uri} 302
-    }
     redir /macports /macports/ 301
     handle /macports/* {
         reverse_proxy mirror-intel:8000
@@ -919,39 +841,15 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /armbian /armbian/ 301
     handle_path /armbian/* {
-        redir * https://mirror.sjtu.edu.cn/armbian{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/armbian{uri} 302
     }
     redir /kernel /kernel/ 301
     handle /kernel/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /raspbian-addons /raspbian-addons/ 301
-    handle_path /raspbian-addons/* {
-        redir * https://mirror.sjtu.edu.cn/raspbian-addons{uri} 302
-    }
-    redir /OpenBSD /OpenBSD/ 301
-    handle_path /OpenBSD/* {
-        redir * https://mirror.sjtu.edu.cn/OpenBSD{uri} 302
-    }
-    redir /ubuntukylin-cdimage /ubuntukylin-cdimage/ 301
-    handle_path /ubuntukylin-cdimage/* {
-        redir * https://mirror.sjtu.edu.cn/ubuntukylin-cdimage{uri} 302
-    }
-    redir /ubuntukylin /ubuntukylin/ 301
-    handle_path /ubuntukylin/* {
-        redir * https://mirror.sjtu.edu.cn/ubuntukylin{uri} 302
-    }
-    redir /zorinos-isos /zorinos-isos/ 301
-    handle_path /zorinos-isos/* {
-        redir * https://mirror.sjtu.edu.cn/zorinos-isos{uri} 302
-    }
     redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
     handle_path /ubuntu-cloud-images/* {
         redir * https://mirror.sjtu.edu.cn/ubuntu-cloud-images{uri} 302
-    }
-    redir /debian-ports /debian-ports/ 301
-    handle_path /debian-ports/* {
-        redir * https://mirror.sjtu.edu.cn/debian-ports{uri} 302
     }
     redir /github/intel-extension-for-pytorch /github/intel-extension-for-pytorch/ 301
     handle_path /github/intel-extension-for-pytorch/* {
@@ -979,11 +877,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /ros /ros/ 301
     handle_path /ros/* {
-        redir * https://mirror.sjtu.edu.cn/ros{uri} 302
-    }
-    redir /alpine /alpine/ 301
-    handle_path /alpine/* {
-        redir * https://mirror.sjtu.edu.cn/alpine{uri} 302
+        redir * {scheme}://mirrors.cernet.edu.cn/ros{uri} 302
     }
 
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
@@ -1009,110 +903,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /git/qemu.git /git/qemu.git/ 301
     handle /git/qemu.git/* {
         reverse_proxy git-backend
-    }
-    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
-    handle_path /git/homebrew-services.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/homebrew-services.git{uri} 302
-    }
-    redir /git/guix.git /git/guix.git/ 301
-    handle_path /git/guix.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/guix.git{uri} 302
-    }
-    redir /git/llvm-project.git /git/llvm-project.git/ 301
-    handle_path /git/llvm-project.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/llvm-project.git{uri} 302
-    }
-    redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
-    handle_path /git/flutter-sdk.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/flutter-sdk.git{uri} 302
-    }
-    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
-    handle_path /git/ohmyzsh.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/ohmyzsh.git{uri} 302
-    }
-    redir /git/spacemacs.git /git/spacemacs.git/ 301
-    handle_path /git/spacemacs.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/spacemacs.git{uri} 302
-    }
-    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
-    handle_path /git/doom-emacs.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/doom-emacs.git{uri} 302
-    }
-    redir /git/dpdk.git /git/dpdk.git/ 301
-    handle_path /git/dpdk.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/dpdk.git{uri} 302
-    }
-    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
-    handle_path /git/homebrew-install.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/homebrew-install.git{uri} 302
-    }
-    redir /git/linux.git /git/linux.git/ 301
-    handle_path /git/linux.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/linux.git{uri} 302
-    }
-    redir /git/homebrew-bundle.git /git/homebrew-bundle.git/ 301
-    handle_path /git/homebrew-bundle.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/homebrew-bundle.git{uri} 302
-    }
-    redir /git/spdk.git /git/spdk.git/ 301
-    handle_path /git/spdk.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/spdk.git{uri} 302
-    }
-    redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
-    handle_path /git/SJTUBeamer.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/SJTUBeamer.git{uri} 302
-    }
-    redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
-    handle_path /git/SJTUTeX.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/SJTUTeX.git{uri} 302
-    }
-    redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
-    handle_path /git/SJTUThesis.git/* {
-        redir * https://mirror.sjtu.edu.cn/git/SJTUThesis.git{uri} 302
-    }
-    redir /git/lean4-packages/std4 /git/lean4-packages/std4/ 301
-    handle_path /git/lean4-packages/std4/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/std4{uri} 302
-    }
-    redir /git/lean4-packages/lean4-cli /git/lean4-packages/lean4-cli/ 301
-    handle_path /git/lean4-packages/lean4-cli/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/lean4-cli{uri} 302
-    }
-    redir /git/lean4-packages/ProofWidgets4 /git/lean4-packages/ProofWidgets4/ 301
-    handle_path /git/lean4-packages/ProofWidgets4/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/ProofWidgets4{uri} 302
-    }
-    redir /git/lean4-packages/aesop /git/lean4-packages/aesop/ 301
-    handle_path /git/lean4-packages/aesop/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/aesop{uri} 302
-    }
-    redir /git/lean4-packages/quote4 /git/lean4-packages/quote4/ 301
-    handle_path /git/lean4-packages/quote4/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/quote4{uri} 302
-    }
-    redir /git/lean4-packages/mathlib4 /git/lean4-packages/mathlib4/ 301
-    handle_path /git/lean4-packages/mathlib4/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/mathlib4{uri} 302
-    }
-    redir /git/lean4-packages/doc-gen4 /git/lean4-packages/doc-gen4/ 301
-    handle_path /git/lean4-packages/doc-gen4/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/doc-gen4{uri} 302
-    }
-    redir /git/lean4-packages/mathematics_in_lean_source /git/lean4-packages/mathematics_in_lean_source/ 301
-    handle_path /git/lean4-packages/mathematics_in_lean_source/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/mathematics_in_lean_source{uri} 302
-    }
-    redir /git/lean4-packages/mathematics_in_lean /git/lean4-packages/mathematics_in_lean/ 301
-    handle_path /git/lean4-packages/mathematics_in_lean/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/mathematics_in_lean{uri} 302
-    }
-    redir /git/lean4-packages/import-graph /git/lean4-packages/import-graph/ 301
-    handle_path /git/lean4-packages/import-graph/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/import-graph{uri} 302
-    }
-    redir /git/lean4-packages/batteries /git/lean4-packages/batteries/ 301
-    handle_path /git/lean4-packages/batteries/* {
-        redir * https://mirror.sjtu.edu.cn/git/lean4-packages/batteries{uri} 302
     }
 }
 

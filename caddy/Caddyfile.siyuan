@@ -18,6 +18,9 @@ http://mirror.sjtu.edu.cn {
     header * x-sjtug-mirror-id siyuan
 
     @gzip_enabled {
+        not path /rocky/*
+        not path /archlinuxarm/*
+        not path /archlinux-cn/*
         not path /debian/*
         not path /debian-security/*
         not path /deepin/*
@@ -26,12 +29,31 @@ http://mirror.sjtu.edu.cn {
         not path /fedora/epel/*
         not path /opensuse/*
         not path /remi/*
+        not path /termux/*
         not path /ubuntu/*
+        not path /ubuntu-ports/*
+        not path /openwrt/*
+        not path /blackarch/*
         not path /openeuler/*
         not path /fedora/*
+        not path /manjaro/*
+        not path /armbian/*
+        not path /ros/*
     }
     encode @gzip_enabled gzip zstd
 
+    redir /rocky /rocky/ 301
+    handle_path /rocky/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/rocky{uri} 302
+    }
+    redir /archlinuxarm /archlinuxarm/ 301
+    handle_path /archlinuxarm/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/archlinuxarm{uri} 302
+    }
+    redir /archlinux-cn /archlinux-cn/ 301
+    handle_path /archlinux-cn/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/archlinuxcn{uri} 302
+    }
     redir /debian /debian/ 301
     handle_path /debian/* {
         redir * {scheme}://ftp.sjtu.edu.cn/debian{uri} 302
@@ -56,15 +78,6 @@ http://mirror.sjtu.edu.cn {
     handle_path /fedora/epel/* {
         redir * {scheme}://ftp.sjtu.edu.cn/fedora/epel{uri} 302
     }
-    redir /fedora-secondary /fedora-secondary/ 301
-    handle /fedora-secondary/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /opensuse /opensuse/ 301
     handle_path /opensuse/* {
         redir * {scheme}://ftp.sjtu.edu.cn/opensuse{uri} 302
@@ -73,36 +86,25 @@ http://mirror.sjtu.edu.cn {
     handle_path /remi/* {
         redir * {scheme}://ftp.sjtu.edu.cn/remi{uri} 302
     }
+    redir /termux /termux/ 301
+    handle_path /termux/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/termux{uri} 302
+    }
     redir /ubuntu /ubuntu/ 301
     handle_path /ubuntu/* {
         redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
-    handle /ubuntu-ports/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /ubuntu-ports/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/ubuntu-ports{uri} 302
     }
     redir /openwrt /openwrt/ 301
-    handle /openwrt/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /openwrt/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/openwrt{uri} 302
     }
-    redir /rpmfusion /rpmfusion/ 301
-    handle /rpmfusion/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    redir /blackarch /blackarch/ 301
+    handle_path /blackarch/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/blackarch{uri} 302
     }
     redir /openeuler /openeuler/ 301
     handle_path /openeuler/* {
@@ -112,14 +114,17 @@ http://mirror.sjtu.edu.cn {
     handle_path /fedora/* {
         redir * {scheme}://ftp.sjtu.edu.cn/fedora{uri} 302
     }
-    redir /alpine /alpine/ 301
-    handle /alpine/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    redir /manjaro /manjaro/ 301
+    handle_path /manjaro/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/manjaro{uri} 302
+    }
+    redir /armbian /armbian/ 301
+    handle_path /armbian/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/armbian{uri} 302
+    }
+    redir /ros /ros/ 301
+    handle_path /ros/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/ros{uri} 302
     }
 
 }
@@ -201,7 +206,10 @@ https://mirror.sjtu.edu.cn {
         not path /endeavouros/*
         not path /debian-cdimage/*
         not path /packman/*
+        not path /rocky/*
         not path /raspberry-pi-os-images/*
+        not path /archlinuxarm/*
+        not path /archlinux-cn/*
         not path /opencloudos/*
         not path /debian/*
         not path /debian-cd/*
@@ -220,8 +228,11 @@ https://mirror.sjtu.edu.cn {
         not path /mx-packages/*
         not path /openvz/*
         not path /remi/*
+        not path /termux/*
         not path /ubuntu/*
         not path /ubuntu-cdimage/*
+        not path /ubuntu-ports/*
+        not path /openwrt/*
         not path /homebrew-bottles/*
         not path /rust-static/*
         not path /pypi-packages/*
@@ -231,14 +242,8 @@ https://mirror.sjtu.edu.cn {
         not path /flutter_infra/*
         not path /ghcup/*
         not path /elan/*
-        not path /git/homebrew-services.git/*
         not path /linuxbrew-bottles/*
-        not path /git/guix.git/*
-        not path /git/llvm-project.git/*
-        not path /git/flutter-sdk.git/*
-        not path /git/ohmyzsh.git/*
-        not path /git/spacemacs.git/*
-        not path /git/doom-emacs.git/*
+        not path /blackarch/*
         not path /github/GNS3/*
         not path /github/FreeCAD/*
         not path /github/prometheus/*
@@ -257,11 +262,10 @@ https://mirror.sjtu.edu.cn {
         not path /maven-central/*
         not path /opam-cache/*
         not path /pypi/web/simple/*
-        not path /git/dpdk.git/*
         not path /gradle/distributions/*
-        not path /git/homebrew-install.git/*
         not path /openeuler/*
         not path /fedora/*
+        not path /manjaro/*
         not path /manjarostable/*
         not path /voidlinux/*
         not path /archlinux/*
@@ -272,31 +276,16 @@ https://mirror.sjtu.edu.cn {
         not path /gimp/*
         not path /flutter_infra_release/*
         not path /anaconda/*
+        not path /armbian/*
         not path /kernel/*
-        not path /git/linux.git/*
         not path /ubuntu-cloud-images/*
-        not path /git/homebrew-bundle.git/*
-        not path /git/spdk.git/*
-        not path /git/SJTUBeamer.git/*
-        not path /git/SJTUTeX.git/*
-        not path /git/SJTUThesis.git/*
         not path /github/intel-extension-for-pytorch/*
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
         not path /centos/*
         not path /ubuntu-cd/*
         not path /scientific/*
-        not path /git/lean4-packages/std4/*
-        not path /git/lean4-packages/lean4-cli/*
-        not path /git/lean4-packages/ProofWidgets4/*
-        not path /git/lean4-packages/aesop/*
-        not path /git/lean4-packages/quote4/*
-        not path /git/lean4-packages/mathlib4/*
-        not path /git/lean4-packages/doc-gen4/*
-        not path /git/lean4-packages/mathematics_in_lean_source/*
-        not path /git/lean4-packages/mathematics_in_lean/*
-        not path /git/lean4-packages/import-graph/*
-        not path /git/lean4-packages/batteries/*
+        not path /ros/*
         not path /kali/*
         not path /almalinux/*
         not path /immortalwrt/*
@@ -378,45 +367,21 @@ https://mirror.sjtu.edu.cn {
     handle /packman/* {
         reverse_proxy rsync-gateway:8000
     }
-    redir /pop-os /pop-os/ 301
-    handle /pop-os/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /rocky /rocky/ 301
-    handle /rocky/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /rocky/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/rocky{uri} 302
     }
     redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
     handle /raspberry-pi-os-images/* {
         reverse_proxy rsync-gateway:8000
     }
     redir /archlinuxarm /archlinuxarm/ 301
-    handle /archlinuxarm/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /archlinuxarm/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/archlinuxarm{uri} 302
     }
     redir /archlinux-cn /archlinux-cn/ 301
-    handle /archlinux-cn/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /archlinux-cn/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/archlinuxcn{uri} 302
     }
     redir /opencloudos /opencloudos/ 301
     handle /opencloudos/* {
@@ -453,15 +418,6 @@ https://mirror.sjtu.edu.cn {
     redir /fedora/epel /fedora/epel/ 301
     handle_path /fedora/epel/* {
         redir * {scheme}://ftp.sjtu.edu.cn/fedora/epel{uri} 302
-    }
-    redir /fedora-secondary /fedora-secondary/ 301
-    handle /fedora-secondary/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
     }
     redir /linuxmint /linuxmint/ 301
     handle_path /linuxmint/* {
@@ -500,57 +456,24 @@ https://mirror.sjtu.edu.cn {
         redir * {scheme}://ftp.sjtu.edu.cn/remi{uri} 302
     }
     redir /termux /termux/ 301
-    handle /termux/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /termux/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/termux{uri} 302
     }
     redir /ubuntu /ubuntu/ 301
     handle_path /ubuntu/* {
         redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
-    }
-    redir /ubuntu-releases /ubuntu-releases/ 301
-    handle /ubuntu-releases/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
     }
     redir /ubuntu-cdimage /ubuntu-cdimage/ 301
     handle_path /ubuntu-cdimage/* {
         redir * {scheme}://ftp.sjtu.edu.cn/ubuntu-cd{uri} 302
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
-    handle /ubuntu-ports/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /ubuntu-ports/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/ubuntu-ports{uri} 302
     }
     redir /openwrt /openwrt/ 301
-    handle /openwrt/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /rpmfusion /rpmfusion/ 301
-    handle /rpmfusion/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /openwrt/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/openwrt{uri} 302
     }
     redir /homebrew-bottles /homebrew-bottles/ 301
     handle /homebrew-bottles/* {
@@ -592,23 +515,9 @@ https://mirror.sjtu.edu.cn {
     handle_path /linuxbrew-bottles/* {
         redir * https://mirror.sjtu.edu.cn/homebrew-bottles{uri} 302
     }
-    redir /apache /apache/ 301
-    handle /apache/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /blackarch /blackarch/ 301
-    handle /blackarch/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /blackarch/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/blackarch{uri} 302
     }
     redir /github/GNS3 /github/GNS3/ 301
     handle_path /github/GNS3/* {
@@ -633,15 +542,6 @@ https://mirror.sjtu.edu.cn {
     redir /github/Office-Tool /github/Office-Tool/ 301
     handle_path /github/Office-Tool/* {
         redir * /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list 302
-    }
-    redir /sites/tldp.org /sites/tldp.org/ 301
-    handle /sites/tldp.org/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
     }
     redir /nix-channels/store /nix-channels/store/ 301
     handle /nix-channels/store/* {
@@ -683,15 +583,6 @@ https://mirror.sjtu.edu.cn {
     handle_path /maven-central/* {
         redir * https://repo.maven.apache.org/maven2{uri} 302
     }
-    redir /sury /sury/ 301
-    handle /sury/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /opam-cache /opam-cache/ 301
     handle /opam-cache/* {
         reverse_proxy mirror-intel:8000
@@ -704,15 +595,6 @@ https://mirror.sjtu.edu.cn {
     handle /gradle/distributions/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /dragonflybsd /dragonflybsd/ 301
-    handle /dragonflybsd/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /openeuler /openeuler/ 301
     handle_path /openeuler/* {
         redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
@@ -722,13 +604,8 @@ https://mirror.sjtu.edu.cn {
         redir * {scheme}://ftp.sjtu.edu.cn/fedora{uri} 302
     }
     redir /manjaro /manjaro/ 301
-    handle /manjaro/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /manjaro/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/manjaro{uri} 302
     }
     redir /manjarostable /manjarostable/ 301
     handle_path /manjarostable/* {
@@ -749,15 +626,6 @@ https://mirror.sjtu.edu.cn {
     redir /wireshark /wireshark/ 301
     handle /wireshark/* {
         reverse_proxy mirror-intel:8000
-    }
-    redir /test /test/ 301
-    handle /test/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
     }
     redir /macports /macports/ 301
     handle /macports/* {
@@ -780,75 +648,16 @@ https://mirror.sjtu.edu.cn {
         reverse_proxy mirror-intel:8000
     }
     redir /armbian /armbian/ 301
-    handle /armbian/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /armbian/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/armbian{uri} 302
     }
     redir /kernel /kernel/ 301
     handle /kernel/* {
         reverse_proxy mirror-intel:8000
     }
-    redir /raspbian-addons /raspbian-addons/ 301
-    handle /raspbian-addons/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /OpenBSD /OpenBSD/ 301
-    handle /OpenBSD/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /ubuntukylin-cdimage /ubuntukylin-cdimage/ 301
-    handle /ubuntukylin-cdimage/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /ubuntukylin /ubuntukylin/ 301
-    handle /ubuntukylin/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /zorinos-isos /zorinos-isos/ 301
-    handle /zorinos-isos/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
     handle /ubuntu-cloud-images/* {
         reverse_proxy rsync-gateway:8000
-    }
-    redir /debian-ports /debian-ports/ 301
-    handle /debian-ports/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
     }
     redir /github/intel-extension-for-pytorch /github/intel-extension-for-pytorch/ 301
     handle_path /github/intel-extension-for-pytorch/* {
@@ -875,22 +684,8 @@ https://mirror.sjtu.edu.cn {
         redir * https://mirrors.ustc.edu.cn/scientificlinux/{uri} 302
     }
     redir /ros /ros/ 301
-    handle /ros/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /alpine /alpine/ 301
-    handle /alpine/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /ros/* {
+        redir * {scheme}://mirrors.cernet.edu.cn/ros{uri} 302
     }
     redir /kali /kali/ 301
     handle_path /kali/* {
@@ -1021,110 +816,6 @@ https://mirror.sjtu.edu.cn {
         redir * https://mirrors.sjtug.sjtu.edu.cn/qt{uri} 302
     }
 
-    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
-    handle /git/homebrew-services.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/guix.git /git/guix.git/ 301
-    handle /git/guix.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/llvm-project.git /git/llvm-project.git/ 301
-    handle /git/llvm-project.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
-    handle /git/flutter-sdk.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
-    handle /git/ohmyzsh.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/spacemacs.git /git/spacemacs.git/ 301
-    handle /git/spacemacs.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
-    handle /git/doom-emacs.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/dpdk.git /git/dpdk.git/ 301
-    handle /git/dpdk.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
-    handle /git/homebrew-install.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/linux.git /git/linux.git/ 301
-    handle /git/linux.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/homebrew-bundle.git /git/homebrew-bundle.git/ 301
-    handle /git/homebrew-bundle.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/spdk.git /git/spdk.git/ 301
-    handle /git/spdk.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
-    handle /git/SJTUBeamer.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
-    handle /git/SJTUTeX.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
-    handle /git/SJTUThesis.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/std4 /git/lean4-packages/std4/ 301
-    handle /git/lean4-packages/std4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/lean4-cli /git/lean4-packages/lean4-cli/ 301
-    handle /git/lean4-packages/lean4-cli/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/ProofWidgets4 /git/lean4-packages/ProofWidgets4/ 301
-    handle /git/lean4-packages/ProofWidgets4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/aesop /git/lean4-packages/aesop/ 301
-    handle /git/lean4-packages/aesop/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/quote4 /git/lean4-packages/quote4/ 301
-    handle /git/lean4-packages/quote4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/mathlib4 /git/lean4-packages/mathlib4/ 301
-    handle /git/lean4-packages/mathlib4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/doc-gen4 /git/lean4-packages/doc-gen4/ 301
-    handle /git/lean4-packages/doc-gen4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/mathematics_in_lean_source /git/lean4-packages/mathematics_in_lean_source/ 301
-    handle /git/lean4-packages/mathematics_in_lean_source/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/mathematics_in_lean /git/lean4-packages/mathematics_in_lean/ 301
-    handle /git/lean4-packages/mathematics_in_lean/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/import-graph /git/lean4-packages/import-graph/ 301
-    handle /git/lean4-packages/import-graph/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/batteries /git/lean4-packages/batteries/ 301
-    handle /git/lean4-packages/batteries/* {
-        reverse_proxy git-backend
-    }
     redir /git/homebrew-core.git /git/homebrew-core.git/ 301
     handle_path /git/homebrew-core.git/* {
         redir * https://mirrors.sjtug.sjtu.edu.cn/git/homebrew-core.git{uri} 302
