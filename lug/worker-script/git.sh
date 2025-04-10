@@ -14,7 +14,7 @@ if [ -n "$LUG_target" ]; then
     git remote add upstream $LUG_target || git remote set-url upstream $LUG_target
 fi
 
-git config --unset-all remote.origin.fetch
+git config --unset-all remote.origin.fetch || true
 git config --add remote.origin.fetch "+refs/heads/*:refs/heads/*"
 git config --add remote.origin.fetch "+refs/tags/*:refs/tags/*"
 
