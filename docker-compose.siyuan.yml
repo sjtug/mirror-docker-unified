@@ -10,7 +10,7 @@ services:
   caddy:
     container_name: siyuan-caddy
     volumes:
-      - "/mnt/data55T:/srv/data55T:ro"
+      - "/mnt/data55T/data:/srv/data55T:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile:ro"
       - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
     mem_limit: 20G
@@ -19,7 +19,7 @@ services:
   lug:
     container_name: siyuan-lug
     volumes:
-      - "/mnt/data55T:/srv/data55T"
+      - "/mnt/data55T/data:/srv/data55T"
       - "./config.siyuan.yaml:/config.yaml:ro"
     environment:
       MIRROR_CLONE_SITE: "mirror.sjtu.edu.cn"
@@ -56,7 +56,7 @@ services:
   mirror-intel:
     container_name: siyuan-mirror-intel
     volumes:
-      - "/mnt/data55T/mirror-intel-cache:/mnt/cache"
+      - "/mnt/data55T/data/mirror-intel-cache:/mnt/cache"
     mem_limit: 15G
     memswap_limit: 15G
 
@@ -90,13 +90,13 @@ services:
     container_name: siyuan-rsyncd
     volumes:
       - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
-      - /mnt/data55T:/srv/data55T:ro
+      - /mnt/data55T/data:/srv/data55T:ro
       - ./rsyncd/motd.siyuan:/etc/rsync/motd:ro
 
   git-backend:
     container_name: siyuan-git-backend
     volumes:
-      - "/mnt/data55T/git:/git:z"
+      - "/mnt/data55T/data/git:/git:z"
     mem_limit: 1G
     memswap_limit: 1G
 
