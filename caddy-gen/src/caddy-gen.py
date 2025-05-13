@@ -181,14 +181,6 @@ def gen_repos(base: str, repos: dict, first_site: bool, site: str) -> tuple[list
     http_file_server_nodes += [BLANK_NODE]
     https_file_server_nodes += [BLANK_NODE]
 
-    # libgit2 patches -- libgit2 doesn't support 301 redirect
-    # file_server_nodes += [Node('@git_libgit2', [Node(f'path /git/*'),
-    #                                             Node(f'header User-Agent *libgit2*')])]
-    # file_server_nodes += [Node('reverse_proxy @git_libgit2 git-backend', [])]
-    # file_server_nodes += [Node('@git_normal', [Node(f'path /git/*'),
-    #                                            Node(f'not header User-Agent *libgit2*')])]
-    # file_server_nodes += [Node('route @git_normal', git_server_nodes)]
-
     http_file_server_nodes += http_git_server_nodes
     https_file_server_nodes += https_git_server_nodes
 
@@ -210,18 +202,45 @@ def sjtug_mirror_id(site: str) -> Node:
     return Node(f'header * x-sjtug-mirror-id {site}')
 
 
+def cerberus_settings() -> list[Node]:
+    return [
+        Node("@cerberus", [
+            Node(r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$"),
+            Node("header User-Agent *Mozilla*"),
+            Node("header User-Agent *Opera*"),
+        ]),
+        Node("@except_cerberus_endpoint", [
+            Node("not path /.cerberus/*"),
+            Node("not", [
+                Node(r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$"),
+                Node("header User-Agent *Mozilla*"),
+                Node("header User-Agent *Opera*"),
+            ])
+        ]),
+        Node("cerberus @except_cerberus_endpoint", [
+            Node("base_url /.cerberus"),
+            Node("block_only"),
+        ]),
+        Node("cerberus @cerberus", [
+            Node("base_url /.cerberus"),
+        ]),
+    ]
+
+
 def build_root(base, config_yaml: dict, first_site: bool, site: str) -> Node:
     no_redir_nodes, http_file_server_nodes, https_file_server_nodes = gen_repos(
         base, config_yaml['repos'], first_site, site)
 
     http_main_children = common_http() + [BLANK_NODE]
     http_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
+    http_main_children += [BLANK_NODE] + cerberus_settings()
     http_main_children += [BLANK_NODE] + http_file_server_nodes
     http_main_node = Node(f'http://{base}', http_main_children)
 
     https_main_children = common() + [BLANK_NODE]
     https_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
     https_main_children += cors("/mirrorz/*")   # mirrorz.org protocol support
+    https_main_children += [BLANK_NODE] + cerberus_settings()
     https_main_children += [BLANK_NODE] + https_file_server_nodes
     https_main_node = Node(f'https://{base}', https_main_children)
 
@@ -335,11 +354,38 @@ if __name__ == "__main__":
             Node('preferred_chains smallest'),
             Node('cert_issuer acme'),
             # Node('metrics')   # has performance issue
+            # timeout settings
+            Node("servers", [
+                Node("timeouts", [
+                    Node("read_body 10s"),
+                    Node("read_header 5s"),
+                    Node("write 600s"),
+                    Node("idle 10m"),
+                ]),
+            ]),
+            # cerberus settings
+            Node("cerberus", [
+                Node("difficulty 12"),
+                Node("max_pending 16"),
+                Node("access_per_approval 8"),
+                Node("block_ttl 12h"),
+                Node("pending_ttl 10m"),
+                Node("approval_ttl 12h"),
+                Node("max_mem_usage 4GiB"),
+                Node("cookie_name cerberus-clearance"),
+                Node("header_name Cerberus-Sec"),
+                Node("mail sjtug-mirror-maintainers@googlegroups.com"),
+                Node("prefix_cfg 32 64"),
+            ])
         ]))
 
         for (idx, base) in enumerate(BASES[site]):
             roots.append(build_root(base, config_yaml, idx == 0, site))
 
+        # allow local access for health check
+        roots.append(Node("http://localhost", [
+            Node("respond 204")
+        ]))
         roots.append(Node("http://", [
             Node("abort"),
         ]))

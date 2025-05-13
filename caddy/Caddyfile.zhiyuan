@@ -3,6 +3,27 @@
     email sjtug-mirror-maintainers@googlegroups.com
     preferred_chains smallest
     cert_issuer acme
+    servers {
+        timeouts {
+            read_body 10s
+            read_header 5s
+            write 600s
+            idle 10m
+        }
+    }
+    cerberus {
+        difficulty 12
+        max_pending 16
+        access_per_approval 8
+        block_ttl 12h
+        pending_ttl 10m
+        approval_ttl 12h
+        max_mem_usage 4GiB
+        cookie_name cerberus-clearance
+        header_name Cerberus-Sec
+        mail sjtug-mirror-maintainers@googlegroups.com
+        prefix_cfg 32 64
+    }
 }
 
 packagist.mirrors.sjtug.sjtu.edu.cn {
@@ -71,6 +92,27 @@ http://mirrors.sjtug.sjtu.edu.cn {
     }
 
     header * x-sjtug-mirror-id zhiyuan
+
+    @cerberus {
+        path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+        header User-Agent *Mozilla*
+        header User-Agent *Opera*
+    }
+    @except_cerberus_endpoint {
+        not path /.cerberus/*
+        not {
+            path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+            header User-Agent *Mozilla*
+            header User-Agent *Opera*
+        }
+    }
+    cerberus @except_cerberus_endpoint {
+        base_url /.cerberus
+        block_only
+    }
+    cerberus @cerberus {
+        base_url /.cerberus
+    }
 
     @gzip_enabled {
         not path /raspbian/*
@@ -158,6 +200,27 @@ https://mirrors.sjtug.sjtu.edu.cn {
     header * x-sjtug-mirror-id zhiyuan
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
+
+    @cerberus {
+        path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+        header User-Agent *Mozilla*
+        header User-Agent *Opera*
+    }
+    @except_cerberus_endpoint {
+        not path /.cerberus/*
+        not {
+            path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+            header User-Agent *Mozilla*
+            header User-Agent *Opera*
+        }
+    }
+    cerberus @except_cerberus_endpoint {
+        base_url /.cerberus
+        block_only
+    }
+    cerberus @cerberus {
+        base_url /.cerberus
+    }
 
     @gzip_enabled {
         not path /kali-images/*
@@ -1114,6 +1177,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle_path /git/lean4-packages/batteries/* {
         redir * https://mirror.sjtu.edu.cn/git/lean4-packages/batteries{uri} 302
     }
+}
+
+http://localhost {
+    respond 204
 }
 
 http:// {

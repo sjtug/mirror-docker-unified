@@ -1,14 +1,14 @@
-FROM caddy:2.9-builder AS builder
+FROM caddy:2.10-builder AS builder
 
 ARG USE_GOPROXY
 RUN if [ "$USE_GOPROXY" = true ] ; then go env -w GO111MODULE=on && go env -w GOPROXY=https://goproxy.cn,direct ; fi
 
 RUN xcaddy build \
     --with github.com/caddyserver/transform-encoder \
-    --with github.com/sjtug/cerberus@v0.1.1
+    --with github.com/sjtug/cerberus@v0.4.1
 
 # stage 2
-FROM caddy:2.9
+FROM caddy:2.10
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
