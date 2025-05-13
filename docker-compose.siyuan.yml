@@ -13,8 +13,10 @@ services:
       - "/mnt/data55T/data:/srv/data55T:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile:ro"
       - "/etc/ssl/certs/ftp_sjtu:/etc/ssl/certs/ftp_sjtu:ro"
-    mem_limit: 20G
-    memswap_limit: 20G
+    mem_limit: 40G
+    memswap_limit: 40G
+    environment:
+      - GOMEMLIMIT=40G
 
   lug:
     container_name: siyuan-lug
