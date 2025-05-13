@@ -16,7 +16,7 @@ services:
     mem_limit: 40G
     memswap_limit: 40G
     environment:
-      - GOMEMLIMIT=40G
+      - GOMEMLIMIT=40960MiB
 
   lug:
     container_name: siyuan-lug
