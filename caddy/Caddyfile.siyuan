@@ -24,6 +24,7 @@
         mail sjtug-mirror-maintainers@googlegroups.com
         prefix_cfg 32 64
     }
+    order cerberus before redir
 }
 
 http://mirror.sjtu.edu.cn {
@@ -42,6 +43,8 @@ http://mirror.sjtu.edu.cn {
         path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
         header User-Agent *Mozilla*
         header User-Agent *Opera*
+        header User-Agent *Go-http-client*
+        header User-Agent *web*spider*
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
@@ -49,6 +52,8 @@ http://mirror.sjtu.edu.cn {
             path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
             header User-Agent *Mozilla*
             header User-Agent *Opera*
+            header User-Agent *Go-http-client*
+            header User-Agent *web*spider*
         }
     }
     cerberus @except_cerberus_endpoint {
@@ -236,6 +241,8 @@ https://mirror.sjtu.edu.cn {
         path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
         header User-Agent *Mozilla*
         header User-Agent *Opera*
+        header User-Agent *Go-http-client*
+        header User-Agent *web*spider*
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
@@ -243,6 +250,8 @@ https://mirror.sjtu.edu.cn {
             path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
             header User-Agent *Mozilla*
             header User-Agent *Opera*
+            header User-Agent *Go-http-client*
+            header User-Agent *web*spider*
         }
     }
     cerberus @except_cerberus_endpoint {

@@ -208,6 +208,8 @@ def cerberus_settings() -> list[Node]:
             Node(r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$"),
             Node("header User-Agent *Mozilla*"),
             Node("header User-Agent *Opera*"),
+            Node("header User-Agent *Go-http-client*"),
+            Node("header User-Agent *web*spider*"),
         ]),
         Node("@except_cerberus_endpoint", [
             Node("not path /.cerberus/*"),
@@ -215,6 +217,8 @@ def cerberus_settings() -> list[Node]:
                 Node(r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$"),
                 Node("header User-Agent *Mozilla*"),
                 Node("header User-Agent *Opera*"),
+                Node("header User-Agent *Go-http-client*"),
+                Node("header User-Agent *web*spider*"),
             ])
         ]),
         Node("cerberus @except_cerberus_endpoint", [
@@ -376,7 +380,9 @@ if __name__ == "__main__":
                 Node("header_name Cerberus-Sec"),
                 Node("mail sjtug-mirror-maintainers@googlegroups.com"),
                 Node("prefix_cfg 32 64"),
-            ])
+            ]),
+            # to forbid 302 redirect among siyuan, zhiyuan and ftp
+            Node("order cerberus before redir"),
         ]))
 
         for (idx, base) in enumerate(BASES[site]):
