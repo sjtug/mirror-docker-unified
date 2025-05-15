@@ -87,11 +87,10 @@ repos:
   # anthon
   - type: shell_script
     name: anthon
-    script: /worker-script/rsync-fetcher.sh
+    script: /worker-script/rsync.sh
     interval: 5601
     source: rsync://repo.aosc.io/anthon
-    serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
+    path: /srv/data55T/anthon
     <<: *oneshot_common
   # leopard.sh
   - type: shell_script

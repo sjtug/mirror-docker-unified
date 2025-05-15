@@ -268,7 +268,6 @@ https://mirror.sjtu.edu.cn {
         not path /bmclapi/*
         not path /alhp/*
         not path /nspawn/*
-        not path /anthon/*
         not path /leopardsh/*
         not path /endeavouros/*
         not path /debian-cdimage/*
@@ -432,7 +431,12 @@ https://mirror.sjtu.edu.cn {
     }
     redir /anthon /anthon/ 301
     handle /anthon/* {
-        reverse_proxy rsync-gateway:8000
+        file_server browse {
+            root /srv/data55T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
     }
     redir /leopardsh /leopardsh/ 301
     handle /leopardsh/* {
