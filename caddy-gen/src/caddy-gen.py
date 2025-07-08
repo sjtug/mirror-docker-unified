@@ -203,23 +203,22 @@ def sjtug_mirror_id(site: str) -> Node:
 
 
 def cerberus_settings() -> list[Node]:
+    large_file = Node(
+        r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$")
+    browser_ua = [
+        Node("header User-Agent *Mozilla*"),
+        Node("header User-Agent *Opera*"),
+        Node("header User-Agent *Go-http-client*"),
+        Node("header User-Agent *web*spider*"),
+    ]
     return [
-        Node("@cerberus", [
-            Node(r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$"),
-            Node("header User-Agent *Mozilla*"),
-            Node("header User-Agent *Opera*"),
-            Node("header User-Agent *Go-http-client*"),
-            Node("header User-Agent *web*spider*"),
+        Node("handle_path /.cerberus/*", [
+            Node("cerberus_endpoint"),
         ]),
+        Node("@cerberus", [large_file, *browser_ua]),
         Node("@except_cerberus_endpoint", [
             Node("not path /.cerberus/*"),
-            Node("not", [
-                Node(r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$"),
-                Node("header User-Agent *Mozilla*"),
-                Node("header User-Agent *Opera*"),
-                Node("header User-Agent *Go-http-client*"),
-                Node("header User-Agent *web*spider*"),
-            ])
+            Node("not", [large_file, *browser_ua])
         ]),
         Node("cerberus @except_cerberus_endpoint", [
             Node("base_url /.cerberus"),
