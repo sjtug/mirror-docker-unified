@@ -39,6 +39,9 @@ http://mirror.sjtu.edu.cn {
 
     header * x-sjtug-mirror-id siyuan
 
+    handle_path /.cerberus/* {
+        cerberus_endpoint
+    }
     @cerberus {
         path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
         header User-Agent *Mozilla*
@@ -237,6 +240,9 @@ https://mirror.sjtu.edu.cn {
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
+    handle_path /.cerberus/* {
+        cerberus_endpoint
+    }
     @cerberus {
         path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
         header User-Agent *Mozilla*
