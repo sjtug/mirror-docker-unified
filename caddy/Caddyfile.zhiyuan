@@ -709,7 +709,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /debian /debian/ 301
     handle_path /debian/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/debian{uri} 302
+        redir * https://mirror.sjtu.edu.cn/debian{uri} 302
     }
     redir /debian-cd /debian-cd/ 301
     handle_path /debian-cd/* {
@@ -717,7 +717,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /debian-security /debian-security/ 301
     handle_path /debian-security/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/debian-security{uri} 302
+        redir * https://mirror.sjtu.edu.cn/debian-security{uri} 302
     }
     redir /deepin /deepin/ 301
     handle_path /deepin/* {

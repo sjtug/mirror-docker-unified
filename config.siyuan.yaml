@@ -195,10 +195,12 @@ repos:
     #  <<: *rsync_fetcher_common
     #  <<: *oneshot_common
   # debian
-  - type: external
+  - type: shell_script
+    script: /worker-script/debian.sh
+    source: mirrors6.tuna.tsinghua.edu.cn
+    interval: 5400
+    path: /srv/data55T/debian
     name: debian
-    serve_mode: redir
-    target: "{scheme}://ftp.sjtu.edu.cn/debian"
     no_redir_http: true
     <<: *oneshot_common
   # debian-cd
@@ -208,10 +210,12 @@ repos:
     target: "{scheme}://ftp.sjtu.edu.cn/debian-cd"
     <<: *oneshot_common
   # debian-security
-  - type: external
+  - type: shell_script
+    script: /worker-script/rsync.sh
+    source: rsync://rsync.security.debian.org/debian-security/
+    interval: 6700
+    path: /srv/data55T/debian-security
     name: debian-security
-    serve_mode: redir
-    target: "{scheme}://ftp.sjtu.edu.cn/debian-security"
     no_redir_http: true
     <<: *oneshot_common
   # deepin

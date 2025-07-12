@@ -68,8 +68,6 @@ http://mirror.sjtu.edu.cn {
     }
 
     @gzip_enabled {
-        not path /debian/*
-        not path /debian-security/*
         not path /deepin/*
         not path /docker-ce/*
         not path /fedora/linux/*
@@ -83,12 +81,22 @@ http://mirror.sjtu.edu.cn {
     encode @gzip_enabled gzip zstd
 
     redir /debian /debian/ 301
-    handle_path /debian/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/debian{uri} 302
+    handle /debian/* {
+        file_server browse {
+            root /srv/data55T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
     }
     redir /debian-security /debian-security/ 301
-    handle_path /debian-security/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/debian-security{uri} 302
+    handle /debian-security/* {
+        file_server browse {
+            root /srv/data55T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
     }
     redir /deepin /deepin/ 301
     handle_path /deepin/* {
@@ -280,9 +288,7 @@ https://mirror.sjtu.edu.cn {
         not path /packman/*
         not path /raspberry-pi-os-images/*
         not path /opencloudos/*
-        not path /debian/*
         not path /debian-cd/*
-        not path /debian-security/*
         not path /deepin/*
         not path /deepin-cd/*
         not path /docker-ce/*
@@ -505,16 +511,26 @@ https://mirror.sjtu.edu.cn {
         reverse_proxy rsync-gateway:8000
     }
     redir /debian /debian/ 301
-    handle_path /debian/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/debian{uri} 302
+    handle /debian/* {
+        file_server browse {
+            root /srv/data55T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
     }
     redir /debian-cd /debian-cd/ 301
     handle_path /debian-cd/* {
         redir * {scheme}://ftp.sjtu.edu.cn/debian-cd{uri} 302
     }
     redir /debian-security /debian-security/ 301
-    handle_path /debian-security/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/debian-security{uri} 302
+    handle /debian-security/* {
+        file_server browse {
+            root /srv/data55T
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
     }
     redir /deepin /deepin/ 301
     handle_path /deepin/* {
