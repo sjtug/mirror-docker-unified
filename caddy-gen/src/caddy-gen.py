@@ -111,11 +111,12 @@ def dict_to_repo(repo: dict) -> Repo:
     if serve_mode == 'default':
         path = repo['path']
         name = repo['name']
+        show_hidden = repo['show_hidden'] if 'show_hidden' in repo else False
         if not path.endswith(name):
             logger.error(
                 f'repo "{name}": {path} should have the same suffix as {name}, ignored')
             return None
-        return FileServerRepo(name, path, extra_directives)
+        return FileServerRepo(name, path, show_hidden, extra_directives)
     if serve_mode == 'mirror_intel':
         return ProxyRepo(repo['name'], 'mirror-intel:8000', False, False, extra_directives)
     if serve_mode == 'rsync_gateway':

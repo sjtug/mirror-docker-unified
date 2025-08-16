@@ -443,11 +443,18 @@ https://mirror.sjtu.edu.cn {
     }
     redir /anthon /anthon/ 301
     handle /anthon/* {
+        @show_hidden path /anthon/.repotest /anthon/.repotest.sha256sum
+        file_server @show_hidden {
+            root /srv/data55T
+        }
         file_server browse {
             root /srv/data55T
             hide .*
         }
-        @hidden path */.*
+        @hidden {
+            path */.*
+            not path /anthon/.repotest /anthon/.repotest.sha256sum
+        }
         respond @hidden 404
     }
     redir /leopardsh /leopardsh/ 301
