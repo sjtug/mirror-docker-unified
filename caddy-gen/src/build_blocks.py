@@ -18,11 +18,20 @@ def auth_guard(matcher: str, username: str, password: str) -> list[Node]:
     ])]
 
 
-def hidden() -> list[Node]:
-    return [
-        Node('@hidden path */.*'),
-        Node('respond @hidden 404')
-    ]
+def hidden(exclude: str = '') -> list[Node]:
+    if exclude:
+        return [
+            Node('@hidden', [
+                Node('path */.*'),
+                Node(f'not path {exclude}')
+            ]),
+            Node('respond @hidden 404')
+        ]
+    else:
+        return [
+            Node('@hidden path */.*'),
+            Node('respond @hidden 404')
+        ]
 
 
 def log() -> list[Node]:

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from loguru import logger
 import dataclasses as dc
 
@@ -27,32 +27,76 @@ class Repo:
 class FileServerRepo(Repo):
     name: str = ''
     path: str = ''
+    show_hidden: Union[str, bool] = False
     extra_directives: List[Node] = dc.field(default_factory=list)
 
     def as_repo(self) -> list[Node]:
         real_root = self.path[:-len(self.name)][:-1]
         base = f'/{self.name}/*'
-        return [
-            Node(f"handle {base}", [
-                Node(f'file_server browse', [
-                    Node(f'root {real_root}'),
-                    Node('hide .*'),
-                    *self.extra_directives
-                ]),
-                *hidden()
-            ])
-        ]
+        if not self.show_hidden: # '' or False, hide .*
+            return [
+                Node(f"handle {base}", [
+                    Node(f'file_server browse', [
+                        Node(f'root {real_root}'),
+                        Node('hide .*'),
+                        *self.extra_directives
+                    ]),
+                    *hidden()
+                ])
+            ]
+        elif type(self.show_hidden) == str: # show specific hidden files
+            return [
+                Node(f"handle {base}", [
+                    Node(f'@show_hidden path {self.show_hidden}'),
+                    Node(f'file_server @show_hidden', [
+                        Node(f'root {real_root}'),
+                    ]),
+                    Node(f'file_server browse', [
+                        Node(f'root {real_root}'),
+                        Node('hide .*'),
+                        *self.extra_directives
+                    ]),
+                    *hidden(self.show_hidden)
+                ])
+            ]
+        else: # do not hide any file
+            return [
+                Node(f"handle {base}", [
+                    Node(f'file_server browse', [
+                        Node(f'root {real_root}'),
+                        *self.extra_directives
+                    ])
+                ])
+            ]
 
     def enable_repo_gzip(self) -> bool:
         return True
 
     def as_subdomain(self) -> list[Node]:
-        return gzip('/*') + log() + [
-            Node('file_server /* browse', [
-                Node(f'root {self.path}'),
-                Node('hide .*'),
-                *self.extra_directives
-            ])] + hidden()
+        if not self.show_hidden: # '' or False, hide .*
+            return gzip('/*') + log() + [
+                Node('file_server /* browse', [
+                    Node(f'root {self.path}'),
+                    Node('hide .*'),
+                    *self.extra_directives
+                ])] + hidden()
+        elif type(self.show_hidden) == str: # show specific hidden files
+            return gzip('/*') + log() + [
+                Node(f'@show_hidden path {self.show_hidden}'),
+                Node(f'file_server @show_hidden', [
+                    Node(f'root {self.path}'),
+                ]),
+                Node('file_server /* browse', [
+                    Node(f'root {self.path}'),
+                    Node('hide .*'),
+                    *self.extra_directives
+                ])] + hidden(self.show_hidden)
+        else: # do not hide any file
+            return gzip('/*') + log() + [
+                Node('file_server /* browse', [
+                    Node(f'root {self.path}'),
+                    *self.extra_directives
+                ])]
 
     def get_name(self) -> str:
         return self.name
