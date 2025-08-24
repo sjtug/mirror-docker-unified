@@ -6,7 +6,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/htt
 
 WORKDIR /app
 RUN apt-get update && apt-get install rsync wget git jq curl unzip -y
-RUN apt-get install apt-transport-https ca-certificates -y
+RUN apt-get install apt-transport-https ca-certificates zlib1g-dev -y
 
 RUN mkdir build-script
 
@@ -70,6 +70,15 @@ RUN /app/build-script/from-cache.sh \
         https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
         tmp.tar.gz \
             && tar -xvf tmp.tar.gz && rm tmp.tar.gz
+
+
+RUN mkdir /tmp/openssl \
+    && git clone --depth 1 --branch OpenSSL_1_1_1w https://github.com/openssl/openssl.git /tmp/openssl \
+    && cd /tmp/openssl/ && ./config shared zlib \
+    && make \
+    && make install \
+    && echo "/usr/local/lib" > /etc/ld.so.conf.d/openssl-1.1.conf \
+    && ldconfig -v
 
 ARG CLONE_VERSION
 RUN /app/build-script/from-cache.sh \
