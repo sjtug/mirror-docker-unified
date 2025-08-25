@@ -957,7 +957,7 @@ https://mirror.sjtu.edu.cn {
     }
     redir /github/intel-extension-for-pytorch /github/intel-extension-for-pytorch/ 301
     handle_path /github/intel-extension-for-pytorch/* {
-        redir * /github-release/Nuullll/intel-extension-for-pytorch/releases/download/?mirror_intel_list 302
+        redir * https://intel-optimized-pytorch.s3.cn-north-1.amazonaws.com.cn/ipex_stable/cpu{uri} 302
     }
     redir /github/SJTUBeamer /github/SJTUBeamer/ 301
     handle_path /github/SJTUBeamer/* {
