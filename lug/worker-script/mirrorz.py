@@ -55,6 +55,7 @@ def help(name, items):
             return item.getElementsByTagName("link")[0].childNodes[0].data
     return ""
 
+
 def mirror_item(worker, param, help_items, sources):
     mirror = {
         "cname": name(worker),
@@ -62,9 +63,10 @@ def mirror_item(worker, param, help_items, sources):
         "url": "/" + worker,
         "status": f"{status(param)}{int(parse(param['LastFinished']).timestamp())}",
         "help": help(worker, help_items),
-        "upstream": sources.get(worker, "")
+        "upstream": sources.get(worker, ""),
     }
     return mirror
+
 
 def z_adhocs(lug, summary, mirrors, help_items, sources):
     for item in lug["repos"]:
@@ -79,6 +81,7 @@ def z_adhocs(lug, summary, mirrors, help_items, sources):
                 if mirror["cname"] == name(item["name"]):
                     mirror["url"] = item["z_url"]
 
+
 def main():
     global options
     global cname
@@ -88,8 +91,7 @@ def main():
     site = json.loads(open(sys.argv[1]).read())
     lug = json.loads(open(sys.argv[2]).read())
     summary = json.loads(open(sys.argv[3]).read())
-    help_items = minidom.parse(
-        sys.argv[4]).documentElement.getElementsByTagName("item")
+    help_items = minidom.parse(sys.argv[4]).documentElement.getElementsByTagName("item")
     cname = json.loads(open(sys.argv[5]).read())
     mirrorz = {}
     mirrorz["site"] = site
@@ -97,7 +99,7 @@ def main():
     mirrors = []
     sources = {item["name"]: item.get("source", "") for item in lug["repos"]}
     for worker, param in summary["WorkerStatus"].items():
-        if worker.startswith(".") or worker == 'sjtug-internal' or worker == 'test':
+        if worker.startswith(".") or worker == "sjtug-internal" or worker == "test":
             continue
         mirror = mirror_item(worker, param, help_items, sources)
         mirrors.append(mirror)
@@ -106,31 +108,33 @@ def main():
 
     mirrorz["mirrors"] = mirrors
     mirrorz["extension"] = "D"
-    mirrorz["endpoints"] = [{
-        "label": "sjtug",
-        "public": True,
-        "resolve": site["url"].strip("https://"),
-        "filter": ["V4", "V6", "SSL", "NOSSL"],
-        "range": [
-            "COUNTRY:CN",
-            "REGION:SH",
-            "ISP:CERNET",
-            "202.120.0.0/18",
-            "59.78.0.0/18",
-            "111.186.0.0/18",
-            "211.80.32.0/19",
-            "211.80.80.0/20",
-            "2001:250:6000::/48",
-            "2001:251:7801::/48",
-            "2001:256:100:2000::/56",
-            "2001:da8:8000::/48",
-            "2403:d400::/32",
-            "2408:8026:380::/52",
-        ]
-    }]
+    mirrorz["endpoints"] = [
+        {
+            "label": "sjtug",
+            "public": True,
+            "resolve": site["url"].strip("https://"),
+            "filter": ["V4", "V6", "SSL", "NOSSL"],
+            "range": [
+                "COUNTRY:CN",
+                "REGION:SH",
+                "ISP:CERNET",
+                "202.120.0.0/18",
+                "59.78.0.0/18",
+                "111.186.0.0/18",
+                "211.80.32.0/19",
+                "211.80.80.0/20",
+                "2001:250:6000::/48",
+                "2001:251:7801::/48",
+                "2001:256:100:2000::/56",
+                "2001:da8:8000::/48",
+                "2403:d400::/32",
+                "2408:8026:380::/52",
+            ],
+        }
+    ]
 
     print(json.dumps(mirrorz, indent=2))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

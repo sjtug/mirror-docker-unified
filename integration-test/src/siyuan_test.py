@@ -109,7 +109,7 @@ For git repos, should redirect to git.sjtu
 
 def test_git_redirect():
     response = requests.get(f"http://{BASE_URL}/git/llvm-project.git")
-    assert response.url == f"https://git.sjtu.edu.cn/sjtug/llvm-project"
+    assert response.url == "https://git.sjtu.edu.cn/sjtug/llvm-project"
 
 
 """
@@ -119,7 +119,7 @@ Users will be redirected to corresponding mirror site
 
 def test_unified_redirect():
     response = requests.get(f"http://{BASE_URL}/archlinux/")
-    assert response.url == f"https://mirrors.sjtug.sjtu.edu.cn/archlinux/"
+    assert response.url == "https://mirrors.sjtug.sjtu.edu.cn/archlinux/"
 
 
 """
