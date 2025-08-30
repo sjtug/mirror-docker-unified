@@ -35,7 +35,7 @@ services:
   postgres:
     container_name: zhiyuan-postgres
     volumes:
-      - './postgresql.zhiyuan.conf:/etc/postgresql/postgresql.conf:ro'
+      - "./postgresql.zhiyuan.conf:/etc/postgresql/postgresql.conf:ro"
       - "/mnt/data12T/postgres-data:/var/lib/postgresql/data"
     mem_limit: 10G
     memswap_limit: 10G
@@ -66,7 +66,7 @@ services:
       - "127.0.0.1:5000:5000"
     networks:
       - tunnel-net
-    volumes: 
+    volumes:
       - "./secrets/xray.json:/etc/xray/config.json:z,ro"
     logging:
       options:
@@ -89,7 +89,7 @@ services:
       weight: 10
       device_read_bps:
         - path: /dev/mapper/vg0-mirror.sjtug
-          rate: '10mb'
+          rate: "10mb"
       device_read_iops:
         - path: /dev/mapper/vg0-mirror.sjtug
           rate: 20
@@ -100,7 +100,6 @@ services:
       - "/mnt/data12T/git:/git:z"
     mem_limit: 1G
     memswap_limit: 1G
-
 
   k8s-registry:
     container_name: zhiyuan-k8s-registry
@@ -164,7 +163,7 @@ networks:
     ipam:
       driver: default
       config:
-      -  subnet: 172.31.0.0/16
+        - subnet: 172.31.0.0/16
   monitor-net:
   tunnel-net:
   proxy-net:
@@ -174,4 +173,4 @@ networks:
     ipam:
       driver: default
       config:
-      -  subnet: fd01::/80
+        - subnet: fd01::/80

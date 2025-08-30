@@ -1,83 +1,201 @@
   {
     key_type rsa4096
+    email sjtug-mirror-maintainers@googlegroups.com
+    preferred_chains smallest
+    cert_issuer acme
+    servers {
+        timeouts {
+            read_body 10s
+            read_header 5s
+            write 600s
+            idle 10m
+        }
+    }
+    cerberus {
+        difficulty 12
+        max_pending 16
+        access_per_approval 8
+        block_ttl 12h
+        pending_ttl 10m
+        approval_ttl 12h
+        max_mem_usage 4GiB
+        cookie_name cerberus-clearance
+        header_name Cerberus-Sec
+        mail sjtug-mirror-maintainers@googlegroups.com
+        prefix_cfg 32 64
+    }
+    order cerberus before redir
 }
 
-http://:80/ {
+http://:80 {
     log {
         output stdout
-        format single_field common_log  # log in v1 style
+        format transform "{common_log}"  # log in v1 style, caddyserver/transform-encoder required
     }
-    redir / https://:80/ 308
+
+    handle {
+        redir https://{hostport}{uri} 308  # redirect remaining http requests to https
+    }
+
+    header * x-sjtug-mirror-id local
+
+    handle_path /.cerberus/* {
+        cerberus_endpoint
+    }
+    @cerberus {
+        path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+        header User-Agent *Mozilla*
+        header User-Agent *Opera*
+        header User-Agent *Go-http-client*
+        header User-Agent *web*spider*
+    }
+    @except_cerberus_endpoint {
+        not path /.cerberus/*
+        not {
+            path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+            header User-Agent *Mozilla*
+            header User-Agent *Opera*
+            header User-Agent *Go-http-client*
+            header User-Agent *web*spider*
+        }
+    }
+    cerberus @except_cerberus_endpoint {
+        base_url /.cerberus
+        block_only
+    }
+    cerberus @cerberus {
+        base_url /.cerberus
+    }
+
+    @gzip_enabled
+    encode @gzip_enabled gzip zstd
+
+
 }
 
-:80 {
+https://:80 {
     log {
         output stdout
-        format single_field common_log  # log in v1 style
+        format transform "{common_log}"  # log in v1 style, caddyserver/transform-encoder required
     }
 
-    file_server /* {
-        root /dists
-    }
-    rewrite /docs/* /  # for react app
-
-    reverse_proxy /lug/* lug:7001 {
-        header_down Access-Control-Allow-Origin *
-        header_down Access-Control-Request-Method GET
+    handle {
+        reverse_proxy /* frontend:3000
     }
 
-    basicauth /monitor/* {
-        {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
-    }
-    route /monitor/node_exporter/* {
-        uri strip_prefix /monitor/node_exporter
-        reverse_proxy 172.31.0.1:9100
-    }
-    route /monitor/cadvisor/* {
-        uri strip_prefix /monitor/cadvisor
-        reverse_proxy cadvisor:8080
-    }
-    route /monitor/lug/* {
-        uri strip_prefix /monitor/lug
-        reverse_proxy lug:8081
-    }
-    route /monitor/mirror-intel/* {
-        uri strip_prefix /monitor/mirror-intel
-        reverse_proxy mirror-intel:8000
-    }
-    route /monitor/docker-gcr/* {
-        uri strip_prefix /monitor/docker-gcr
-        reverse_proxy siyuan-gcr-registry:5001
-    }
-    route /monitor/docker-registry/* {
-        uri strip_prefix /monitor/docker-registry
-        reverse_proxy siyuan-docker-registry:5001
+    handle /mirrorz/* {
+        uri strip_prefix /mirrorz
+        file_server {
+            root /var/www/mirrorz
+        }
     }
 
-    @hidden {
-        path */.*
+    handle /lug/* {
+        reverse_proxy /lug/* lug:7001 {
+            header_down Access-Control-Allow-Origin *
+            header_down Access-Control-Request-Method GET
+        }
+        @reject_lug_api {
+            path /lug/v1/admin/*
+        }
+        respond @reject_lug_api 403
     }
-    respond @hidden 404
-    @reject_lug_api {
-        path /lug/v1/admin/*
+
+    handle /monitor/* {
+        basic_auth /monitor/* {
+            {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
+        }
+        handle_path /monitor/node_exporter/* {
+            reverse_proxy 172.31.0.1:9100
+        }
+        handle_path /monitor/cadvisor/* {
+            reverse_proxy cadvisor:8080
+        }
+        handle_path /monitor/lug/* {
+            reverse_proxy lug:8081
+        }
+        handle_path /monitor/mirror-intel/* {
+            reverse_proxy mirror-intel:8000
+        }
+        handle_path /monitor/rsync-gateway/* {
+            reverse_proxy rsync-gateway:8000
+        }
+        handle_path /monitor/docker-gcr/* {
+            reverse_proxy siyuan-gcr-registry:5001
+        }
+        handle_path /monitor/docker-registry/* {
+            reverse_proxy siyuan-docker-registry:5001
+        }
     }
-    respond @reject_lug_api 403
+
+    handle /.well-known/* {
+        uri strip_prefix /.well-known
+        file_server {
+            root /var/www/.well-known
+        }
+    }
 
     header * x-sjtug-mirror-id local
     header /mirrorz/* Access-Control-Allow-Origin *
     header /mirrorz/* Access-Control-Request-Method GET
 
-    redir /test /test/ 301
-    file_server /test/* browse {
-        root /srv
-        hide .*
+    handle_path /.cerberus/* {
+        cerberus_endpoint
     }
-    redir /TEST /TEST/ 301
-    file_server /TEST/* browse {
-        root /srv
-        hide .*
+    @cerberus {
+        path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+        header User-Agent *Mozilla*
+        header User-Agent *Opera*
+        header User-Agent *Go-http-client*
+        header User-Agent *web*spider*
     }
+    @except_cerberus_endpoint {
+        not path /.cerberus/*
+        not {
+            path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+            header User-Agent *Mozilla*
+            header User-Agent *Opera*
+            header User-Agent *Go-http-client*
+            header User-Agent *web*spider*
+        }
+    }
+    cerberus @except_cerberus_endpoint {
+        base_url /.cerberus
+        block_only
+    }
+    cerberus @cerberus {
+        base_url /.cerberus
+    }
+
     @gzip_enabled
     encode @gzip_enabled gzip zstd
+
+    redir /test /test/ 301
+    handle /test/* {
+        file_server browse {
+            root /srv
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
+    redir /TEST /TEST/ 301
+    handle /TEST/* {
+        file_server browse {
+            root /srv
+            hide .*
+        }
+        @hidden path */.*
+        respond @hidden 404
+    }
+
+}
+
+http://localhost {
+    respond 204
+}
+
+http:// {
+    abort
 }
 
