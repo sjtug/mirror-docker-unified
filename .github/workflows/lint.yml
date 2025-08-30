@@ -28,6 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      actions: write # Required to save to GitHub Actions Cache
     concurrency:
       # Lint and Validation-test-docker-build-{siyuan,zhiyuan}
       group: ${{ github.workflow }}-test-docker-build-${{ matrix.mirror }}
@@ -40,6 +41,7 @@ jobs:
         with:
           persist-credentials: false
           submodules: "recursive"
+      - uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3
       - name: use CI config for docker-compose
         run: |
           cp docker-compose.ci.yml docker-compose.override.yml
@@ -53,7 +55,16 @@ jobs:
       - name: verify config
         run: docker compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
       - name: docker compose build
-        run: docker compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml -f docker-compose.ci.yml build --parallel
+        uses: docker/bake-action@3acf805d94d93a86cce4ca44798a76464a75b88c # v6
+        with:
+          files: |
+            docker-compose.yml
+            docker-compose.${{ matrix.mirror }}.yml
+            docker-compose.ci.yml
+          set: |
+            *.cache-from=type=gha,scope=${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.mirror }}
+            *.cache-to=type=gha,mode=max,scope=${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.mirror }}
+          load: true
       - name: validate Caddyfile
         run: make caddy-verify-config
   test-caddy-file:

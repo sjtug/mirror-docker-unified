@@ -1,4 +1,4 @@
-bind = ["0.0.0.0:8000"]
+bind = [ "0.0.0.0:8000",]
 s3_url = "https://s3.jcloud.sjtu.edu.cn"
 s3_region = "sjtug"
 database_url = "postgres://rsync-sjtug@postgres/rsync-sjtug"

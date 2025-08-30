@@ -109,7 +109,9 @@
           # Example: https://github.com/nix-community/buildbot-nix/blob/main/nix/treefmt/flake-module.nix
           treefmt = {
             projectRootFile = "flake.nix";
-            settings.global.excludes = [ ];
+            settings.global.excludes = [
+              "rsync-gateway/config.*.toml"
+            ];
 
             programs = builtins.listToAttrs (
               map (x: {
@@ -142,7 +144,11 @@
                 # config.pre-commit.devShell
               ];
               buildInputs = [ pkgs.cachix ];
-              shellHook = builtins.concatStringsSep "\n" (builtins.map (path: "rm -rf ${path}/.venv && nix build .#pythonEnv-${path} --out-link ${path}/.venv") names);
+              shellHook = builtins.concatStringsSep "\n" (
+                builtins.map (
+                  path: "rm -rf ${path}/.venv && nix build .#pythonEnv-${path} --out-link ${path}/.venv"
+                ) names
+              );
             };
           };
 
