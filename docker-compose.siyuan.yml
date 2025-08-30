@@ -38,8 +38,8 @@ services:
   postgres:
     container_name: siyuan-postgres
     volumes:
-      - './postgresql.siyuan.conf:/etc/postgresql/postgresql.conf:ro'
-      - '/srv/mirror/postgres-data:/var/lib/postgresql/data'
+      - "./postgresql.siyuan.conf:/etc/postgresql/postgresql.conf:ro"
+      - "/srv/mirror/postgres-data:/var/lib/postgresql/data"
     mem_limit: 30G
     memswap_limit: 30G
 
@@ -75,7 +75,7 @@ services:
       - "127.0.0.1:5005:5005"
     networks:
       - tunnel-net
-    volumes: 
+    volumes:
       - "./secrets/xray.json:/etc/xray/config.json:z,ro"
     logging:
       options:
@@ -108,7 +108,7 @@ networks:
     ipam:
       driver: default
       config:
-      -  subnet: 172.31.0.0/16
+        - subnet: 172.31.0.0/16
     driver_opts:
       com.docker.network.driver.mtu: 1450
   monitor-net:
@@ -126,6 +126,6 @@ networks:
     ipam:
       driver: default
       config:
-      -  subnet: fd01::/80
+        - subnet: fd01::/80
     driver_opts:
       com.docker.network.driver.mtu: 1450

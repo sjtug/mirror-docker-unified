@@ -18,7 +18,7 @@ allow = [
   "oneclick/rubyinstaller2/",
   "mikefarah/yq/",
   "docker/compose/",
-  "librespeed/speedtest-go/"
+  "librespeed/speedtest-go/",
 ]
 
 [default.endpoints]
@@ -42,18 +42,18 @@ opam_cache = "https://opam.ocaml.org/cache"
 pypi_simple = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 gradle_distribution = "https://services.gradle.org/distributions"
 overrides = [
-  { name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/" }
+  { name = "flutter", pattern = "https://storage.flutter-io.cn/", replace = "https://storage.googleapis.com/" },
 ]
 s3_only = [
-    "voidlinux/",
-    "bioconductor/",
-    "anaconda/",
-    "wireshark/",
-    "macports/",
-    "gimp/",
-    "ghcup/",
-    "elan/",
-    "kernel/"
+  "voidlinux/",
+  "bioconductor/",
+  "anaconda/",
+  "wireshark/",
+  "macports/",
+  "gimp/",
+  "ghcup/",
+  "elan/",
+  "kernel/",
 ]
 
 [default.s3]
