@@ -103,6 +103,7 @@ http://mirrors.sjtug.sjtu.edu.cn {
         header User-Agent *Opera*
         header User-Agent *Go-http-client*
         header User-Agent *web*spider*
+        not remote_ip 10.0.0.0/8
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
@@ -112,6 +113,7 @@ http://mirrors.sjtug.sjtu.edu.cn {
             header User-Agent *Opera*
             header User-Agent *Go-http-client*
             header User-Agent *web*spider*
+            not remote_ip 10.0.0.0/8
         }
     }
     cerberus @except_cerberus_endpoint {
@@ -218,6 +220,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         header User-Agent *Opera*
         header User-Agent *Go-http-client*
         header User-Agent *web*spider*
+        not remote_ip 10.0.0.0/8
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
@@ -227,6 +230,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
             header User-Agent *Opera*
             header User-Agent *Go-http-client*
             header User-Agent *web*spider*
+            not remote_ip 10.0.0.0/8
         }
     }
     cerberus @except_cerberus_endpoint {

@@ -212,14 +212,17 @@ def cerberus_settings() -> list[Node]:
         Node("header User-Agent *Go-http-client*"),
         Node("header User-Agent *web*spider*"),
     ]
+    addresses = [
+        Node("not remote_ip 10.0.0.0/8"),
+    ]
     return [
         Node("handle_path /.cerberus/*", [
             Node("cerberus_endpoint"),
         ]),
-        Node("@cerberus", [large_file, *browser_ua]),
+        Node("@cerberus", [large_file, *browser_ua, *addresses]),
         Node("@except_cerberus_endpoint", [
             Node("not path /.cerberus/*"),
-            Node("not", [large_file, *browser_ua])
+            Node("not", [large_file, *browser_ua, *addresses]),
         ]),
         Node("cerberus @except_cerberus_endpoint", [
             Node("base_url /.cerberus"),
