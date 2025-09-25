@@ -328,6 +328,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /sites/tldp.org/*
         not path /nix-channels/store/*
         not path /guix/*
+        not path /guix-bordeaux/*
         not path /sjtug-internal/*
         not path /fedora-ostree/*
         not path /fedora-iot/*
@@ -893,6 +894,10 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /guix /guix/ 301
     handle /guix/* {
+        reverse_proxy mirror-intel:8000
+    }
+    redir /guix-bordeaux /guix-bordeaux/ 301
+    handle /guix-bordeaux/* {
         reverse_proxy mirror-intel:8000
     }
     redir /sjtug-internal /sjtug-internal/ 301
