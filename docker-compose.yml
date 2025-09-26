@@ -8,7 +8,7 @@ services:
       - monitor-net
       - host-monitor-net
     env_file:
-      - './secrets/caddy.env'
+      - "./secrets/caddy.env"
     build:
       context: ./caddy
       args:
@@ -74,9 +74,10 @@ services:
       context: ./lug
       args:
         - USE_SJTUG=true
+        # TODO: bump OpenSSL version
         - CLONE_VERSION=v0.1.18
         - CLONE_V2_VERSION=v0.2.39
-        - RSYNC_SJTUG_VERSION=v0.4.16
+        - RSYNC_SJTUG_VERSION=v0.4.17
         - LUG_VERSION=v0.12.11
     expose:
       - 8081
@@ -98,7 +99,7 @@ services:
     environment:
       RUST_LOG: info
     env_file:
-      - './secrets/mirror-clone.env'
+      - "./secrets/mirror-clone.env"
     healthcheck:
       test: curl -f http://localhost:7001/lug/v1/manager/summary || exit 1
       interval: 1m30s
@@ -119,7 +120,7 @@ services:
       context: ./rsync-gateway
       args:
         - USE_SJTUG=true
-        - RSYNC_SJTUG_VERSION=v0.4.15
+        - RSYNC_SJTUG_VERSION=v0.4.17
     networks:
       - ipv6-service-net
       - postgres-net
@@ -128,8 +129,8 @@ services:
       - 8000
     restart: unless-stopped
     env_file:
-      - './secrets/mirror-intel.env'
-      - './secrets/pg.env'
+      - "./secrets/mirror-intel.env"
+      - "./secrets/pg.env"
     environment:
       RUST_LOG: info
       RUST_BACKTRACE: 1
@@ -150,7 +151,7 @@ services:
     expose:
       - 5432
     env_file:
-      - './secrets/pg.env'
+      - "./secrets/pg.env"
     logging:
       options:
         max-size: "4M"
@@ -238,7 +239,7 @@ services:
       - 8000
     restart: unless-stopped
     env_file:
-      - './secrets/mirror-intel.env'
+      - "./secrets/mirror-intel.env"
     environment:
       RUST_LOG: info
     logging:
@@ -284,7 +285,7 @@ networks:
     ipam:
       driver: default
       config:
-      -  subnet: 172.31.0.0/16
+        - subnet: 172.31.0.0/16
   monitor-net:
   tunnel-net:
   proxy-net:
@@ -294,7 +295,7 @@ networks:
     ipam:
       driver: default
       config:
-      -  subnet: fd01::/80
+        - subnet: fd01::/80
   redis-net:
   postgres-net:
 

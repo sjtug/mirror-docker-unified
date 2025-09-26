@@ -1,14 +1,14 @@
 {
-    "url": "https://mirrors.sjtug.sjtu.edu.cn",
-    "logo": "https://mirrors.sjtug.sjtu.edu.cn/apple-icon.png",
-    "abbr": "SJTUG - Zhiyuan",
-    "name": "SJTUG 致远镜像站",
-    "homepage": "https://mirrors.sjtug.sjtu.edu.cn",
-    "issue": "https://github.com/sjtug/mirror-requests/issues",
-    "request": "https://github.com/sjtug/mirror-requests/issues",
-    "email": "sjtug-mirror-maintainers@googlegroups.com",
-    "group": "https://t.me/sjtug_mirrors_news",
-    "disk": "",
-    "note": "",
-    "tag": "zhiyuan"
+  "url": "https://mirrors.sjtug.sjtu.edu.cn",
+  "logo": "https://mirrors.sjtug.sjtu.edu.cn/apple-icon.png",
+  "abbr": "SJTUG - Zhiyuan",
+  "name": "SJTUG 致远镜像站",
+  "homepage": "https://mirrors.sjtug.sjtu.edu.cn",
+  "issue": "https://github.com/sjtug/mirror-requests/issues",
+  "request": "https://github.com/sjtug/mirror-requests/issues",
+  "email": "sjtug-mirror-maintainers@googlegroups.com",
+  "group": "https://t.me/sjtug_mirrors_news",
+  "disk": "",
+  "note": "",
+  "tag": "zhiyuan"
 }

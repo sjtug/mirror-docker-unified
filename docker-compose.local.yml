@@ -1,29 +1,29 @@
 services:
-    caddy:
-      volumes:
-        - "/srv:/srv"
-        - "./caddy/Caddyfile.local:/etc/caddy/Caddyfile:ro"
-    lug:
-      volumes:
-        - "./lug/config.local.yaml:/config.local.yaml:ro"
-      command: -c /config.local.yaml
-    apache:
-      restart: unless-stopped
-      build:
-        context: ./apache 
-      networks:
-        - ipv6-service-net
-      volumes:
-        - "/srv/disk2:/usr/local/apache2/htdocs:ro"
-      logging:
-        options:
-          max-size: "4M"
-          max-file: "20"
-      ulimits:
-        nofile:
-          soft: 80000
-          hard: 120000
-      mem_limit: 1G
-      memswap_limit: 1G
-      ports:
-        - 80:80
+  caddy:
+    volumes:
+      - "/srv:/srv"
+      - "./caddy/Caddyfile.local:/etc/caddy/Caddyfile:ro"
+  lug:
+    volumes:
+      - "./lug/config.local.yaml:/config.local.yaml:ro"
+    command: -c /config.local.yaml
+  apache:
+    restart: unless-stopped
+    build:
+      context: ./apache
+    networks:
+      - ipv6-service-net
+    volumes:
+      - "/srv/disk2:/usr/local/apache2/htdocs:ro"
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 1G
+    memswap_limit: 1G
+    ports:
+      - 80:80

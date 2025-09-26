@@ -10,32 +10,41 @@ jobs:
   test-lug:
     runs-on: ubuntu-latest
     name: lug config format
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/checkout@v2
-      - name: Use Node.js 14
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v5
         with:
-          node-version: 14
-      - run: npm i -g prettier
-      - run: prettier -c *.yaml
+          persist-credentials: false
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@1f095fee853b33114486cfdeae62fa099cda35a9 # v33
+        with:
+          nix_conf: |
+            extra-substituters = https://sjtug.cachix.org
+            extra-trusted-public-keys = sjtug.cachix.org-1:06k1I31gmbCDlu7StkdMgDt1yEf6qoRsyaUkMpkuPdE=
+      - run: nix flake check
   test-docker-build:
     name: docker build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write # Required to save to GitHub Actions Cache
+    concurrency:
+      # Lint and Validation-test-docker-build-{siyuan,zhiyuan}
+      group: ${{ github.workflow }}-test-docker-build-${{ matrix.mirror }}
+      cancel-in-progress: true
     strategy:
       matrix:
         mirror: ["siyuan", "zhiyuan"]
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+      - uses: actions/checkout@v5
         with:
-          access_token: ${{ github.token }}
-      - uses: actions/checkout@v2
-        with:
+          persist-credentials: false
           submodules: "recursive"
+      - uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3
       - name: use CI config for docker-compose
         run: |
-          cp docker-compose.ci.yml docker-compose.override.yml 
+          cp docker-compose.ci.yml docker-compose.override.yml
           cp ./secrets/caddy.env.example ./secrets/caddy.env
           cp ./secrets/mirror-clone.env.example ./secrets/mirror-clone.env
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
@@ -46,25 +55,39 @@ jobs:
       - name: verify config
         run: docker compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
       - name: docker compose build
-        run: docker compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml -f docker-compose.ci.yml build --parallel
+        uses: docker/bake-action@3acf805d94d93a86cce4ca44798a76464a75b88c # v6
+        with:
+          files: |
+            docker-compose.yml
+            docker-compose.${{ matrix.mirror }}.yml
+            docker-compose.ci.yml
+          set: |
+            *.cache-from=type=gha,scope=${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.mirror }}
+            *.cache-to=type=gha,mode=max,scope=${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.mirror }}
+          load: true
       - name: validate Caddyfile
         run: make caddy-verify-config
   test-caddy-file:
     runs-on: ubuntu-latest
     name: Caddyfile up-to-date
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v5
         with:
-          python-version: "3.13"
-      - uses: dschep/install-pipenv-action@v1
-      - name: setup Pipenv
-        run: cd caddy-gen && pipenv install
+          persist-credentials: false
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@1f095fee853b33114486cfdeae62fa099cda35a9 # v33
+        with:
+          nix_conf: |
+            extra-substituters = https://sjtug.cachix.org
+            extra-trusted-public-keys = sjtug.cachix.org-1:06k1I31gmbCDlu7StkdMgDt1yEf6qoRsyaUkMpkuPdE=
+      - run: nix build .#pythonEnv-caddy-gen --out-link caddy-gen/.venv
       - name: check if Caddyfile is latest version
         run: make caddy-gen && git diff --exit-code
       - name: use CI config for docker-compose
         run: |
-          cp docker-compose.ci.yml docker-compose.override.yml 
+          cp docker-compose.ci.yml docker-compose.override.yml
           cp ./secrets/caddy.env.example ./secrets/caddy.env
           cp ./secrets/mirror-clone.env.example ./secrets/mirror-clone.env
           cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
@@ -77,13 +100,18 @@ jobs:
   test-gateway-file:
     runs-on: ubuntu-latest
     name: rsync-gateway config up-to-date
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v5
         with:
-          python-version: "3.13"
-      - uses: dschep/install-pipenv-action@v1
-      - name: setup Pipenv
-        run: cd gateway-gen && pipenv install
+          persist-credentials: false
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@1f095fee853b33114486cfdeae62fa099cda35a9 # v33
+        with:
+          nix_conf: |
+            extra-substituters = https://sjtug.cachix.org
+            extra-trusted-public-keys = sjtug.cachix.org-1:06k1I31gmbCDlu7StkdMgDt1yEf6qoRsyaUkMpkuPdE=
+      - run: nix build .#pythonEnv-gateway-gen --out-link gateway-gen/.venv
       - name: check if rsync-gateway config.toml is latest version
         run: make gateway-gen && git diff --exit-code

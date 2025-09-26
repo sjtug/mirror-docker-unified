@@ -1,0 +1,29 @@
+[python]
+version = "3.13" # used Python version
+workspaces = [
+  "caddy-gen",
+  "gateway-gen",
+  "integration-test",
+] # sub-directories using Python with uv.lock
+
+# Linter & Formatter
+[treefmt]
+programs = [
+  "autocorrect",
+  "nixfmt",
+  "prettier",
+  "ruff-check",
+  "ruff-format",
+  "taplo",
+  "zizmor",
+] # See https://github.com/numtide/treefmt-nix#supported-programs for available programs
+
+# Pre-commit Hooks
+[pre-commit]
+flake-check = false
+package = "prek" # One of pre-commit, prek
+hooks = [
+  "commitizen",
+  "eclint",
+  "treefmt",
+] # See https://github.com/cachix/git-hooks.nix#hooks for available hooks

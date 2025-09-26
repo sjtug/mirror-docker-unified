@@ -1,0 +1,12 @@
+[project]
+name = "caddy-gen"
+version = "0.0.1"
+requires-python = ">=3.13"
+dependencies = ["loguru", "pyyaml", "typing-extensions"]
+
+[tool.ruff.lint]
+ignore = [
+  "F403", # unable to detect undefined names
+  "F405", # may be undefined, or defined from star imports
+  "F841", # local variable is assigned to but never used
+]
