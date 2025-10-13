@@ -484,7 +484,7 @@ repos:
     script: /worker-script/git.sh
     interval: 3608
     name: git/guix.git
-    source: https://git.savannah.gnu.org/git/guix.git
+    source: https://codeberg.org/guix/guix.git
     path: /srv/data55T/git/guix.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/guix.git
