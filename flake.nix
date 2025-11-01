@@ -146,7 +146,8 @@
               buildInputs = [ pkgs.cachix ];
               shellHook = builtins.concatStringsSep "\n" (
                 builtins.map (
-                  path: "rm -rf ${path}/.venv && nix build .#pythonEnv-${path} --out-link ${path}/.venv"
+                  path:
+                  "rm -rf ${path}/.venv && nix build .#pythonEnv-${path} --out-link ${path}/.venv --option warn-dirty false"
                 ) names
               );
             };
