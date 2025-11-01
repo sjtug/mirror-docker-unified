@@ -625,6 +625,9 @@ repos:
     name: guix
     serve_mode: mirror_intel
   - type: external
+    name: guix-bordeaux
+    serve_mode: mirror_intel
+  - type: external
     name: sjtug-internal
     serve_mode: mirror_intel
   - type: external
