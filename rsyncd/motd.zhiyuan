@@ -1,24 +1,33 @@
-+==================================================+
-|                   SJTUG Mirror                   |
-+--------------------------------------------------+
-|   Welcome to SJTUG Mirror.                       |
-|                                                  |
-|   This rsync endpoint is mostly for file         |
-|   scanning. Disk I/O is strictly limited.        |
-|   Please email us before synchronizing files.    |
-|                                                  |
-|   Please use HTTP(s) service to download files.  |
-|   Zhiyuan: https://mirrors.sjtug.sjtu.edu.cn     |
-|   Siyuan: https://mirror.sjtu.edu.cn             |
-|                                                  |
-|   If you have any issues, please contact us      |
-|   by sjtug-mirror-maintainers@googlegroups.com   |
-|   or by submitting issue via GitHub              |
-|   https://github.com/sjtug/mirror-requests       |
-|                                                  |
-|   Sponsored by SJTU Network Information Center   |
-|   Maintained by SJTU Linux User Group (SJTUG)    |
-|                                                  |
-|   You're using Zhiyuan Mirror Server.            |
-|                                                  |
-+==================================================+
++==============================================================================+
+|                                SJTUG Mirror                                  |
++------------------------------------------------------------------------------+
+|   Welcome to SJTUG Mirror.                                                   |
+|   欢迎使用上海交通大学 Linux 用户组开源镜像服务（SJTUG Mirror）。            |
+|                                                                              |
+|   This rsync endpoint is mostly for file scanning. Disk I/O is strictly      |
+|   limited. Please email us before synchronizing files.                       |
+|   注意：本 rsync 端点仅用于文件扫描用途，磁盘 I/O 严格受限，非公开同步接口。 |
+|   如需同步文件，请务必先通过邮件联系维护团队。                               |
+|                                                                              |
+|   Please use HTTP(s) service to download files.                              |
+|   请通过 HTTP 或 HTTPS 服务下载文件。                                        |
+|   Zhiyuan: https://mirrors.sjtug.sjtu.edu.cn                                 |
+|   Siyuan : https://mirror.sjtu.edu.cn                                        |
+|                                                                              |
+|   If you have any issues, please contact us by email or GitHub:              |
+|   如果遇到问题，请通过以下方式联系我们：                                     |
+|   Email : sjtug-mirror-maintainers@googlegroups.com                          |
+|   GitHub: https://github.com/sjtug/mirror-requests                           |
+|                                                                              |
+|   Sponsored by SJTU Network Information Center                               |
+|   本服务由上海交通大学网络信息中心赞助支持。                                 |
+|   Maintained by SJTU Linux User Group (SJTUG)                                |
+|   由上海交通大学 Linux 用户组（SJTUG）维护。                                 |
+|                                                                              |
+|   You're using Zhiyuan Mirror Server.                                        |
+|   当前服务器：致远镜像节点。                                                 |
+|                                                                              |
+|  【说明】本 rsync 服务已限制 I/O 速率，不对外提供完整同步功能。              |
+|          请勿错误通报为安全威胁或异常网络活动。                              |
+|          如有违者，我方将保留追究通报单位/个人相关责任的权利。               |
++==============================================================================+
