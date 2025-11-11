@@ -98,7 +98,7 @@ services:
   git-backend:
     container_name: siyuan-git-backend
     volumes:
-      - "/mnt/data55T/data/git:/git:z"
+      - "/mnt/data55T/data/git:/git:z,ro"
     mem_limit: 1G
     memswap_limit: 1G
 
