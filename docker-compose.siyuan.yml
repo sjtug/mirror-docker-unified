@@ -91,9 +91,9 @@ services:
   rsyncd:
     container_name: siyuan-rsyncd
     volumes:
-      - ./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro
-      - /mnt/data55T/data:/srv/data55T:ro
-      - ./rsyncd/motd.siyuan:/etc/rsync/motd:ro
+      - "./rsyncd/rsyncd.siyuan.conf:/etc/rsyncd.conf:ro"
+      - "/mnt/data55T/data:/srv/data55T:ro"
+      - "./rsyncd/motd.siyuan:/etc/rsync/motd:ro"
 
   git-backend:
     container_name: siyuan-git-backend

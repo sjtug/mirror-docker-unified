@@ -82,9 +82,9 @@ services:
   rsyncd:
     container_name: zhiyuan-rsyncd
     volumes:
-      - ./rsyncd/rsyncd.zhiyuan.conf:/etc/rsyncd.conf:ro
-      - /mnt/data12T:/mnt:ro
-      - ./rsyncd/motd.zhiyuan:/etc/rsync/motd:ro
+      - "./rsyncd/rsyncd.zhiyuan.conf:/etc/rsyncd.conf:ro"
+      - "/mnt/data12T:/mnt:ro"
+      - "./rsyncd/motd.zhiyuan:/etc/rsync/motd:ro"
     blkio_config:
       weight: 10
       device_read_bps:
