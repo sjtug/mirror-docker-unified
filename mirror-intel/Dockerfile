@@ -1,4 +1,6 @@
-FROM debian:bookworm
+# No idea why Rust stable requires GLIBC_2.39 ...
+# but at lease work around it here
+FROM debian:trixie-slim
 
 ARG USE_SJTUG
 
@@ -7,7 +9,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/htt
 
 WORKDIR /app
 
-RUN apt-get update -y -qq && apt-get install wget curl -y -qq
+RUN apt-get update && apt-get install wget curl -y -qq
 
 ARG INTEL_VERSION
 
@@ -21,5 +23,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then \
     fi && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
 COPY Rocket.toml /app
+
+ENV ROCKET_TOML_PATH=/app/Rocket.toml
 
 CMD /app/mirror-intel
