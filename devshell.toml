@@ -8,8 +8,10 @@ workspaces = [
 
 # Linter & Formatter
 [treefmt]
+flake-check = true
 programs = [
   "autocorrect",
+  "dockerfmt",
   "nixfmt",
   "prettier",
   "ruff-check",
