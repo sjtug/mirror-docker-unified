@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:bookworm-slim
 
 ARG USE_SJTUG
 RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources ; fi
@@ -54,7 +54,8 @@ RUN git clone https://salsa.debian.org/mirror-team/archvsync.git && cd archvsync
 # apt-mirror
 COPY build-script/misc/apt-mirror-icon2x.patch .
 RUN cd $(mktemp -d) && \
-    wget -O apt-mirror https://raw.githubusercontent.com/apt-mirror/apt-mirror/088fa51357602ed4cea263b8eeff5c5365fcac63/apt-mirror && \
+    (wget -O apt-mirror https://cdn.jsdelivr.net/gh/apt-mirror/apt-mirror@088fa51357602ed4cea263b8eeff5c5365fcac63/apt-mirror || \
+    wget -O apt-mirror https://raw.githubusercontent.com/apt-mirror/apt-mirror/088fa51357602ed4cea263b8eeff5c5365fcac63/apt-mirror) && \
     patch apt-mirror /app/apt-mirror-icon2x.patch && \
     install -m 755 apt-mirror /usr/bin/apt-mirror
 
@@ -65,28 +66,19 @@ COPY ssh_config /root/.ssh/config
 
 ARG LUG_VERSION
 RUN /app/build-script/from-cache.sh \
-        https://mirror.sjtu.edu.cn/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
-        https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
-        https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
-        tmp.tar.gz \
-            && tar -xvf tmp.tar.gz && rm tmp.tar.gz
-
-
-RUN mkdir /tmp/openssl \
-    && git clone --depth 1 --branch OpenSSL_1_1_1w https://github.com/openssl/openssl.git /tmp/openssl \
-    && cd /tmp/openssl/ && ./config shared zlib \
-    && make \
-    && make install \
-    && echo "/usr/local/lib" > /etc/ld.so.conf.d/openssl-1.1.conf \
-    && ldconfig -v
+    https://mirror.sjtu.edu.cn/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
+    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
+    https://github.com/sjtug/lug/releases/download/${LUG_VERSION}/lug.tar.gz \
+    tmp.tar.gz \
+        && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
 ARG CLONE_VERSION
 RUN /app/build-script/from-cache.sh \
-        https://mirror.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
-        https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
-        https://github.com/sjtug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
-        tmp.tar.gz \
-            && tar -xvf tmp.tar.gz && rm tmp.tar.gz
+    https://mirror.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
+    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
+    https://github.com/sjtug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
+    tmp.tar.gz \
+        && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
 ARG CLONE_V2_VERSION
 RUN mkdir v2 && cd v2 && /app/build-script/from-cache.sh \
@@ -98,8 +90,8 @@ RUN mkdir v2 && cd v2 && /app/build-script/from-cache.sh \
 
 ARG RSYNC_SJTUG_VERSION
 RUN mkdir rsync_sjtug && cd rsync_sjtug && /app/build-script/from-cache.sh \
-    https://mirror.sjtu.edu.cn/sjtug-internal/rsync-sjtug/releases/download/${RSYNC_SJTUG_VERSION}/rsync-sjtug-x86_64-unknown-linux-musl.tar.gz \
-    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/rsync-sjtug/releases/download/${RSYNC_SJTUG_VERSION}/rsync-sjtug-x86_64-unknown-linux-musl.tar.gz \
+    https://mirror.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/${RSYNC_SJTUG_VERSION}/rsync-sjtug-x86_64-unknown-linux-musl.tar.gz \
+    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/mirror-clone/releases/download/${RSYNC_SJTUG_VERSION}/rsync-sjtug-x86_64-unknown-linux-musl.tar.gz \
     https://github.com/sjtug/rsync-sjtug/releases/download/${RSYNC_SJTUG_VERSION}/rsync-sjtug-x86_64-unknown-linux-musl.tar.gz \
     tmp.tar.gz \
         && tar -xvf tmp.tar.gz && rm tmp.tar.gz

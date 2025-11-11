@@ -1,5 +1,5 @@
 # small is beautiful
-FROM debian:bullseye
+FROM debian:bookworm-slim
 
 MAINTAINER Anthony Hogg anthony@hogg.fr
 
@@ -12,8 +12,8 @@ VOLUME ["/git"]
 
 ARG USE_SJTUG
 
-RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list ; fi
-RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/http:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list ; fi
+RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources ; fi
+RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/http:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources ; fi
 
 # We need the following:
 # - git, because that gets us the git-http-backend CGI script
@@ -21,7 +21,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/htt
 # - spawn-fcgi, to launch fcgiwrap and to create the unix socket
 # - nginx, because it is our frontend
 RUN apt-get update && \
-	apt-get install -yy nginx git fcgiwrap spawn-fcgi 
+	apt-get install -yy nginx git fcgiwrap spawn-fcgi
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
