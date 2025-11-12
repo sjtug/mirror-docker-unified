@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -108,7 +108,8 @@
           # https://flake.parts/options/treefmt-nix.html
           # Example: https://github.com/nix-community/buildbot-nix/blob/main/nix/treefmt/flake-module.nix
           treefmt = {
-            projectRootFile = "flake.nix";
+            projectRootFile = ".git/config";
+            flakeCheck = cfg.treefmt.flake-check;
             settings.global.excludes = [
               "rsync-gateway/config.*.toml"
             ];
@@ -126,6 +127,7 @@
           # https://flake.parts/options/git-hooks-nix.html
           # Example: https://github.com/cachix/git-hooks.nix/blob/master/template/flake.nix
           pre-commit.check.enable = cfg.pre-commit.flake-check;
+          pre-commit.settings.configPath = ".pre-commit-config.flake.yaml";
           pre-commit.settings.package = pkgs.${cfg.pre-commit.package};
           pre-commit.settings.hooks = builtins.listToAttrs (
             map (x: {

@@ -21,7 +21,7 @@ jobs:
         with:
           nix_conf: |
             extra-substituters = https://sjtug.cachix.org
-            extra-trusted-public-keys = sjtug.cachix.org-1:06k1I31gmbCDlu7StkdMgDt1yEf6qoRsyaUkMpkuPdE=
+            extra-trusted-public-keys = sjtug.cachix.org-1:0bD3nO47HROvtvVfkodDpE7AUwjFxQ/6l4fCbcC+7bc=
       - run: nix flake check
   test-docker-build:
     name: docker build

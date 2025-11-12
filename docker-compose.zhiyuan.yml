@@ -82,9 +82,9 @@ services:
   rsyncd:
     container_name: zhiyuan-rsyncd
     volumes:
-      - ./rsyncd/rsyncd.zhiyuan.conf:/etc/rsyncd.conf:ro
-      - /mnt/data12T:/mnt:ro
-      - ./rsyncd/motd.zhiyuan:/etc/rsync/motd:ro
+      - "./rsyncd/rsyncd.zhiyuan.conf:/etc/rsyncd.conf:ro"
+      - "/mnt/data12T:/mnt:ro"
+      - "./rsyncd/motd.zhiyuan:/etc/rsync/motd:ro"
     blkio_config:
       weight: 10
       device_read_bps:
@@ -97,7 +97,7 @@ services:
   git-backend:
     container_name: zhiyuan-git-backend
     volumes:
-      - "/mnt/data12T/git:/git:z"
+      - "/mnt/data12T/git:/git:z,ro"
     mem_limit: 1G
     memswap_limit: 1G
 
