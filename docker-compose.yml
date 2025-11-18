@@ -73,10 +73,9 @@ services:
       context: ./lug
       args:
         - USE_SJTUG=true
-        # TODO: bump OpenSSL version
-        - CLONE_VERSION=v0.1.18
-        - CLONE_V2_VERSION=v0.2.39
-        - RSYNC_SJTUG_VERSION=v0.4.17
+        - CLONE_VERSION=v0.1.19
+        - CLONE_V2_VERSION=v0.2.40
+        - RSYNC_SJTUG_VERSION=v0.4.18
         - LUG_VERSION=v0.12.11
     expose:
       - 8081
@@ -119,7 +118,7 @@ services:
       context: ./rsync-gateway
       args:
         - USE_SJTUG=true
-        - RSYNC_SJTUG_VERSION=v0.4.17
+        - RSYNC_SJTUG_VERSION=v0.4.18
     networks:
       - ipv6-service-net
       - postgres-net
@@ -231,7 +230,7 @@ services:
       context: ./mirror-intel
       args:
         - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.34
+        - INTEL_VERSION=v0.1.35
     networks:
       - ipv6-service-net
     expose:
