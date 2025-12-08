@@ -460,7 +460,7 @@ if __name__ == "__main__":
                     Node(
                         "cerberus",
                         [
-                            Node("difficulty 12"),
+                            Node("difficulty 14"),
                             Node("max_pending 16"),
                             Node("access_per_approval 8"),
                             Node("block_ttl 12h"),

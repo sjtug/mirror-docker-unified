@@ -5,7 +5,7 @@ RUN if [ "$USE_GOPROXY" = true ] ; then go env -w GO111MODULE=on && go env -w GO
 
 RUN xcaddy build \
     --with github.com/caddyserver/transform-encoder \
-    --with github.com/sjtug/cerberus@v0.4.3
+    --with github.com/sjtug/cerberus@v0.4.6
 
 # stage 2
 FROM caddy:2.10

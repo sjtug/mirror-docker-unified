@@ -12,7 +12,7 @@
         }
     }
     cerberus {
-        difficulty 12
+        difficulty 14
         max_pending 16
         access_per_approval 8
         block_ttl 12h
