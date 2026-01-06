@@ -60,7 +60,7 @@ RUN cd $(mktemp -d) \
     && install -m 755 apt-mirror /usr/bin/apt-mirror
 
 # general config
-RUN mkdir /root/.ssh && ssh-keyscan cran.r-project.org >>/root/.ssh/known_hosts
+RUN mkdir -p /root/.ssh && ssh-keyscan cran.r-project.org >>/root/.ssh/known_hosts
 RUN git config --global credential.helper store
 COPY ssh_config /root/.ssh/config
 
