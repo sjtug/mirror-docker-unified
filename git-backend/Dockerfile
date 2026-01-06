@@ -1,5 +1,5 @@
 # small is beautiful
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 LABEL org.opencontainers.image.authors="Anthony Hogg anthony@hogg.fr"
 
