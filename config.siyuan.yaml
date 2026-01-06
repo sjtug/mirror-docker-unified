@@ -914,19 +914,6 @@ repos:
     path: /srv/data55T/git/SJTUThesis.git
     serve_mode: git
     <<: *oneshot_common
-  # - type: shell_script
-  #   script: /worker-script/github-release.sh Nuullll/intel-extension-for-pytorch 30
-  #   interval: 86400
-  #   name: github/intel-extension-for-pytorch
-  #   target: /github-release/Nuullll/intel-extension-for-pytorch/releases/download/?mirror_intel_list
-  #   serve_mode: redir_force
-  #   <<: *oneshot_common
-  - type: external
-    name: github/intel-extension-for-pytorch # for compatibility
-    serve_mode: redir
-    target: https://intel-optimized-pytorch.s3.cn-north-1.amazonaws.com.cn/ipex_stable/cpu
-    # disabled: true
-    <<: *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh sjtug/SJTUBeamer 30
     interval: 86400
