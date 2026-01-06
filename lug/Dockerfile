@@ -5,8 +5,7 @@ RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\
 RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/security.debian.org/http:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources ; fi
 
 WORKDIR /app
-RUN apt-get update && apt-get install rsync wget git jq curl unzip -y
-RUN apt-get install apt-transport-https ca-certificates zlib1g-dev -y
+RUN apt-get update && apt-get install rsync wget git jq curl unzip apt-transport-https ca-certificates openssl zlib1g-dev -y
 
 RUN mkdir build-script
 
