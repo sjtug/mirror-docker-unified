@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 ARG USE_SJTUG
 RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/http:\/\/deb.debian.org/http:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources ; fi
@@ -59,7 +59,7 @@ RUN cd $(mktemp -d) \
     && install -m 755 apt-mirror /usr/bin/apt-mirror
 
 # general config
-RUN mkdir /root/.ssh && ssh-keyscan cran.r-project.org >>/root/.ssh/known_hosts
+RUN mkdir -p /root/.ssh && ssh-keyscan cran.r-project.org >>/root/.ssh/known_hosts
 RUN git config --global credential.helper store
 COPY ssh_config /root/.ssh/config
 
