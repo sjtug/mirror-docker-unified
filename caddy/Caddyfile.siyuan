@@ -372,7 +372,6 @@ https://mirror.sjtu.edu.cn {
         not path /git/touying-sjtu.git/*
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
-        not path /github/modern-sjtu-thesis/*
         not path /centos/*
         not path /ubuntu-cd/*
         not path /scientific/*
@@ -973,10 +972,6 @@ https://mirror.sjtu.edu.cn {
     redir /github/SJTUThesis /github/SJTUThesis/ 301
     handle_path /github/SJTUThesis/* {
         redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
-    }
-    redir /github/modern-sjtu-thesis /github/modern-sjtu-thesis/ 301
-    handle_path /github/modern-sjtu-thesis/* {
-        redir * /github-release/sjtug/modern-sjtu-thesis/releases/download/?mirror_intel_list 302
     }
     redir /centos /centos/ 301
     handle_path /centos/* {
