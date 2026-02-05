@@ -368,6 +368,8 @@ https://mirror.sjtu.edu.cn {
         not path /git/SJTUBeamer.git/*
         not path /git/SJTUTeX.git/*
         not path /git/SJTUThesis.git/*
+        not path /git/modern-sjtu-thesis.git/*
+        not path /git/touying-sjtu.git/*
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
         not path /centos/*
@@ -1188,6 +1190,14 @@ https://mirror.sjtu.edu.cn {
     }
     redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
     handle /git/SJTUThesis.git/* {
+        reverse_proxy git-backend
+    }
+    redir /git/modern-sjtu-thesis.git /git/modern-sjtu-thesis.git/ 301
+    handle /git/modern-sjtu-thesis.git/* {
+        reverse_proxy git-backend
+    }
+    redir /git/touying-sjtu.git /git/touying-sjtu.git/ 301
+    handle /git/touying-sjtu.git/* {
         reverse_proxy git-backend
     }
     redir /git/lean4-packages/std4 /git/lean4-packages/std4/ 301
