@@ -368,8 +368,11 @@ https://mirror.sjtu.edu.cn {
         not path /git/SJTUBeamer.git/*
         not path /git/SJTUTeX.git/*
         not path /git/SJTUThesis.git/*
+        not path /git/modern-sjtu-thesis.git/*
+        not path /git/touying-sjtu.git/*
         not path /github/SJTUBeamer/*
         not path /github/SJTUThesis/*
+        not path /github/modern-sjtu-thesis/*
         not path /centos/*
         not path /ubuntu-cd/*
         not path /scientific/*
@@ -971,6 +974,10 @@ https://mirror.sjtu.edu.cn {
     handle_path /github/SJTUThesis/* {
         redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
     }
+    redir /github/modern-sjtu-thesis /github/modern-sjtu-thesis/ 301
+    handle_path /github/modern-sjtu-thesis/* {
+        redir * /github-release/sjtug/modern-sjtu-thesis/releases/download/?mirror_intel_list 302
+    }
     redir /centos /centos/ 301
     handle_path /centos/* {
         redir * https://repo.huaweicloud.com/centos/{uri} 302
@@ -1188,6 +1195,14 @@ https://mirror.sjtu.edu.cn {
     }
     redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
     handle /git/SJTUThesis.git/* {
+        reverse_proxy git-backend
+    }
+    redir /git/modern-sjtu-thesis.git /git/modern-sjtu-thesis.git/ 301
+    handle /git/modern-sjtu-thesis.git/* {
+        reverse_proxy git-backend
+    }
+    redir /git/touying-sjtu.git /git/touying-sjtu.git/ 301
+    handle /git/touying-sjtu.git/* {
         reverse_proxy git-backend
     }
     redir /git/lean4-packages/std4 /git/lean4-packages/std4/ 301

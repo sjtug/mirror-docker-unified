@@ -915,6 +915,22 @@ repos:
     serve_mode: git
     <<: *oneshot_common
   - type: shell_script
+    script: /worker-script/git.sh
+    interval: 7200
+    name: git/modern-sjtu-thesis.git
+    source: https://github.com/sjtug/modern-sjtu-thesis
+    path: /srv/data55T/git/modern-sjtu-thesis.git
+    serve_mode: git
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/git.sh
+    interval: 7200
+    name: git/touying-sjtu.git
+    source: https://github.com/sjtug/touying-sjtu
+    path: /srv/data55T/git/touying-sjtu.git
+    serve_mode: git
+    <<: *oneshot_common
+  - type: shell_script
     script: /worker-script/github-release.sh sjtug/SJTUBeamer 30
     interval: 86400
     name: github/SJTUBeamer
@@ -926,6 +942,13 @@ repos:
     interval: 86400
     name: github/SJTUThesis
     target: /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list
+    serve_mode: redir_force
+    <<: *oneshot_common
+  - type: shell_script
+    script: /worker-script/github-release.sh sjtug/modern-sjtu-thesis 30
+    interval: 86400
+    name: github/modern-sjtu-thesis
+    target: /github-release/sjtug/modern-sjtu-thesis/releases/download/?mirror_intel_list
     serve_mode: redir_force
     <<: *oneshot_common
   - type: external
