@@ -114,7 +114,7 @@ repos:
       - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirror.wisegs.com/cygwin/
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/cygwin/
     interval: 3600
     path: /mnt/cygwin
     name: cygwin
