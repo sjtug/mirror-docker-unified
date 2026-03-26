@@ -44,8 +44,9 @@ repos:
     source: rsync://root@kos.ieisystem.com/wwwroot
     password: Keyarchos_yum
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # racket
   - type: shell_script
     name: racket
@@ -53,8 +54,9 @@ repos:
     interval: 13271
     source: rsync://mirror.csclub.uwaterloo.ca/racket/racket-installers
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # bmclapi
   - type: shell_script
     name: bmclapi
@@ -63,8 +65,9 @@ repos:
     source: rsync://rsync.mirrors.ustc.edu.cn/bmclapi
     serve_mode: rsync_gateway
     rsync_extra_flags: --exclude='*.links.tar.gz*' --exclude='/other' --exclude='/sources' --exclude='/logs'
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # alhp
   - type: shell_script
     name: alhp
@@ -73,8 +76,9 @@ repos:
     source: rsync://alhp.dev/alhp
     serve_mode: rsync_gateway
     rsync_extra_flags: --exclude='*.links.tar.gz*' --exclude='/other' --exclude='/sources' --exclude='/logs'
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # nspawn
   - type: shell_script
     name: nspawn
@@ -82,8 +86,9 @@ repos:
     interval: 6901
     source: rsync://hub.nspawn.org/containers
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # anthon
   - type: shell_script
     name: anthon
@@ -92,7 +97,8 @@ repos:
     source: rsync://repo.aosc.io/anthon
     path: /srv/data55T/anthon
     show_hidden: /anthon/.repotest /anthon/.repotest.sha256sum
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # leopard.sh
   - type: shell_script
     name: leopardsh
@@ -101,8 +107,9 @@ repos:
     source: rsync://leopard.sh/html
     serve_mode: rsync_gateway
     rsync_extra_flags: --exclude=/misc/ --exclude=.DS_Store
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # endeavouros
   - type: shell_script
     name: endeavouros
@@ -110,8 +117,9 @@ repos:
     interval: 5494
     source: rsync://alpix.eu.rsync.endeavouros.com/endeavouros
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # debian-cdimage
   - type: shell_script
     name: debian-cdimage
@@ -120,8 +128,9 @@ repos:
     source: rsync://cdimage.debian.org/cdimage/
     serve_mode: rsync_gateway
     rsync_extra_flags: --exclude=archive/ --exclude="daily-*/" --exclude=source/ --include=".latest" --exclude=".*/" --exclude="*alpha*" --exclude="*-edu-*" --exclude=/blends-live --exclude=/cd-sources --exclude=/release --exclude=/experimental-live --exclude="/snapshot*" --exclude="/stretch*" --exclude=/tmp --include=/unofficial/non-free --exclude="/unofficial/*" --exclude="/project*" --exclude=/cloud/test --exclude="/cloud/**/daily"
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # packman
   - type: shell_script
     name: packman
@@ -129,8 +138,9 @@ repos:
     interval: 10701
     source: rsync://mirror.karneval.cz/packman/
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # pop
   - type: shell_script
     script: /worker-script/apt.sh
@@ -141,8 +151,9 @@ repos:
     interval: 10601
     path: /srv/data55T/pop-os
     name: pop-os
-    <<: *oneshot_common
-    <<: *apt_common
+    <<:
+      - *oneshot_common
+      - *apt_common
   # rocky
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -151,7 +162,8 @@ repos:
     path: /srv/data55T/rocky
     name: rocky
     rsync_extra_flags: --exclude "*/debug/*"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # raspberry-pi-os-images
   - type: shell_script
     name: raspberry-pi-os-images
@@ -159,8 +171,9 @@ repos:
     interval: 10801
     source: rsync://mirrors6.tuna.tsinghua.edu.cn/raspberry-pi-os-images/
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # archlinuxarm
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -175,7 +188,8 @@ repos:
     interval: 6000
     path: /srv/data55T/archlinux-cn
     script: /worker-script/zhiyuan/worker-script/archlinux-cn.sh
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # opencloudos
   - type: shell_script
     script: /worker-script/rsync-fetcher.sh
@@ -183,8 +197,9 @@ repos:
     interval: 5400
     name: opencloudos
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
     ## qt
     #- type: shell_script
     #  script: /worker-script/rsync-fetcher.sh
@@ -203,13 +218,15 @@ repos:
     path: /srv/data55T/debian
     name: debian
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # debian-cd
   - type: external
     name: debian-cd
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/debian-cd"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # debian-security
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -218,20 +235,23 @@ repos:
     path: /srv/data55T/debian-security
     name: debian-security
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # deepin
   - type: external
     name: deepin
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/deepin"
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # deepin-cd
   - type: external
     name: deepin-cd
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/deepin-cd"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # docker-ce
   - type: shell_script
     name: docker-ce
@@ -240,22 +260,25 @@ repos:
     interval: 4900
     serve_mode: rsync_gateway
     no_redir_http: true
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # fedora/linux
   - type: external
     name: fedora/linux
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/fedora/linux"
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # fedora/epel
   - type: external
     name: fedora/epel
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/fedora/epel"
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # fedora-secondary
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -265,33 +288,38 @@ repos:
     name: fedora-secondary
     rsync_extra_flags: --exclude "development/*" --exclude "extras/*" --exclude "*/debug/*"
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # linuxmint
   - type: external
     name: linuxmint
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/linuxmint/packages"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # linuxmint-cd
   - type: external
     name: linuxmint-cd
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/linuxmint-cd"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # mageia
   - type: external
     name: mageia
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/mageia"
     disabled: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # opensuse
   - type: external
     name: opensuse
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/opensuse"
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # openkylin
   - type: shell_script
     name: openkylin
@@ -302,8 +330,9 @@ repos:
     # So we do not hide it behind secrets
     password: b85b3ab60822.11ed-Ok
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # openkylin-cdimage
   - type: shell_script
     name: openkylin-cdimage
@@ -314,8 +343,9 @@ repos:
     # So we do not hide it behind secrets
     password: b85b3ab60822.11ed-Ok
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # mx-packages
   - type: shell_script
     name: mx-packages
@@ -326,21 +356,24 @@ repos:
     # So we do not hide it behind secrets
     password: T1tpw4rstmr
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   # openvz
   - type: external
     name: openvz
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/openvz"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # remi
   - type: external
     name: remi
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/remi"
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://packages.termux.dev/termux
@@ -348,14 +381,16 @@ repos:
     path: /srv/data55T/termux
     name: termux
     rsync_extra_flags: --exclude "termux-main-21"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   #ubuntu
   - type: external
     name: ubuntu
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/ubuntu/"
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # ubuntu-releases
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -363,13 +398,15 @@ repos:
     interval: 24600
     path: /srv/data55T/ubuntu-releases
     name: ubuntu-releases
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # ubuntu-cdimage
   - type: external
     name: ubuntu-cdimage
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/ubuntu-cd"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # ubuntu-ports
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
@@ -378,7 +415,8 @@ repos:
     path: /srv/data55T/ubuntu-ports
     name: ubuntu-ports
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # openwrt
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -388,7 +426,8 @@ repos:
     rsync_extra_flags: --exclude "index.html" --exclude "snapshots/*"
     name: openwrt
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # rpmfusion
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -397,7 +436,8 @@ repos:
     path: /srv/data55T/rpmfusion
     name: rpmfusion
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # homebrew-bottles
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix homebrew-bottles/bottles --s3-buffer-path /var/cache --print-plan 100 homebrew
@@ -405,14 +445,16 @@ repos:
     interval: 10800
     name: homebrew-bottles
     z_url: "/homebrew-bottles/bottles"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # rust-static
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix rust-static --s3-buffer-path /var/cache --print-plan 100 rustup
     serve_mode: mirror_intel
     interval: 43200
     name: rust-static
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # pypi
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix pypi-packages --s3-buffer-path /var/cache --print-plan 100 --no-delete --s3-prefix-hint-mode pypi pypi --bq-query --keep-recent 10
@@ -420,28 +462,32 @@ repos:
     serve_mode: mirror_intel
     interval: 86400
     name: pypi-packages
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # dart-pub
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix dart-pub --s3-buffer-path /var/cache --print-plan 100 dart-pub
     serve_mode: mirror_intel
     interval: 4800
     name: dart-pub
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # pytorch-wheels
   - type: shell_script
     script: /app/mirror-clone --concurrent_resolve 64 --workers 4 pytorch_wheels --target http://mirror-intel:8000/pytorch-wheels
     serve_mode: mirror_intel
     interval: 4900
     name: pytorch-wheels
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # crates.io
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix crates.io/crates --s3-buffer-path /var/cache --print-plan 100 crates-io
     serve_mode: mirror_intel
     interval: 7200
     name: crates.io
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # flutter_infra
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra/
@@ -450,21 +496,24 @@ repos:
     name: flutter_infra
     # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
     source: https://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # ghcup
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix ghcup --s3-buffer-path /var/cache --s3-scan-metadata --print-plan 100 --no-delete ghcup --target-mirror https://mirror.sjtu.edu.cn/ghcup
     serve_mode: mirror_intel
     interval: 7000
     name: ghcup
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # elan
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix elan --s3-buffer-path /var/cache --s3-scan-metadata --print-plan 100 elan --retain-elan-versions 5 --retain-lean-versions 10 --retain-lean-nightly-versions 14 --retain-glean-versions 1 --retain-proofwidgets-versions 10
     serve_mode: mirror_intel
     interval: 7000
     name: elan
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3601
@@ -473,13 +522,15 @@ repos:
     path: /srv/data55T/git/homebrew-services.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-services.git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: linuxbrew-bottles
     serve_mode: redir
     target: https://mirror.sjtu.edu.cn/homebrew-bottles
     disabled: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3608
@@ -488,7 +539,8 @@ repos:
     path: /srv/data55T/git/guix.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/guix.git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3700
@@ -497,7 +549,8 @@ repos:
     path: /srv/data55T/git/llvm-project.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/llvm-project.git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 3650
@@ -506,14 +559,16 @@ repos:
     path: /srv/data55T/git/flutter-sdk.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/flutter-sdk.git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.apache.org/apache-dist/
     interval: 7200
     path: /srv/data55T/apache
     name: apache
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
@@ -546,7 +601,8 @@ repos:
     name: dragonflybsd/iso-images
     rsync_extra_flags: --exclude "tmp"
     serve_mode: ignore
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.jaist.ac.jp/pub/DragonFly/dports/
@@ -554,63 +610,72 @@ repos:
     path: /srv/data55T/dragonflybsd/dports
     name: dragonflybsd/dports
     serve_mode: ignore
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://www.blackarch.org/blackarch/
     interval: 20000
     path: /srv/data55T/blackarch
     name: blackarch
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh GNS3/gns3-gui 3
     interval: 86400
     name: github/GNS3
     target: /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh FreeCAD/FreeCAD 5
     interval: 86400
     name: github/FreeCAD
     target: /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/prometheus.sh
     interval: 86400
     name: github/prometheus
     target: /github-release/prometheus/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh oneclick/rubyinstaller2 30
     interval: 86400
     name: github/rubyinstaller2
     target: /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh PowerShell/PowerShell 5
     interval: 86400
     name: github/PowerShell
     target: /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh YerongAI/Office-Tool 5
     interval: 86400
     name: github/Office-Tool
     target: /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: ftp.ibiblio.org::ldp_mirror
     interval: 5800
     path: /srv/data55T/sites/tldp.org
     name: sites/tldp.org
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/mirrorz.sh
     interval: 300
@@ -663,7 +728,8 @@ repos:
     interval: 7200
     path: /srv/data55T/sury
     name: sury
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: opam-cache
     serve_mode: mirror_intel
@@ -678,18 +744,21 @@ repos:
     path: /srv/data55T/git/dpdk.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/dpdk.git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix gradle/distributions --s3-buffer-path /var/cache --print-plan 100 gradle
     serve_mode: mirror_intel
     interval: 10800
     name: gradle/distributions
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     path: /srv/data55T/dragonflybsd
     name: dragonflybsd
     disabled: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 4900
@@ -698,20 +767,23 @@ repos:
     path: /srv/data55T/git/homebrew-install.git
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-install.git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: openeuler
     serve_mode: redir
     target: https://mirrors.cernet.edu.cn/openeuler
     disabled: true
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: fedora
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/fedora"
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.ocf.berkeley.edu/manjaro
@@ -719,7 +791,8 @@ repos:
     path: /srv/data55T/manjaro
     name: manjaro
     exclude_hidden: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: manjarostable
     serve_mode: redir
@@ -732,12 +805,14 @@ repos:
     name: voidlinux
     # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
     source: https://mirrors.tuna.tsinghua.edu.cn/voidlinux
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: archlinux
     serve_mode: redir
     target: "{scheme}://ftp.sjtu.edu.cn/archlinux"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # bioconductor
   - type: shell_script
     name: bioconductor
@@ -745,8 +820,9 @@ repos:
     interval: 40801
     source: rsync://mirrors6.tuna.tsinghua.edu.cn/bioconductor/
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix wireshark --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://2.na.dl.wireshark.org --rsync-base rsync://rsync.wireshark.org/wsdl
     serve_mode: mirror_intel
@@ -754,13 +830,15 @@ repos:
     name: wireshark
     # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
     source: https://2.na.dl.wireshark.org
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/test.sh
     interval: 300
     path: /srv/data55T/test
     name: test
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix macports --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/macports --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/macports
     serve_mode: mirror_intel
@@ -768,14 +846,16 @@ repos:
     name: macports
     # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
     source: https://mirrors.tuna.tsinghua.edu.cn/macports
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh VSCodium/vscodium 3
     interval: 86400
     name: github/vscodium
     target: /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix gimp --s3-buffer-path /var/cache --print-plan 100 rsync --http-base http://www.mirrorservice.org/sites/ftp.gimp.org/pub/gimp --rsync-base rsync://rsync.mirrorservice.org/ftp.gimp.org/pub/gimp/
     serve_mode: mirror_intel
@@ -783,7 +863,8 @@ repos:
     # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
     source: http://www.mirrorservice.org/sites/ftp.gimp.org/pub/gimp
     name: gimp
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: flutter_infra_release
     serve_mode: redir
@@ -795,14 +876,16 @@ repos:
     interval: 7200
     name: anaconda
     unified: disable
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.armbian.com/apt
     interval: 28800
     path: /srv/data55T/armbian
     name: armbian
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix kernel --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/kernel --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/kernel/
     serve_mode: mirror_intel
@@ -810,7 +893,8 @@ repos:
     name: kernel
     # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
     source: https://mirrors.tuna.tsinghua.edu.cn/kernel
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     name: git/linux.git
@@ -819,21 +903,24 @@ repos:
     path: /srv/data55T/git/linux.git
     target: https://git.sjtu.edu.cn/sjtug/linux.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     name: raspbian-addons
     script: /worker-script/rsync.sh
     path: /srv/data55T/raspbian-addons
     interval: 10000
     source: rsync://mirrors.tuna.tsinghua.edu.cn/osdn/storage/g/r/ra/raspbian-addons/
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/OpenBSD
     interval: 50000
     path: /srv/data55T/OpenBSD
     name: OpenBSD
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://cdimage.ubuntukylin.com/releases/
@@ -841,7 +928,8 @@ repos:
     path: /srv/data55T/ubuntukylin-cdimage
     name: ubuntukylin-cdimage
     rsync_extra_flags: --exclude "professional/"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://archive.ubuntukylin.com/ubuntukylin/
@@ -849,14 +937,16 @@ repos:
     path: /srv/data55T/ubuntukylin
     name: ubuntukylin
     rsync_extra_flags: --exclude "*partner*/"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirror.zorinos.com/isos/
     interval: 86400
     path: /srv/data55T/zorinos-isos
     name: zorinos-isos
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync-fetcher.sh
     source: rsync://cloud-images.ubuntu.com/cloud-images/
@@ -864,8 +954,9 @@ repos:
     name: ubuntu-cloud-images
     rsync_extra_flags: --exclude "releases/" --exclude ".bzr/" --exclude "lost+found/"
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.de.debian.org/debian-ports/
@@ -873,7 +964,8 @@ repos:
     path: /srv/data55T/debian-ports
     name: debian-ports
     rsync_extra_flags: --exclude "pool-alpha" --exclude "pool-hppa" --exclude "pool-hurd-i386" --exclude "pool-ia64" --exclude "pool-kfreebsd-amd64" --exclude "pool-kfreebsd-i386" --exclude "pool-m68k" --exclude "pool-powerpc" --exclude "pool-ppc64" --exclude "pool-sh4" --exclude "pool-sparc64" --exclude "pool-x32"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
@@ -881,7 +973,8 @@ repos:
     source: https://github.com/Homebrew/homebrew-bundle.git
     path: /srv/data55T/git/homebrew-bundle.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
@@ -889,7 +982,8 @@ repos:
     source: https://github.com/spdk/spdk
     path: /srv/data55T/git/spdk.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
@@ -897,7 +991,8 @@ repos:
     source: https://github.com/sjtug/SJTUBeamer
     path: /srv/data55T/git/SJTUBeamer.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
@@ -905,7 +1000,8 @@ repos:
     source: https://github.com/sjtug/SJTUTeX
     path: /srv/data55T/git/SJTUTeX.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
@@ -913,7 +1009,8 @@ repos:
     source: https://github.com/sjtug/SJTUThesis
     path: /srv/data55T/git/SJTUThesis.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
@@ -921,7 +1018,8 @@ repos:
     source: https://github.com/sjtug/modern-sjtu-thesis
     path: /srv/data55T/git/modern-sjtu-thesis.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/git.sh
     interval: 7200
@@ -929,39 +1027,45 @@ repos:
     source: https://github.com/sjtug/touying-sjtu
     path: /srv/data55T/git/touying-sjtu.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh sjtug/SJTUBeamer 30
     interval: 86400
     name: github/SJTUBeamer
     target: /github-release/sjtug/SJTUBeamer/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/github-release.sh sjtug/SJTUThesis 30
     interval: 86400
     name: github/SJTUThesis
     target: /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: centos
     serve_mode: redir
     target: https://repo.huaweicloud.com/centos/
     disabled: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: ubuntu-cd
     serve_mode: redir
     target: https://repo.huaweicloud.com/ubuntu-cdimage/
     disabled: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: scientific
     serve_mode: redir
     target: https://mirrors.ustc.edu.cn/scientificlinux/
     disabled: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # mathlib
   - type: shell_script
     script: /worker-script/git.sh
@@ -1047,7 +1151,8 @@ repos:
     path: /srv/data55T/ros
     mirror_path: /srv/data55T/ros/ubuntu
     name: ros
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # alpine
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -1056,4 +1161,5 @@ repos:
     path: /srv/data55T/alpine
     name: alpine
     no_redir_http: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common

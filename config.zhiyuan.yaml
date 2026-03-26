@@ -31,7 +31,8 @@ repos:
     interval: 10800
     path: /mnt/kali
     name: kali
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # almalinux
   - type: shell_script
     script: /worker-script/rsync.sh
@@ -39,7 +40,8 @@ repos:
     interval: 10903
     path: /mnt/almalinux
     name: almalinux
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # immortalwrt
   - type: shell_script
     script: /worker-script/rsync_password.sh
@@ -51,35 +53,40 @@ repos:
     # So we do not hide it behind secrets
     password: immortalwrt-org
     rsync_extra_flags: --exclude "/snapshots/" --exclude "/releases/*18.06*"
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.chiark.greenend.org.uk/ftp/users/sgtatham/putty-website-mirror/
     interval: 3600
     path: /mnt/putty
     name: putty
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync11.us.gentoo.org/gentoo-portage/
     interval: 3600
     path: /mnt/gentoo
     name: gentoo
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.ca.vim.org/vim
     interval: 3600
     path: /mnt/vim
     name: vim
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: cpan-rsync.perl.org::CPAN
     interval: 3600
     path: /mnt/cpan
     name: cpan
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/rsync_ssh.sh
     source: "cran-rsync@cran.r-project.org:"
@@ -87,28 +94,32 @@ repos:
     path: /mnt/cran
     name: cran
     ignore_vanish: true
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/ctex/
     interval: 3600
     path: /mnt/ctex
     name: ctex
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirrors.tuna.tsinghua.edu.cn/gnu/
     interval: 43200
     path: /mnt/gnu
     name: gnu
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://mirror.wisegs.com/cygwin/
     interval: 3600
     path: /mnt/cygwin
     name: cygwin
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync-fetcher.sh
     source: rsync://ftp.jaist.ac.jp/kali-images/
@@ -116,8 +127,9 @@ repos:
     path: /mnt/kali-images
     name: kali-images
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/homebrew-core.git
@@ -126,7 +138,8 @@ repos:
     path: /mnt/git/homebrew-core.git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-core.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/homebrew-cask.git
@@ -135,7 +148,8 @@ repos:
     origin: https://github.com/Homebrew/homebrew-cask.git
     target: https://git.sjtu.edu.cn/sjtug/homebrew-cask.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/brew.git
@@ -144,7 +158,8 @@ repos:
     origin: https://github.com/Homebrew/brew.git
     target: https://git.sjtu.edu.cn/sjtug/brew.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/crates-io.sh
     name: git/crates.io-index
@@ -153,7 +168,8 @@ repos:
     origin: https://github.com/rust-lang/crates.io-index.git
     target: https://git.sjtu.edu.cn/sjtug/crates.io-index.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: crates.io-index
     path: /mnt/git/crates.io-index
@@ -166,24 +182,27 @@ repos:
     source: rsync://mirrors6.tuna.tsinghua.edu.cn/raspbian/
     no_redir_http: true
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   - type: shell_script
     name: parrot
     script: /worker-script/rsync-fetcher.sh
     interval: 3802
     source: rsync://archive.parrotsec.org/parrot
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   - type: shell_script
     name: raspberrypi
     script: /worker-script/rsync-fetcher.sh
     interval: 10801
     source: rsync://apt-repo.raspberrypi.org/archive
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   - type: shell_script
     name: mx-isos
     script: /worker-script/rsync_password.sh
@@ -193,7 +212,8 @@ repos:
     # Password is made public at https://mxlinux.org/wiki/rsyncserver/mirroring-mx-antix-linux/
     # So we do not hide it behind secrets
     password: dstuPwd
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/packagist.sh
     interval: 4800
@@ -203,14 +223,16 @@ repos:
     upstream: https://repo.packagist.org
     extra_directives:
       - precompressed gzip
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/mongodb.sh
     source: s3://repo.mongodb.org/
     interval: 4600
     path: /mnt/mongodb
     name: mongodb
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # - type: shell_script
   #   script: julia -t auto /worker-script/zhiyuan/worker-script/julia.jl
   #   interval: 8000
@@ -233,15 +255,17 @@ repos:
     interval: 9200
     path: /mnt/julia-releases
     name: julia-releases
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     name: msys2
     script: /worker-script/rsync-fetcher.sh
     interval: 12001
     source: rsync://repo.msys2.org/builds
     serve_mode: rsync_gateway
-    <<: *rsync_fetcher_common
-    <<: *oneshot_common
+    <<:
+      - *rsync_fetcher_common
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/opam.sh
     name: git/opam-repository.git
@@ -250,7 +274,8 @@ repos:
     origin: https://github.com/ocaml/opam-repository.git
     target: https://git.sjtu.edu.cn/sjtug/opam-repository.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/qemu.git
@@ -259,14 +284,16 @@ repos:
     path: /mnt/git/qemu.git
     target: https://git.sjtu.edu.cn/sjtug/qemu.git
     serve_mode: git
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://repo.linuxliteos.com/repo
     interval: 7200
     path: /mnt/linuxliteos
     name: linuxliteos
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   # - type: shell_script
   #   name: download.flutter.io
   #   script: /worker-script/rsync.sh
@@ -317,7 +344,8 @@ repos:
     subdomain: anaconda.mirrors.sjtug.sjtu.edu.cn
     disabled: true
     unified: disable
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: external
     name: CTAN
     path: /mnt/CTAN
@@ -329,7 +357,8 @@ repos:
     path: /mnt/ctan
     no_redir_http: true
     name: ctan
-    <<: *oneshot_common
+    <<:
+      - *oneshot_common
   - type: shell_script
     script: /worker-script/mirrorz.sh
     interval: 300

@@ -230,7 +230,7 @@ services:
       context: ./mirror-intel
       args:
         - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.35
+        - INTEL_VERSION=v0.1.37
     networks:
       - ipv6-service-net
     expose:
