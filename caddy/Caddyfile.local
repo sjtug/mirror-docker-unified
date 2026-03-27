@@ -43,6 +43,7 @@ http://:80 {
         cerberus_endpoint
     }
     @cerberus {
+        not path /qt/*
         path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
         header User-Agent *Mozilla*
         header User-Agent *Opera*
@@ -51,6 +52,7 @@ http://:80 {
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
+        not path /qt/*
         not {
             path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
             header User-Agent *Mozilla*
@@ -143,6 +145,7 @@ https://:80 {
         cerberus_endpoint
     }
     @cerberus {
+        not path /qt/*
         path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
         header User-Agent *Mozilla*
         header User-Agent *Opera*
@@ -151,6 +154,7 @@ https://:80 {
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
+        not path /qt/*
         not {
             path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
             header User-Agent *Mozilla*
@@ -198,4 +202,3 @@ http://localhost {
 http:// {
     abort
 }
-
