@@ -276,6 +276,7 @@ def cerberus_settings() -> list[Node]:
     large_file = Node(
         r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$"
     )
+    exclude_cerberus = Node("not path /qt/*")
     browser_ua = [
         Node("header User-Agent *Mozilla*"),
         Node("header User-Agent *Opera*"),
@@ -292,11 +293,12 @@ def cerberus_settings() -> list[Node]:
                 Node("cerberus_endpoint"),
             ],
         ),
-        Node("@cerberus", [large_file, *browser_ua, *addresses]),
+        Node("@cerberus", [exclude_cerberus, large_file, *browser_ua, *addresses]),
         Node(
             "@except_cerberus_endpoint",
             [
                 Node("not path /.cerberus/*"),
+                exclude_cerberus,
                 Node("not", [large_file, *browser_ua, *addresses]),
             ],
         ),
