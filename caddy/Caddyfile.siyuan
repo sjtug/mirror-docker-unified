@@ -43,7 +43,7 @@ http://mirror.sjtu.edu.cn {
         cerberus_endpoint
     }
     @cerberus {
-        not path /qt/*
+        not path /qt /qt/*
         path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
         header User-Agent *Mozilla*
         header User-Agent *Opera*
@@ -53,7 +53,7 @@ http://mirror.sjtu.edu.cn {
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
-        not path /qt/*
+        not path /qt /qt/*
         not {
             path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
             header User-Agent *Mozilla*
@@ -256,7 +256,7 @@ https://mirror.sjtu.edu.cn {
         cerberus_endpoint
     }
     @cerberus {
-        not path /qt/*
+        not path /qt /qt/*
         path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
         header User-Agent *Mozilla*
         header User-Agent *Opera*
@@ -266,7 +266,7 @@ https://mirror.sjtu.edu.cn {
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
-        not path /qt/*
+        not path /qt /qt/*
         not {
             path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
             header User-Agent *Mozilla*
