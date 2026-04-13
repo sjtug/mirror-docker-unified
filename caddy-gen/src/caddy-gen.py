@@ -276,7 +276,7 @@ def cerberus_settings() -> list[Node]:
     large_file = Node(
         r"path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$"
     )
-    exclude_cerberus = Node("not path /qt/*")
+    exclude_cerberus = Node("not path /qt /qt/*")
     browser_ua = [
         Node("header User-Agent *Mozilla*"),
         Node("header User-Agent *Opera*"),
