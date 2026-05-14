@@ -31,7 +31,9 @@ configure-venv:
 >   uv sync --directory integration-test; \
 > elif command -v nix >/dev/null 2>&1; then \
 >   echo "Configure Python virtual environment with uv2nix"; \
->   eval "$$(nix eval --raw .\#devShells.x86_64-linux.default.shellHook --option warn-dirty false)"; \
+>   nix build .\#caddy-gen --out-link caddy-gen/.venv --option warn-dirty false ; \
+>   nix build .\#gateway-gen --out-link gateway-gen/.venv --option warn-dirty false ; \
+>   nix build .\#integration-test --out-link integration-test/.venv --option warn-dirty false ; \
 > else \
 >   echo "ERROR: uv or nix not found"; \
 > fi

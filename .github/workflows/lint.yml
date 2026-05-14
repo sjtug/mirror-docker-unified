@@ -82,7 +82,6 @@ jobs:
           nix_conf: |
             extra-substituters = https://sjtug.cachix.org
             extra-trusted-public-keys = sjtug.cachix.org-1:06k1I31gmbCDlu7StkdMgDt1yEf6qoRsyaUkMpkuPdE=
-      - run: nix build .#pythonEnv-caddy-gen --out-link caddy-gen/.venv
       - name: check if Caddyfile is latest version
         run: make caddy-gen && git diff --exit-code
       - name: use CI config for docker-compose
@@ -112,6 +111,5 @@ jobs:
           nix_conf: |
             extra-substituters = https://sjtug.cachix.org
             extra-trusted-public-keys = sjtug.cachix.org-1:06k1I31gmbCDlu7StkdMgDt1yEf6qoRsyaUkMpkuPdE=
-      - run: nix build .#pythonEnv-gateway-gen --out-link gateway-gen/.venv
       - name: check if rsync-gateway config.toml is latest version
         run: make gateway-gen && git diff --exit-code
