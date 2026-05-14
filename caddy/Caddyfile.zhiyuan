@@ -27,22 +27,6 @@
     order cerberus before redir
 }
 
-packagist.mirrors.sjtug.sjtu.edu.cn {
-    encode /* gzip zstd
-    log {
-        output stdout
-        format transform "{common_log}"  # log in v1 style, caddyserver/transform-encoder required
-    }
-    file_server /* browse {
-        root /mnt/packagist
-        hide .*
-        precompressed gzip
-    }
-    @hidden path */.*
-    respond @hidden 404
-    header * x-sjtug-mirror-id zhiyuan
-}
-
 k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn {
     log {
         output stdout
@@ -528,16 +512,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         file_server browse {
             root /mnt
             hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /packagist /packagist/ 301
-    handle /packagist/* {
-        file_server browse {
-            root /mnt
-            hide .*
-            precompressed gzip
         }
         @hidden path */.*
         respond @hidden 404

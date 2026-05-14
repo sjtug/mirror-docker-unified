@@ -214,17 +214,17 @@ repos:
     password: dstuPwd
     <<:
       - *oneshot_common
-  - type: shell_script
-    script: /worker-script/zhiyuan/worker-script/packagist.sh
-    interval: 4800
-    path: /mnt/packagist
-    name: packagist
-    subdomain: packagist.mirrors.sjtug.sjtu.edu.cn
-    upstream: https://repo.packagist.org
-    extra_directives:
-      - precompressed gzip
-    <<:
-      - *oneshot_common
+  # - type: shell_script
+  #   script: /worker-script/zhiyuan/worker-script/packagist.sh
+  #   interval: 4800
+  #   path: /mnt/packagist
+  #   name: packagist
+  #   subdomain: packagist.mirrors.sjtug.sjtu.edu.cn
+  #   upstream: https://repo.packagist.org
+  #   extra_directives:
+  #     - precompressed gzip
+  #   <<:
+  #     - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/mongodb.sh
     source: s3://repo.mongodb.org/

@@ -10,16 +10,16 @@ RUN apt-get update && apt-get install rsync wget git jq curl unzip apt-transport
 RUN mkdir build-script
 
 # PHP, composer
-COPY build-script/setup-php.sh build-script/setup-php.sh
-RUN /app/build-script/setup-php.sh
-RUN apt-get update && apt-get install php-cli php-mbstring php-xml php-curl -y
+# COPY build-script/setup-php.sh build-script/setup-php.sh
+# RUN /app/build-script/setup-php.sh
+# RUN apt-get update && apt-get install php-cli php-mbstring php-xml php-curl -y
 
 # Python
 RUN apt-get install python3 python3-pip -y
 
 # packagist-mirror
-COPY build-script/setup-packagist.sh build-script/setup-packagist.sh
-RUN /app/build-script/setup-packagist.sh
+# COPY build-script/setup-packagist.sh build-script/setup-packagist.sh
+# RUN /app/build-script/setup-packagist.sh
 
 # Julia
 COPY build-script/setup-julia.sh build-script/setup-julia.sh
