@@ -366,13 +366,6 @@ repos:
     serve_mode: ignore
     unified: disable
     name: .mirrorz
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: master.qt.io::qt-all
-    interval: 6000
-    path: /mnt/qt
-    name: qt
-    rsync_extra_flags: --exclude "snapshots/*"
     # no_redir_http: true
     # serve_mode: ignore
     # unified: disable
