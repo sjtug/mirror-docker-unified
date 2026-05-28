@@ -94,7 +94,7 @@ repos:
     name: anthon
     script: /worker-script/rsync.sh
     interval: 5601
-    source: rsync://repo.aosc.io/anthon
+    source: rsync://repo-us.aosc.io/anthon
     path: /srv/data55T/anthon
     show_hidden: /anthon/.repotest /anthon/.repotest.sha256sum
     <<:
