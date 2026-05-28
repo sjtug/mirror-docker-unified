@@ -921,24 +921,6 @@ repos:
       - *oneshot_common
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://cdimage.ubuntukylin.com/releases/
-    interval: 86400
-    path: /srv/data55T/ubuntukylin-cdimage
-    name: ubuntukylin-cdimage
-    rsync_extra_flags: --exclude "professional/"
-    <<:
-      - *oneshot_common
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: rsync://archive.ubuntukylin.com/ubuntukylin/
-    interval: 6000
-    path: /srv/data55T/ubuntukylin
-    name: ubuntukylin
-    rsync_extra_flags: --exclude "*partner*/"
-    <<:
-      - *oneshot_common
-  - type: shell_script
-    script: /worker-script/rsync.sh
     source: rsync://mirror.zorinos.com/isos/
     interval: 86400
     path: /srv/data55T/zorinos-isos

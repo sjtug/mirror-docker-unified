@@ -351,8 +351,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /git/linux.git/*
         not path /raspbian-addons/*
         not path /OpenBSD/*
-        not path /ubuntukylin-cdimage/*
-        not path /ubuntukylin/*
         not path /zorinos-isos/*
         not path /ubuntu-cloud-images/*
         not path /debian-ports/*
@@ -994,14 +992,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /OpenBSD /OpenBSD/ 301
     handle_path /OpenBSD/* {
         redir * https://mirror.sjtu.edu.cn/OpenBSD{uri} 302
-    }
-    redir /ubuntukylin-cdimage /ubuntukylin-cdimage/ 301
-    handle_path /ubuntukylin-cdimage/* {
-        redir * https://mirror.sjtu.edu.cn/ubuntukylin-cdimage{uri} 302
-    }
-    redir /ubuntukylin /ubuntukylin/ 301
-    handle_path /ubuntukylin/* {
-        redir * https://mirror.sjtu.edu.cn/ubuntukylin{uri} 302
     }
     redir /zorinos-isos /zorinos-isos/ 301
     handle_path /zorinos-isos/* {
