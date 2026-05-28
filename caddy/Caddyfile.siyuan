@@ -936,24 +936,6 @@ https://mirror.sjtu.edu.cn {
         @hidden path */.*
         respond @hidden 404
     }
-    redir /ubuntukylin-cdimage /ubuntukylin-cdimage/ 301
-    handle /ubuntukylin-cdimage/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /ubuntukylin /ubuntukylin/ 301
-    handle /ubuntukylin/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
     redir /zorinos-isos /zorinos-isos/ 301
     handle /zorinos-isos/* {
         file_server browse {
