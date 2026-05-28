@@ -381,12 +381,13 @@ repos:
     rsync_extra_flags: --exclude "termux-main-21"
     <<:
       - *oneshot_common
-  #ubuntu
+  # ubuntu
   - type: external
+    script: /worker-script/ubuntu-debian-rsync.sh
+    source: rsync://rsync.archive.ubuntu.com/ubuntu/
+    interval: 24900
+    path: /srv/data55T/ubuntu
     name: ubuntu
-    serve_mode: redir
-    target: "{scheme}://ftp.sjtu.edu.cn/ubuntu/"
-    no_redir_http: true
     <<:
       - *oneshot_common
   # ubuntu-releases

@@ -763,7 +763,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
     }
     redir /ubuntu /ubuntu/ 301
     handle_path /ubuntu/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
+        redir * https://mirror.sjtu.edu.cn/ubuntu{uri} 302
     }
     redir /ubuntu-releases /ubuntu-releases/ 301
     handle_path /ubuntu-releases/* {
