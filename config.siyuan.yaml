@@ -408,7 +408,7 @@ repos:
   # ubuntu-ports
   - type: shell_script
     script: /worker-script/ubuntu-debian-rsync.sh
-    source: rsync://ports.ubuntu.com/ubuntu-ports/
+    source: rsync://rsync.ports.ubuntu.com/ubuntu-ports/
     interval: 7800
     path: /srv/data55T/ubuntu-ports
     name: ubuntu-ports
