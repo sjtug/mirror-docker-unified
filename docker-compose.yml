@@ -47,11 +47,13 @@ services:
     expose:
       - 3000
     healthcheck:
-      test: curl -f http://localhost:3000 || exit 1
+      # `node:24-alpine` image includes `wget` but no `curl`
+      test: wget --spider -q http://localhost:3000 || exit 1
       interval: 1m30s
       timeout: 10s
       retries: 3
       start_period: 40s
+    stop_grace_period: 15s
     logging:
       options:
         max-size: "4M"
@@ -73,7 +75,6 @@ services:
       context: ./lug
       args:
         - USE_SJTUG=true
-        - CLONE_VERSION=v0.1.19
         - CLONE_V2_VERSION=v0.2.41
         - RSYNC_SJTUG_VERSION=v0.4.18
         - LUG_VERSION=v0.12.11
