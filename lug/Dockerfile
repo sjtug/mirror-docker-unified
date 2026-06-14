@@ -71,13 +71,8 @@ RUN /app/build-script/from-cache.sh \
     tmp.tar.gz \
     && tar -xvf tmp.tar.gz && rm tmp.tar.gz
 
-ARG CLONE_VERSION
-RUN /app/build-script/from-cache.sh \
-    https://mirror.sjtu.edu.cn/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
-    https://s3.jcloud.sjtu.edu.cn/899a892efef34b1b944a19981040f55b-oss01/sjtug-internal/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
-    https://github.com/sjtug/mirror-clone/releases/download/${CLONE_VERSION}/mirror-clone.tar.gz \
-    tmp.tar.gz \
-    && tar -xvf tmp.tar.gz && rm tmp.tar.gz
+# Legacy v1 mirror-clone removed — only usage (pytorch-wheels) migrated
+# to on-demand mirror-intel proxy. v2 binary is in /app/v2/mirror-clone.
 
 ARG CLONE_V2_VERSION
 RUN mkdir v2 && cd v2 && /app/build-script/from-cache.sh \
