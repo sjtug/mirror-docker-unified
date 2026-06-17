@@ -121,11 +121,11 @@ networks:
     driver_opts:
       com.docker.network.driver.mtu: 1450
   ipv6-service-net:
-    enable_ipv6: true
+    enable_ipv6: false
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: fd01::/80
+        - subnet: 172.30.0.0/16
     driver_opts:
       com.docker.network.driver.mtu: 1450
