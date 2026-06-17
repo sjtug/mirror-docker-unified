@@ -169,7 +169,7 @@ repos:
     name: raspberry-pi-os-images
     script: /worker-script/rsync-fetcher.sh
     interval: 10801
-    source: rsync://mirrors6.tuna.tsinghua.edu.cn/raspberry-pi-os-images/
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/raspberry-pi-os-images/
     serve_mode: rsync_gateway
     <<:
       - *rsync_fetcher_common
@@ -211,7 +211,7 @@ repos:
   # debian
   - type: shell_script
     script: /worker-script/debian.sh
-    source: mirrors6.tuna.tsinghua.edu.cn
+    source: mirrors.tuna.tsinghua.edu.cn
     interval: 5400
     path: /srv/data55T/debian
     name: debian
@@ -254,7 +254,7 @@ repos:
   - type: shell_script
     name: docker-ce
     script: /worker-script/rsync-fetcher.sh
-    source: rsync://mirrors6.tuna.tsinghua.edu.cn/docker-ce/
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/docker-ce/
     interval: 4900
     serve_mode: rsync_gateway
     no_redir_http: true
@@ -812,7 +812,7 @@ repos:
     name: bioconductor
     script: /worker-script/rsync-fetcher.sh
     interval: 40801
-    source: rsync://mirrors6.tuna.tsinghua.edu.cn/bioconductor/
+    source: rsync://mirrors.tuna.tsinghua.edu.cn/bioconductor/
     serve_mode: rsync_gateway
     <<:
       - *rsync_fetcher_common
