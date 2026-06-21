@@ -78,6 +78,7 @@ http://mirror.sjtu.edu.cn {
         not path /fedora/epel/*
         not path /opensuse/*
         not path /remi/*
+        not path /ubuntu/*
         not path /openeuler/*
         not path /fedora/*
     }
@@ -133,6 +134,10 @@ http://mirror.sjtu.edu.cn {
     redir /remi /remi/ 301
     handle_path /remi/* {
         redir * {scheme}://ftp.sjtu.edu.cn/remi{uri} 302
+    }
+    redir /ubuntu /ubuntu/ 301
+    handle_path /ubuntu/* {
+        redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
     }
     redir /ubuntu-ports /ubuntu-ports/ 301
     handle /ubuntu-ports/* {
@@ -306,6 +311,7 @@ https://mirror.sjtu.edu.cn {
         not path /mx-packages/*
         not path /openvz/*
         not path /remi/*
+        not path /ubuntu/*
         not path /ubuntu-cdimage/*
         not path /homebrew-bottles/*
         not path /rust-static/*
@@ -624,13 +630,8 @@ https://mirror.sjtu.edu.cn {
         respond @hidden 404
     }
     redir /ubuntu /ubuntu/ 301
-    handle /ubuntu/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
+    handle_path /ubuntu/* {
+        redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
     }
     redir /ubuntu-releases /ubuntu-releases/ 301
     handle /ubuntu-releases/* {
