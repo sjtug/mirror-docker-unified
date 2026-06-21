@@ -8,7 +8,15 @@ fi
 
 cd "$LUG_path"
 git remote set-url origin "$LUG_origin"
-git pull --all --rebase || (git reset --hard origin/HEAD && git pull --all --rebase)
+git fetch --prune origin
+git remote set-head origin --auto
+
+origin_head="$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD)"
+default_branch="${origin_head#origin/}"
+
+git checkout -B "$default_branch" "$origin_head"
+git branch --set-upstream-to="$origin_head" "$default_branch"
+git reset --hard "$origin_head"
 git update-server-info
 git gc --auto
 git repack -a -b -d
