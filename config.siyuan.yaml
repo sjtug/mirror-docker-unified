@@ -483,12 +483,12 @@ repos:
       - *oneshot_common
   # flutter_infra
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra/
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix flutter_infra --s3-buffer-path /var/cache --print-plan 100 --no-delete rsync --http-base https://mirror.nju.edu.cn/flutter/flutter_infra --rsync-base rsync://mirror.nju.edu.cn/flutter/flutter_infra/
     serve_mode: mirror_intel
     interval: 4000
     name: flutter_infra
     # Note: this source is only used for mirrorz to have correct source info in mirrorz.json. If you want to change upstream, also change the upstream in mirror-clone command.
-    source: https://mirrors.tuna.tsinghua.edu.cn/flutter/flutter_infra
+    source: https://mirror.nju.edu.cn/flutter/flutter_infra
     <<:
       - *oneshot_common
   # ghcup
