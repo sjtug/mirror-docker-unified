@@ -36,18 +36,8 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      flake-parts,
-      pyproject-nix,
-      uv2nix,
-      uv2nix_hammer_overrides,
-      pyproject-build-systems,
-      pre-commit-hooks,
-      treefmt-nix,
-    }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.treefmt-nix.flakeModule
         inputs.pre-commit-hooks.flakeModule
@@ -64,125 +54,113 @@
           config,
           pkgs,
           lib,
-          system,
           ...
         }:
         let
-          buildSystemOverrides = {
-            loguru = {
-              flit-core = [ ];
-            };
-          };
+          inherit (inputs)
+            pyproject-build-systems
+            pyproject-nix
+            uv2nix
+            uv2nix_hammer_overrides
+            ;
 
           cfg = lib.importTOML ./devshell.toml;
+          workspaceNames = cfg.python.workspaces;
 
-          names = cfg.python.workspaces;
+          buildSystemOverrides = {
+            loguru.flit-core = [ ];
+          };
 
-          # Load a uv workspace from a workspace root.
-          # Uv2nix treats all uv projects as workspace projects.
-          workspaces = lib.foldl' (
-            acc: path:
-            acc
-            // {
-              "workspace-${path}" = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./. + "/${path}"; };
-            }
-          ) { } names;
+          enableAll =
+            names:
+            lib.genAttrs names (_: {
+              enable = true;
+            });
+
+          workspaces = lib.genAttrs workspaceNames (
+            name: uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./. + "/${name}"; }
+          );
 
           python =
             pkgs."python${lib.versions.major cfg.python.version}${lib.versions.minor cfg.python.version}";
 
           pyprojectOverrides = lib.composeExtensions (uv2nix_hammer_overrides.overrides pkgs) (
-            # use uv2nix_hammer_overrides.overrides_debug
-            #   to see which versions were matched to which overrides
-            #  use uv2nix_hammer_overrides.overrides_strict / overrides_strict_debug
-            #  to use only overrides exactly matching your python package versions
-
-            # Build system dependencies specified in the shape expected by resolveBuildSystem
-            # The empty lists below are lists of optional dependencies.
-            #
-            # A package `foo` with specification written as:
-            # `setuptools-scm[toml]` in pyproject.toml would be written as
-            # `foo.setuptools-scm = [ "toml" ]` in Nix
             final: prev:
-            let
-              inherit (final) resolveBuildSystem;
-              inherit (builtins) mapAttrs;
-              inherit buildSystemOverrides;
-            in
-            mapAttrs (
+            lib.mapAttrs (
               name: spec:
               prev.${name}.overrideAttrs (old: {
-                nativeBuildInputs = old.nativeBuildInputs ++ resolveBuildSystem spec;
+                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ final.resolveBuildSystem spec;
               })
             ) buildSystemOverrides
           );
 
-          # Construct package set
-          pythonSet' = lib.foldl' (
-            acc: path:
-            acc
-            // {
-              "${path}" =
-                # Use base package set from pyproject.nix builders
-                (pkgs.callPackage pyproject-nix.build.packages {
-                  inherit python;
-                }).overrideScope
-                  (
-                    lib.composeManyExtensions [
-                      pyproject-build-systems.overlays.default
-                      (workspaces."workspace-${path}".mkPyprojectOverlay {
-                        # Prefer prebuilt binary wheels as a package source.
-                        # Sdists are less likely to "just work" because of the metadata missing from uv.lock.
-                        # Binary wheels are more likely to, but may still require overrides for library dependencies.
-                        sourcePreference = "wheel";
-                      })
-                      pyprojectOverrides
-                    ]
-                  );
-            }
-          ) { } names;
+          basePythonSet = pkgs.callPackage pyproject-nix.build.packages {
+            inherit python;
+          };
 
-          editablePythonSet = lib.foldl' (
-            acc: path:
-            acc
-            // {
-              "${path}" = pythonSet'.${path}.overrideScope (
-                lib.composeExtensions
-                  (workspaces."workspace-${path}".mkEditablePyprojectOverlay {
-                    root = "$REPO_ROOT";
-                  })
-                  (
-                    _final: prev: {
-                      "${path}" = prev.${path}.overrideAttrs (old: {
-                        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-                          _final.editables
-                        ];
-                      });
-                    }
-                  )
-              );
-            }
-          ) { } names;
-          virtualenv-dev =
+          pythonSets = lib.genAttrs workspaceNames (
             name:
-            editablePythonSet.${name}.mkVirtualEnv "${name}-dev-env" workspaces."workspace-${name}".deps.all;
+            basePythonSet.overrideScope (
+              lib.composeManyExtensions [
+                pyproject-build-systems.overlays.default
+                (workspaces.${name}.mkPyprojectOverlay {
+                  sourcePreference = "wheel";
+                })
+                pyprojectOverrides
+              ]
+            )
+          );
 
-          pythonSet = lib.foldl' (
-            acc: path:
-            acc
-            // {
-              "${path}" = pythonSet'.${path}.pythonPkgsHostHost.overrideScope pyprojectOverrides;
-            }
-          ) { } names;
-          virtualenv =
-            name: pythonSet.${name}.mkVirtualEnv "${name}-env" workspaces."workspace-${name}".deps.default;
+          editablePythonSets = lib.genAttrs workspaceNames (
+            name:
+            pythonSets.${name}.overrideScope (
+              lib.composeExtensions
+                (workspaces.${name}.mkEditablePyprojectOverlay {
+                  root = "$REPO_ROOT";
+                })
+                (
+                  final: prev: {
+                    "${name}" = prev.${name}.overrideAttrs (old: {
+                      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+                        final.editables
+                      ];
+                    });
+                  }
+                )
+            )
+          );
 
-          inherit (pkgs.callPackages pyproject-nix.build.util { }) mkApplication;
+          runtimePythonSets = lib.genAttrs workspaceNames (
+            name: pythonSets.${name}.pythonPkgsHostHost.overrideScope pyprojectOverrides
+          );
 
+          mkDevVirtualenv =
+            name: editablePythonSets.${name}.mkVirtualEnv "${name}-dev-env" workspaces.${name}.deps.all;
+
+          mkVirtualenv =
+            name: runtimePythonSets.${name}.mkVirtualEnv "${name}-env" workspaces.${name}.deps.default;
+
+          mkWorkspaceShell =
+            name:
+            pkgs.mkShell {
+              nativeBuildInputs = [
+                (mkDevVirtualenv name)
+                pkgs.uv
+              ];
+
+              env = {
+                UV_NO_SYNC = "1";
+                UV_PYTHON = editablePythonSets.${name}.python.interpreter;
+                UV_PYTHON_DOWNLOADS = "never";
+              };
+
+              shellHook = ''
+                unset PYTHONPATH
+                export REPO_ROOT=$(git rev-parse --show-toplevel)/${name}
+              '';
+            };
         in
         {
-          # https://flake.parts/options/treefmt-nix.html
-          # Example: https://github.com/nix-community/buildbot-nix/blob/main/nix/treefmt/flake-module.nix
           treefmt = {
             projectRootFile = ".git/config";
             flakeCheck = cfg.treefmt.flake-check;
@@ -190,71 +168,28 @@
               "rsync-gateway/config.*.toml"
             ];
 
-            programs = builtins.listToAttrs (
-              map (x: {
-                name = x;
-                value = {
-                  enable = true;
-                };
-              }) cfg.treefmt.programs
-            );
+            programs = enableAll cfg.treefmt.programs;
           };
 
-          # https://flake.parts/options/git-hooks-nix.html
-          # Example: https://github.com/cachix/git-hooks.nix/blob/master/template/flake.nix
-          pre-commit.check.enable = cfg.pre-commit.flake-check;
-          pre-commit.settings.configPath = ".pre-commit-config.flake.yaml";
-          pre-commit.settings.package = pkgs.${cfg.pre-commit.package};
-          pre-commit.settings.hooks = builtins.listToAttrs (
-            map (x: {
-              name = x;
-              value = {
-                enable = true;
-              };
-            }) cfg.pre-commit.hooks
-          );
+          pre-commit = {
+            check.enable = cfg.pre-commit.flake-check;
+            settings = {
+              configPath = ".pre-commit-config.flake.yaml";
+              package = pkgs.${cfg.pre-commit.package};
+              hooks = enableAll cfg.pre-commit.hooks;
+            };
+          };
 
-          # Create a development shell containing dependencies from `pyproject.toml`
           devShells = {
             default = pkgs.mkShellNoCC {
               inputsFrom = [
                 config.treefmt.build.devShell
-                # config.pre-commit.devShell
               ];
             };
           }
-          // (lib.foldl' (
-            acc: name:
-            acc
-            // {
-              "${name}" = pkgs.mkShell {
-                nativeBuildInputs = [
-                  (virtualenv-dev name)
-                  pkgs.uv
-                ];
+          // lib.genAttrs workspaceNames mkWorkspaceShell;
 
-                env = {
-                  UV_NO_SYNC = "1";
-                  UV_PYTHON = editablePythonSet.${name}.python.interpreter;
-                  UV_PYTHON_DOWNLOADS = "never";
-                };
-
-                shellHook = ''
-                  unset PYTHONPATH
-                  export REPO_ROOT=$(git rev-parse --show-toplevel)/${name}
-                '';
-              };
-            }
-          ) { } names);
-
-          packages = lib.foldl' (
-            acc: name:
-            acc
-            // {
-              "${name}" = virtualenv name;
-            }
-          ) { } names;
-
+          packages = lib.genAttrs workspaceNames mkVirtualenv;
         };
     };
 }
