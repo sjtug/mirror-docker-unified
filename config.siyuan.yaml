@@ -79,16 +79,6 @@ repos:
     <<:
       - *rsync_fetcher_common
       - *oneshot_common
-  # nspawn
-  - type: shell_script
-    name: nspawn
-    script: /worker-script/rsync-fetcher.sh
-    interval: 6901
-    source: rsync://hub.nspawn.org/containers
-    serve_mode: rsync_gateway
-    <<:
-      - *rsync_fetcher_common
-      - *oneshot_common
   # anthon
   - type: shell_script
     name: anthon
@@ -659,14 +649,6 @@ repos:
     name: github/Office-Tool
     target: /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list
     serve_mode: redir_force
-    <<:
-      - *oneshot_common
-  - type: shell_script
-    script: /worker-script/rsync.sh
-    source: ftp.ibiblio.org::ldp_mirror
-    interval: 5800
-    path: /srv/data55T/sites/tldp.org
-    name: sites/tldp.org
     <<:
       - *oneshot_common
   - type: shell_script

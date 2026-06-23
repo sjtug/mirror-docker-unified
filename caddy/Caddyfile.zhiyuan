@@ -251,7 +251,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /racket/*
         not path /bmclapi/*
         not path /alhp/*
-        not path /nspawn/*
         not path /anthon/*
         not path /leopardsh/*
         not path /endeavouros/*
@@ -313,7 +312,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         not path /github/rubyinstaller2/*
         not path /github/PowerShell/*
         not path /github/Office-Tool/*
-        not path /sites/tldp.org/*
         not path /nix-channels/store/*
         not path /guix/*
         not path /guix-bordeaux/*
@@ -632,10 +630,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     handle_path /alhp/* {
         redir * https://mirror.sjtu.edu.cn/alhp{uri} 302
     }
-    redir /nspawn /nspawn/ 301
-    handle_path /nspawn/* {
-        redir * https://mirror.sjtu.edu.cn/nspawn{uri} 302
-    }
     redir /anthon /anthon/ 301
     handle_path /anthon/* {
         redir * https://mirror.sjtu.edu.cn/anthon{uri} 302
@@ -851,10 +845,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
     redir /github/Office-Tool /github/Office-Tool/ 301
     handle_path /github/Office-Tool/* {
         redir * /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list 302
-    }
-    redir /sites/tldp.org /sites/tldp.org/ 301
-    handle_path /sites/tldp.org/* {
-        redir * https://mirror.sjtu.edu.cn/sites/tldp.org{uri} 302
     }
     redir /nix-channels/store /nix-channels/store/ 301
     handle /nix-channels/store/* {
