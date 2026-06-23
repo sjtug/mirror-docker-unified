@@ -75,8 +75,8 @@ services:
       context: ./lug
       args:
         - USE_SJTUG=true
-        - CLONE_V2_VERSION=v0.2.41
-        - RSYNC_SJTUG_VERSION=v0.4.18
+        - CLONE_V2_VERSION=v0.2.42
+        - RSYNC_SJTUG_VERSION=v0.4.19
         - LUG_VERSION=v0.12.11
     expose:
       - 8081
@@ -119,7 +119,7 @@ services:
       context: ./rsync-gateway
       args:
         - USE_SJTUG=true
-        - RSYNC_SJTUG_VERSION=v0.4.18
+        - RSYNC_SJTUG_VERSION=v0.4.19
     networks:
       - ipv6-service-net
       - postgres-net
@@ -232,7 +232,7 @@ services:
       context: ./mirror-intel
       args:
         - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.39
+        - INTEL_VERSION=v0.1.40
     networks:
       - ipv6-service-net
     expose:
