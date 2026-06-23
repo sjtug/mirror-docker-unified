@@ -292,6 +292,7 @@ repos:
     interval: 7200
     path: /mnt/linuxliteos
     name: linuxliteos
+    rsync_extra_flags: --exclude "/isos/**/*.iso.torrent"
     <<:
       - *oneshot_common
   # - type: shell_script
