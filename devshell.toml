@@ -22,7 +22,6 @@ programs = [
 
 # Pre-commit Hooks
 [pre-commit]
-flake-check = false
 package = "prek" # One of pre-commit, prek
 hooks = [
   "commitizen",
