@@ -77,6 +77,25 @@
               enable = true;
             });
 
+          generated-file-checks = {
+            caddy-gen-check = {
+              enable = true;
+              name = "Caddyfiles up-to-date";
+              entry = "${lib.getExe pkgs.bash} -c 'CADDY_GEN_PYTHON=${mkVirtualenv "caddy-gen"}/bin/python exec ${lib.getExe pkgs.bash} ${./scripts/pre-commit/caddy-gen.sh}'";
+              language = "system";
+              pass_filenames = false;
+              files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
+            };
+            gateway-gen-check = {
+              enable = true;
+              name = "Gateway configs up-to-date";
+              entry = "${lib.getExe pkgs.bash} -c 'GATEWAY_GEN_PYTHON=${mkVirtualenv "gateway-gen"}/bin/python exec ${lib.getExe pkgs.bash} ${./scripts/pre-commit/gateway-gen.sh}'";
+              language = "system";
+              pass_filenames = false;
+              files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/)";
+            };
+          };
+
           workspaces = lib.genAttrs workspaceNames (
             name: uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./. + "/${name}"; }
           );
@@ -171,19 +190,17 @@
             programs = enableAll cfg.treefmt.programs;
           };
 
-          pre-commit = {
-            check.enable = cfg.pre-commit.flake-check;
-            settings = {
-              configPath = ".pre-commit-config.flake.yaml";
-              package = pkgs.${cfg.pre-commit.package};
-              hooks = enableAll cfg.pre-commit.hooks;
-            };
+          pre-commit.settings = {
+            package = pkgs.${cfg.pre-commit.package};
+            configPath = ".pre-commit-config.flake.yaml";
+            hooks = (enableAll cfg.pre-commit.hooks) // generated-file-checks;
           };
 
           devShells = {
             default = pkgs.mkShellNoCC {
               inputsFrom = [
                 config.treefmt.build.devShell
+                config.pre-commit.devShell
               ];
             };
           }
