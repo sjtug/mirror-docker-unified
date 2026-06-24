@@ -136,7 +136,7 @@ repos:
     script: /worker-script/apt.sh
     source: https://apt.pop-os.org
     arch: "all,arm64,amd64,i386,src"
-    # REMARK generate this list by script/popos_dists.sh
+    # REMARK generate this list by scripts/popos_dists.sh
     repo: "proprietary:bionic:main,proprietary:disco:main,proprietary:eoan:main,proprietary:focal:main,proprietary:groovy:main,proprietary:hirsute:main,proprietary:impish:main,proprietary:jammy:main,proprietary:noble:main,proprietary:resolute:main,release:impish:main,release:jammy:main,release:noble:main,release:resolute:main,staging/master:jammy:main,staging/master:noble:main,staging/master:resolute:main,staging-proprietary:bionic:main,staging-proprietary:disco:main,staging-proprietary:eoan:main,staging-proprietary:focal:main,staging-proprietary:groovy:main,staging-proprietary:hirsute:main,staging-proprietary:impish:main,staging-proprietary:jammy:main,staging-proprietary:noble:main,staging-proprietary:resolute:main"
     interval: 10601
     path: /srv/data55T/pop-os
