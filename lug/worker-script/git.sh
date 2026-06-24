@@ -11,7 +11,11 @@ cd $LUG_path
 git remote set-url origin $LUG_source
 
 if [ -n "$LUG_target" ]; then
-    git remote add upstream $LUG_target || git remote set-url upstream $LUG_target
+    if git remote get-url upstream >/dev/null 2>&1; then
+        git remote set-url upstream "$LUG_target"
+    else
+        git remote add upstream "$LUG_target"
+    fi
 fi
 
 git config --unset-all remote.origin.fetch || true
@@ -25,5 +29,5 @@ git for-each-ref --format 'delete %(refname)' refs/remotes | git update-ref --st
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
 if [ -n "$LUG_target" ]; then
-    timeout 60 git push --mirror upstream || true
+    timeout 60 git push --mirror upstream || echo "[git.sh] WARNING: push to upstream failed (will retry on next sync)" >&2
 fi
