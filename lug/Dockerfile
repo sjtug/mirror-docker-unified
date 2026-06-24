@@ -60,7 +60,7 @@ RUN cd $(mktemp -d) \
 
 # general config
 RUN mkdir -p /root/.ssh && ssh-keyscan cran.r-project.org >>/root/.ssh/known_hosts
-RUN git config --global credential.helper store
+RUN git config --global credential.helper /worker-script/git-credential-helper.sh
 COPY ssh_config /root/.ssh/config
 
 ARG LUG_VERSION
