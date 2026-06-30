@@ -2,11 +2,18 @@
 
 set -e
 
-cd /app/archvsync
+archvsync_src="${ARCHVSYNC_DIR:-/app/archvsync}"
+archvsync_dir="$(mktemp -d)"
+trap 'rm -rf "$archvsync_dir"' EXIT
+
+cp -R "$archvsync_src/." "$archvsync_dir"
+chmod -R u+w "$archvsync_dir"
+
+cd "$archvsync_dir"
 
 export LOGNAME=
 
-cat > /app/archvsync/etc/ftpsync.conf <<EOF
+cat > "$archvsync_dir/etc/ftpsync.conf" <<EOF
 MIRRORNAME="mirror.sjtu.edu.cn"
 TO="$LUG_path"
 MAILTO=""
@@ -27,6 +34,7 @@ INFO_THROUGHPUT="1Gb"
 # ARCH_EXCLUDE=
 
 LOGDIR="/var/log/ftpsync"
+LOCKDIR="/tmp/ftpsync-locks"
 EOF
 
-/app/archvsync/bin/ftpsync sync:all
+"$archvsync_dir/bin/ftpsync" sync:all

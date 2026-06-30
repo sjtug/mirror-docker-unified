@@ -1,3 +1,6 @@
-FROM dreamacro/clash:latest
+FROM metacubex/mihomo:latest
 
-RUN mkdir /etc/clash && cd /etc/clash && wget https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb
+RUN mkdir -p /etc/clash \
+    && wget -O /etc/clash/geoip.metadb https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb \
+    && wget -O /etc/clash/geosite.dat https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat \
+    && wget -O /etc/clash/geoip.dat https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat

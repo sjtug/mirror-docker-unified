@@ -35,8 +35,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # --- Build toolchain pinned for SJTUG Rust projects (Stage 1) ---
-    # crane + rust-overlay are shared by mirror-clone / mirror-intel /
-    # rsync-sjtug via `follows`, so a single copy lives in the lock.
     crane.url = "github:ipetkov/crane";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -99,168 +97,252 @@
       pyproject-build-systems,
       ...
     }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.treefmt-nix.flakeModule
-        inputs.pre-commit-hooks.flakeModule
-      ];
+    let
+      mkFlakeResult = flake-parts.lib.mkFlake { inherit inputs; } {
+        imports = [
+          # inputs.flake-parts.flakeModules.partitions
+          inputs.treefmt-nix.flakeModule
+          inputs.pre-commit-hooks.flakeModule
+        ];
 
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ];
 
-      perSystem =
-        {
-          config,
-          pkgs,
-          lib,
-          system,
-          ...
-        }:
-        let
-          workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
-          workspaceMembers = pyproject.tool.uv.workspace.members;
+        perSystem =
+          {
+            config,
+            pkgs,
+            lib,
+            system,
+            ...
+          }:
+          let
+            workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
+            workspaceMembers = pyproject.tool.uv.workspace.members;
 
-          pythonVersion = lib.strings.fileContents ./.python-version;
-          python = pkgs."python${lib.versions.major pythonVersion}${lib.versions.minor pythonVersion}";
-          pyproject = lib.importTOML ./pyproject.toml;
+            pythonVersion = lib.strings.fileContents ./.python-version;
+            python = pkgs."python${lib.versions.major pythonVersion}${lib.versions.minor pythonVersion}";
+            pyproject = lib.importTOML ./pyproject.toml;
 
-          hacks = pkgs.callPackage pyproject-nix.build.hacks { };
+            hacks = pkgs.callPackage pyproject-nix.build.hacks { };
 
-          overlay = workspace.mkPyprojectOverlay { sourcePreference = "wheel"; };
-          pyprojectOverrides = lib.composeExtensions (uv2nix_hammer_overrides.overrides pkgs) (
-            final: prev:
-            let
-              inherit (final) resolveBuildSystem;
-              inherit (builtins) mapAttrs;
-              buildSystemOverrides = {
-                loguru.flit-core = [ ];
-              };
-            in
-            mapAttrs (
-              name: spec:
-              prev.${name}.overrideAttrs (old: {
-                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ resolveBuildSystem spec;
-              })
-            ) buildSystemOverrides
-          );
+            overlay = workspace.mkPyprojectOverlay { sourcePreference = "wheel"; };
+            pyprojectOverrides = lib.composeExtensions (uv2nix_hammer_overrides.overrides pkgs) (
+              final: prev:
+              let
+                inherit (final) resolveBuildSystem;
+                inherit (builtins) mapAttrs;
+                buildSystemOverrides = {
+                  loguru.flit-core = [ ];
+                };
+              in
+              mapAttrs (
+                name: spec:
+                prev.${name}.overrideAttrs (old: {
+                  nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ resolveBuildSystem spec;
+                })
+              ) buildSystemOverrides
+            );
 
-          basePythonSet =
-            (pkgs.callPackage pyproject-nix.build.packages {
-              inherit python;
-            }).overrideScope
-              (
-                lib.composeManyExtensions [
-                  pyproject-build-systems.overlays.default
-                  overlay
-                  pyprojectOverrides
-                ]
-              );
+            basePythonSet =
+              (pkgs.callPackage pyproject-nix.build.packages {
+                inherit python;
+              }).overrideScope
+                (
+                  lib.composeManyExtensions [
+                    pyproject-build-systems.overlays.default
+                    overlay
+                    pyprojectOverrides
+                  ]
+                );
 
-          editablePythonSet = basePythonSet.overrideScope (
-            lib.composeExtensions
-              (workspace.mkEditablePyprojectOverlay {
-                root = "$REPO_ROOT";
-              })
-              (
-                final: prev:
-                lib.genAttrs workspaceMembers (
-                  name:
-                  prev.${name}.overrideAttrs (old: {
-                    nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-                      final.editables
-                    ];
-                  })
+            editablePythonSet = basePythonSet.overrideScope (
+              lib.composeExtensions
+                (workspace.mkEditablePyprojectOverlay {
+                  root = "$REPO_ROOT";
+                })
+                (
+                  final: prev:
+                  lib.genAttrs workspaceMembers (
+                    name:
+                    prev.${name}.overrideAttrs (old: {
+                      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+                        final.editables
+                      ];
+                    })
+                  )
                 )
-              )
-          );
-          virtualenv-dev = editablePythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-dev-env" workspace.deps.all;
+            );
+            virtualenv-dev = editablePythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-dev-env" workspace.deps.all;
 
-          pythonSet = basePythonSet.pythonPkgsHostHost.overrideScope pyprojectOverrides;
-          virtualenv =
-            (pythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-env" workspace.deps.default)
-            .overrideAttrs
-              (old: {
-                venvIgnoreCollisions = [ "*" ];
-              });
-        in
-        {
-          treefmt = {
-            projectRootFile = ".git/config";
-            settings.global.excludes = [
-              "rsync-gateway/config.*.toml"
-            ];
+            pythonSet = basePythonSet.pythonPkgsHostHost.overrideScope pyprojectOverrides;
+            virtualenv =
+              (pythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-env" workspace.deps.default)
+              .overrideAttrs
+                (old: {
+                  venvIgnoreCollisions = [ "*" ];
+                });
 
-            programs = {
-              autocorrect.enable = true;
-              dockerfmt.enable = true;
-              nixfmt.enable = true;
-              prettier.enable = true;
-              ruff-check.enable = true;
-              ruff-format.enable = true;
-              taplo.enable = true;
-              zizmor.enable = true;
+            # mirror-lib: shared helpers for nix2container image construction
+            mirror-lib = import ./nix/lib {
+              inherit lib;
+              inherit (inputs.nix2container.packages.${system}) nix2container;
             };
-          };
 
-          pre-commit.settings = {
-            package = pkgs.prek;
-            configPath = ".pre-commit-config.flake.yaml";
-            hooks = {
-              treefmt.enable = true;
-              caddy-gen-check = {
-                enable = true;
-                name = "Caddyfiles up-to-date";
-                entry = "${virtualenv}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan --fail-on-change";
-                language = "system";
-                pass_filenames = false;
-                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/|caddy/Caddyfile\\..*)";
+            caddy = pkgs.callPackage ./nix/package/caddy.nix { };
+
+            mihomo = pkgs.mihomo;
+
+            geoip-metadb = pkgs.fetchurl {
+              url = "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/462e21e38eab5adc0027f8486b680e4f61c39efc/geoip.metadb";
+              hash = "sha256-N4ng+XWEOSOdzIGqYmtATNc7rtp8FoHO3UMomZsRAHU=";
+            };
+
+            geosite-dat = pkgs.fetchurl {
+              url = "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/462e21e38eab5adc0027f8486b680e4f61c39efc/geosite.dat";
+              hash = "sha256-hYEFCbPJ2dpeKPZYh+iXKXdVGpHIVLgrb4tqgoMRt+o=";
+            };
+
+            geoip-dat = pkgs.fetchurl {
+              url = "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/462e21e38eab5adc0027f8486b680e4f61c39efc/geoip.dat";
+              hash = "sha256-5VG2bpMAqY7MlKXcjIajlzv3AzE4sPph6wY4QZzlAFc=";
+            };
+          in
+          {
+            _module.args.pkgs = import nixpkgs {
+              inherit system;
+              overlays = [
+                (_final: _prev: {
+                  inherit mirror-lib;
+                  inherit (inputs.nix2container.packages.${system}) nix2container;
+                })
+              ];
+            };
+
+            treefmt = {
+              projectRootFile = ".git/config";
+              settings.global.excludes = [
+                "caddy/Caddyfile.*"
+                "rsync-gateway/config.*.toml"
+              ];
+
+              programs = {
+                autocorrect.enable = true;
+                dockerfmt.enable = true;
+                nixfmt.enable = true;
+                prettier.enable = true;
+                ruff-check.enable = true;
+                ruff-format.enable = true;
+                taplo.enable = true;
+                zizmor.enable = true;
               };
-              gateway-gen-check = {
-                enable = true;
-                name = "Gateway configuration up-to-date";
-                entry = "${virtualenv}/bin/python3 gateway-gen/src/gateway-gen.py -i ./. -o ./rsync-gateway --site siyuan,zhiyuan --fail-on-change";
-                language = "system";
-                pass_filenames = false;
-                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/|rsync-gateway/config\\.(siyuan|zhiyuan)\\.toml)";
+            };
+
+            pre-commit.settings = {
+              package = pkgs.prek;
+              configPath = ".pre-commit-config.flake.yaml";
+              hooks = {
+                treefmt.enable = true;
+                caddy-gen-check = {
+                  enable = true;
+                  name = "Caddyfiles up-to-date";
+                  entry = "${virtualenv}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan --fail-on-change";
+                  language = "system";
+                  pass_filenames = false;
+                  files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/|caddy/Caddyfile\\..*)";
+                };
+                gateway-gen-check = {
+                  enable = true;
+                  name = "Gateway configuration up-to-date";
+                  entry = "${virtualenv}/bin/python3 gateway-gen/src/gateway-gen.py -i ./. -o ./rsync-gateway --site siyuan,zhiyuan --fail-on-change";
+                  language = "system";
+                  pass_filenames = false;
+                  files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/|rsync-gateway/config\\.(siyuan|zhiyuan)\\.toml)";
+                };
               };
             };
-          };
 
-          devShells.default = pkgs.mkShellNoCC {
-            inputsFrom = [
-              config.treefmt.build.devShell
-              config.pre-commit.devShell
-            ];
+            devShells.default = pkgs.mkShellNoCC {
+              inputsFrom = [
+                config.treefmt.build.devShell
+                config.pre-commit.devShell
+              ];
 
-            packages = [
-              pkgs.uv
-              virtualenv-dev
-            ];
+              packages = [
+                pkgs.uv
+                virtualenv-dev
+              ];
 
-            env = {
-              UV_NO_SYNC = "1";
-              UV_PYTHON = editablePythonSet.python.interpreter;
-              UV_PYTHON_DOWNLOADS = "never";
+              env = {
+                UV_NO_SYNC = "1";
+                UV_PYTHON = editablePythonSet.python.interpreter;
+                UV_PYTHON_DOWNLOADS = "never";
+              };
+
+              shellHook =
+                # Bash
+                ''
+                  unset PYTHONPATH
+                  export REPO_ROOT=$(git rev-parse --show-toplevel)
+                '';
             };
 
-            shellHook =
-              # Bash
-              ''
-                unset PYTHONPATH
-                export REPO_ROOT=$(git rev-parse --show-toplevel)
-              '';
-          };
+            packages = {
+              inherit virtualenv virtualenv-dev;
 
-          packages = {
-            inherit virtualenv virtualenv-dev;
-            inherit (inputs.lug.packages.${system}) lug;
-            mirror-clone = inputs.mirror-clone.packages.${system}.default;
-            mirror-intel = inputs.mirror-intel.packages.${system}.default;
-            inherit (inputs.rsync-sjtug.packages.${system}) rsync-fetcher rsync-gateway rsync-gc;
+              # Raw binaries from flake inputs (for standalone nix build .#<name>)
+              inherit (inputs.lug.packages.${system}) lug;
+              mirror-clone = inputs.mirror-clone.packages.${system}.default;
+              mirror-intel = inputs.mirror-intel.packages.${system}.default;
+              inherit (inputs.rsync-sjtug.packages.${system}) rsync-fetcher rsync-gateway rsync-gc;
+
+              # --- nix2container OCI images ---
+              docker-image-lug = pkgs.callPackage ./lug/docker.nix {
+                inherit (config.packages) lug;
+              };
+
+              docker-image-mirror-intel = pkgs.callPackage ./mirror-intel/docker.nix {
+                inherit (config.packages) mirror-intel;
+              };
+
+              docker-image-rsync-gateway = pkgs.callPackage ./rsync-gateway/docker.nix {
+                inherit (config.packages) rsync-gateway;
+              };
+
+              docker-image-caddy = pkgs.callPackage ./caddy/docker.nix {
+                inherit caddy;
+              };
+
+              docker-image-clash = pkgs.callPackage ./clash/docker.nix {
+                inherit
+                  mihomo
+                  geoip-metadb
+                  geosite-dat
+                  geoip-dat
+                  ;
+              };
+
+              docker-image-apache = pkgs.callPackage ./apache/docker.nix { };
+
+              docker-image-git-backend = pkgs.callPackage ./git-backend/docker.nix { };
+
+              docker-image-rsyncd = pkgs.callPackage ./rsyncd/docker.nix { };
+            };
           };
-        };
+      };
+    in
+    mkFlakeResult
+    // {
+      # Top-level lib: a function consumers call with { lib, nix2container }
+      # to get image-building helpers like foldImageLayers.
+      #
+      #   inputs.mirror-docker-unified.lib {
+      #     lib = nixpkgs.lib;
+      #     nix2container = inputs.nix2container.packages.${system}.nix2container;
+      #   }
+      lib = import ./nix/lib;
     };
 }

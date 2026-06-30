@@ -1,4 +1,4 @@
-<Directory /usr/local/apache2/htdocs>
+<Directory /etc/httpd/htdocs>
   IndexOptions FancyIndexing NameWidth=* FoldersFirst ScanHTMLTitles DescriptionWidth=*
   HeaderName HEADER.html
   ReadmeName README.html
