@@ -122,14 +122,15 @@
                 )
               )
           );
-          virtualenv-dev = editablePythonSet.mkVirtualEnv "${pyproject.project.name}-dev-env" workspace.deps.all;
+          virtualenv-dev = editablePythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-dev-env" workspace.deps.all;
 
-          pythonSet = basePythonSet.pythonPkgsHostHost.overrideScope pyprojectOverrides;
-          virtualenv =
-            (pythonSet.mkVirtualEnv "${pyproject.project.name}-env" workspace.deps.default).overrideAttrs
-              (old: {
-                venvIgnoreCollisions = [ "*" ];
-              });
+          # pythonSet = basePythonSet.pythonPkgsHostHost.overrideScope pyprojectOverrides;
+          # virtualenv =
+          #   (pythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-env" workspace.deps.default)
+          #   .overrideAttrs
+          #     (old: {
+          #       venvIgnoreCollisions = [ "*" ];
+          #     });
         in
         {
           treefmt = {
@@ -158,7 +159,7 @@
               caddy-gen-check = {
                 enable = true;
                 name = "Caddyfiles up-to-date";
-                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan && git diff --exit-code caddy/Caddyfile.siyuan caddy/Caddyfile.zhiyuan";
+                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan --fail-on-change";
                 language = "system";
                 pass_filenames = false;
                 files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
@@ -166,7 +167,7 @@
               gateway-gen-check = {
                 enable = true;
                 name = "Gateway configuration up-to-date";
-                entry = "";
+                entry = "${virtualenv-dev}/bin/python3 gateway-gen/src/gateway-gen.py -i ./. -o ./rsync-gateway --site siyuan,zhiyuan --fail-on-change";
                 language = "system";
                 pass_filenames = false;
                 files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/)";
@@ -194,7 +195,7 @@
           };
 
           packages = {
-            inherit virtualenv virtualenv-dev;
+            inherit virtualenv-dev;
           };
         };
     };
