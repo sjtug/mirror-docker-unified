@@ -401,8 +401,6 @@ https://mirror.sjtu.edu.cn {
         not path /gnu/*
         not path /cygwin/*
         not path /kali-images/*
-        not path /git/homebrew-core.git/*
-        not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
         not path /git/crates.io-index/*
         not path /crates.io-index/*
@@ -1214,14 +1212,6 @@ https://mirror.sjtu.edu.cn {
     redir /git/lean4-packages/batteries /git/lean4-packages/batteries/ 301
     handle /git/lean4-packages/batteries/* {
         reverse_proxy git-backend
-    }
-    redir /git/homebrew-core.git /git/homebrew-core.git/ 301
-    handle_path /git/homebrew-core.git/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/homebrew-core.git{uri} 302
-    }
-    redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
-    handle_path /git/homebrew-cask.git/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/homebrew-cask.git{uri} 302
     }
     redir /git/brew.git /git/brew.git/ 301
     handle_path /git/brew.git/* {

@@ -132,26 +132,6 @@ repos:
       - *oneshot_common
   - type: shell_script
     script: /worker-script/zhiyuan/worker-script/git.sh
-    name: git/homebrew-core.git
-    origin: https://github.com/Homebrew/homebrew-core.git
-    interval: 3801
-    path: /mnt/git/homebrew-core.git
-    target: https://git.sjtu.edu.cn/sjtug/homebrew-core.git
-    serve_mode: git
-    <<:
-      - *oneshot_common
-  - type: shell_script
-    script: /worker-script/zhiyuan/worker-script/git.sh
-    name: git/homebrew-cask.git
-    interval: 3801
-    path: /mnt/git/homebrew-cask.git
-    origin: https://github.com/Homebrew/homebrew-cask.git
-    target: https://git.sjtu.edu.cn/sjtug/homebrew-cask.git
-    serve_mode: git
-    <<:
-      - *oneshot_common
-  - type: shell_script
-    script: /worker-script/zhiyuan/worker-script/git.sh
     name: git/brew.git
     interval: 3927
     path: /mnt/git/brew.git

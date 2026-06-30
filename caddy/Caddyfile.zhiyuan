@@ -231,8 +231,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
 
     @gzip_enabled {
         not path /kali-images/*
-        not path /git/homebrew-core.git/*
-        not path /git/homebrew-cask.git/*
         not path /git/brew.git/*
         not path /git/crates.io-index/*
         not path /raspbian/*
@@ -1024,14 +1022,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
         redir * https://mirror.sjtu.edu.cn/alpine{uri} 302
     }
 
-    redir /git/homebrew-core.git /git/homebrew-core.git/ 301
-    handle /git/homebrew-core.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
-    handle /git/homebrew-cask.git/* {
-        reverse_proxy git-backend
-    }
     redir /git/brew.git /git/brew.git/ 301
     handle /git/brew.git/* {
         reverse_proxy git-backend
