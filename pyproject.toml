@@ -10,10 +10,6 @@ build-backend = "uv_build"
 [tool.uv.workspace]
 members = ["caddy-gen", "gateway-gen", "integration-test"]
 
-[tool.uv.build-backend]
-module-root = ""
-namespace = true
-
 [tool.uv]
 package = false # repo root is not a package
 
