@@ -5,6 +5,15 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # --- Build toolchain pinned for in-tree Python projects (Stage 0) ---
     pyproject-nix = {
       url = "github:pyproject-nix/pyproject.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,13 +34,57 @@
       inputs.uv2nix.follows = "uv2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    pre-commit-hooks = {
-      url = "github:cachix/git-hooks.nix";
+    # --- Build toolchain pinned for SJTUG Rust projects (Stage 1) ---
+    # crane + rust-overlay are shared by mirror-clone / mirror-intel /
+    # rsync-sjtug via `follows`, so a single copy lives in the lock.
+    crane.url = "github:ipetkov/crane";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
+    # nix2container builds the OCI images (Stage 2) and is reused by lug
+    # and rsync-sjtug upstream flakes.
+    nix2container = {
+      url = "github:nlewo/nix2container";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # --- SJTUG service source repositories ---
+    lug = {
+      url = "git+https://git.a-stable.com/SJTUG/lug.git?ref=refactor";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.nix2container.follows = "nix2container";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      # TODO: go2nix
+    };
+    mirror-clone = {
+      url = "github:sjtug/mirror-clone";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.crane.follows = "crane";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+    mirror-intel = {
+      url = "github:sjtug/mirror-intel";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.crane.follows = "crane";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+    rsync-sjtug = {
+      url = "github:sjtug/rsync-sjtug";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.crane.follows = "crane";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.nix2container.follows = "nix2container";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+      inputs.treefmt-nix.follows = "treefmt-nix";
     };
   };
 
@@ -63,6 +116,7 @@
           config,
           pkgs,
           lib,
+          system,
           ...
         }:
         let
@@ -202,6 +256,10 @@
 
           packages = {
             inherit virtualenv virtualenv-dev;
+            inherit (inputs.lug.packages.${system}) lug;
+            mirror-clone = inputs.mirror-clone.packages.${system}.default;
+            mirror-intel = inputs.mirror-intel.packages.${system}.default;
+            inherit (inputs.rsync-sjtug.packages.${system}) rsync-fetcher rsync-gateway rsync-gc;
           };
         };
     };

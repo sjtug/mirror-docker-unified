@@ -32,19 +32,24 @@ For more information, refer to our [Wiki](https://github.com/sjtug/mirror-docker
 └── upstream
 ```
 
-Python version, treefmt, pre-commit configurations are controlled by `devshell.toml` with Nix flakes.
+Development shell configuration is controlled by `flake.nix`.
 
-See <https://nixos.org/download/> or <https://lix.systems/install/> for Nix installation manual.
+See <https://nixos.org/download/> for Nix installation manual.
 
-`devshell.toml`
+## Building services from source
 
-```toml
-[python]
-version = "3.13" # major-minor version
-workspaces = ["caddy-gen", "gateway-gen", "integration-test"] # Python workspaces with uv.lock
+`lug`, `mirror-clone`, `mirror-intel`, and the three `rsync-sjtug` binaries (`rsync-gateway`, `rsync-fetcher`, `rsync-gc`) are built from their upstream source repositories through flake inputs, replacing the Dockerfile step that previously fetched GitHub release tarballs:
 
-# ...
+```sh
+nix build .#lug
+nix build .#mirror-clone
+nix build .#mirror-intel
+nix build .#rsync-gateway
+nix build .#rsync-fetcher
+nix build .#rsync-gc
 ```
+
+Container images built with nix2container will follow in Stage 2.
 
 ## License
 
