@@ -7,6 +7,7 @@ members = [
     "caddy-gen",
     "gateway-gen",
     "integration-test",
+    "mirror-docker-unified",
 ]
 
 [[package]]
@@ -163,6 +164,11 @@ sdist = { url = "https://mirror.sjtu.edu.cn/pypi-packages/3a/05/a1dae3dffd111609
 wheels = [
     { url = "https://mirror.sjtu.edu.cn/pypi-packages/0c/29/0348de65b8cc732daa3e33e67806420b2ae89bdce2b04af740289c5c6c8c/loguru-0.7.3-py3-none-any.whl", hash = "sha256:31a33c10c8e1e10422bfd431aeb5d351c7cf7fa671e3c4df004162264b28220c" },
 ]
+
+[[package]]
+name = "mirror-docker-unified"
+version = "0.1.0"
+source = { virtual = "." }
 
 [[package]]
 name = "packaging"

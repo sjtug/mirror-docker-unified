@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     uv2nix = {
-      url = "github:pyproject-nix/uv2nix";
+      url = "github:pyproject-nix/uv2nix?ref=virtual";
       inputs.pyproject-nix.follows = "pyproject-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -122,11 +122,12 @@
                 )
               )
           );
-          virtualenv-dev = editablePythonSet.mkVirtualEnv "${pyproject.project.name}-dev-env" workspace.deps.all;
+          virtualenv-dev = editablePythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-dev-env" workspace.deps.all;
 
           pythonSet = basePythonSet.pythonPkgsHostHost.overrideScope pyprojectOverrides;
           virtualenv =
-            (pythonSet.mkVirtualEnv "${pyproject.project.name}-env" workspace.deps.default).overrideAttrs
+            (pythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-env" workspace.deps.default)
+            .overrideAttrs
               (old: {
                 venvIgnoreCollisions = [ "*" ];
               });
@@ -158,27 +159,31 @@
               caddy-gen-check = {
                 enable = true;
                 name = "Caddyfiles up-to-date";
-                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan && git diff --exit-code caddy/Caddyfile.siyuan caddy/Caddyfile.zhiyuan";
+                entry = "${virtualenv}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan --fail-on-change";
                 language = "system";
                 pass_filenames = false;
-                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
+                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/|caddy/Caddyfile\\..*)";
               };
               gateway-gen-check = {
                 enable = true;
                 name = "Gateway configuration up-to-date";
-                entry = "";
+                entry = "${virtualenv}/bin/python3 gateway-gen/src/gateway-gen.py -i ./. -o ./rsync-gateway --site siyuan,zhiyuan --fail-on-change";
                 language = "system";
                 pass_filenames = false;
-                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/)";
+                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/|rsync-gateway/config\\.(siyuan|zhiyuan)\\.toml)";
               };
             };
           };
 
           devShells.default = pkgs.mkShellNoCC {
-            nativeBuildInputs = [ pkgs.uv ];
-            buildInputs = [
-              virtualenv-dev
+            inputsFrom = [
+              config.treefmt.build.devShell
+              config.pre-commit.devShell
+            ];
+
+            packages = [
               pkgs.uv
+              virtualenv-dev
             ];
 
             env = {
@@ -187,10 +192,12 @@
               UV_PYTHON_DOWNLOADS = "never";
             };
 
-            shellHook = ''
-              unset PYTHONPATH
-              export REPO_ROOT=$(git rev-parse --show-toplevel)
-            '';
+            shellHook =
+              # Bash
+              ''
+                unset PYTHONPATH
+                export REPO_ROOT=$(git rev-parse --show-toplevel)
+              '';
           };
 
           packages = {

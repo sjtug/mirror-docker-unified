@@ -3,6 +3,7 @@
 import yaml
 from loguru import logger
 import argparse
+import difflib
 
 from config import *
 from repos import *
@@ -387,9 +388,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "-I", "--indent", default=INDENT_CNT, help="Number of spaces in indents."
     )
+    parser.add_argument(
+        "--fail-on-change",
+        action="store_true",
+        help="Exit with code 1 if output differs from existing files.",
+    )
     args = parser.parse_args()
-
-    INDENT_CNT = args.indent  # pyright: ignore[reportConstantRedefinition]
 
     sites = args.site.split(",")
     site_configs = {}
@@ -428,6 +432,8 @@ if __name__ == "__main__":
         )
         logger.info(f"local repos: {str(sorted(names))}")
         logger.info(f"remote repos: {str(sorted(new_repo_names))}")
+
+    changed_outputs = []
 
     for site in sites:
         logger.info(f"generating {site}")
@@ -496,9 +502,32 @@ if __name__ == "__main__":
         )
 
         output = f"{args.output}/Caddyfile.{site}"
+        try:
+            with open(output, "r") as fp:
+                old_content = fp.read()
+        except FileNotFoundError:
+            old_content = None
+
+        new_content = "".join(f"{root}\n\n" for root in roots)
         with open(output, "w") as fp:
-            for root in roots:
-                fp.write(str(root))
-                fp.write("\n\n")
+            fp.write(new_content)
+
+        if args.fail_on_change and old_content != new_content:
+            logger.error(f"{output}: has changed")
+            print(
+                "".join(
+                    difflib.unified_diff(
+                        (old_content or "").splitlines(keepends=True),
+                        new_content.splitlines(keepends=True),
+                        fromfile=f"{output} (current)",
+                        tofile=f"{output} (generated)",
+                    )
+                ),
+                end="",
+            )
+            changed_outputs.append(output)
 
         logger.info(f"{output}: done")
+
+    if changed_outputs:
+        raise SystemExit(1)

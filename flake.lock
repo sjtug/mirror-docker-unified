@@ -197,15 +197,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1782100052,
-        "narHash": "sha256-UfyLY3Hfwb3JqxCcj0953GxTFI5dEL85EKEe6DAFiVs=",
+        "lastModified": 1782786456,
+        "narHash": "sha256-Eqq4/j8GV2vUx3SePd5A8HTFlpPrejTqxa6075rX8r4=",
         "owner": "pyproject-nix",
         "repo": "uv2nix",
-        "rev": "920fc6dfaf9f10ec56de93b184055e1a9f380d5e",
+        "rev": "08f533d0b3ce37f58c8fcaf923d74bf4d58de1df",
         "type": "github"
       },
       "original": {
         "owner": "pyproject-nix",
+        "ref": "virtual",
         "repo": "uv2nix",
         "type": "github"
       }
