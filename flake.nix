@@ -36,8 +36,17 @@
   };
 
   outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    {
+      self,
+      nixpkgs,
+      flake-parts,
+      pyproject-nix,
+      uv2nix,
+      uv2nix_hammer_overrides,
+      pyproject-build-systems,
+      ...
+    }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.treefmt-nix.flakeModule
         inputs.pre-commit-hooks.flakeModule
@@ -57,156 +66,136 @@
           ...
         }:
         let
-          inherit (inputs)
-            pyproject-build-systems
-            pyproject-nix
-            uv2nix
-            uv2nix_hammer_overrides
-            ;
+          workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
+          workspaceMembers = pyproject.tool.uv.workspace.members;
 
-          cfg = lib.importTOML ./devshell.toml;
-          workspaceNames = cfg.python.workspaces;
+          pythonVersion = lib.strings.fileContents ./.python-version;
+          python = pkgs."python${lib.versions.major pythonVersion}${lib.versions.minor pythonVersion}";
+          pyproject = lib.importTOML ./pyproject.toml;
 
-          buildSystemOverrides = {
-            loguru.flit-core = [ ];
-          };
+          hacks = pkgs.callPackage pyproject-nix.build.hacks { };
 
-          enableAll =
-            names:
-            lib.genAttrs names (_: {
-              enable = true;
-            });
-
-          generated-file-checks = {
-            caddy-gen-check = {
-              enable = true;
-              name = "Caddyfiles up-to-date";
-              entry = "${lib.getExe pkgs.bash} -c 'CADDY_GEN_PYTHON=${mkVirtualenv "caddy-gen"}/bin/python exec ${lib.getExe pkgs.bash} ${./scripts/pre-commit/caddy-gen.sh}'";
-              language = "system";
-              pass_filenames = false;
-              files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
-            };
-            gateway-gen-check = {
-              enable = true;
-              name = "Gateway configs up-to-date";
-              entry = "${lib.getExe pkgs.bash} -c 'GATEWAY_GEN_PYTHON=${mkVirtualenv "gateway-gen"}/bin/python exec ${lib.getExe pkgs.bash} ${./scripts/pre-commit/gateway-gen.sh}'";
-              language = "system";
-              pass_filenames = false;
-              files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/)";
-            };
-          };
-
-          workspaces = lib.genAttrs workspaceNames (
-            name: uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./. + "/${name}"; }
-          );
-
-          python =
-            pkgs."python${lib.versions.major cfg.python.version}${lib.versions.minor cfg.python.version}";
-
+          overlay = workspace.mkPyprojectOverlay { sourcePreference = "wheel"; };
           pyprojectOverrides = lib.composeExtensions (uv2nix_hammer_overrides.overrides pkgs) (
             final: prev:
-            lib.mapAttrs (
+            let
+              inherit (final) resolveBuildSystem;
+              inherit (builtins) mapAttrs;
+              buildSystemOverrides = {
+                loguru.flit-core = [ ];
+              };
+            in
+            mapAttrs (
               name: spec:
               prev.${name}.overrideAttrs (old: {
-                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ final.resolveBuildSystem spec;
+                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ resolveBuildSystem spec;
               })
             ) buildSystemOverrides
           );
 
-          basePythonSet = pkgs.callPackage pyproject-nix.build.packages {
-            inherit python;
-          };
+          basePythonSet =
+            (pkgs.callPackage pyproject-nix.build.packages {
+              inherit python;
+            }).overrideScope
+              (
+                lib.composeManyExtensions [
+                  pyproject-build-systems.overlays.default
+                  overlay
+                  pyprojectOverrides
+                ]
+              );
 
-          pythonSets = lib.genAttrs workspaceNames (
-            name:
-            basePythonSet.overrideScope (
-              lib.composeManyExtensions [
-                pyproject-build-systems.overlays.default
-                (workspaces.${name}.mkPyprojectOverlay {
-                  sourcePreference = "wheel";
-                })
-                pyprojectOverrides
-              ]
-            )
-          );
-
-          editablePythonSets = lib.genAttrs workspaceNames (
-            name:
-            pythonSets.${name}.overrideScope (
-              lib.composeExtensions
-                (workspaces.${name}.mkEditablePyprojectOverlay {
-                  root = "$REPO_ROOT";
-                })
-                (
-                  final: prev: {
-                    "${name}" = prev.${name}.overrideAttrs (old: {
-                      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-                        final.editables
-                      ];
-                    });
-                  }
+          editablePythonSet = basePythonSet.overrideScope (
+            lib.composeExtensions
+              (workspace.mkEditablePyprojectOverlay {
+                root = "$REPO_ROOT";
+              })
+              (
+                final: prev:
+                lib.genAttrs workspaceMembers (
+                  name:
+                  prev.${name}.overrideAttrs (old: {
+                    nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+                      final.editables
+                    ];
+                  })
                 )
-            )
+              )
           );
+          virtualenv-dev = editablePythonSet.mkVirtualEnv "${pyproject.project.name}-dev-env" workspace.deps.all;
 
-          runtimePythonSets = lib.genAttrs workspaceNames (
-            name: pythonSets.${name}.pythonPkgsHostHost.overrideScope pyprojectOverrides
-          );
-
-          mkDevVirtualenv =
-            name: editablePythonSets.${name}.mkVirtualEnv "${name}-dev-env" workspaces.${name}.deps.all;
-
-          mkVirtualenv =
-            name: runtimePythonSets.${name}.mkVirtualEnv "${name}-env" workspaces.${name}.deps.default;
-
-          mkWorkspaceShell =
-            name:
-            pkgs.mkShell {
-              nativeBuildInputs = [
-                (mkDevVirtualenv name)
-                pkgs.uv
-              ];
-
-              env = {
-                UV_NO_SYNC = "1";
-                UV_PYTHON = editablePythonSets.${name}.python.interpreter;
-                UV_PYTHON_DOWNLOADS = "never";
-              };
-
-              shellHook = ''
-                unset PYTHONPATH
-                export REPO_ROOT=$(git rev-parse --show-toplevel)/${name}
-              '';
-            };
+          pythonSet = basePythonSet.pythonPkgsHostHost.overrideScope pyprojectOverrides;
+          virtualenv =
+            (pythonSet.mkVirtualEnv "${pyproject.project.name}-env" workspace.deps.default).overrideAttrs
+              (old: {
+                venvIgnoreCollisions = [ "*" ];
+              });
         in
         {
           treefmt = {
             projectRootFile = ".git/config";
-            flakeCheck = cfg.treefmt.flake-check;
             settings.global.excludes = [
               "rsync-gateway/config.*.toml"
             ];
 
-            programs = enableAll cfg.treefmt.programs;
+            programs = {
+              autocorrect.enable = true;
+              dockerfmt.enable = true;
+              nixfmt.enable = true;
+              prettier.enable = true;
+              ruff-check.enable = true;
+              ruff-format.enable = true;
+              taplo.enable = true;
+              zizmor.enable = true;
+            };
           };
 
           pre-commit.settings = {
-            package = pkgs.${cfg.pre-commit.package};
+            package = pkgs.prek;
             configPath = ".pre-commit-config.flake.yaml";
-            hooks = (enableAll cfg.pre-commit.hooks) // generated-file-checks;
+            hooks = {
+              treefmt.enable = true;
+              caddy-gen-check = {
+                enable = true;
+                name = "Caddyfiles up-to-date";
+                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan && git diff --exit-code caddy/Caddyfile.siyuan caddy/Caddyfile.zhiyuan";
+                language = "system";
+                pass_filenames = false;
+                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
+              };
+              gateway-gen-check = {
+                enable = true;
+                name = "Gateway configuration up-to-date";
+                entry = "";
+                language = "system";
+                pass_filenames = false;
+                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/)";
+              };
+            };
           };
 
-          devShells = {
-            default = pkgs.mkShellNoCC {
-              inputsFrom = [
-                config.treefmt.build.devShell
-                config.pre-commit.devShell
-              ];
-            };
-          }
-          // lib.genAttrs workspaceNames mkWorkspaceShell;
+          devShells.default = pkgs.mkShellNoCC {
+            nativeBuildInputs = [ pkgs.uv ];
+            buildInputs = [
+              virtualenv-dev
+              pkgs.uv
+            ];
 
-          packages = lib.genAttrs workspaceNames mkVirtualenv;
+            env = {
+              UV_NO_SYNC = "1";
+              UV_PYTHON = editablePythonSet.python.interpreter;
+              UV_PYTHON_DOWNLOADS = "never";
+            };
+
+            shellHook = ''
+              unset PYTHONPATH
+              export REPO_ROOT=$(git rev-parse --show-toplevel)
+            '';
+          };
+
+          packages = {
+            inherit virtualenv virtualenv-dev;
+          };
         };
     };
 }
