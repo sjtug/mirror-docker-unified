@@ -21,17 +21,8 @@ RUN apt-get install python3 python3-pip -y
 # COPY build-script/setup-packagist.sh build-script/setup-packagist.sh
 # RUN /app/build-script/setup-packagist.sh
 
-# Julia
-COPY build-script/setup-julia.sh build-script/setup-julia.sh
-RUN /app/build-script/setup-julia.sh
-ENV PATH="/app/julia-1.5.0/bin:${PATH}"
-
 # Python packages
 RUN apt-get install python3-dateutil -y
-
-# StorageMirrorServer.jl
-COPY build-script/setup-julia-mirror.sh build-script/setup-julia-mirror.sh
-RUN /app/build-script/setup-julia-mirror.sh
 
 # AWS
 RUN apt-get install awscli -y
