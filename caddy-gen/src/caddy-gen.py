@@ -440,7 +440,6 @@ if __name__ == "__main__":
                 [
                     Node("key_type rsa4096"),
                     Node("email sjtug-mirror-maintainers@googlegroups.com"),
-                    Node("preferred_chains smallest"),
                     Node("cert_issuer acme"),
                     # Node('metrics')   # has performance issue
                     # timeout settings
