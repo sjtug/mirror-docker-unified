@@ -52,5 +52,5 @@ RUN git config --global pack.threads 4 \
     && git config --global core.bare true
 
 
-CMD spawn-fcgi -s /run/fcgi.sock /usr/sbin/fcgiwrap && \
+CMD spawn-fcgi -s /run/fcgi.sock -F 8 /usr/sbin/fcgiwrap && \
     nginx -g "daemon off;"
