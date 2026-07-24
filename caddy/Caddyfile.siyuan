@@ -2,6 +2,9 @@
     key_type rsa4096
     email sjtug-mirror-maintainers@googlegroups.com
     cert_issuer acme
+    metrics {
+        per_host
+    }
     servers {
         timeouts {
             read_body 10s
@@ -231,6 +234,10 @@ https://mirror.sjtu.edu.cn {
         }
         handle_path /monitor/rsync-gateway/* {
             reverse_proxy rsync-gateway:8000
+        }
+        handle /monitor/caddy/metrics {
+            rewrite * /metrics
+            reverse_proxy 127.0.0.1:2019
         }
         handle_path /monitor/docker-gcr/* {
             reverse_proxy siyuan-gcr-registry:5001

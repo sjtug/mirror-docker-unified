@@ -74,9 +74,15 @@ def common() -> list[Node]:
             *reverse_proxy("/monitor/lug", LUG_EXPORTER_ADDR),
             *reverse_proxy("/monitor/mirror-intel", MIRROR_INTEL_ADDR),
             *reverse_proxy("/monitor/rsync-gateway", RSYNC_GATEWAY_ADDR),
+            Node(
+                "handle /monitor/caddy/metrics",
+                [
+                    Node("rewrite * /metrics"),
+                    Node("reverse_proxy 127.0.0.1:2019"),
+                ],
+            ),
             *reverse_proxy("/monitor/docker-gcr", "siyuan-gcr-registry:5001"),
             *reverse_proxy("/monitor/docker-registry", "siyuan-docker-registry:5001"),
-            # *metrics("/monitor/caddy")    # enable metrics in global config
         ],
     )
 
@@ -441,7 +447,9 @@ if __name__ == "__main__":
                     Node("key_type rsa4096"),
                     Node("email sjtug-mirror-maintainers@googlegroups.com"),
                     Node("cert_issuer acme"),
-                    # Node('metrics')   # has performance issue
+                    # Caddy >= 2.11.2 records metrics once per route and bounds
+                    # unknown HTTP hosts to "_other"; keep catch-all observation disabled.
+                    Node("metrics", [Node("per_host")]),
                     # timeout settings
                     Node(
                         "servers",

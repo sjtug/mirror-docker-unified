@@ -1,4 +1,4 @@
-FROM caddy:2.10-builder AS builder
+FROM caddy:2.11-builder AS builder
 
 ARG USE_GOPROXY
 RUN if [ "$USE_GOPROXY" = true ] ; then go env -w GO111MODULE=on && go env -w GOPROXY=https://goproxy.cn,direct ; fi
@@ -8,7 +8,7 @@ RUN xcaddy build \
     --with github.com/sjtug/cerberus@v0.4.6
 
 # stage 2
-FROM caddy:2.10
+FROM caddy:2.11
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
