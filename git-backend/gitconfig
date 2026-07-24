@@ -1,0 +1,12 @@
+[pack]
+	threads = 16
+	windowMemory = 512m
+[core]
+	compression = 1
+	bare = true
+[uploadpack]
+	allowReachableSHA1InWant = true
+	allowFilter = true
+	packObjectsHook = /queue-wrapper.sh
+[safe]
+	directory = *
