@@ -329,17 +329,23 @@ def build_root(base: str, config_yaml: dict, first_site: bool, site: str) -> Nod
         base, config_yaml["repos"], first_site, site
     )
 
+    https_main_children = common() + [BLANK_NODE]
+    https_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
+    https_main_children += cors("/mirrorz/*")  # mirrorz.org protocol support
+    https_main_children += [BLANK_NODE] + cerberus_settings()
+    https_main_children += [BLANK_NODE] + https_file_server_nodes
+
+    # Local development listens on plain HTTP only. Reuse the full serving
+    # configuration rather than generating an invalid https://:80 site.
+    if is_local(base):
+        return Node("", no_redir_nodes + [Node(f"http://{base}", https_main_children)])
+
     http_main_children = common_http() + [BLANK_NODE]
     http_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
     http_main_children += [BLANK_NODE] + cerberus_settings()
     http_main_children += [BLANK_NODE] + http_file_server_nodes
     http_main_node = Node(f"http://{base}", http_main_children)
 
-    https_main_children = common() + [BLANK_NODE]
-    https_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
-    https_main_children += cors("/mirrorz/*")  # mirrorz.org protocol support
-    https_main_children += [BLANK_NODE] + cerberus_settings()
-    https_main_children += [BLANK_NODE] + https_file_server_nodes
     https_main_node = Node(f"https://{base}", https_main_children)
 
     return Node("", no_redir_nodes + [http_main_node] + [https_main_node])
@@ -469,7 +475,7 @@ if __name__ == "__main__":
                     Node(
                         "cerberus",
                         [
-                            Node("difficulty 14"),
+                            Node(f"difficulty {12 if site == 'local' else 14}"),
                             Node("max_pending 16"),
                             Node("access_per_approval 8"),
                             Node("block_ttl 12h"),

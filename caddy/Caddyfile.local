@@ -36,54 +36,6 @@ http://:80 {
     }
 
     handle {
-        redir https://{hostport}{uri} 308  # redirect remaining http requests to https
-    }
-
-    header * x-sjtug-mirror-id local
-
-    handle_path /.cerberus/* {
-        cerberus_endpoint
-    }
-    @cerberus {
-        not path /qt /qt/*
-        path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
-        header User-Agent *Mozilla*
-        header User-Agent *Opera*
-        header User-Agent *Go-http-client*
-        header User-Agent *web*spider*
-    }
-    @except_cerberus_endpoint {
-        not path /.cerberus/*
-        not path /qt /qt/*
-        not {
-            path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
-            header User-Agent *Mozilla*
-            header User-Agent *Opera*
-            header User-Agent *Go-http-client*
-            header User-Agent *web*spider*
-        }
-    }
-    cerberus @except_cerberus_endpoint {
-        base_url /.cerberus
-        block_only
-    }
-    cerberus @cerberus {
-        base_url /.cerberus
-    }
-
-    @gzip_enabled
-    encode @gzip_enabled gzip zstd
-
-
-}
-
-https://:80 {
-    log {
-        output stdout
-        format transform "{common_log}"  # log in v1 style, caddyserver/transform-encoder required
-    }
-
-    handle {
         reverse_proxy /* frontend:3000
     }
 
@@ -124,6 +76,10 @@ https://:80 {
         handle_path /monitor/rsync-gateway/* {
             reverse_proxy rsync-gateway:8000
         }
+        handle /monitor/caddy/metrics {
+            rewrite * /metrics
+            reverse_proxy 127.0.0.1:2019
+        }
         handle_path /monitor/docker-gcr/* {
             reverse_proxy siyuan-gcr-registry:5001
         }
@@ -153,6 +109,7 @@ https://:80 {
         header User-Agent *Opera*
         header User-Agent *Go-http-client*
         header User-Agent *web*spider*
+        not remote_ip 10.0.0.0/8
     }
     @except_cerberus_endpoint {
         not path /.cerberus/*
@@ -163,6 +120,7 @@ https://:80 {
             header User-Agent *Opera*
             header User-Agent *Go-http-client*
             header User-Agent *web*spider*
+            not remote_ip 10.0.0.0/8
         }
     }
     cerberus @except_cerberus_endpoint {
