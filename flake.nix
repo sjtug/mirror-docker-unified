@@ -73,7 +73,7 @@
           python = pkgs."python${lib.versions.major pythonVersion}${lib.versions.minor pythonVersion}";
           pyproject = lib.importTOML ./pyproject.toml;
 
-          hacks = pkgs.callPackage pyproject-nix.build.hacks { };
+          # hacks = pkgs.callPackage pyproject-nix.build.hacks { };
 
           overlay = workspace.mkPyprojectOverlay { sourcePreference = "wheel"; };
           pyprojectOverrides = lib.composeExtensions (uv2nix_hammer_overrides.overrides pkgs) (
@@ -156,15 +156,23 @@
             configPath = ".pre-commit-config.flake.yaml";
             hooks = {
               treefmt.enable = true;
-              caddy-gen-check = {
+              caddy-verify-config = {
+                enable = true;
+                name = "Caddyfile validated by Caddy server";
+                entry = "${lib.getExe pkgs.caddy} validate --adapter caddyfile --config caddy/Caddyfile.{siyuan,zhiyuan}";
+                language = "system";
+                pass_filenames = false;
+                files = "^(caddy/Caddyfile\\.(siyuan|zhiyuan))$";
+              };
+              caddy-gen = {
                 enable = true;
                 name = "Caddyfiles up-to-date";
-                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan --fail-on-change";
+                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site local,siyuan,zhiyuan --fail-on-change";
                 language = "system";
                 pass_filenames = false;
                 files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
               };
-              gateway-gen-check = {
+              gateway-gen = {
                 enable = true;
                 name = "Gateway configuration up-to-date";
                 entry = "${virtualenv-dev}/bin/python3 gateway-gen/src/gateway-gen.py -i ./. -o ./rsync-gateway --site siyuan,zhiyuan --fail-on-change";
@@ -176,10 +184,16 @@
           };
 
           devShells.default = pkgs.mkShellNoCC {
-            nativeBuildInputs = [ pkgs.uv ];
-            buildInputs = [
-              virtualenv-dev
+            inputsFrom = [
+              config.treefmt.build.devShell
+              config.pre-commit.devShell
+            ];
+
+            strictDeps = true;
+
+            nativeBuildInputs = [
               pkgs.uv
+              virtualenv-dev
             ];
 
             env = {
