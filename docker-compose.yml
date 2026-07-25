@@ -10,9 +10,8 @@ services:
       - "./secrets/caddy.env"
     build:
       context: ./caddy
-      args:
-        - USE_SJTUG=true
-        - USE_GOPROXY=true
+      additional_contexts:
+        flake: .
     volumes:
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"

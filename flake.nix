@@ -63,6 +63,7 @@
           config,
           pkgs,
           lib,
+          system,
           ...
         }:
         let
@@ -156,10 +157,18 @@
             configPath = ".pre-commit-config.flake.yaml";
             hooks = {
               treefmt.enable = true;
-              caddy-verify-config = {
+              caddy-verify-config-siyuan = {
                 enable = true;
-                name = "Caddyfile validated by Caddy server";
-                entry = "${lib.getExe pkgs.caddy} validate --adapter caddyfile --config caddy/Caddyfile.{siyuan,zhiyuan}";
+                name = "Caddyfile.siyuan validated by Caddy server";
+                entry = "${lib.getExe config.packages.caddy} validate --adapter caddyfile --config caddy/Caddyfile.siyuan";
+                language = "system";
+                pass_filenames = false;
+                files = "^(caddy/Caddyfile\\.(siyuan|zhiyuan))$";
+              };
+              caddy-verify-config-zhiyuan = {
+                enable = true;
+                name = "Caddyfile.zhiyuan validated by Caddy server";
+                entry = "${lib.getExe config.packages.caddy} validate --adapter caddyfile --config caddy/Caddyfile.zhiyuan";
                 language = "system";
                 pass_filenames = false;
                 files = "^(caddy/Caddyfile\\.(siyuan|zhiyuan))$";
@@ -170,7 +179,7 @@
                 entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site local,siyuan,zhiyuan --fail-on-change";
                 language = "system";
                 pass_filenames = false;
-                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
+                files = "^(config\\.(local|siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
               };
               gateway-gen = {
                 enable = true;
@@ -210,6 +219,13 @@
 
           packages = {
             inherit virtualenv-dev;
+            caddy = pkgs.caddy.withPlugins {
+              plugins = [
+                "github.com/caddyserver/transform-encoder@v0.0.0-20260423033309-ba4124974830"
+                "github.com/sjtug/cerberus@v0.4.8"
+              ];
+              hash = "sha256-pShS64ckH4eVKXJvgDCuDPSrWZb9L8RYjeTqoupRGZE=";
+            };
           };
         };
     };

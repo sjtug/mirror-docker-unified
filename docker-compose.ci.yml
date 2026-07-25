@@ -6,11 +6,6 @@ services:
     volumes:
       - "./lug/config.local.yaml:/config.local.yaml:ro"
     command: -c /config.local.yaml
-  caddy:
-    build:
-      args:
-        - USE_SJTUG=false
-        - USE_GOPROXY=false
   rsync-gateway:
     build:
       args:

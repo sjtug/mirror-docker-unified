@@ -9,7 +9,7 @@ on:
 jobs:
   test-lug:
     runs-on: ubuntu-latest
-    name: lug config format
+    name: Run checks
     permissions:
       contents: read
     steps:
@@ -65,51 +65,3 @@ jobs:
             *.cache-from=type=gha,scope=${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.mirror }}
             *.cache-to=type=gha,mode=max,scope=${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.mirror }}
           load: true
-      - name: validate Caddyfile
-        run: make caddy-verify-config
-  test-caddy-file:
-    runs-on: ubuntu-latest
-    name: Caddyfile up-to-date
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          persist-credentials: false
-      - name: Install Nix
-        uses: nixbuild/nix-quick-install-action@1f095fee853b33114486cfdeae62fa099cda35a9 # v33
-        with:
-          nix_conf: |
-            extra-substituters = https://sjtug.cachix.org
-            extra-trusted-public-keys = sjtug.cachix.org-1:06k1I31gmbCDlu7StkdMgDt1yEf6qoRsyaUkMpkuPdE=
-      - name: check if Caddyfile is latest version
-        run: make caddy-gen && git diff --exit-code
-      - name: use CI config for docker-compose
-        run: |
-          cp docker-compose.ci.yml docker-compose.override.yml
-          cp ./secrets/caddy.env.example ./secrets/caddy.env
-          cp ./secrets/mirror-clone.env.example ./secrets/mirror-clone.env
-          cp ./secrets/mirror-intel.env.example ./secrets/mirror-intel.env
-          cp ./secrets/gcr-registry.ci.yml ./secrets/gcr-registry.yml
-          cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
-          cp ./secrets/pg.env.example ./secrets/pg.env
-          touch ./secrets/lug-secrets.sh
-      - name: validate Caddyfile
-        run: docker compose build caddy && make caddy-verify-config
-  test-gateway-file:
-    runs-on: ubuntu-latest
-    name: rsync-gateway config up-to-date
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          persist-credentials: false
-      - name: Install Nix
-        uses: nixbuild/nix-quick-install-action@1f095fee853b33114486cfdeae62fa099cda35a9 # v33
-        with:
-          nix_conf: |
-            extra-substituters = https://sjtug.cachix.org
-            extra-trusted-public-keys = sjtug.cachix.org-1:06k1I31gmbCDlu7StkdMgDt1yEf6qoRsyaUkMpkuPdE=
-      - name: check if rsync-gateway config.toml is latest version
-        run: make gateway-gen && git diff --exit-code

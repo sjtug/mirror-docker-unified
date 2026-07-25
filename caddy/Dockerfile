@@ -1,19 +1,19 @@
-FROM caddy:2.11-builder AS builder
+FROM nixos/nix:2.35.1
 
-ARG USE_GOPROXY
-RUN if [ "$USE_GOPROXY" = true ] ; then go env -w GO111MODULE=on && go env -w GOPROXY=https://goproxy.cn,direct ; fi
+WORKDIR /build
+COPY --from=flake flake.nix flake.lock ./
+RUN nix \
+    --extra-experimental-features "nix-command flakes" \
+    --option extra-substituters "https://sjtug.cachix.org" \
+    --option extra-trusted-public-keys "sjtug.cachix.org-1:0bD3nO47HROvtvVfkodDpE7AUwjFxQ/6l4fCbcC+7bc=" \
+    --option filter-syscalls false \
+    build .#caddy \
+    --out-link /result \
+    && nix-store --gc
 
-RUN xcaddy build \
-    --with github.com/caddyserver/transform-encoder \
-    --with github.com/sjtug/cerberus@v0.4.6
+ENV PATH=/result/bin:${PATH}
+ENV XDG_CONFIG_HOME=/config
+ENV XDG_DATA_HOME=/data
 
-# stage 2
-FROM caddy:2.11
-
-COPY --from=builder /usr/bin/caddy /usr/bin/caddy
-
-ARG USE_SJTUG
-RUN if [ "$USE_SJTUG" = true ] ; then sed -i 's/https:\/\/dl-cdn.alpinelinux.org/http:\/\/mirrors.ustc.edu.cn/g' /etc/apk/repositories ; fi
-RUN apk update && apk add curl
-
-CMD caddy
+WORKDIR /srv
+CMD ["caddy"]
