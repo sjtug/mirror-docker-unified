@@ -264,7 +264,10 @@
               pkgs.go
               pkgs.go2nix
 
+              pkgs.cachix
+              pkgs.jq
               pkgs.nix-fast-build
+              pkgs.sops
             ];
 
             env = {
