@@ -460,9 +460,10 @@ repos:
     name: dart-pub
     <<:
       - *oneshot_common
-  # pytorch-wheels: served on-demand by mirror-intel
-  # (removed v1 mirror-clone proactive sync — torch_stable.html is legacy,
-  #  modern pytorch uses PEP 503 per-CUDA indexes that mirror-intel handles)
+  # pytorch-wheels
+  - type: external
+    name: pytorch-wheels
+    serve_mode: mirror_intel
   # crates.io
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix crates.io/crates --s3-buffer-path /var/cache --print-plan 100 crates-io

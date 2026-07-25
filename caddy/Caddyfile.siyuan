@@ -321,6 +321,7 @@ https://mirror.sjtu.edu.cn {
 		not path /rust-static/*
 		not path /pypi-packages/*
 		not path /dart-pub/*
+		not path /pytorch-wheels/*
 		not path /crates.io/*
 		not path /flutter_infra/*
 		not path /ghcup/*
@@ -687,6 +688,10 @@ https://mirror.sjtu.edu.cn {
 	}
 	redir /dart-pub /dart-pub/ 301
 	handle /dart-pub/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /pytorch-wheels /pytorch-wheels/ 301
+	handle /pytorch-wheels/* {
 		reverse_proxy mirror-intel:8000
 	}
 	redir /crates.io /crates.io/ 301
