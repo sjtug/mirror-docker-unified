@@ -334,6 +334,7 @@ https://mirror.sjtu.edu.cn {
 		not path /git/ohmyzsh.git/*
 		not path /git/spacemacs.git/*
 		not path /git/doom-emacs.git/*
+		not path /git/flake-parts.git/*
 		not path /github/GNS3/*
 		not path /github/FreeCAD/*
 		not path /github/prometheus/*
@@ -1134,6 +1135,10 @@ https://mirror.sjtu.edu.cn {
 	}
 	redir /git/doom-emacs.git /git/doom-emacs.git/ 301
 	handle /git/doom-emacs.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/flake-parts.git /git/flake-parts.git/ 301
+	handle /git/flake-parts.git/* {
 		reverse_proxy git-backend
 	}
 	redir /git/dpdk.git /git/dpdk.git/ 301

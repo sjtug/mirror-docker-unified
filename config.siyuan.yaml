@@ -578,6 +578,14 @@ repos:
     serve_mode: git
     target: https://git.sjtu.edu.cn/sjtug/doom-emacs.git
   - type: shell_script
+    script: /worker-script/git.sh
+    interval: 28800
+    name: git/flake-parts.git
+    source: https://github.com/hercules-ci/flake-parts.git
+    path: /srv/data55T/git/flake-parts.git
+    serve_mode: git
+    target: https://git.sjtu.edu.cn/sjtug/flake-parts.git
+  - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://ftp.jaist.ac.jp/pub/DragonFly/iso-images/
     interval: 25600
