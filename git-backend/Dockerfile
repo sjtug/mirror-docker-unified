@@ -3,8 +3,8 @@ FROM nixos/nix:2.35.1
 WORKDIR /build
 COPY --from=flake .go-version .python-version flake.nix flake.lock ./
 COPY go.mod go.sum go-queue.go go-queue_test.go go-queue.nix go2nix.toml multiwatch.nix runtime.nix ./git-backend/
+RUN echo "experimental-features = nix-command flakes recursive-nix ca-derivations dynamic-derivations" >>/etc/nix/nix.conf
 RUN nix \
-    --extra-experimental-features "nix-command flakes recursive-nix ca-derivations dynamic-derivations" \
     --option extra-substituters "https://sjtug.cachix.org" \
     --option extra-trusted-public-keys "sjtug.cachix.org-1:0bD3nO47HROvtvVfkodDpE7AUwjFxQ/6l4fCbcC+7bc=" \
     --option filter-syscalls false \
