@@ -1,3 +1,5 @@
 **
+!.go-version
+!.python-version
 !flake.nix
 !flake.lock

@@ -25,6 +25,10 @@
       inputs.uv2nix.follows = "uv2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    go2nix = {
+      url = "github:numtide/go2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -67,11 +71,22 @@
           ...
         }:
         let
+          ### Go ###
+          goVersion = lib.versions.majorMinor (lib.fileContents ./.go-version);
+
+          # go2nix experimental mode (no plugin):
+          #   extra-experimental-features = recursive-nix ca-derivations dynamic-derivations
+          goEnv = inputs.go2nix.lib.mkGoEnv {
+            inherit (pkgs) go go2nix callPackage;
+            nixPackage = pkgs.nixVersions.nix_2_34;
+          };
+
+          ### Python ###
+
           workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
           workspaceMembers = pyproject.tool.uv.workspace.members;
 
           pythonVersion = lib.strings.fileContents ./.python-version;
-          python = pkgs."python${lib.versions.major pythonVersion}${lib.versions.minor pythonVersion}";
           pyproject = lib.importTOML ./pyproject.toml;
 
           # hacks = pkgs.callPackage pyproject-nix.build.hacks { };
@@ -96,7 +111,7 @@
 
           basePythonSet =
             (pkgs.callPackage pyproject-nix.build.packages {
-              inherit python;
+              inherit (pkgs) python;
             }).overrideScope
               (
                 lib.composeManyExtensions [
@@ -134,15 +149,33 @@
           #     });
         in
         {
+          _module.args.pkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = [
+              (_final: prev: {
+                go = prev."go_${lib.replaceString "." "_" goVersion}";
+                inherit goEnv;
+                inherit (inputs.go2nix.packages.${system}) go2nix;
+              })
+              (_final: _prev: rec {
+                python = pkgs."python${lib.versions.major pythonVersion}${lib.versions.minor pythonVersion}";
+                python3 = python;
+              })
+            ];
+          };
+
           treefmt = {
             projectRootFile = ".git/config";
             settings.global.excludes = [
+              "git-backend/go2nix.toml"
               "rsync-gateway/config.*.toml"
             ];
 
             programs = {
               autocorrect.enable = true;
               dockerfmt.enable = true;
+              gofumpt.enable = true;
+              goimports.enable = true;
               nixfmt.enable = true;
               prettier.enable = true;
               ruff-check.enable = true;
@@ -197,6 +230,22 @@
                 pass_filenames = false;
                 files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/)";
               };
+              go2nix = {
+                enable = true;
+                name = "go2nix";
+                description = "Regenerate go2nix.toml lockfile";
+                entry =
+                  let
+                    script = pkgs.writeShellScript "go2nix-wrapper" ''
+                      exec ${
+                        lib.getExe inputs.go2nix.packages.${system}.go2nix
+                      } generate -o git-backend/go2nix.toml git-backend
+                    '';
+                  in
+                  toString script;
+                files = "^git-backend/(go2nix\\.toml|go\\.(mod|sum))";
+                pass_filenames = false;
+              };
             };
           };
 
@@ -211,6 +260,11 @@
             nativeBuildInputs = [
               pkgs.uv
               virtualenv-dev
+
+              pkgs.go
+              pkgs.go2nix
+
+              pkgs.nix-fast-build
             ];
 
             env = {
@@ -233,6 +287,11 @@
                 "github.com/sjtug/cerberus@v0.4.8"
               ];
               hash = "sha256-pShS64ckH4eVKXJvgDCuDPSrWZb9L8RYjeTqoupRGZE=";
+            };
+            go-queue = pkgs.callPackage ./git-backend/go-queue.nix { };
+            git-backend-runtime = pkgs.callPackage ./git-backend/runtime.nix {
+              goQueue = config.packages.go-queue;
+              multiwatch = pkgs.callPackage ./git-backend/multiwatch.nix { };
             };
           };
         };

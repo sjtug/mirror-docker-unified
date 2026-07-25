@@ -268,8 +268,8 @@ services:
   git-backend:
     build:
       context: ./git-backend
-      args:
-        - USE_SJTUG=true
+      additional_contexts:
+        flake: .
     logging:
       options:
         max-size: "2M"

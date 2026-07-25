@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -14,9 +14,9 @@ go-queue \
     --port-number "$QUEUE_SERVER_PORT" &
 
 spawn-fcgi -s /run/fcgi.sock -n -- \
-    /usr/bin/multiwatch -f "$THREADS" -- /usr/sbin/fcgiwrap &
+    /runtime/bin/multiwatch -f "$THREADS" -- /runtime/bin/fcgiwrap &
 
-nginx -g "daemon off;" &
+nginx -e stderr -c /etc/nginx/nginx.conf -g "daemon off;" &
 
 # Stop the container if any critical process exits. tini forwards signals to
 # the complete process group and the container runtime cleans up on exit.

@@ -1,7 +1,7 @@
 FROM nixos/nix:2.35.1
 
 WORKDIR /build
-COPY --from=flake flake.nix flake.lock ./
+COPY --from=flake .go-version .python-version flake.nix flake.lock ./
 RUN nix \
     --extra-experimental-features "nix-command flakes" \
     --option extra-substituters "https://sjtug.cachix.org" \
