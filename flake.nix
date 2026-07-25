@@ -1,4 +1,8 @@
 {
+  nixConfig = {
+    extra-substituters = [ "https://sjtug.cachix.org" ];
+    extra-trusted-public-keys = [ "sjtug.cachix.org-1:0bD3nO47HROvtvVfkodDpE7AUwjFxQ/6l4fCbcC+7bc=" ];
+  };
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-parts = {
