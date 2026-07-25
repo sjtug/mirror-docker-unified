@@ -176,10 +176,18 @@
               caddy-gen = {
                 enable = true;
                 name = "Caddyfiles up-to-date";
-                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site local,siyuan,zhiyuan --fail-on-change";
+                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./. -o ./caddy --site siyuan,zhiyuan --fail-on-change";
                 language = "system";
                 pass_filenames = false;
-                files = "^(config\\.(local|siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
+                files = "^(config\\.(siyuan|zhiyuan)\\.yaml|caddy-gen/src/)";
+              };
+              caddy-gen-local = {
+                enable = true;
+                name = "Caddyfile.local up-to-date";
+                entry = "${virtualenv-dev}/bin/python3 caddy-gen/src/caddy-gen.py -i ./lug -o ./caddy --site local --fail-on-change";
+                language = "system";
+                pass_filenames = false;
+                files = "^(lug/config\\.local\\.yaml|caddy-gen/src/)";
               };
               gateway-gen = {
                 enable = true;

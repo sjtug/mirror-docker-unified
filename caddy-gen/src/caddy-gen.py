@@ -398,7 +398,10 @@ if __name__ == "__main__":
     )
     parser.add_argument("-s", "--site", required=True, help="Site names.")
     parser.add_argument(
-        "-I", "--indent", default=INDENT_CNT, help="Number of spaces in indents."
+        "-I",
+        "--indent",
+        type=int,
+        help="Number of spaces in indents (default: canonical Caddyfile tabs).",
     )
     parser.add_argument(
         "--fail-on-change",
@@ -406,6 +409,7 @@ if __name__ == "__main__":
         help="Exit with code 1 if output differs from existing files.",
     )
     args = parser.parse_args()
+    set_indent(args.indent)
 
     sites = args.site.split(",")
     site_configs = {}
@@ -521,7 +525,7 @@ if __name__ == "__main__":
         except FileNotFoundError:
             old_content = None
 
-        new_content = "".join(f"{root}\n\n" for root in roots)
+        new_content = "\n\n".join(str(root) for root in roots) + "\n"
         with open(output, "w") as fp:
             fp.write(new_content)
 
