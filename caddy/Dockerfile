@@ -1,9 +1,12 @@
 FROM nixos/nix:2.35.1
 
+ARG USE_GOPROXY
+
 WORKDIR /build
 COPY --from=flake .go-version .python-version flake.nix flake.lock ./
 RUN echo "experimental-features = nix-command flakes" >>/etc/nix/nix.conf
-RUN nix \
+RUN if [ "$USE_GOPROXY" = true ] ; then export GOPROXY="https://goproxy.cn" ; fi; \
+    nix \
     --extra-experimental-features "nix-command flakes" \
     --option extra-substituters "https://sjtug.cachix.org" \
     --option extra-trusted-public-keys "sjtug.cachix.org-1:0bD3nO47HROvtvVfkodDpE7AUwjFxQ/6l4fCbcC+7bc=" \

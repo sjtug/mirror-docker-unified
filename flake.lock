@@ -65,15 +65,16 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1781254883,
-        "narHash": "sha256-DHGapGB3CSq0nu8N6wpIrKn5l8W4J7BKrO9iv78h6VE=",
-        "owner": "numtide",
+        "lastModified": 1785057455,
+        "narHash": "sha256-2KOg/SaMM+BmrbfftreDOSJtUqClp4jSkGcarK8dVfA=",
+        "owner": "definfo",
         "repo": "go2nix",
-        "rev": "ec9bf035ffd85da6620fbda3b6d4032ecbf91e54",
+        "rev": "716fae350c9659ef5c11cc08026b75ad91b48d53",
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
+        "owner": "definfo",
+        "ref": "fix/buildModuleFODs_GOPROXY",
         "repo": "go2nix",
         "type": "github"
       }

@@ -30,7 +30,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     go2nix = {
-      url = "github:numtide/go2nix";
+      url = "github:definfo/go2nix/fix/buildModuleFODs_GOPROXY";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pre-commit-hooks = {
@@ -77,11 +77,15 @@
         let
           ### Go ###
           goVersion = lib.versions.majorMinor (lib.fileContents ./.go-version);
+          goProxy = builtins.getEnv "GOPROXY";
 
           # go2nix experimental mode (no plugin):
           #   extra-experimental-features = recursive-nix ca-derivations dynamic-derivations
           goEnv = inputs.go2nix.lib.mkGoEnv {
             inherit (pkgs) go go2nix callPackage;
+            goEnv = lib.optionalAttrs (goProxy != "") {
+              GOPROXY = goProxy;
+            };
             nixPackage = pkgs.nixVersions.nix_2_34;
           };
 

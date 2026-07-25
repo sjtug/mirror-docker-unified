@@ -1,4 +1,12 @@
 services:
+  caddy:
+    build:
+      args:
+        - USE_GOPROXY=false
+  git-backend:
+    build:
+      args:
+        - USE_GOPROXY=false
   lug:
     build:
       args:

@@ -12,6 +12,8 @@ services:
       context: ./caddy
       additional_contexts:
         flake: .
+      args:
+        - USE_GOPROXY=true
     volumes:
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"
@@ -270,6 +272,8 @@ services:
       context: ./git-backend
       additional_contexts:
         flake: .
+      args:
+        - USE_GOPROXY=true
     logging:
       options:
         max-size: "2M"
