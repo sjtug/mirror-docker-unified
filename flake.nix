@@ -29,10 +29,6 @@
       inputs.uv2nix.follows = "uv2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    go2nix = {
-      url = "github:definfo/go2nix/fix/buildModuleFODs_GOPROXY";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,17 +73,7 @@
         let
           ### Go ###
           goVersion = lib.versions.majorMinor (lib.fileContents ./.go-version);
-          goProxy = builtins.getEnv "GOPROXY";
-
-          # go2nix experimental mode (no plugin):
-          #   extra-experimental-features = recursive-nix ca-derivations dynamic-derivations
-          goEnv = inputs.go2nix.lib.mkGoEnv {
-            inherit (pkgs) go go2nix callPackage;
-            goEnv = lib.optionalAttrs (goProxy != "") {
-              GOPROXY = goProxy;
-            };
-            nixPackage = pkgs.nixVersions.nix_2_34;
-          };
+          go = pkgs."go_${lib.replaceString "." "_" goVersion}";
 
           ### Python ###
 
@@ -95,6 +81,7 @@
           workspaceMembers = pyproject.tool.uv.workspace.members;
 
           pythonVersion = lib.strings.fileContents ./.python-version;
+          python = pkgs."python${lib.versions.major pythonVersion}${lib.versions.minor pythonVersion}";
           pyproject = lib.importTOML ./pyproject.toml;
 
           # hacks = pkgs.callPackage pyproject-nix.build.hacks { };
@@ -119,7 +106,7 @@
 
           basePythonSet =
             (pkgs.callPackage pyproject-nix.build.packages {
-              inherit (pkgs) python;
+              inherit python;
             }).overrideScope
               (
                 lib.composeManyExtensions [
@@ -157,25 +144,9 @@
           #     });
         in
         {
-          _module.args.pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = [
-              (_final: prev: {
-                go = prev."go_${lib.replaceString "." "_" goVersion}";
-                inherit goEnv;
-                inherit (inputs.go2nix.packages.${system}) go2nix;
-              })
-              (_final: _prev: rec {
-                python = pkgs."python${lib.versions.major pythonVersion}${lib.versions.minor pythonVersion}";
-                python3 = python;
-              })
-            ];
-          };
-
           treefmt = {
             projectRootFile = ".git/config";
             settings.global.excludes = [
-              "git-backend/go2nix.toml"
               "rsync-gateway/config.*.toml"
             ];
 
@@ -238,22 +209,6 @@
                 pass_filenames = false;
                 files = "^(config\\.(siyuan|zhiyuan)\\.yaml|gateway-gen/src/)";
               };
-              go2nix = {
-                enable = true;
-                name = "go2nix";
-                description = "Regenerate go2nix.toml lockfile";
-                entry =
-                  let
-                    script = pkgs.writeShellScript "go2nix-wrapper" ''
-                      exec ${
-                        lib.getExe inputs.go2nix.packages.${system}.go2nix
-                      } generate -o git-backend/go2nix.toml git-backend
-                    '';
-                  in
-                  toString script;
-                files = "^git-backend/(go2nix\\.toml|go\\.(mod|sum))";
-                pass_filenames = false;
-              };
             };
           };
 
@@ -269,8 +224,7 @@
               pkgs.uv
               virtualenv-dev
 
-              pkgs.go
-              pkgs.go2nix
+              go
 
               pkgs.cachix
               pkgs.jq

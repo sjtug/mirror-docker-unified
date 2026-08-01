@@ -4,7 +4,7 @@ ARG USE_GOPROXY
 
 WORKDIR /build
 COPY --from=flake .go-version .python-version flake.nix flake.lock ./
-COPY go.mod go.sum go-queue.go go-queue_test.go go-queue.nix go2nix.toml multiwatch.nix runtime.nix ./git-backend/
+COPY go.mod go.sum go-queue.go go-queue_test.go go-queue.nix multiwatch.nix runtime.nix ./git-backend/
 RUN echo "experimental-features = nix-command flakes recursive-nix ca-derivations dynamic-derivations" >>/etc/nix/nix.conf
 RUN if [ "$USE_GOPROXY" = true ] ; then export GOPROXY="https://goproxy.cn" ; fi; \
     nix \

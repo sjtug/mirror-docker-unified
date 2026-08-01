@@ -57,28 +57,6 @@
         "type": "github"
       }
     },
-    "go2nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": "treefmt-nix"
-      },
-      "locked": {
-        "lastModified": 1785057455,
-        "narHash": "sha256-2KOg/SaMM+BmrbfftreDOSJtUqClp4jSkGcarK8dVfA=",
-        "owner": "definfo",
-        "repo": "go2nix",
-        "rev": "716fae350c9659ef5c11cc08026b75ad91b48d53",
-        "type": "github"
-      },
-      "original": {
-        "owner": "definfo",
-        "ref": "fix/buildModuleFODs_GOPROXY",
-        "repo": "go2nix",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1782666739,
@@ -166,12 +144,11 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "go2nix": "go2nix",
         "nixpkgs": "nixpkgs",
         "pre-commit-hooks": "pre-commit-hooks",
         "pyproject-build-systems": "pyproject-build-systems",
         "pyproject-nix": "pyproject-nix",
-        "treefmt-nix": "treefmt-nix_2",
+        "treefmt-nix": "treefmt-nix",
         "uv2nix": "uv2nix",
         "uv2nix_hammer_overrides": "uv2nix_hammer_overrides"
       }
@@ -191,27 +168,6 @@
       }
     },
     "treefmt-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "go2nix",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1773297127,
-        "narHash": "sha256-6E/yhXP7Oy/NbXtf1ktzmU8SdVqJQ09HC/48ebEGBpk=",
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "rev": "71b125cd05fbfd78cab3e070b73544abe24c5016",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
