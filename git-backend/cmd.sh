@@ -7,6 +7,9 @@ QUEUE_SIZE="${QUEUE_SIZE:-1}"
 QUEUE_SERVER_PORT="${QUEUE_SERVER_PORT:-8888}"
 export QUEUE_SERVER_PORT
 
+# The minimal Nix base image does not create the conventional runtime
+# directory. Both the FastCGI socket and nginx's PID file live here.
+mkdir -p /run
 rm -f /run/fcgi.sock
 
 go-queue \
