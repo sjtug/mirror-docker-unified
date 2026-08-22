@@ -29,42 +29,12 @@
 	order cerberus before redir
 }
 
-k8s-gcr-io.mirrors.sjtug.sjtu.edu.cn {
-	log {
-		output stdout
-		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
-	}
-	redir * https://mirrors.sjtug.sjtu.edu.cn/registry.k8s.io{uri} 302
-	header * x-sjtug-mirror-id zhiyuan
-}
-
-registry-k8s-io.mirrors.sjtug.sjtu.edu.cn {
-	log {
-		output stdout
-		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
-	}
-	reverse_proxy k8s-registry:80 {
-		header_up Host {http.reverse_proxy.upstream.hostport}
-	}
-	header * x-sjtug-mirror-id zhiyuan
-}
-
 google-fonts.mirrors.sjtug.sjtu.edu.cn {
 	log {
 		output stdout
 		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
 	}
 	redir * https://fonts.googleapis.com{uri} 302
-	header * x-sjtug-mirror-id zhiyuan
-}
-
-anaconda.mirrors.sjtug.sjtu.edu.cn {
-	log {
-		output stdout
-		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
-	}
-	rewrite * /anaconda{uri}
-	reverse_proxy mirror-intel:8000
 	header * x-sjtug-mirror-id zhiyuan
 }
 
@@ -236,10 +206,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
 
 	@gzip_enabled {
 		not path /kali-images/*
-		not path /git/homebrew-core.git/*
-		not path /git/homebrew-cask.git/*
 		not path /git/brew.git/*
-		not path /git/crates.io-index/*
 		not path /raspbian/*
 		not path /parrot/*
 		not path /raspberrypi/*
@@ -248,10 +215,7 @@ https://mirrors.sjtug.sjtu.edu.cn {
 		not path /git/opam-repository.git/*
 		not path /git/qemu.git/*
 		not path /download.flutter.io/*
-		not path /k8s.gcr.io/*
-		not path /registry.k8s.io/*
 		not path /google-fonts/*
-		not path /anaconda/*
 		not path /keyarchos/*
 		not path /racket/*
 		not path /bmclapi/*
@@ -567,16 +531,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
 	handle_path /download.flutter.io/* {
 		redir * https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/{uri} 302
 	}
-	redir /k8s.gcr.io /k8s.gcr.io/ 301
-	handle_path /k8s.gcr.io/* {
-		redir * https://mirrors.sjtug.sjtu.edu.cn/registry.k8s.io{uri} 302
-	}
-	redir /registry.k8s.io /registry.k8s.io/ 301
-	handle_path /registry.k8s.io/* {
-		reverse_proxy k8s-registry:80 {
-			header_up Host {http.reverse_proxy.upstream.hostport}
-		}
-	}
 	redir /google-fonts /google-fonts/ 301
 	handle_path /google-fonts/* {
 		redir * https://fonts.googleapis.com{uri} 302
@@ -598,10 +552,6 @@ https://mirrors.sjtug.sjtu.edu.cn {
 		}
 		@hidden path */.*
 		respond @hidden 404
-	}
-	redir /anaconda /anaconda/ 301
-	handle /anaconda/* {
-		reverse_proxy mirror-intel:8000
 	}
 	redir /CTAN /CTAN/ 301
 	handle /CTAN/* {
@@ -1030,20 +980,8 @@ https://mirrors.sjtug.sjtu.edu.cn {
 		redir * https://mirror.sjtu.edu.cn/alpine{uri} 302
 	}
 
-	redir /git/homebrew-core.git /git/homebrew-core.git/ 301
-	handle /git/homebrew-core.git/* {
-		reverse_proxy git-backend
-	}
-	redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
-	handle /git/homebrew-cask.git/* {
-		reverse_proxy git-backend
-	}
 	redir /git/brew.git /git/brew.git/ 301
 	handle /git/brew.git/* {
-		reverse_proxy git-backend
-	}
-	redir /git/crates.io-index /git/crates.io-index/ 301
-	handle /git/crates.io-index/* {
 		reverse_proxy git-backend
 	}
 	redir /git/opam-repository.git /git/opam-repository.git/ 301

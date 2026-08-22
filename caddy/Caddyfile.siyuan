@@ -407,10 +407,7 @@ https://mirror.sjtu.edu.cn {
 		not path /gnu/*
 		not path /cygwin/*
 		not path /kali-images/*
-		not path /git/homebrew-core.git/*
-		not path /git/homebrew-cask.git/*
 		not path /git/brew.git/*
-		not path /git/crates.io-index/*
 		not path /crates.io-index/*
 		not path /raspbian/*
 		not path /parrot/*
@@ -425,7 +422,6 @@ https://mirror.sjtu.edu.cn {
 		not path /git/qemu.git/*
 		not path /linuxliteos/*
 		not path /download.flutter.io/*
-		not path /k8s.gcr.io/*
 		not path /google-fonts/*
 		not path /CPAN/*
 		not path /CRAN/*
@@ -1084,10 +1080,6 @@ https://mirror.sjtu.edu.cn {
 	handle_path /download.flutter.io/* {
 		redir * https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/{uri} 302
 	}
-	redir /k8s.gcr.io /k8s.gcr.io/ 301
-	handle_path /k8s.gcr.io/* {
-		redir * https://mirrors.sjtug.sjtu.edu.cn/registry.k8s.io{uri} 302
-	}
 	redir /google-fonts /google-fonts/ 301
 	handle_path /google-fonts/* {
 		redir * https://fonts.googleapis.com{uri} 302
@@ -1225,21 +1217,9 @@ https://mirror.sjtu.edu.cn {
 	handle /git/lean4-packages/batteries/* {
 		reverse_proxy git-backend
 	}
-	redir /git/homebrew-core.git /git/homebrew-core.git/ 301
-	handle_path /git/homebrew-core.git/* {
-		redir * https://mirrors.sjtug.sjtu.edu.cn/git/homebrew-core.git{uri} 302
-	}
-	redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
-	handle_path /git/homebrew-cask.git/* {
-		redir * https://mirrors.sjtug.sjtu.edu.cn/git/homebrew-cask.git{uri} 302
-	}
 	redir /git/brew.git /git/brew.git/ 301
 	handle_path /git/brew.git/* {
 		redir * https://mirrors.sjtug.sjtu.edu.cn/git/brew.git{uri} 302
-	}
-	redir /git/crates.io-index /git/crates.io-index/ 301
-	handle_path /git/crates.io-index/* {
-		redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
 	}
 	redir /git/opam-repository.git /git/opam-repository.git/ 301
 	handle_path /git/opam-repository.git/* {
