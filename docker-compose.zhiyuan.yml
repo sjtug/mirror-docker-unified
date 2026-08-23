@@ -49,7 +49,7 @@ services:
   mirror-intel:
     container_name: zhiyuan-mirror-intel
     volumes:
-      - "/mnt/cache:/mnt/cache"
+      - "/mnt/data12T/mirror-intel-cache:/mnt/cache"
     mem_limit: 10G
     memswap_limit: 10G
 
