@@ -1,0 +1,25 @@
+[project]
+name = "mirror-docker-unified"
+version = "0.1.0"
+requires-python = ">=3.13"
+
+[build-system]
+requires = ["uv_build>=0.11,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.workspace]
+members = ["caddy-gen", "gateway-gen", "integration-test"]
+
+[tool.uv.build-backend]
+module-root = ""
+namespace = true
+
+[tool.uv]
+package = false # repo root is not a package
+
+[tool.ruff.lint]
+ignore = [
+  "F403", # unable to detect undefined names
+  "F405", # may be undefined, or defined from star imports
+  "F841", # local variable is assigned to but never used
+]

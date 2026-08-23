@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
+import difflib
+import io
 
 import toml
 import yaml
@@ -19,6 +21,11 @@ if __name__ == "__main__":
         "-o", "--output", required=True, help="Output folder for generated config.toml."
     )
     parser.add_argument("-s", "--site", required=True, help="Site names.")
+    parser.add_argument(
+        "--fail-on-change",
+        action="store_true",
+        help="Exit with code 1 if output differs from existing files.",
+    )
     args = parser.parse_args()
 
     sites = args.site.split(",")
@@ -64,6 +71,8 @@ if __name__ == "__main__":
         logger.info(f"{site}: {len(endpoints)} gateway endpoints")
         logger.info(f"endpoints: {list(endpoints.keys())}")
 
+    changed_outputs = []
+
     for site in sites:
         logger.info(f"generating {site}")
 
@@ -71,7 +80,34 @@ if __name__ == "__main__":
         config_toml["log"]["target"] = f"tcp://tunnel:{LOG_PORT[site]}"  # pyright: ignore[reportIndexIssue, reportCallIssue, reportArgumentType]
 
         output = f"{args.output}/config.{site}.toml"
+        try:
+            with open(output, "r") as fp:
+                old_content = fp.read()
+        except FileNotFoundError:
+            old_content = None
+
+        new_content = io.StringIO()
+        toml.dump(config_toml, new_content)
         with open(output, "w") as fp:
-            toml.dump(config_toml, fp)
+            fp.write(new_content.getvalue())
+
+        generated_content = new_content.getvalue()
+        if args.fail_on_change and old_content != generated_content:
+            logger.error(f"{output}: has changed")
+            print(
+                "".join(
+                    difflib.unified_diff(
+                        (old_content or "").splitlines(keepends=True),
+                        generated_content.splitlines(keepends=True),
+                        fromfile=f"{output} (current)",
+                        tofile=f"{output} (generated)",
+                    )
+                ),
+                end="",
+            )
+            changed_outputs.append(output)
 
         logger.info(f"{output}: done")
+
+    if changed_outputs:
+        raise SystemExit(1)

@@ -1,1245 +1,1240 @@
-  {
-    key_type rsa4096
-    email sjtug-mirror-maintainers@googlegroups.com
-    cert_issuer acme
-    servers {
-        timeouts {
-            read_body 10s
-            read_header 5s
-            write 600s
-            idle 10m
-        }
-    }
-    cerberus {
-        difficulty 14
-        max_pending 16
-        access_per_approval 8
-        block_ttl 12h
-        pending_ttl 10m
-        approval_ttl 12h
-        max_mem_usage 4GiB
-        cookie_name cerberus-clearance
-        header_name Cerberus-Sec
-        mail sjtug-mirror-maintainers@googlegroups.com
-        prefix_cfg 32 64
-    }
-    order cerberus before redir
+{
+	key_type rsa4096
+	email sjtug-mirror-maintainers@googlegroups.com
+	cert_issuer acme
+	metrics {
+		per_host
+	}
+	servers {
+		timeouts {
+			read_body 10s
+			read_header 5s
+			write 600s
+			idle 10m
+		}
+	}
+	cerberus {
+		difficulty 14
+		max_pending 16
+		access_per_approval 8
+		block_ttl 12h
+		pending_ttl 10m
+		approval_ttl 12h
+		max_mem_usage 4GiB
+		cookie_name cerberus-clearance
+		header_name Cerberus-Sec
+		mail sjtug-mirror-maintainers@googlegroups.com
+		prefix_cfg 32 64
+	}
+	order cerberus before redir
 }
 
 http://mirror.sjtu.edu.cn {
-    log {
-        output stdout
-        format transform "{common_log}"  # log in v1 style, caddyserver/transform-encoder required
-    }
+	log {
+		output stdout
+		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
+	}
 
-    handle {
-        redir https://{hostport}{uri} 308  # redirect remaining http requests to https
-    }
+	handle {
+		redir https://{hostport}{uri} 308 # redirect remaining http requests to https
+	}
 
-    header * x-sjtug-mirror-id siyuan
+	header * x-sjtug-mirror-id siyuan
 
-    handle_path /.cerberus/* {
-        cerberus_endpoint
-    }
-    @cerberus {
-        not path /qt /qt/*
-        path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
-        header User-Agent *Mozilla*
-        header User-Agent *Opera*
-        header User-Agent *Go-http-client*
-        header User-Agent *web*spider*
-        not remote_ip 10.0.0.0/8
-    }
-    @except_cerberus_endpoint {
-        not path /.cerberus/*
-        not path /qt /qt/*
-        not {
-            path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
-            header User-Agent *Mozilla*
-            header User-Agent *Opera*
-            header User-Agent *Go-http-client*
-            header User-Agent *web*spider*
-            not remote_ip 10.0.0.0/8
-        }
-    }
-    cerberus @except_cerberus_endpoint {
-        base_url /.cerberus
-        block_only
-    }
-    cerberus @cerberus {
-        base_url /.cerberus
-    }
+	handle_path /.cerberus/* {
+		cerberus_endpoint
+	}
+	@cerberus {
+		not path /qt /qt/*
+		path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+		header User-Agent *Mozilla*
+		header User-Agent *Opera*
+		header User-Agent *Go-http-client*
+		header User-Agent *web*spider*
+		not remote_ip 10.0.0.0/8
+	}
+	@except_cerberus_endpoint {
+		not path /.cerberus/*
+		not path /qt /qt/*
+		not {
+			path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+			header User-Agent *Mozilla*
+			header User-Agent *Opera*
+			header User-Agent *Go-http-client*
+			header User-Agent *web*spider*
+			not remote_ip 10.0.0.0/8
+		}
+	}
+	cerberus @except_cerberus_endpoint {
+		base_url /.cerberus
+		block_only
+	}
+	cerberus @cerberus {
+		base_url /.cerberus
+	}
 
-    @gzip_enabled {
-        not path /deepin/*
-        not path /docker-ce/*
-        not path /fedora/linux/*
-        not path /fedora/epel/*
-        not path /opensuse/*
-        not path /remi/*
-        not path /ubuntu/*
-        not path /openeuler/*
-        not path /fedora/*
-    }
-    encode @gzip_enabled gzip zstd
+	@gzip_enabled {
+		not path /deepin/*
+		not path /docker-ce/*
+		not path /fedora/linux/*
+		not path /fedora/epel/*
+		not path /opensuse/*
+		not path /remi/*
+		not path /ubuntu/*
+		not path /openeuler/*
+		not path /fedora/*
+	}
+	encode @gzip_enabled gzip zstd
 
-    redir /debian /debian/ 301
-    handle /debian/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /debian-security /debian-security/ 301
-    handle /debian-security/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /deepin /deepin/ 301
-    handle_path /deepin/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/deepin{uri} 302
-    }
-    redir /docker-ce /docker-ce/ 301
-    handle /docker-ce/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /fedora/linux /fedora/linux/ 301
-    handle_path /fedora/linux/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/fedora/linux{uri} 302
-    }
-    redir /fedora/epel /fedora/epel/ 301
-    handle_path /fedora/epel/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/fedora/epel{uri} 302
-    }
-    redir /fedora-secondary /fedora-secondary/ 301
-    handle /fedora-secondary/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /opensuse /opensuse/ 301
-    handle_path /opensuse/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/opensuse{uri} 302
-    }
-    redir /remi /remi/ 301
-    handle_path /remi/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/remi{uri} 302
-    }
-    redir /ubuntu /ubuntu/ 301
-    handle_path /ubuntu/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
-    }
-    redir /ubuntu-ports /ubuntu-ports/ 301
-    handle /ubuntu-ports/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /openwrt /openwrt/ 301
-    handle /openwrt/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /rpmfusion /rpmfusion/ 301
-    handle /rpmfusion/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /openeuler /openeuler/ 301
-    handle_path /openeuler/* {
-        redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
-    }
-    redir /fedora /fedora/ 301
-    handle_path /fedora/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/fedora{uri} 302
-    }
-    redir /alpine /alpine/ 301
-    handle /alpine/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-
+	redir /debian /debian/ 301
+	handle /debian/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /debian-security /debian-security/ 301
+	handle /debian-security/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /deepin /deepin/ 301
+	handle_path /deepin/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/deepin{uri} 302
+	}
+	redir /docker-ce /docker-ce/ 301
+	handle /docker-ce/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /fedora/linux /fedora/linux/ 301
+	handle_path /fedora/linux/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/fedora/linux{uri} 302
+	}
+	redir /fedora/epel /fedora/epel/ 301
+	handle_path /fedora/epel/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/fedora/epel{uri} 302
+	}
+	redir /fedora-secondary /fedora-secondary/ 301
+	handle /fedora-secondary/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /opensuse /opensuse/ 301
+	handle_path /opensuse/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/opensuse{uri} 302
+	}
+	redir /remi /remi/ 301
+	handle_path /remi/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/remi{uri} 302
+	}
+	redir /ubuntu /ubuntu/ 301
+	handle_path /ubuntu/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
+	}
+	redir /ubuntu-ports /ubuntu-ports/ 301
+	handle /ubuntu-ports/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /openwrt /openwrt/ 301
+	handle /openwrt/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /rpmfusion /rpmfusion/ 301
+	handle /rpmfusion/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /openeuler /openeuler/ 301
+	handle_path /openeuler/* {
+		redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
+	}
+	redir /fedora /fedora/ 301
+	handle_path /fedora/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/fedora{uri} 302
+	}
+	redir /alpine /alpine/ 301
+	handle /alpine/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
 }
 
 https://mirror.sjtu.edu.cn {
-    log {
-        output stdout
-        format transform "{common_log}"  # log in v1 style, caddyserver/transform-encoder required
-    }
+	log {
+		output stdout
+		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
+	}
 
-    handle {
-        reverse_proxy /* frontend:3000
-    }
+	handle {
+		reverse_proxy /* frontend:3000
+	}
 
-    handle /mirrorz/* {
-        uri strip_prefix /mirrorz
-        file_server {
-            root /var/www/mirrorz
-        }
-    }
+	handle /mirrorz/* {
+		uri strip_prefix /mirrorz
+		file_server {
+			root /var/www/mirrorz
+		}
+	}
 
-    handle /lug/* {
-        reverse_proxy /lug/* lug:7001 {
-            header_down Access-Control-Allow-Origin *
-            header_down Access-Control-Request-Method GET
-        }
-        @reject_lug_api {
-            path /lug/v1/admin/*
-        }
-        respond @reject_lug_api 403
-    }
+	handle /lug/* {
+		reverse_proxy /lug/* lug:7001 {
+			header_down Access-Control-Allow-Origin *
+			header_down Access-Control-Request-Method GET
+		}
+		@reject_lug_api {
+			path /lug/v1/admin/*
+		}
+		respond @reject_lug_api 403
+	}
 
-    handle /monitor/* {
-        basic_auth /monitor/* {
-            {$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
-        }
-        handle_path /monitor/node_exporter/* {
-            reverse_proxy 172.31.0.1:9100
-        }
-        handle_path /monitor/cadvisor/* {
-            reverse_proxy cadvisor:8080
-        }
-        handle_path /monitor/lug/* {
-            reverse_proxy lug:8081
-        }
-        handle_path /monitor/mirror-intel/* {
-            reverse_proxy mirror-intel:8000
-        }
-        handle_path /monitor/rsync-gateway/* {
-            reverse_proxy rsync-gateway:8000
-        }
-        handle_path /monitor/docker-gcr/* {
-            reverse_proxy siyuan-gcr-registry:5001
-        }
-        handle_path /monitor/docker-registry/* {
-            reverse_proxy siyuan-docker-registry:5001
-        }
-    }
+	handle /monitor/* {
+		basic_auth /monitor/* {
+			{$MONITOR_USER} {$MONITOR_PASSWORD_HASHED}
+		}
+		handle_path /monitor/node_exporter/* {
+			reverse_proxy 172.31.0.1:9100
+		}
+		handle_path /monitor/cadvisor/* {
+			reverse_proxy cadvisor:8080
+		}
+		handle_path /monitor/lug/* {
+			reverse_proxy lug:8081
+		}
+		handle_path /monitor/mirror-intel/* {
+			reverse_proxy mirror-intel:8000
+		}
+		handle_path /monitor/rsync-gateway/* {
+			reverse_proxy rsync-gateway:8000
+		}
+		handle /monitor/caddy/metrics {
+			rewrite * /metrics
+			reverse_proxy 127.0.0.1:2019
+		}
+		handle_path /monitor/docker-gcr/* {
+			reverse_proxy siyuan-gcr-registry:5001
+		}
+		handle_path /monitor/docker-registry/* {
+			reverse_proxy siyuan-docker-registry:5001
+		}
+	}
 
-    handle /.well-known/* {
-        uri strip_prefix /.well-known
-        file_server {
-            root /var/www/.well-known
-        }
-    }
+	handle /.well-known/* {
+		uri strip_prefix /.well-known
+		file_server {
+			root /var/www/.well-known
+		}
+	}
 
-    header * x-sjtug-mirror-id siyuan
-    header /mirrorz/* Access-Control-Allow-Origin *
-    header /mirrorz/* Access-Control-Request-Method GET
+	header * x-sjtug-mirror-id siyuan
+	header /mirrorz/* Access-Control-Allow-Origin *
+	header /mirrorz/* Access-Control-Request-Method GET
 
-    handle_path /.cerberus/* {
-        cerberus_endpoint
-    }
-    @cerberus {
-        not path /qt /qt/*
-        path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
-        header User-Agent *Mozilla*
-        header User-Agent *Opera*
-        header User-Agent *Go-http-client*
-        header User-Agent *web*spider*
-        not remote_ip 10.0.0.0/8
-    }
-    @except_cerberus_endpoint {
-        not path /.cerberus/*
-        not path /qt /qt/*
-        not {
-            path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
-            header User-Agent *Mozilla*
-            header User-Agent *Opera*
-            header User-Agent *Go-http-client*
-            header User-Agent *web*spider*
-            not remote_ip 10.0.0.0/8
-        }
-    }
-    cerberus @except_cerberus_endpoint {
-        base_url /.cerberus
-        block_only
-    }
-    cerberus @cerberus {
-        base_url /.cerberus
-    }
+	handle_path /.cerberus/* {
+		cerberus_endpoint
+	}
+	@cerberus {
+		not path /qt /qt/*
+		path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+		header User-Agent *Mozilla*
+		header User-Agent *Opera*
+		header User-Agent *Go-http-client*
+		header User-Agent *web*spider*
+		not remote_ip 10.0.0.0/8
+	}
+	@except_cerberus_endpoint {
+		not path /.cerberus/*
+		not path /qt /qt/*
+		not {
+			path_regexp \.(?:iso|exe|dmg|run|zip|tar|tgz|txz|raw|img|ova|vhd|grd|qcow2|7z)(?:\.gz|\.xz)?$
+			header User-Agent *Mozilla*
+			header User-Agent *Opera*
+			header User-Agent *Go-http-client*
+			header User-Agent *web*spider*
+			not remote_ip 10.0.0.0/8
+		}
+	}
+	cerberus @except_cerberus_endpoint {
+		base_url /.cerberus
+		block_only
+	}
+	cerberus @cerberus {
+		base_url /.cerberus
+	}
 
-    @gzip_enabled {
-        not path /keyarchos/*
-        not path /racket/*
-        not path /bmclapi/*
-        not path /alhp/*
-        not path /leopardsh/*
-        not path /endeavouros/*
-        not path /debian-cdimage/*
-        not path /packman/*
-        not path /raspberry-pi-os-images/*
-        not path /opencloudos/*
-        not path /debian-cd/*
-        not path /deepin/*
-        not path /deepin-cd/*
-        not path /docker-ce/*
-        not path /fedora/linux/*
-        not path /fedora/epel/*
-        not path /linuxmint/*
-        not path /linuxmint-cd/*
-        not path /mageia/*
-        not path /opensuse/*
-        not path /openkylin/*
-        not path /openkylin-cdimage/*
-        not path /mx-packages/*
-        not path /openvz/*
-        not path /remi/*
-        not path /ubuntu/*
-        not path /ubuntu-cdimage/*
-        not path /homebrew-bottles/*
-        not path /rust-static/*
-        not path /pypi-packages/*
-        not path /dart-pub/*
-        not path /crates.io/*
-        not path /flutter_infra/*
-        not path /ghcup/*
-        not path /elan/*
-        not path /git/homebrew-services.git/*
-        not path /linuxbrew-bottles/*
-        not path /git/guix.git/*
-        not path /git/llvm-project.git/*
-        not path /git/flutter-sdk.git/*
-        not path /git/ohmyzsh.git/*
-        not path /git/spacemacs.git/*
-        not path /git/doom-emacs.git/*
-        not path /github/GNS3/*
-        not path /github/FreeCAD/*
-        not path /github/prometheus/*
-        not path /github/rubyinstaller2/*
-        not path /github/PowerShell/*
-        not path /github/Office-Tool/*
-        not path /nix-channels/store/*
-        not path /guix/*
-        not path /guix-bordeaux/*
-        not path /sjtug-internal/*
-        not path /fedora-ostree/*
-        not path /fedora-iot/*
-        not path /flathub/*
-        not path /github-release/*
-        not path /npm-registry/*
-        not path /nodejs-release/*
-        not path /maven-central/*
-        not path /opam-cache/*
-        not path /pypi/web/simple/*
-        not path /git/dpdk.git/*
-        not path /gradle/distributions/*
-        not path /git/homebrew-install.git/*
-        not path /openeuler/*
-        not path /fedora/*
-        not path /manjarostable/*
-        not path /voidlinux/*
-        not path /archlinux/*
-        not path /bioconductor/*
-        not path /wireshark/*
-        not path /macports/*
-        not path /github/vscodium/*
-        not path /gimp/*
-        not path /flutter_infra_release/*
-        not path /anaconda/*
-        not path /kernel/*
-        not path /git/linux.git/*
-        not path /ubuntu-cloud-images/*
-        not path /git/homebrew-bundle.git/*
-        not path /git/spdk.git/*
-        not path /git/SJTUBeamer.git/*
-        not path /git/SJTUTeX.git/*
-        not path /git/SJTUThesis.git/*
-        not path /git/modern-sjtu-thesis.git/*
-        not path /git/touying-sjtu.git/*
-        not path /github/SJTUBeamer/*
-        not path /github/SJTUThesis/*
-        not path /centos/*
-        not path /ubuntu-cd/*
-        not path /scientific/*
-        not path /git/lean4-packages/std4/*
-        not path /git/lean4-packages/lean4-cli/*
-        not path /git/lean4-packages/ProofWidgets4/*
-        not path /git/lean4-packages/aesop/*
-        not path /git/lean4-packages/quote4/*
-        not path /git/lean4-packages/mathlib4/*
-        not path /git/lean4-packages/doc-gen4/*
-        not path /git/lean4-packages/mathematics_in_lean_source/*
-        not path /git/lean4-packages/mathematics_in_lean/*
-        not path /git/lean4-packages/import-graph/*
-        not path /git/lean4-packages/batteries/*
-        not path /kali/*
-        not path /almalinux/*
-        not path /immortalwrt/*
-        not path /putty/*
-        not path /gentoo/*
-        not path /vim/*
-        not path /cpan/*
-        not path /cran/*
-        not path /ctex/*
-        not path /gnu/*
-        not path /cygwin/*
-        not path /kali-images/*
-        not path /git/homebrew-core.git/*
-        not path /git/homebrew-cask.git/*
-        not path /git/brew.git/*
-        not path /git/crates.io-index/*
-        not path /crates.io-index/*
-        not path /raspbian/*
-        not path /parrot/*
-        not path /raspberrypi/*
-        not path /mx-isos/*
-        not path /mongodb/*
-        not path /julia/*
-        not path /emacs-elpa/*
-        not path /julia-releases/*
-        not path /msys2/*
-        not path /git/opam-repository.git/*
-        not path /git/qemu.git/*
-        not path /linuxliteos/*
-        not path /download.flutter.io/*
-        not path /k8s.gcr.io/*
-        not path /google-fonts/*
-        not path /CPAN/*
-        not path /CRAN/*
-        not path /CTAN/*
-        not path /ctan/*
-    }
-    encode @gzip_enabled gzip zstd
+	@gzip_enabled {
+		not path /keyarchos/*
+		not path /racket/*
+		not path /bmclapi/*
+		not path /alhp/*
+		not path /leopardsh/*
+		not path /endeavouros/*
+		not path /debian-cdimage/*
+		not path /packman/*
+		not path /raspberry-pi-os-images/*
+		not path /opencloudos/*
+		not path /debian-cd/*
+		not path /deepin/*
+		not path /deepin-cd/*
+		not path /docker-ce/*
+		not path /fedora/linux/*
+		not path /fedora/epel/*
+		not path /linuxmint/*
+		not path /linuxmint-cd/*
+		not path /mageia/*
+		not path /opensuse/*
+		not path /openkylin/*
+		not path /openkylin-cdimage/*
+		not path /mx-packages/*
+		not path /openvz/*
+		not path /remi/*
+		not path /ubuntu/*
+		not path /ubuntu-cdimage/*
+		not path /homebrew-bottles/*
+		not path /rust-static/*
+		not path /pypi-packages/*
+		not path /dart-pub/*
+		not path /pytorch-wheels/*
+		not path /crates.io/*
+		not path /flutter_infra/*
+		not path /ghcup/*
+		not path /elan/*
+		not path /git/homebrew-services.git/*
+		not path /linuxbrew-bottles/*
+		not path /git/guix.git/*
+		not path /git/llvm-project.git/*
+		not path /git/flutter-sdk.git/*
+		not path /git/ohmyzsh.git/*
+		not path /git/spacemacs.git/*
+		not path /git/doom-emacs.git/*
+		not path /git/flake-parts.git/*
+		not path /github/GNS3/*
+		not path /github/FreeCAD/*
+		not path /github/prometheus/*
+		not path /github/rubyinstaller2/*
+		not path /github/PowerShell/*
+		not path /github/Office-Tool/*
+		not path /nix-channels/store/*
+		not path /guix/*
+		not path /guix-bordeaux/*
+		not path /sjtug-internal/*
+		not path /fedora-ostree/*
+		not path /fedora-iot/*
+		not path /flathub/*
+		not path /github-release/*
+		not path /npm-registry/*
+		not path /nodejs-release/*
+		not path /maven-central/*
+		not path /opam-cache/*
+		not path /pypi/web/simple/*
+		not path /git/dpdk.git/*
+		not path /gradle/distributions/*
+		not path /git/homebrew-install.git/*
+		not path /openeuler/*
+		not path /fedora/*
+		not path /manjarostable/*
+		not path /voidlinux/*
+		not path /archlinux/*
+		not path /bioconductor/*
+		not path /wireshark/*
+		not path /macports/*
+		not path /github/vscodium/*
+		not path /gimp/*
+		not path /flutter_infra_release/*
+		not path /anaconda/*
+		not path /kernel/*
+		not path /git/linux.git/*
+		not path /ubuntu-cloud-images/*
+		not path /git/homebrew-bundle.git/*
+		not path /git/spdk.git/*
+		not path /git/SJTUBeamer.git/*
+		not path /git/SJTUTeX.git/*
+		not path /git/SJTUThesis.git/*
+		not path /git/modern-sjtu-thesis.git/*
+		not path /git/touying-sjtu.git/*
+		not path /github/SJTUBeamer/*
+		not path /github/SJTUThesis/*
+		not path /centos/*
+		not path /ubuntu-cd/*
+		not path /scientific/*
+		not path /git/lean4-packages/std4/*
+		not path /git/lean4-packages/lean4-cli/*
+		not path /git/lean4-packages/ProofWidgets4/*
+		not path /git/lean4-packages/aesop/*
+		not path /git/lean4-packages/quote4/*
+		not path /git/lean4-packages/mathlib4/*
+		not path /git/lean4-packages/doc-gen4/*
+		not path /git/lean4-packages/mathematics_in_lean_source/*
+		not path /git/lean4-packages/mathematics_in_lean/*
+		not path /git/lean4-packages/import-graph/*
+		not path /git/lean4-packages/batteries/*
+		not path /kali/*
+		not path /almalinux/*
+		not path /immortalwrt/*
+		not path /putty/*
+		not path /gentoo/*
+		not path /vim/*
+		not path /cpan/*
+		not path /cran/*
+		not path /ctex/*
+		not path /gnu/*
+		not path /cygwin/*
+		not path /kali-images/*
+		not path /git/brew.git/*
+		not path /crates.io-index/*
+		not path /raspbian/*
+		not path /parrot/*
+		not path /raspberrypi/*
+		not path /mx-isos/*
+		not path /mongodb/*
+		not path /julia/*
+		not path /emacs-elpa/*
+		not path /julia-releases/*
+		not path /msys2/*
+		not path /git/opam-repository.git/*
+		not path /git/qemu.git/*
+		not path /linuxliteos/*
+		not path /download.flutter.io/*
+		not path /google-fonts/*
+		not path /CPAN/*
+		not path /CRAN/*
+		not path /CTAN/*
+		not path /ctan/*
+	}
+	encode @gzip_enabled gzip zstd
 
-    redir /keyarchos /keyarchos/ 301
-    handle /keyarchos/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /racket /racket/ 301
-    handle /racket/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /bmclapi /bmclapi/ 301
-    handle /bmclapi/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /alhp /alhp/ 301
-    handle /alhp/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /anthon /anthon/ 301
-    handle /anthon/* {
-        @show_hidden path /anthon/.repotest /anthon/.repotest.sha256sum
-        file_server @show_hidden {
-            root /srv/data55T
-        }
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden {
-            path */.*
-            not path /anthon/.repotest /anthon/.repotest.sha256sum
-        }
-        respond @hidden 404
-    }
-    redir /leopardsh /leopardsh/ 301
-    handle /leopardsh/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /endeavouros /endeavouros/ 301
-    handle /endeavouros/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /debian-cdimage /debian-cdimage/ 301
-    handle /debian-cdimage/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /packman /packman/ 301
-    handle /packman/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /pop-os /pop-os/ 301
-    handle /pop-os/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /rocky /rocky/ 301
-    handle /rocky/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
-    handle /raspberry-pi-os-images/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /archlinuxarm /archlinuxarm/ 301
-    handle /archlinuxarm/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /archlinux-cn /archlinux-cn/ 301
-    handle /archlinux-cn/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /opencloudos /opencloudos/ 301
-    handle /opencloudos/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /qt /qt/ 301
-    handle /qt/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /debian /debian/ 301
-    handle /debian/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /debian-cd /debian-cd/ 301
-    handle_path /debian-cd/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/debian-cd{uri} 302
-    }
-    redir /debian-security /debian-security/ 301
-    handle /debian-security/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /deepin /deepin/ 301
-    handle_path /deepin/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/deepin{uri} 302
-    }
-    redir /deepin-cd /deepin-cd/ 301
-    handle_path /deepin-cd/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/deepin-cd{uri} 302
-    }
-    redir /docker-ce /docker-ce/ 301
-    handle /docker-ce/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /fedora/linux /fedora/linux/ 301
-    handle_path /fedora/linux/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/fedora/linux{uri} 302
-    }
-    redir /fedora/epel /fedora/epel/ 301
-    handle_path /fedora/epel/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/fedora/epel{uri} 302
-    }
-    redir /fedora-secondary /fedora-secondary/ 301
-    handle /fedora-secondary/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /linuxmint /linuxmint/ 301
-    handle_path /linuxmint/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/linuxmint/packages{uri} 302
-    }
-    redir /linuxmint-cd /linuxmint-cd/ 301
-    handle_path /linuxmint-cd/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/linuxmint-cd{uri} 302
-    }
-    redir /mageia /mageia/ 301
-    handle_path /mageia/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/mageia{uri} 302
-    }
-    redir /opensuse /opensuse/ 301
-    handle_path /opensuse/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/opensuse{uri} 302
-    }
-    redir /openkylin /openkylin/ 301
-    handle /openkylin/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /openkylin-cdimage /openkylin-cdimage/ 301
-    handle /openkylin-cdimage/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /mx-packages /mx-packages/ 301
-    handle /mx-packages/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /openvz /openvz/ 301
-    handle_path /openvz/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/openvz{uri} 302
-    }
-    redir /remi /remi/ 301
-    handle_path /remi/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/remi{uri} 302
-    }
-    redir /termux /termux/ 301
-    handle /termux/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /ubuntu /ubuntu/ 301
-    handle_path /ubuntu/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
-    }
-    redir /ubuntu-releases /ubuntu-releases/ 301
-    handle /ubuntu-releases/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /ubuntu-cdimage /ubuntu-cdimage/ 301
-    handle_path /ubuntu-cdimage/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/ubuntu-cd{uri} 302
-    }
-    redir /ubuntu-ports /ubuntu-ports/ 301
-    handle /ubuntu-ports/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /openwrt /openwrt/ 301
-    handle /openwrt/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /rpmfusion /rpmfusion/ 301
-    handle /rpmfusion/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /homebrew-bottles /homebrew-bottles/ 301
-    handle /homebrew-bottles/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /rust-static /rust-static/ 301
-    handle /rust-static/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /pypi-packages /pypi-packages/ 301
-    handle /pypi-packages/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /dart-pub /dart-pub/ 301
-    handle /dart-pub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /crates.io /crates.io/ 301
-    handle /crates.io/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /flutter_infra /flutter_infra/ 301
-    handle /flutter_infra/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /ghcup /ghcup/ 301
-    handle /ghcup/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /elan /elan/ 301
-    handle /elan/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /linuxbrew-bottles /linuxbrew-bottles/ 301
-    handle_path /linuxbrew-bottles/* {
-        redir * https://mirror.sjtu.edu.cn/homebrew-bottles{uri} 302
-    }
-    redir /apache /apache/ 301
-    handle /apache/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /blackarch /blackarch/ 301
-    handle /blackarch/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /github/GNS3 /github/GNS3/ 301
-    handle_path /github/GNS3/* {
-        redir * /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list 302
-    }
-    redir /github/FreeCAD /github/FreeCAD/ 301
-    handle_path /github/FreeCAD/* {
-        redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
-    }
-    redir /github/prometheus /github/prometheus/ 301
-    handle_path /github/prometheus/* {
-        redir * /github-release/prometheus/?mirror_intel_list 302
-    }
-    redir /github/rubyinstaller2 /github/rubyinstaller2/ 301
-    handle_path /github/rubyinstaller2/* {
-        redir * /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list 302
-    }
-    redir /github/PowerShell /github/PowerShell/ 301
-    handle_path /github/PowerShell/* {
-        redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
-    }
-    redir /github/Office-Tool /github/Office-Tool/ 301
-    handle_path /github/Office-Tool/* {
-        redir * /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list 302
-    }
-    redir /nix-channels/store /nix-channels/store/ 301
-    handle /nix-channels/store/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /guix /guix/ 301
-    handle /guix/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /guix-bordeaux /guix-bordeaux/ 301
-    handle /guix-bordeaux/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /sjtug-internal /sjtug-internal/ 301
-    handle /sjtug-internal/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /fedora-ostree /fedora-ostree/ 301
-    handle /fedora-ostree/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /fedora-iot /fedora-iot/ 301
-    handle /fedora-iot/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /flathub /flathub/ 301
-    handle /flathub/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /github-release /github-release/ 301
-    handle /github-release/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /npm-registry /npm-registry/ 301
-    handle_path /npm-registry/* {
-        redir * https://registry.npmjs.org{uri} 302
-    }
-    redir /nodejs-release /nodejs-release/ 301
-    handle_path /nodejs-release/* {
-        redir * https://nodejs.org/dist{uri} 302
-    }
-    redir /maven-central /maven-central/ 301
-    handle_path /maven-central/* {
-        redir * https://repo.maven.apache.org/maven2{uri} 302
-    }
-    redir /sury /sury/ 301
-    handle /sury/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /opam-cache /opam-cache/ 301
-    handle /opam-cache/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /pypi/web/simple /pypi/web/simple/ 301
-    handle /pypi/web/simple/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /gradle/distributions /gradle/distributions/ 301
-    handle /gradle/distributions/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /dragonflybsd /dragonflybsd/ 301
-    handle /dragonflybsd/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /openeuler /openeuler/ 301
-    handle_path /openeuler/* {
-        redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
-    }
-    redir /fedora /fedora/ 301
-    handle_path /fedora/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/fedora{uri} 302
-    }
-    redir /manjaro /manjaro/ 301
-    handle /manjaro/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /manjarostable /manjarostable/ 301
-    handle_path /manjarostable/* {
-        redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
-    }
-    redir /voidlinux /voidlinux/ 301
-    handle /voidlinux/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /archlinux /archlinux/ 301
-    handle_path /archlinux/* {
-        redir * {scheme}://ftp.sjtu.edu.cn/archlinux{uri} 302
-    }
-    redir /bioconductor /bioconductor/ 301
-    handle /bioconductor/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /wireshark /wireshark/ 301
-    handle /wireshark/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /test /test/ 301
-    handle /test/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /macports /macports/ 301
-    handle /macports/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /github/vscodium /github/vscodium/ 301
-    handle_path /github/vscodium/* {
-        redir * /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list 302
-    }
-    redir /gimp /gimp/ 301
-    handle /gimp/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /flutter_infra_release /flutter_infra_release/ 301
-    handle_path /flutter_infra_release/* {
-        redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
-    }
-    redir /anaconda /anaconda/ 301
-    handle /anaconda/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /armbian /armbian/ 301
-    handle /armbian/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /kernel /kernel/ 301
-    handle /kernel/* {
-        reverse_proxy mirror-intel:8000
-    }
-    redir /raspbian-addons /raspbian-addons/ 301
-    handle /raspbian-addons/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /OpenBSD /OpenBSD/ 301
-    handle /OpenBSD/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /zorinos-isos /zorinos-isos/ 301
-    handle /zorinos-isos/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
-    handle /ubuntu-cloud-images/* {
-        reverse_proxy rsync-gateway:8000
-    }
-    redir /debian-ports /debian-ports/ 301
-    handle /debian-ports/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /github/SJTUBeamer /github/SJTUBeamer/ 301
-    handle_path /github/SJTUBeamer/* {
-        redir * /github-release/sjtug/SJTUBeamer/releases/download/?mirror_intel_list 302
-    }
-    redir /github/SJTUThesis /github/SJTUThesis/ 301
-    handle_path /github/SJTUThesis/* {
-        redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
-    }
-    redir /centos /centos/ 301
-    handle_path /centos/* {
-        redir * https://repo.huaweicloud.com/centos/{uri} 302
-    }
-    redir /ubuntu-cd /ubuntu-cd/ 301
-    handle_path /ubuntu-cd/* {
-        redir * https://repo.huaweicloud.com/ubuntu-cdimage/{uri} 302
-    }
-    redir /scientific /scientific/ 301
-    handle_path /scientific/* {
-        redir * https://mirrors.ustc.edu.cn/scientificlinux/{uri} 302
-    }
-    redir /ros /ros/ 301
-    handle /ros/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /alpine /alpine/ 301
-    handle /alpine/* {
-        file_server browse {
-            root /srv/data55T
-            hide .*
-        }
-        @hidden path */.*
-        respond @hidden 404
-    }
-    redir /kali /kali/ 301
-    handle_path /kali/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/kali{uri} 302
-    }
-    redir /almalinux /almalinux/ 301
-    handle_path /almalinux/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/almalinux{uri} 302
-    }
-    redir /immortalwrt /immortalwrt/ 301
-    handle_path /immortalwrt/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/immortalwrt{uri} 302
-    }
-    redir /putty /putty/ 301
-    handle_path /putty/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
-    }
-    redir /gentoo /gentoo/ 301
-    handle_path /gentoo/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/gentoo{uri} 302
-    }
-    redir /vim /vim/ 301
-    handle_path /vim/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/vim{uri} 302
-    }
-    redir /cpan /cpan/ 301
-    handle_path /cpan/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
-    }
-    redir /cran /cran/ 301
-    handle_path /cran/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
-    }
-    redir /ctex /ctex/ 301
-    handle_path /ctex/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctex{uri} 302
-    }
-    redir /gnu /gnu/ 301
-    handle_path /gnu/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/gnu{uri} 302
-    }
-    redir /cygwin /cygwin/ 301
-    handle_path /cygwin/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/cygwin{uri} 302
-    }
-    redir /kali-images /kali-images/ 301
-    handle_path /kali-images/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/kali-images{uri} 302
-    }
-    redir /crates.io-index /crates.io-index/ 301
-    handle_path /crates.io-index/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/crates.io-index{uri} 302
-    }
-    redir /raspbian /raspbian/ 301
-    handle_path /raspbian/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/raspbian{uri} 302
-    }
-    redir /parrot /parrot/ 301
-    handle_path /parrot/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/parrot{uri} 302
-    }
-    redir /raspberrypi /raspberrypi/ 301
-    handle_path /raspberrypi/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/raspberrypi{uri} 302
-    }
-    redir /mx-isos /mx-isos/ 301
-    handle_path /mx-isos/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/mx-isos{uri} 302
-    }
-    redir /mongodb /mongodb/ 301
-    handle_path /mongodb/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/mongodb{uri} 302
-    }
-    redir /julia /julia/ 301
-    handle_path /julia/* {
-        redir * https://mirrors.pku.edu.cn/julia/{uri} 302
-    }
-    redir /emacs-elpa /emacs-elpa/ 301
-    handle_path /emacs-elpa/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/emacs-elpa{uri} 302
-    }
-    redir /julia-releases /julia-releases/ 301
-    handle_path /julia-releases/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/julia-releases{uri} 302
-    }
-    redir /msys2 /msys2/ 301
-    handle_path /msys2/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/msys2{uri} 302
-    }
-    redir /linuxliteos /linuxliteos/ 301
-    handle_path /linuxliteos/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/linuxliteos{uri} 302
-    }
-    redir /download.flutter.io /download.flutter.io/ 301
-    handle_path /download.flutter.io/* {
-        redir * https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/{uri} 302
-    }
-    redir /k8s.gcr.io /k8s.gcr.io/ 301
-    handle_path /k8s.gcr.io/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/registry.k8s.io{uri} 302
-    }
-    redir /google-fonts /google-fonts/ 301
-    handle_path /google-fonts/* {
-        redir * https://fonts.googleapis.com{uri} 302
-    }
-    redir /CPAN /CPAN/ 301
-    handle_path /CPAN/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/CPAN{uri} 302
-    }
-    redir /CRAN /CRAN/ 301
-    handle_path /CRAN/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
-    }
-    redir /CTAN /CTAN/ 301
-    handle_path /CTAN/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
-    }
-    redir /ctan /ctan/ 301
-    handle_path /ctan/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
-    }
+	redir /keyarchos /keyarchos/ 301
+	handle /keyarchos/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /racket /racket/ 301
+	handle /racket/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /bmclapi /bmclapi/ 301
+	handle /bmclapi/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /alhp /alhp/ 301
+	handle /alhp/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /anthon /anthon/ 301
+	handle /anthon/* {
+		@show_hidden path /anthon/.repotest /anthon/.repotest.sha256sum
+		file_server @show_hidden {
+			root /srv/data55T
+		}
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden {
+			path */.*
+			not path /anthon/.repotest /anthon/.repotest.sha256sum
+		}
+		respond @hidden 404
+	}
+	redir /leopardsh /leopardsh/ 301
+	handle /leopardsh/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /endeavouros /endeavouros/ 301
+	handle /endeavouros/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /debian-cdimage /debian-cdimage/ 301
+	handle /debian-cdimage/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /packman /packman/ 301
+	handle /packman/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /pop-os /pop-os/ 301
+	handle /pop-os/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /rocky /rocky/ 301
+	handle /rocky/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /raspberry-pi-os-images /raspberry-pi-os-images/ 301
+	handle /raspberry-pi-os-images/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /archlinuxarm /archlinuxarm/ 301
+	handle /archlinuxarm/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /archlinux-cn /archlinux-cn/ 301
+	handle /archlinux-cn/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /opencloudos /opencloudos/ 301
+	handle /opencloudos/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /qt /qt/ 301
+	handle /qt/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /debian /debian/ 301
+	handle /debian/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /debian-cd /debian-cd/ 301
+	handle_path /debian-cd/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/debian-cd{uri} 302
+	}
+	redir /debian-security /debian-security/ 301
+	handle /debian-security/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /deepin /deepin/ 301
+	handle_path /deepin/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/deepin{uri} 302
+	}
+	redir /deepin-cd /deepin-cd/ 301
+	handle_path /deepin-cd/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/deepin-cd{uri} 302
+	}
+	redir /docker-ce /docker-ce/ 301
+	handle /docker-ce/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /fedora/linux /fedora/linux/ 301
+	handle_path /fedora/linux/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/fedora/linux{uri} 302
+	}
+	redir /fedora/epel /fedora/epel/ 301
+	handle_path /fedora/epel/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/fedora/epel{uri} 302
+	}
+	redir /fedora-secondary /fedora-secondary/ 301
+	handle /fedora-secondary/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /linuxmint /linuxmint/ 301
+	handle_path /linuxmint/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/linuxmint/packages{uri} 302
+	}
+	redir /linuxmint-cd /linuxmint-cd/ 301
+	handle_path /linuxmint-cd/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/linuxmint-cd{uri} 302
+	}
+	redir /mageia /mageia/ 301
+	handle_path /mageia/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/mageia{uri} 302
+	}
+	redir /opensuse /opensuse/ 301
+	handle_path /opensuse/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/opensuse{uri} 302
+	}
+	redir /openkylin /openkylin/ 301
+	handle /openkylin/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /openkylin-cdimage /openkylin-cdimage/ 301
+	handle /openkylin-cdimage/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /mx-packages /mx-packages/ 301
+	handle /mx-packages/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /openvz /openvz/ 301
+	handle_path /openvz/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/openvz{uri} 302
+	}
+	redir /remi /remi/ 301
+	handle_path /remi/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/remi{uri} 302
+	}
+	redir /termux /termux/ 301
+	handle /termux/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /ubuntu /ubuntu/ 301
+	handle_path /ubuntu/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/ubuntu/{uri} 302
+	}
+	redir /ubuntu-releases /ubuntu-releases/ 301
+	handle /ubuntu-releases/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /ubuntu-cdimage /ubuntu-cdimage/ 301
+	handle_path /ubuntu-cdimage/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/ubuntu-cd{uri} 302
+	}
+	redir /ubuntu-ports /ubuntu-ports/ 301
+	handle /ubuntu-ports/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /openwrt /openwrt/ 301
+	handle /openwrt/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /rpmfusion /rpmfusion/ 301
+	handle /rpmfusion/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /homebrew-bottles /homebrew-bottles/ 301
+	handle /homebrew-bottles/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /rust-static /rust-static/ 301
+	handle /rust-static/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /pypi-packages /pypi-packages/ 301
+	handle /pypi-packages/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /dart-pub /dart-pub/ 301
+	handle /dart-pub/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /pytorch-wheels /pytorch-wheels/ 301
+	handle /pytorch-wheels/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /crates.io /crates.io/ 301
+	handle /crates.io/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /flutter_infra /flutter_infra/ 301
+	handle /flutter_infra/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /ghcup /ghcup/ 301
+	handle /ghcup/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /elan /elan/ 301
+	handle /elan/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /linuxbrew-bottles /linuxbrew-bottles/ 301
+	handle_path /linuxbrew-bottles/* {
+		redir * https://mirror.sjtu.edu.cn/homebrew-bottles{uri} 302
+	}
+	redir /apache /apache/ 301
+	handle /apache/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /blackarch /blackarch/ 301
+	handle /blackarch/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /github/GNS3 /github/GNS3/ 301
+	handle_path /github/GNS3/* {
+		redir * /github-release/GNS3/gns3-gui/releases/download/?mirror_intel_list 302
+	}
+	redir /github/FreeCAD /github/FreeCAD/ 301
+	handle_path /github/FreeCAD/* {
+		redir * /github-release/FreeCAD/FreeCAD/releases/download/?mirror_intel_list 302
+	}
+	redir /github/prometheus /github/prometheus/ 301
+	handle_path /github/prometheus/* {
+		redir * /github-release/prometheus/?mirror_intel_list 302
+	}
+	redir /github/rubyinstaller2 /github/rubyinstaller2/ 301
+	handle_path /github/rubyinstaller2/* {
+		redir * /github-release/oneclick/rubyinstaller2/releases/download/?mirror_intel_list 302
+	}
+	redir /github/PowerShell /github/PowerShell/ 301
+	handle_path /github/PowerShell/* {
+		redir * /github-release/PowerShell/PowerShell/releases/download/?mirror_intel_list 302
+	}
+	redir /github/Office-Tool /github/Office-Tool/ 301
+	handle_path /github/Office-Tool/* {
+		redir * /github-release/YerongAI/Office-Tool/releases/download/?mirror_intel_list 302
+	}
+	redir /nix-channels/store /nix-channels/store/ 301
+	handle /nix-channels/store/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /guix /guix/ 301
+	handle /guix/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /guix-bordeaux /guix-bordeaux/ 301
+	handle /guix-bordeaux/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /sjtug-internal /sjtug-internal/ 301
+	handle /sjtug-internal/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /fedora-ostree /fedora-ostree/ 301
+	handle /fedora-ostree/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /fedora-iot /fedora-iot/ 301
+	handle /fedora-iot/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /flathub /flathub/ 301
+	handle /flathub/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /github-release /github-release/ 301
+	handle /github-release/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /npm-registry /npm-registry/ 301
+	handle_path /npm-registry/* {
+		redir * https://registry.npmjs.org{uri} 302
+	}
+	redir /nodejs-release /nodejs-release/ 301
+	handle_path /nodejs-release/* {
+		redir * https://nodejs.org/dist{uri} 302
+	}
+	redir /maven-central /maven-central/ 301
+	handle_path /maven-central/* {
+		redir * https://repo.maven.apache.org/maven2{uri} 302
+	}
+	redir /sury /sury/ 301
+	handle /sury/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /opam-cache /opam-cache/ 301
+	handle /opam-cache/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /pypi/web/simple /pypi/web/simple/ 301
+	handle /pypi/web/simple/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /gradle/distributions /gradle/distributions/ 301
+	handle /gradle/distributions/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /dragonflybsd /dragonflybsd/ 301
+	handle /dragonflybsd/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /openeuler /openeuler/ 301
+	handle_path /openeuler/* {
+		redir * https://mirrors.cernet.edu.cn/openeuler{uri} 302
+	}
+	redir /fedora /fedora/ 301
+	handle_path /fedora/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/fedora{uri} 302
+	}
+	redir /manjaro /manjaro/ 301
+	handle /manjaro/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /manjarostable /manjarostable/ 301
+	handle_path /manjarostable/* {
+		redir * https://mirror.sjtu.edu.cn/manjaro/stable{uri} 302
+	}
+	redir /voidlinux /voidlinux/ 301
+	handle /voidlinux/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /archlinux /archlinux/ 301
+	handle_path /archlinux/* {
+		redir * {scheme}://ftp.sjtu.edu.cn/archlinux{uri} 302
+	}
+	redir /bioconductor /bioconductor/ 301
+	handle /bioconductor/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /wireshark /wireshark/ 301
+	handle /wireshark/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /test /test/ 301
+	handle /test/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /macports /macports/ 301
+	handle /macports/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /github/vscodium /github/vscodium/ 301
+	handle_path /github/vscodium/* {
+		redir * /github-release/VSCodium/vscodium/releases/download/?mirror_intel_list 302
+	}
+	redir /gimp /gimp/ 301
+	handle /gimp/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /flutter_infra_release /flutter_infra_release/ 301
+	handle_path /flutter_infra_release/* {
+		redir * https://mirror.sjtu.edu.cn/flutter_infra{uri} 302
+	}
+	redir /anaconda /anaconda/ 301
+	handle /anaconda/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /armbian /armbian/ 301
+	handle /armbian/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /kernel /kernel/ 301
+	handle /kernel/* {
+		reverse_proxy mirror-intel:8000
+	}
+	redir /raspbian-addons /raspbian-addons/ 301
+	handle /raspbian-addons/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /OpenBSD /OpenBSD/ 301
+	handle /OpenBSD/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /zorinos-isos /zorinos-isos/ 301
+	handle /zorinos-isos/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /ubuntu-cloud-images /ubuntu-cloud-images/ 301
+	handle /ubuntu-cloud-images/* {
+		reverse_proxy rsync-gateway:8000
+	}
+	redir /debian-ports /debian-ports/ 301
+	handle /debian-ports/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /github/SJTUBeamer /github/SJTUBeamer/ 301
+	handle_path /github/SJTUBeamer/* {
+		redir * /github-release/sjtug/SJTUBeamer/releases/download/?mirror_intel_list 302
+	}
+	redir /github/SJTUThesis /github/SJTUThesis/ 301
+	handle_path /github/SJTUThesis/* {
+		redir * /github-release/sjtug/SJTUThesis/releases/download/?mirror_intel_list 302
+	}
+	redir /centos /centos/ 301
+	handle_path /centos/* {
+		redir * https://repo.huaweicloud.com/centos/{uri} 302
+	}
+	redir /ubuntu-cd /ubuntu-cd/ 301
+	handle_path /ubuntu-cd/* {
+		redir * https://repo.huaweicloud.com/ubuntu-cdimage/{uri} 302
+	}
+	redir /scientific /scientific/ 301
+	handle_path /scientific/* {
+		redir * https://mirrors.ustc.edu.cn/scientificlinux/{uri} 302
+	}
+	redir /ros /ros/ 301
+	handle /ros/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /alpine /alpine/ 301
+	handle /alpine/* {
+		file_server browse {
+			root /srv/data55T
+			hide .*
+		}
+		@hidden path */.*
+		respond @hidden 404
+	}
+	redir /kali /kali/ 301
+	handle_path /kali/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/kali{uri} 302
+	}
+	redir /almalinux /almalinux/ 301
+	handle_path /almalinux/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/almalinux{uri} 302
+	}
+	redir /immortalwrt /immortalwrt/ 301
+	handle_path /immortalwrt/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/immortalwrt{uri} 302
+	}
+	redir /putty /putty/ 301
+	handle_path /putty/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/putty{uri} 302
+	}
+	redir /gentoo /gentoo/ 301
+	handle_path /gentoo/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/gentoo{uri} 302
+	}
+	redir /vim /vim/ 301
+	handle_path /vim/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/vim{uri} 302
+	}
+	redir /cpan /cpan/ 301
+	handle_path /cpan/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/cpan{uri} 302
+	}
+	redir /cran /cran/ 301
+	handle_path /cran/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/cran{uri} 302
+	}
+	redir /ctex /ctex/ 301
+	handle_path /ctex/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/ctex{uri} 302
+	}
+	redir /gnu /gnu/ 301
+	handle_path /gnu/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/gnu{uri} 302
+	}
+	redir /cygwin /cygwin/ 301
+	handle_path /cygwin/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/cygwin{uri} 302
+	}
+	redir /kali-images /kali-images/ 301
+	handle_path /kali-images/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/kali-images{uri} 302
+	}
+	redir /crates.io-index /crates.io-index/ 301
+	handle_path /crates.io-index/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/crates.io-index{uri} 302
+	}
+	redir /raspbian /raspbian/ 301
+	handle_path /raspbian/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/raspbian{uri} 302
+	}
+	redir /parrot /parrot/ 301
+	handle_path /parrot/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/parrot{uri} 302
+	}
+	redir /raspberrypi /raspberrypi/ 301
+	handle_path /raspberrypi/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/raspberrypi{uri} 302
+	}
+	redir /mx-isos /mx-isos/ 301
+	handle_path /mx-isos/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/mx-isos{uri} 302
+	}
+	redir /mongodb /mongodb/ 301
+	handle_path /mongodb/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/mongodb{uri} 302
+	}
+	redir /julia /julia/ 301
+	handle_path /julia/* {
+		redir * https://mirrors.pku.edu.cn/julia/{uri} 302
+	}
+	redir /emacs-elpa /emacs-elpa/ 301
+	handle_path /emacs-elpa/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/emacs-elpa{uri} 302
+	}
+	redir /julia-releases /julia-releases/ 301
+	handle_path /julia-releases/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/julia-releases{uri} 302
+	}
+	redir /msys2 /msys2/ 301
+	handle_path /msys2/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/msys2{uri} 302
+	}
+	redir /linuxliteos /linuxliteos/ 301
+	handle_path /linuxliteos/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/linuxliteos{uri} 302
+	}
+	redir /download.flutter.io /download.flutter.io/ 301
+	handle_path /download.flutter.io/* {
+		redir * https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io/{uri} 302
+	}
+	redir /google-fonts /google-fonts/ 301
+	handle_path /google-fonts/* {
+		redir * https://fonts.googleapis.com{uri} 302
+	}
+	redir /CPAN /CPAN/ 301
+	handle_path /CPAN/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/CPAN{uri} 302
+	}
+	redir /CRAN /CRAN/ 301
+	handle_path /CRAN/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/CRAN{uri} 302
+	}
+	redir /CTAN /CTAN/ 301
+	handle_path /CTAN/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/CTAN{uri} 302
+	}
+	redir /ctan /ctan/ 301
+	handle_path /ctan/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/ctan{uri} 302
+	}
 
-    redir /git/homebrew-services.git /git/homebrew-services.git/ 301
-    handle /git/homebrew-services.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/guix.git /git/guix.git/ 301
-    handle /git/guix.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/llvm-project.git /git/llvm-project.git/ 301
-    handle /git/llvm-project.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
-    handle /git/flutter-sdk.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
-    handle /git/ohmyzsh.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/spacemacs.git /git/spacemacs.git/ 301
-    handle /git/spacemacs.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/doom-emacs.git /git/doom-emacs.git/ 301
-    handle /git/doom-emacs.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/dpdk.git /git/dpdk.git/ 301
-    handle /git/dpdk.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/homebrew-install.git /git/homebrew-install.git/ 301
-    handle /git/homebrew-install.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/linux.git /git/linux.git/ 301
-    handle /git/linux.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/homebrew-bundle.git /git/homebrew-bundle.git/ 301
-    handle /git/homebrew-bundle.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/spdk.git /git/spdk.git/ 301
-    handle /git/spdk.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
-    handle /git/SJTUBeamer.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
-    handle /git/SJTUTeX.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
-    handle /git/SJTUThesis.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/modern-sjtu-thesis.git /git/modern-sjtu-thesis.git/ 301
-    handle /git/modern-sjtu-thesis.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/touying-sjtu.git /git/touying-sjtu.git/ 301
-    handle /git/touying-sjtu.git/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/std4 /git/lean4-packages/std4/ 301
-    handle /git/lean4-packages/std4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/lean4-cli /git/lean4-packages/lean4-cli/ 301
-    handle /git/lean4-packages/lean4-cli/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/ProofWidgets4 /git/lean4-packages/ProofWidgets4/ 301
-    handle /git/lean4-packages/ProofWidgets4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/aesop /git/lean4-packages/aesop/ 301
-    handle /git/lean4-packages/aesop/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/quote4 /git/lean4-packages/quote4/ 301
-    handle /git/lean4-packages/quote4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/mathlib4 /git/lean4-packages/mathlib4/ 301
-    handle /git/lean4-packages/mathlib4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/doc-gen4 /git/lean4-packages/doc-gen4/ 301
-    handle /git/lean4-packages/doc-gen4/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/mathematics_in_lean_source /git/lean4-packages/mathematics_in_lean_source/ 301
-    handle /git/lean4-packages/mathematics_in_lean_source/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/mathematics_in_lean /git/lean4-packages/mathematics_in_lean/ 301
-    handle /git/lean4-packages/mathematics_in_lean/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/import-graph /git/lean4-packages/import-graph/ 301
-    handle /git/lean4-packages/import-graph/* {
-        reverse_proxy git-backend
-    }
-    redir /git/lean4-packages/batteries /git/lean4-packages/batteries/ 301
-    handle /git/lean4-packages/batteries/* {
-        reverse_proxy git-backend
-    }
-    redir /git/homebrew-core.git /git/homebrew-core.git/ 301
-    handle_path /git/homebrew-core.git/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/homebrew-core.git{uri} 302
-    }
-    redir /git/homebrew-cask.git /git/homebrew-cask.git/ 301
-    handle_path /git/homebrew-cask.git/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/homebrew-cask.git{uri} 302
-    }
-    redir /git/brew.git /git/brew.git/ 301
-    handle_path /git/brew.git/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/brew.git{uri} 302
-    }
-    redir /git/crates.io-index /git/crates.io-index/ 301
-    handle_path /git/crates.io-index/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index{uri} 302
-    }
-    redir /git/opam-repository.git /git/opam-repository.git/ 301
-    handle_path /git/opam-repository.git/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/opam-repository.git{uri} 302
-    }
-    redir /git/qemu.git /git/qemu.git/ 301
-    handle_path /git/qemu.git/* {
-        redir * https://mirrors.sjtug.sjtu.edu.cn/git/qemu.git{uri} 302
-    }
+	redir /git/homebrew-services.git /git/homebrew-services.git/ 301
+	handle /git/homebrew-services.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/guix.git /git/guix.git/ 301
+	handle /git/guix.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/llvm-project.git /git/llvm-project.git/ 301
+	handle /git/llvm-project.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/flutter-sdk.git /git/flutter-sdk.git/ 301
+	handle /git/flutter-sdk.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/ohmyzsh.git /git/ohmyzsh.git/ 301
+	handle /git/ohmyzsh.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/spacemacs.git /git/spacemacs.git/ 301
+	handle /git/spacemacs.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/doom-emacs.git /git/doom-emacs.git/ 301
+	handle /git/doom-emacs.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/flake-parts.git /git/flake-parts.git/ 301
+	handle /git/flake-parts.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/dpdk.git /git/dpdk.git/ 301
+	handle /git/dpdk.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/homebrew-install.git /git/homebrew-install.git/ 301
+	handle /git/homebrew-install.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/linux.git /git/linux.git/ 301
+	handle /git/linux.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/homebrew-bundle.git /git/homebrew-bundle.git/ 301
+	handle /git/homebrew-bundle.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/spdk.git /git/spdk.git/ 301
+	handle /git/spdk.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/SJTUBeamer.git /git/SJTUBeamer.git/ 301
+	handle /git/SJTUBeamer.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/SJTUTeX.git /git/SJTUTeX.git/ 301
+	handle /git/SJTUTeX.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/SJTUThesis.git /git/SJTUThesis.git/ 301
+	handle /git/SJTUThesis.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/modern-sjtu-thesis.git /git/modern-sjtu-thesis.git/ 301
+	handle /git/modern-sjtu-thesis.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/touying-sjtu.git /git/touying-sjtu.git/ 301
+	handle /git/touying-sjtu.git/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/std4 /git/lean4-packages/std4/ 301
+	handle /git/lean4-packages/std4/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/lean4-cli /git/lean4-packages/lean4-cli/ 301
+	handle /git/lean4-packages/lean4-cli/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/ProofWidgets4 /git/lean4-packages/ProofWidgets4/ 301
+	handle /git/lean4-packages/ProofWidgets4/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/aesop /git/lean4-packages/aesop/ 301
+	handle /git/lean4-packages/aesop/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/quote4 /git/lean4-packages/quote4/ 301
+	handle /git/lean4-packages/quote4/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/mathlib4 /git/lean4-packages/mathlib4/ 301
+	handle /git/lean4-packages/mathlib4/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/doc-gen4 /git/lean4-packages/doc-gen4/ 301
+	handle /git/lean4-packages/doc-gen4/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/mathematics_in_lean_source /git/lean4-packages/mathematics_in_lean_source/ 301
+	handle /git/lean4-packages/mathematics_in_lean_source/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/mathematics_in_lean /git/lean4-packages/mathematics_in_lean/ 301
+	handle /git/lean4-packages/mathematics_in_lean/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/import-graph /git/lean4-packages/import-graph/ 301
+	handle /git/lean4-packages/import-graph/* {
+		reverse_proxy git-backend
+	}
+	redir /git/lean4-packages/batteries /git/lean4-packages/batteries/ 301
+	handle /git/lean4-packages/batteries/* {
+		reverse_proxy git-backend
+	}
+	redir /git/brew.git /git/brew.git/ 301
+	handle_path /git/brew.git/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/git/brew.git{uri} 302
+	}
+	redir /git/opam-repository.git /git/opam-repository.git/ 301
+	handle_path /git/opam-repository.git/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/git/opam-repository.git{uri} 302
+	}
+	redir /git/qemu.git /git/qemu.git/ 301
+	handle_path /git/qemu.git/* {
+		redir * https://mirrors.sjtug.sjtu.edu.cn/git/qemu.git{uri} 302
+	}
 }
 
 http://localhost {
-    respond 204
+	respond 204
 }
 
 http:// {
-    abort
+	abort
 }
-

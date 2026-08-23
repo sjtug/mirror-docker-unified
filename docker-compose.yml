@@ -10,8 +10,9 @@ services:
       - "./secrets/caddy.env"
     build:
       context: ./caddy
+      additional_contexts:
+        flake: .
       args:
-        - USE_SJTUG=true
         - USE_GOPROXY=true
     volumes:
       - "./data/caddy/data:/data"
@@ -269,8 +270,10 @@ services:
   git-backend:
     build:
       context: ./git-backend
+      additional_contexts:
+        flake: .
       args:
-        - USE_SJTUG=true
+        - USE_GOPROXY=true
     logging:
       options:
         max-size: "2M"

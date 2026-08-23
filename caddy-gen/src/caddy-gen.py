@@ -3,6 +3,7 @@
 import yaml
 from loguru import logger
 import argparse
+import difflib
 
 from config import *
 from repos import *
@@ -74,9 +75,15 @@ def common() -> list[Node]:
             *reverse_proxy("/monitor/lug", LUG_EXPORTER_ADDR),
             *reverse_proxy("/monitor/mirror-intel", MIRROR_INTEL_ADDR),
             *reverse_proxy("/monitor/rsync-gateway", RSYNC_GATEWAY_ADDR),
+            Node(
+                "handle /monitor/caddy/metrics",
+                [
+                    Node("rewrite * /metrics"),
+                    Node("reverse_proxy 127.0.0.1:2019"),
+                ],
+            ),
             *reverse_proxy("/monitor/docker-gcr", "siyuan-gcr-registry:5001"),
             *reverse_proxy("/monitor/docker-registry", "siyuan-docker-registry:5001"),
-            # *metrics("/monitor/caddy")    # enable metrics in global config
         ],
     )
 
@@ -323,17 +330,23 @@ def build_root(base: str, config_yaml: dict, first_site: bool, site: str) -> Nod
         base, config_yaml["repos"], first_site, site
     )
 
+    https_main_children = common() + [BLANK_NODE]
+    https_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
+    https_main_children += cors("/mirrorz/*")  # mirrorz.org protocol support
+    https_main_children += [BLANK_NODE] + cerberus_settings()
+    https_main_children += [BLANK_NODE] + https_file_server_nodes
+
+    # Local development listens on plain HTTP only. Reuse the full serving
+    # configuration rather than generating an invalid https://:80 site.
+    if is_local(base):
+        return Node("", no_redir_nodes + [Node(f"http://{base}", https_main_children)])
+
     http_main_children = common_http() + [BLANK_NODE]
     http_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
     http_main_children += [BLANK_NODE] + cerberus_settings()
     http_main_children += [BLANK_NODE] + http_file_server_nodes
     http_main_node = Node(f"http://{base}", http_main_children)
 
-    https_main_children = common() + [BLANK_NODE]
-    https_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
-    https_main_children += cors("/mirrorz/*")  # mirrorz.org protocol support
-    https_main_children += [BLANK_NODE] + cerberus_settings()
-    https_main_children += [BLANK_NODE] + https_file_server_nodes
     https_main_node = Node(f"https://{base}", https_main_children)
 
     return Node("", no_redir_nodes + [http_main_node] + [https_main_node])
@@ -385,11 +398,18 @@ if __name__ == "__main__":
     )
     parser.add_argument("-s", "--site", required=True, help="Site names.")
     parser.add_argument(
-        "-I", "--indent", default=INDENT_CNT, help="Number of spaces in indents."
+        "-I",
+        "--indent",
+        type=int,
+        help="Number of spaces in indents (default: canonical Caddyfile tabs).",
+    )
+    parser.add_argument(
+        "--fail-on-change",
+        action="store_true",
+        help="Exit with code 1 if output differs from existing files.",
     )
     args = parser.parse_args()
-
-    INDENT_CNT = args.indent  # pyright: ignore[reportConstantRedefinition]
+    set_indent(args.indent)
 
     sites = args.site.split(",")
     site_configs = {}
@@ -429,6 +449,8 @@ if __name__ == "__main__":
         logger.info(f"local repos: {str(sorted(names))}")
         logger.info(f"remote repos: {str(sorted(new_repo_names))}")
 
+    changed_outputs = []
+
     for site in sites:
         logger.info(f"generating {site}")
 
@@ -441,7 +463,9 @@ if __name__ == "__main__":
                     Node("key_type rsa4096"),
                     Node("email sjtug-mirror-maintainers@googlegroups.com"),
                     Node("cert_issuer acme"),
-                    # Node('metrics')   # has performance issue
+                    # Caddy >= 2.11.2 records metrics once per route and bounds
+                    # unknown HTTP hosts to "_other"; keep catch-all observation disabled.
+                    Node("metrics", [Node("per_host")]),
                     # timeout settings
                     Node(
                         "servers",
@@ -461,7 +485,7 @@ if __name__ == "__main__":
                     Node(
                         "cerberus",
                         [
-                            Node("difficulty 14"),
+                            Node(f"difficulty {12 if site == 'local' else 14}"),
                             Node("max_pending 16"),
                             Node("access_per_approval 8"),
                             Node("block_ttl 12h"),
@@ -495,9 +519,32 @@ if __name__ == "__main__":
         )
 
         output = f"{args.output}/Caddyfile.{site}"
+        try:
+            with open(output, "r") as fp:
+                old_content = fp.read()
+        except FileNotFoundError:
+            old_content = None
+
+        new_content = "\n\n".join(str(root) for root in roots) + "\n"
         with open(output, "w") as fp:
-            for root in roots:
-                fp.write(str(root))
-                fp.write("\n\n")
+            fp.write(new_content)
+
+        if args.fail_on_change and old_content != new_content:
+            logger.error(f"{output}: has changed")
+            print(
+                "".join(
+                    difflib.unified_diff(
+                        (old_content or "").splitlines(keepends=True),
+                        new_content.splitlines(keepends=True),
+                        fromfile=f"{output} (current)",
+                        tofile=f"{output} (generated)",
+                    )
+                ),
+                end="",
+            )
+            changed_outputs.append(output)
 
         logger.info(f"{output}: done")
+
+    if changed_outputs:
+        raise SystemExit(1)

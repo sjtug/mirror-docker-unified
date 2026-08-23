@@ -26,14 +26,16 @@ caddy-verify-config:
 configure-venv:
 > @if command -v uv >/dev/null 2>&1; then \
 >   echo "Configure Python virtual environment with uv"; \
->   uv sync --directory caddy-gen; \
->   uv sync --directory gateway-gen; \
->   uv sync --directory integration-test; \
+>   uv sync --config-file /dev/null --default-index https://pypi.org/simple --locked --all-packages --no-install-workspace; \
+>   ln -sfn ../.venv caddy-gen/.venv; \
+>   ln -sfn ../.venv gateway-gen/.venv; \
+>   ln -sfn ../.venv integration-test/.venv; \
 > elif command -v nix >/dev/null 2>&1; then \
 >   echo "Configure Python virtual environment with uv2nix"; \
->   nix build .\#caddy-gen --out-link caddy-gen/.venv --option warn-dirty false ; \
->   nix build .\#gateway-gen --out-link gateway-gen/.venv --option warn-dirty false ; \
->   nix build .\#integration-test --out-link integration-test/.venv --option warn-dirty false ; \
+>   nix build .\#python-workspace --out-link .venv --option warn-dirty false ; \
+>   ln -sfn ../.venv caddy-gen/.venv; \
+>   ln -sfn ../.venv gateway-gen/.venv; \
+>   ln -sfn ../.venv integration-test/.venv; \
 > else \
 >   echo "ERROR: uv or nix not found"; \
 > fi

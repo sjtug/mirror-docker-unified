@@ -1,0 +1,7 @@
+keys:
+  - &pgp_comonad 3E56B57EF635A7B1946A6F5706F17A16A93651EE
+
+creation_rules:
+  - path_regex: ^secrets/[^/]+\.sops\.(env|json|ya?ml)$
+    pgp:
+      - *pgp_comonad

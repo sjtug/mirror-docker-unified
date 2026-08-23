@@ -3,7 +3,11 @@ docker-compose.override.yml
 .vscode
 .DS_Store
 .env
-/secrets
+/secrets/*
+!/secrets/*.sops.env
+!/secrets/*.sops.json
+!/secrets/*.sops.yaml
+!/secrets/*.sops.yml
 __pycache__/
 .pytest_cache/
 .ruff_cache/

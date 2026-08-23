@@ -1,6 +1,11 @@
 import dataclasses as dc
 
-INDENT_CNT = 4
+INDENT = "\t"
+
+
+def set_indent(width: int | None = None):
+    global INDENT
+    INDENT = "\t" if width is None else " " * width
 
 
 @dc.dataclass
@@ -17,27 +22,28 @@ class Node:
         elif len(self.children) == 0:
             lines = self.name.split("\n")
             return (
-                "\n".join([" " * (level * INDENT_CNT) + line for line in lines])
+                "\n".join([INDENT * level + line for line in lines])
                 + self.comment_str()
             )
         else:
             children_str = "\n".join(
                 [child.__str__(level=level + 1) for child in self.children]
-            )
+            ).rstrip("\n")
+            block_name = "" if self.name.isspace() else f"{self.name} "
             return (
-                " " * (level * INDENT_CNT)
-                + self.name
-                + " {"
+                INDENT * level
+                + block_name
+                + "{"
                 + self.comment_str()
                 + "\n"
                 + children_str
                 + "\n"
-                + " " * (level * INDENT_CNT)
+                + INDENT * level
                 + "}"
             )
 
     def comment_str(self):
-        return "" if len(self.comment) == 0 else f"  # {self.comment}"
+        return "" if len(self.comment) == 0 else f" # {self.comment}"
 
 
 BLANK_NODE = Node()
