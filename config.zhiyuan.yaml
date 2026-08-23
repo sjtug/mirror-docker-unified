@@ -43,18 +43,23 @@ repos:
     <<:
       - *oneshot_common
   # immortalwrt
-  - type: shell_script
-    script: /worker-script/rsync_password.sh
-    source: rsync://firmwarepublic@rsync-mirror.infra.immortalwrt.org/firmware-public
-    interval: 40401
-    path: /mnt/immortalwrt
+  # - type: shell_script
+  #   script: /worker-script/rsync_password.sh
+  #   source: rsync://firmwarepublic@rsync-mirror.infra.immortalwrt.org/firmware-public
+  #   interval: 40401
+  #   path: /mnt/immortalwrt
+  #   name: immortalwrt
+  #   # Password is made public at #319
+  #   # So we do not hide it behind secrets
+  #   password: immortalwrt-org
+  #   rsync_extra_flags: --exclude "/snapshots/" --exclude "/releases/*18.06*"
+  #   <<:
+  #     - *oneshot_common
+  - type: external
     name: immortalwrt
-    # Password is made public at #319
-    # So we do not hide it behind secrets
-    password: immortalwrt-org
-    rsync_extra_flags: --exclude "/snapshots/" --exclude "/releases/*18.06*"
-    <<:
-      - *oneshot_common
+    serve_mode: redir
+    target: https://mirrors.zju.edu.cn/immortalwrt/
+
   - type: shell_script
     script: /worker-script/rsync.sh
     source: rsync://rsync.chiark.greenend.org.uk/ftp/users/sgtatham/putty-website-mirror/
@@ -225,12 +230,10 @@ repos:
   #     - precompressed gzip
   #   <<:
   #     - *oneshot_common
-  - type: shell_script
-    script: /worker-script/zhiyuan/worker-script/mongodb.sh
-    source: s3://repo.mongodb.org/
-    interval: 4600
-    path: /mnt/mongodb
+  - type: external
     name: mongodb
+    serve_mode: redir
+    target: "{scheme}://mirror.nju.edu.cn/mongodb/"
     <<:
       - *oneshot_common
   # - type: shell_script

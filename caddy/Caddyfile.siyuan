@@ -994,7 +994,7 @@ https://mirror.sjtu.edu.cn {
 	}
 	redir /immortalwrt /immortalwrt/ 301
 	handle_path /immortalwrt/* {
-		redir * https://mirrors.sjtug.sjtu.edu.cn/immortalwrt{uri} 302
+		redir * https://mirrors.zju.edu.cn/immortalwrt/{uri} 302
 	}
 	redir /putty /putty/ 301
 	handle_path /putty/* {
@@ -1054,7 +1054,7 @@ https://mirror.sjtu.edu.cn {
 	}
 	redir /mongodb /mongodb/ 301
 	handle_path /mongodb/* {
-		redir * https://mirrors.sjtug.sjtu.edu.cn/mongodb{uri} 302
+		redir * {scheme}://mirror.nju.edu.cn/mongodb/{uri} 302
 	}
 	redir /julia /julia/ 301
 	handle_path /julia/* {

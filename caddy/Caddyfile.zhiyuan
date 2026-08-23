@@ -205,11 +205,13 @@ https://mirrors.sjtug.sjtu.edu.cn {
 	}
 
 	@gzip_enabled {
+		not path /immortalwrt/*
 		not path /kali-images/*
 		not path /git/brew.git/*
 		not path /raspbian/*
 		not path /parrot/*
 		not path /raspberrypi/*
+		not path /mongodb/*
 		not path /julia/*
 		not path /msys2/*
 		not path /git/opam-repository.git/*
@@ -369,13 +371,8 @@ https://mirrors.sjtug.sjtu.edu.cn {
 		respond @hidden 404
 	}
 	redir /immortalwrt /immortalwrt/ 301
-	handle /immortalwrt/* {
-		file_server browse {
-			root /mnt
-			hide .*
-		}
-		@hidden path */.*
-		respond @hidden 404
+	handle_path /immortalwrt/* {
+		redir * https://mirrors.zju.edu.cn/immortalwrt/{uri} 302
 	}
 	redir /putty /putty/ 301
 	handle /putty/* {
@@ -484,13 +481,8 @@ https://mirrors.sjtug.sjtu.edu.cn {
 		respond @hidden 404
 	}
 	redir /mongodb /mongodb/ 301
-	handle /mongodb/* {
-		file_server browse {
-			root /mnt
-			hide .*
-		}
-		@hidden path */.*
-		respond @hidden 404
+	handle_path /mongodb/* {
+		redir * {scheme}://mirror.nju.edu.cn/mongodb/{uri} 302
 	}
 	redir /julia /julia/ 301
 	handle_path /julia/* {

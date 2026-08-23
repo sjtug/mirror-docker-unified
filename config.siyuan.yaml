@@ -929,7 +929,7 @@ repos:
     interval: 9000
     path: /srv/data55T/debian-ports
     name: debian-ports
-    rsync_extra_flags: --exclude "pool-alpha" --exclude "pool-hppa" --exclude "pool-hurd-i386" --exclude "pool-ia64" --exclude "pool-kfreebsd-amd64" --exclude "pool-kfreebsd-i386" --exclude "pool-m68k" --exclude "pool-powerpc" --exclude "pool-ppc64" --exclude "pool-sh4" --exclude "pool-sparc64" --exclude "pool-x32"
+    # rsync_extra_flags: --exclude "pool-alpha" --exclude "pool-hppa" --exclude "pool-hurd-i386" --exclude "pool-ia64" --exclude "pool-kfreebsd-amd64" --exclude "pool-kfreebsd-i386" --exclude "pool-m68k" --exclude "pool-powerpc" --exclude "pool-ppc64" --exclude "pool-sh4" --exclude "pool-sparc64" --exclude "pool-x32"
     <<:
       - *oneshot_common
   - type: shell_script
