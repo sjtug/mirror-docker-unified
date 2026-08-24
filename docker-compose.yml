@@ -17,6 +17,7 @@ services:
     volumes:
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"
+      - "./data/caddy/log:/var/log/caddy"
       - "mirrorz-volume:/var/www/mirrorz:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile.siyuan:ro"
       - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile.zhiyuan:ro"
@@ -182,6 +183,28 @@ services:
     mem_limit: 2G
     memswap_limit: 2G
 
+  vector:
+    image: timberio/vector:0.57.0-alpine
+    command: --config /etc/vector/vector.yaml
+    restart: unless-stopped
+    networks:
+      - ipv6-service-net
+    volumes:
+      - "./vector.yaml:/etc/vector/vector.yaml:ro"
+      - "./data/vector:/var/lib/vector"
+      - "./data/caddy/log:/var/log/caddy:ro"
+      - "/etc/mirrorz/vector/tls:/etc/mirrorz/vector/tls:ro"
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 2G
+    memswap_limit: 2G
+
   cadvisor:
     restart: unless-stopped
     networks:
@@ -304,3 +327,4 @@ networks:
 
 volumes:
   mirrorz-volume:
+  vector-data:

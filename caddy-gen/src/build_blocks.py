@@ -31,13 +31,26 @@ def log() -> list[Node]:
         Node(
             "log",
             [
-                Node("output stdout"),
                 Node(
-                    'format transform "{common_log}"',
-                    comment="log in v1 style, caddyserver/transform-encoder required",
+                    "output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log}",
+                    [Node("mode 0644")],
+                ),
+                Node(
+                    "format json",
+                    [
+                        Node("time_key timestamp"),
+                        Node("time_format unix_seconds_float"),
+                        Node("duration_format seconds"),
+                    ],
                 ),
             ],
-        )
+        ),
+        Node("log_append serverip {http.request.local.host}"),
+        Node("log_append server_port {http.request.local.port}"),
+        Node("log_append scheme {http.request.scheme}"),
+        Node("log_append uri {http.request.uri.path}"),
+        Node("log_append http_host {http.request.host}"),
+        Node("log_append request_id {http.request.uuid}"),
     ]
 
 

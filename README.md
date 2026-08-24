@@ -36,6 +36,23 @@ Python version, treefmt, pre-commit configurations are controlled by `devshell.t
 
 See <https://nixos.org/download/> or <https://lix.systems/install/> for Nix installation manual.
 
+### Vector TLS credentials
+
+The Vector sink uses mutual TLS to send Caddy access logs to the central
+collector. Before starting the Siyuan or Zhiyuan stack, install these
+host-local files on each mirror server:
+
+```text
+/etc/mirrorz/vector/tls/ca.crt
+/etc/mirrorz/vector/tls/client.crt
+/etc/mirrorz/vector/tls/client.key
+```
+
+`docker-compose.yml` mounts `/etc/mirrorz/vector/tls` read-only into the Vector
+container. Vector will fail to start or connect if any credential is missing
+or unreadable. Keep the client key private (recommended mode `0600`) and never
+commit these credentials to this repository.
+
 `devshell.toml`
 
 ```toml

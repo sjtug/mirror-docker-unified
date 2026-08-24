@@ -31,18 +31,42 @@
 
 google-fonts.mirrors.sjtug.sjtu.edu.cn {
 	log {
-		output stdout
-		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
+		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
+			mode 0644
+		}
+		format json {
+			time_key timestamp
+			time_format unix_seconds_float
+			duration_format seconds
+		}
 	}
+	log_append serverip {http.request.local.host}
+	log_append server_port {http.request.local.port}
+	log_append scheme {http.request.scheme}
+	log_append uri {http.request.uri.path}
+	log_append http_host {http.request.host}
+	log_append request_id {http.request.uuid}
 	redir * https://fonts.googleapis.com{uri} 302
 	header * x-sjtug-mirror-id zhiyuan
 }
 
 http://mirrors.sjtug.sjtu.edu.cn {
 	log {
-		output stdout
-		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
+		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
+			mode 0644
+		}
+		format json {
+			time_key timestamp
+			time_format unix_seconds_float
+			duration_format seconds
+		}
 	}
+	log_append serverip {http.request.local.host}
+	log_append server_port {http.request.local.port}
+	log_append scheme {http.request.scheme}
+	log_append uri {http.request.uri.path}
+	log_append http_host {http.request.host}
+	log_append request_id {http.request.uuid}
 
 	handle {
 		redir https://{hostport}{uri} 308 # redirect remaining http requests to https
@@ -104,9 +128,21 @@ http://mirrors.sjtug.sjtu.edu.cn {
 
 https://mirrors.sjtug.sjtu.edu.cn {
 	log {
-		output stdout
-		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
+		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
+			mode 0644
+		}
+		format json {
+			time_key timestamp
+			time_format unix_seconds_float
+			duration_format seconds
+		}
 	}
+	log_append serverip {http.request.local.host}
+	log_append server_port {http.request.local.port}
+	log_append scheme {http.request.scheme}
+	log_append uri {http.request.uri.path}
+	log_append http_host {http.request.host}
+	log_append request_id {http.request.uuid}
 
 	handle {
 		reverse_proxy /* frontend:3000

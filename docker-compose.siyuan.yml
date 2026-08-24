@@ -17,6 +17,13 @@ services:
     memswap_limit: 40G
     environment:
       - GOMEMLIMIT=40960MiB
+      - CADDY_LOG_PATH=/var/log/caddy/mirrorz/access.log
+
+  vector:
+    container_name: siyuan-vector
+    environment:
+      VECTOR_ORG: sjtug
+      VECTOR_SERVER: siyuan
 
   lug:
     container_name: siyuan-lug
