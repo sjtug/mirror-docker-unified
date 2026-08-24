@@ -98,8 +98,8 @@ services:
     container_name: zhiyuan-git-backend
     volumes:
       - "/mnt/data12T/git:/git:z,ro"
-    mem_limit: 1G
-    memswap_limit: 1G
+    mem_limit: 8G
+    memswap_limit: 8G
 
   k8s-registry:
     container_name: zhiyuan-k8s-registry
