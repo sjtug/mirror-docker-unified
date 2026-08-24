@@ -1,0 +1,221 @@
+name: docker-prometheus-grafana
+
+services:
+  xray:
+    image: ghcr.io/xtls/xray-core:26.7.11
+    # The xtls image's default Cmd is '-confdir /usr/local/etc/xray/' (bundled
+    # example configs); it never auto-reads /etc/xray/config.json. Without
+    # this, the VLESS tunnel endpoint (19200) and the 1081 HTTP proxy that
+    # alertmanager/grafana egress through are dead.
+    command: -c /etc/xray/config.json
+    # The image runs as nonroot; rendered configs are 0600 root-owned,
+    # so run as root (same as the legacy teddysun deployment).
+    user: root
+    restart: always
+    volumes:
+      - ./xray/config.json:/etc/xray/config.json:ro
+    networks:
+      - proxy
+      # mihomo network: xray routes the HTTP proxy inbound (alertmanager/
+      # grafana egress) through the metacubexd socks proxy, since host
+      # direct egress is unreliable on g-storage.
+      - mihomo
+    expose:
+      - 1081
+    # Preserve the legacy VMess listener when reusing the existing host-local config.
+    # The safe example intentionally defines only the internal HTTP proxy on 1081.
+    ports:
+      - 19200:1080
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+      nproc:
+        soft: 1024
+        hard: 1024
+    logging:
+      options:
+        max-size: "2M"
+        max-file: "10"
+    mem_limit: 2G
+    memswap_limit: 2G
+    cpu_shares: 100
+    environment:
+      V2RAY_RAY_BUFFER_SIZE: 5
+
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    restart: always
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    volumes:
+      - ./runtime/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./runtime/monitor_password:/run/secrets/monitor_password:ro
+      - ./prometheus/rules:/etc/prometheus/rules:ro
+      - prometheus:/prometheus
+    networks:
+      - pg
+      - proxy
+    depends_on:
+      - alertmanager
+      - node-exporter
+      - blackbox-exporter
+    ulimits:
+      nofile:
+        soft: 20000
+        hard: 40000
+    mem_limit: 3G
+    cpus: 2
+
+  alertmanager:
+    image: quay.io/prometheus/alertmanager:v0.28.0
+    restart: always
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+      - --storage.path=/alertmanager
+    volumes:
+      - ./runtime/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - ./runtime/telegram_bot_token:/run/secrets/telegram_bot_token:ro
+      - alertmanager:/alertmanager
+    networks:
+      - proxy
+      - mihomo
+    environment:
+      http_proxy: http://xray:1081
+      https_proxy: http://xray:1081
+      HTTP_PROXY: http://xray:1081
+      HTTPS_PROXY: http://xray:1081
+      no_proxy: localhost,127.0.0.1,::1,alertmanager,prometheus,blackbox-exporter,node-exporter,grafana
+      NO_PROXY: localhost,127.0.0.1,::1,alertmanager,prometheus,blackbox-exporter,node-exporter,grafana
+    depends_on:
+      - xray
+    mem_limit: 512M
+    cpus: 0.5
+
+  blackbox-exporter:
+    image: quay.io/prometheus/blackbox-exporter:v0.25.0
+    restart: always
+    command:
+      - --config.file=/etc/blackbox_exporter/blackbox.yml
+    volumes:
+      - ./runtime/blackbox.yml:/etc/blackbox_exporter/blackbox.yml:ro
+      - ./runtime/monitor_password:/run/secrets/monitor_password:ro
+    networks:
+      - pg
+      - proxy
+    mem_limit: 256M
+    cpus: 0.5
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:v1.8.2
+    restart: always
+    pid: host
+    command:
+      - --path.rootfs=/host
+      - --collector.textfile.directory=/textfile_collector
+      - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run/credentials/.+|var/lib/docker/.+)($$|/)
+    volumes:
+      - type: bind
+        source: /
+        target: /host
+        read_only: true
+        bind:
+          propagation: rslave
+      - type: bind
+        source: ${MIRROR_MONITOR_TEXTFILE_DIR:-/var/lib/mirror-monitor/textfile_collector}
+        target: /textfile_collector
+        read_only: true
+    networks:
+      - pg
+    mem_limit: 256M
+    cpus: 0.5
+
+  grafana:
+    image: localhost/grafana/grafana-custom:${GRAFANA_VERSION:-11.4.0}
+    restart: always
+    build:
+      context: ./grafana/builder
+      network: host
+      args:
+        GF_INSTALL_IMAGE_RENDERER_PLUGIN: "true"
+        GRAFANA_VERSION: ${GRAFANA_VERSION:-11.4.0}
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards/json:/var/lib/grafana/dashboards:ro
+      - ./runtime/github_client_secret:/run/secrets/github_client_secret:ro
+    ports:
+      - 127.0.0.1:3000:3000
+    networks:
+      - pg
+      - proxy
+    environment:
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:?set GITHUB_CLIENT_ID in .env}
+      http_proxy: http://xray:1081
+      https_proxy: http://xray:1081
+      HTTP_PROXY: http://xray:1081
+      HTTPS_PROXY: http://xray:1081
+      no_proxy: localhost,127.0.0.1,::1,alertmanager,prometheus,blackbox-exporter,node-exporter,grafana
+      NO_PROXY: localhost,127.0.0.1,::1,alertmanager,prometheus,blackbox-exporter,node-exporter,grafana
+    depends_on:
+      - prometheus
+      - xray
+    mem_limit: 2G
+    cpus: 1
+
+  vector:
+    image: timberio/vector:0.44.0-alpine
+    restart: always
+    volumes:
+      - ./config/vector.toml:/etc/vector/vector.toml:ro
+    ports:
+      - 5104:5104
+    networks:
+      - pg
+    depends_on:
+      - loki
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 131072
+    mem_limit: 512M
+    cpus: 1
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "10"
+
+  loki:
+    image: grafana/loki:3.4.2
+    restart: always
+    command:
+      - -config.file=/etc/loki/loki.yml
+    volumes:
+      - ./config/loki.yml:/etc/loki/loki.yml:ro
+      - loki:/loki
+    networks:
+      - pg
+    mem_limit: 1G
+    cpus: 1
+    logging:
+      options:
+        max-size: "4M"
+        max-file: "10"
+
+networks:
+  pg:
+    driver: bridge
+  proxy:
+    driver: bridge
+  mihomo:
+    external: true
+    name: metacubexd_default
+
+volumes:
+  prometheus:
+  alertmanager:
+  grafana:
+  loki:

@@ -1,0 +1,7 @@
+[Unit]
+Description=Mirror siyuan iSCSI/ext4 textfile metrics
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/mirror-siyuan-iscsi-metrics

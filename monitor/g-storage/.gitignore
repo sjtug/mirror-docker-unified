@@ -1,0 +1,12 @@
+.env
+bot.env
+runtime/
+.backup/
+docker-compose.override.yml
+*.bak
+*.swp
+*.swo
+xray/config.json
+xray/dat/
+node_exporter/textfile_collector/*.prom
+__pycache__/

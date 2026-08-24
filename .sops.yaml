@@ -1,7 +1,18 @@
 keys:
   - &pgp_comonad 3E56B57EF635A7B1946A6F5706F17A16A93651EE
+  # SSH host keys let each deployment host decrypt its own runtime secrets.
+  - &age_siyuan ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBdPNKrwOLfk/BEvblIzpz5tQOR7xvYxd9LuvYOPwdJ
+  - &age_zhiyuan ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO6e1G0t5aD0b4BcLiovR1kN4Dc2Z6Y11yPg6iiCpLIT
+  - &age_g_storage ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+qSGGWUP03xS6iwFXnK3Z1N6gez+pfexZ30/IYaODC
 
 creation_rules:
   - path_regex: ^secrets/[^/]+\.sops\.(env|json|ya?ml)$
     pgp:
       - *pgp_comonad
+  - path_regex: ^monitor/g-storage/.+\.sops(\.(env|json|ya?ml))?$
+    pgp:
+      - *pgp_comonad
+    age:
+      - *age_siyuan
+      - *age_zhiyuan
+      - *age_g_storage

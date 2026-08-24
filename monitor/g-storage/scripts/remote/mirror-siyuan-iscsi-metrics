@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+set -u
+
+# Installed on mirror-siyuan and run by a local systemd timer. It only reads
+# kernel and mount state and writes Prometheus text into the node_exporter
+# textfile directory, where the existing /monitor/node_exporter scrape picks
+# it up (no SSH forced command needed).
+HOST_LABEL="mirror-siyuan"
+OUT_DIR=${MIRROR_SIYUAN_TEXTFILE_DIR:-/var/lib/node_exporter/textfile_collector}
+OUT_FILE="$OUT_DIR/mirror_siyuan_iscsi.prom"
+TARGET_IQN="iqn.2025-05.cn.edu.sjtu.mirror:storage.data55T"
+PORTAL_ADDR="10.32.36.148"
+PORTAL_PORT="3260"
+PORTAL="${PORTAL_ADDR}:${PORTAL_PORT}"
+MOUNTPOINT="/mnt/data55T"
+BIND_MOUNT="/srv/mirror/postgres-data"
+BIND_SOURCE_EXPECTED="/mnt/data55T/mirror-postgres-data"
+BY_PATH="/dev/disk/by-path/ip-10.32.36.148:3260-iscsi-iqn.2025-05.cn.edu.sjtu.mirror:storage.data55T-lun-1"
+
+now=$(date +%s)
+collector_success=1
+mount_present=0
+fs_ext4=0
+mount_rw=0
+data55t_mount_ok=0
+mount_source_matches=0
+block_readonly=-1
+session_present=0
+session_logged_in=0
+connection_present=0
+connection_up=0
+bind_present=0
+bind_source_ok=0
+device="unknown"
+source_dev="unknown"
+options=""
+fstype="unknown"
+
+if line=$(findmnt -rn --mountpoint "$MOUNTPOINT" -o SOURCE,FSTYPE,OPTIONS 2>/dev/null); then
+  # shellcheck disable=SC2086
+  set -- $line
+  source_dev="${1:-unknown}"
+  fstype="${2:-unknown}"
+  options="${3:-}"
+  if [ -n "$source_dev" ] && [ "$source_dev" != "unknown" ] && [ "$source_dev" != "none" ]; then
+    mount_present=1
+  fi
+  [ "$fstype" = "ext4" ] && fs_ext4=1
+  case ",$options," in
+    *",rw,"*) mount_rw=1 ;;
+  esac
+fi
+if [ "$mount_present" = 1 ] && [ "$mount_rw" = 1 ]; then
+  data55t_mount_ok=1
+fi
+
+if resolved=$(readlink -f "$BY_PATH" 2>/dev/null); then
+  device="$resolved"
+  if [ "$mount_present" = 1 ] && source_resolved=$(readlink -f "$source_dev" 2>/dev/null); then
+    [ "$source_resolved" = "$resolved" ] && mount_source_matches=1
+  fi
+elif [ "${source_dev#/dev/}" != "$source_dev" ]; then
+  device="$source_dev"
+fi
+if [ "$device" != "unknown" ]; then
+  devbase=$(basename "$device")
+  if [ -r "/sys/class/block/$devbase/ro" ]; then
+    block_readonly=$(cat "/sys/class/block/$devbase/ro" 2>/dev/null || echo -1)
+  fi
+fi
+
+for session in /sys/class/iscsi_session/session*; do
+  [ -r "$session/targetname" ] || continue
+  target=$(cat "$session/targetname" 2>/dev/null || true)
+  [ "$target" = "$TARGET_IQN" ] || continue
+  session_present=1
+  state=$(cat "$session/state" 2>/dev/null || true)
+  [ "$state" = "LOGGED_IN" ] && session_logged_in=1
+done
+
+for connection in /sys/class/iscsi_connection/connection*; do
+  [ -r "$connection/address" ] || continue
+  address=$(cat "$connection/address" 2>/dev/null || true)
+  port=$(cat "$connection/port" 2>/dev/null || true)
+  [ "$address" = "$PORTAL_ADDR" ] && [ "$port" = "$PORTAL_PORT" ] || continue
+  connection_present=1
+  state=$(cat "$connection/state" 2>/dev/null || true)
+  [ "$state" = "up" ] && connection_up=1
+done
+
+if bind_line=$(findmnt -rn --mountpoint "$BIND_MOUNT" -o SOURCE,FSTYPE,OPTIONS 2>/dev/null); then
+  # shellcheck disable=SC2086
+  set -- $bind_line
+  bind_source="${1:-unknown}"
+  expected_source_alt="${source_dev}[/mirror-postgres-data]"
+  bind_present=1
+  case "$bind_source" in
+    "$BIND_SOURCE_EXPECTED" | "$expected_source_alt") bind_source_ok=1 ;;
+    *) bind_source_ok=0 ;;
+  esac
+fi
+
+install -d -m 0755 "$OUT_DIR"
+TMP_FILE=$(mktemp "$OUT_DIR/.mirror_siyuan_iscsi.prom.XXXXXX")
+cleanup() { rm -f "$TMP_FILE"; }
+trap cleanup EXIT
+
+{
+cat <<METRICS
+# HELP mirror_siyuan_iscsi_collector_success Whether the mirror-siyuan iSCSI collector completed successfully.
+# TYPE mirror_siyuan_iscsi_collector_success gauge
+mirror_siyuan_iscsi_collector_success{host="$HOST_LABEL"} $collector_success
+# HELP mirror_siyuan_iscsi_collector_timestamp_seconds Unix timestamp of the last successful mirror-siyuan iSCSI collector run.
+# TYPE mirror_siyuan_iscsi_collector_timestamp_seconds gauge
+mirror_siyuan_iscsi_collector_timestamp_seconds{host="$HOST_LABEL"} $now
+# HELP mirror_siyuan_iscsi_mount_present Whether the iSCSI ext4 filesystem is mounted at /mnt/data55T.
+# TYPE mirror_siyuan_iscsi_mount_present gauge
+mirror_siyuan_iscsi_mount_present{host="$HOST_LABEL",mountpoint="$MOUNTPOINT",target_iqn="$TARGET_IQN"} $mount_present
+# HELP mirror_siyuan_iscsi_fs_type_ext4 Whether the mounted filesystem type is ext4.
+# TYPE mirror_siyuan_iscsi_fs_type_ext4 gauge
+mirror_siyuan_iscsi_fs_type_ext4{host="$HOST_LABEL",mountpoint="$MOUNTPOINT",fstype="$fstype"} $fs_ext4
+# HELP mirror_siyuan_iscsi_mount_rw Whether the iSCSI ext4 filesystem is mounted read-write.
+# TYPE mirror_siyuan_iscsi_mount_rw gauge
+mirror_siyuan_iscsi_mount_rw{host="$HOST_LABEL",mountpoint="$MOUNTPOINT"} $mount_rw
+# HELP mirror_siyuan_data55t_mount_ok Whether findmnt reports a source mounted read-write at /mnt/data55T.
+# TYPE mirror_siyuan_data55t_mount_ok gauge
+mirror_siyuan_data55t_mount_ok{host="$HOST_LABEL",mountpoint="$MOUNTPOINT"} $data55t_mount_ok
+# HELP mirror_siyuan_iscsi_mount_source_matches Whether the mounted source resolves to the expected stable iSCSI by-path.
+# TYPE mirror_siyuan_iscsi_mount_source_matches gauge
+mirror_siyuan_iscsi_mount_source_matches{host="$HOST_LABEL",mountpoint="$MOUNTPOINT",by_path="$BY_PATH"} $mount_source_matches
+# HELP mirror_siyuan_iscsi_block_readonly Kernel read-only flag for the iSCSI block device; 0 is writable, 1 is read-only, -1 is unknown.
+# TYPE mirror_siyuan_iscsi_block_readonly gauge
+mirror_siyuan_iscsi_block_readonly{host="$HOST_LABEL",by_path="$BY_PATH"} $block_readonly
+# HELP mirror_siyuan_iscsi_session_present Whether a sysfs iSCSI session for the expected target exists.
+# TYPE mirror_siyuan_iscsi_session_present gauge
+mirror_siyuan_iscsi_session_present{host="$HOST_LABEL",target_iqn="$TARGET_IQN"} $session_present
+# HELP mirror_siyuan_iscsi_session_logged_in Whether the expected iSCSI session is LOGGED_IN.
+# TYPE mirror_siyuan_iscsi_session_logged_in gauge
+mirror_siyuan_iscsi_session_logged_in{host="$HOST_LABEL",target_iqn="$TARGET_IQN"} $session_logged_in
+# HELP mirror_siyuan_iscsi_connection_present Whether the expected iSCSI portal connection exists.
+# TYPE mirror_siyuan_iscsi_connection_present gauge
+mirror_siyuan_iscsi_connection_present{host="$HOST_LABEL",portal="$PORTAL"} $connection_present
+# HELP mirror_siyuan_iscsi_connection_up Whether the expected iSCSI portal connection state is up.
+# TYPE mirror_siyuan_iscsi_connection_up gauge
+mirror_siyuan_iscsi_connection_up{host="$HOST_LABEL",portal="$PORTAL"} $connection_up
+# HELP mirror_siyuan_postgres_bind_mount_present Whether /srv/mirror/postgres-data is a mount point.
+# TYPE mirror_siyuan_postgres_bind_mount_present gauge
+mirror_siyuan_postgres_bind_mount_present{host="$HOST_LABEL",mountpoint="$BIND_MOUNT",expected_source="$BIND_SOURCE_EXPECTED"} $bind_present
+# HELP mirror_siyuan_postgres_bind_mount_source_ok Whether /srv/mirror/postgres-data is bound from the expected data55T path.
+# TYPE mirror_siyuan_postgres_bind_mount_source_ok gauge
+mirror_siyuan_postgres_bind_mount_source_ok{host="$HOST_LABEL",mountpoint="$BIND_MOUNT",expected_source="$BIND_SOURCE_EXPECTED"} $bind_source_ok
+METRICS
+} >"$TMP_FILE"
+chmod 0644 "$TMP_FILE"
+mv "$TMP_FILE" "$OUT_FILE"
+trap - EXIT

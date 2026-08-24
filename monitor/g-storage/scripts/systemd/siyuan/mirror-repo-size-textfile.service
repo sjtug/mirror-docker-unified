@@ -1,0 +1,16 @@
+[Unit]
+Description=Collect mirror-siyuan per-repository size metrics
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mirror-repo-size-collector --site siyuan
+TimeoutStartSec=24h
+Nice=19
+IOSchedulingClass=idle
+UMask=0022
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/mnt/data55T/data
+ReadWritePaths=/var/lib/node_exporter/textfile_collector /run/lock

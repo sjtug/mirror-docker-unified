@@ -1,0 +1,12 @@
+[Unit]
+Description=Collect mirror-zhiyuan per-repository sizes daily
+
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=1d
+RandomizedDelaySec=30min
+AccuracySec=1min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
