@@ -1,0 +1,106 @@
+tests:
+  - name: normalize-caddy-native-json
+    inputs:
+      - insert_at: normalize_logs
+        type: log
+        log_fields:
+          message: >-
+            {"level":"info","timestamp":1700000000.125,"logger":"http.log.access","msg":"handled request","request":{"remote_ip":"192.0.2.10","remote_port":"49152","client_ip":"192.0.2.10","proto":"HTTP/2.0","method":"GET","host":"mirror.example.edu.cn","uri":"/archlinux/file.pkg?download=1","headers":{"Referer":["https://example.edu.cn/a\"b\\c"],"User-Agent":["curl/8.0 \"quoted\" 雪"]}},"duration":0.25,"size":1024,"status":206,"resp_headers":{"Content-Type":["application/octet-stream"]},"serverip":"192.0.2.20","server_port":"443","scheme":"https","uri":"/archlinux/file.pkg","http_host":"mirror.example.edu.cn","request_id":"01234567-89ab-cdef-0123-456789abcdef","upstream_addr":"backend:8080","upstream_header_time_ms":20.0,"upstream_response_time_ms":240.0}
+    outputs:
+      - extract_from: normalize_logs
+        conditions:
+          - type: vrl
+            source: |
+              payload = parse_json!(.message)
+              assert_eq!(payload.timestamp, 1700000000.125)
+              assert_eq!(payload.clientip, "192.0.2.10")
+              assert_eq!(payload.serverip, "192.0.2.20")
+              assert_eq!(payload.method, "GET")
+              assert_eq!(payload.scheme, "https")
+              assert_eq!(payload.url, "/archlinux/file.pkg?download=1")
+              assert_eq!(payload.status, 206)
+              assert_eq!(payload.size, 1024)
+              assert_eq!(payload.resp_time, 0.25)
+              assert_eq!(payload.http_host, "mirror.example.edu.cn")
+              assert_eq!(payload.referer, "https://example.edu.cn/a\"b\\c")
+              assert_eq!(payload.user_agent, "curl/8.0 \"quoted\" 雪")
+              assert_eq!(payload.request_id, "01234567-89ab-cdef-0123-456789abcdef")
+              assert_eq!(payload.proto, "HTTP/2.0")
+              assert_eq!(payload.sent_http_content_type, "application/octet-stream")
+              assert_eq!(payload.upstream_addr, "backend:8080")
+              assert_eq!(payload.upstream_header_time, 0.02)
+              assert_eq!(payload.upstream_response_time, 0.24)
+              assert!(!exists(payload.request))
+              assert!(!exists(payload.remote_user))
+              assert!(!exists(payload.http_x_forwarded_for))
+              assert_eq!(.org, "sjtug")
+              assert_eq!(.server, "test-edge")
+      - extract_from: repo_download_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.download_bytes, 1024)
+              assert_eq!(.repo, "archlinux")
+      - extract_from: repo_download_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "mirror_repo_download_bytes_total")
+              assert_eq!(.tags.repo, "archlinux")
+
+  - name: normalize-caddy-missing-optional-headers
+    inputs:
+      - insert_at: normalize_logs
+        type: log
+        log_fields:
+          message: >-
+            {"timestamp":1700000001.0,"request":{"remote_ip":"2001:db8::10","proto":"HTTP/3.0","method":"HEAD","uri":"/","headers":{"Accept":["*/*"]}},"duration":0.001,"size":0,"status":200,"serverip":"2001:db8::20","scheme":"https","http_host":"mirror.example.edu.cn","request_id":"89abcdef-0123-4567-89ab-cdef01234567"}
+    outputs:
+      - extract_from: normalize_logs
+        conditions:
+          - type: vrl
+            source: |
+              payload = parse_json!(.message)
+              assert_eq!(payload.clientip, "2001:db8::10")
+              assert_eq!(payload.url, "/")
+              assert_eq!(payload.referer, "")
+              assert_eq!(payload.user_agent, "")
+              assert_eq!(payload.sent_http_content_type, "")
+              assert_eq!(payload.size, 0)
+              assert!(!exists(payload.upstream_addr))
+
+  - name: count-git-repository-download-bytes
+    inputs:
+      - insert_at: normalize_logs
+        type: log
+        log_fields:
+          message: >-
+            {"timestamp":1700000002.0,"request":{"remote_ip":"192.0.2.11","proto":"HTTP/2.0","method":"GET","uri":"/git/linux.git/objects/pack/file.pack","headers":{}},"duration":1.0,"size":2048,"status":200,"serverip":"192.0.2.20","scheme":"https","http_host":"mirror.example.edu.cn","request_id":"fedcba98-7654-3210-fedc-ba9876543210"}
+    outputs:
+      - extract_from: repo_download_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.download_bytes, 2048)
+              assert_eq!(.repo, "/git/linux.git")
+      - extract_from: repo_download_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "mirror_repo_download_bytes_total")
+              assert_eq!(.tags.repo, "/git/linux.git")
+
+  - name: bound-unknown-repository-cardinality
+    inputs:
+      - insert_at: normalize_logs
+        type: log
+        log_fields:
+          message: >-
+            {"timestamp":1700000003.0,"request":{"remote_ip":"192.0.2.12","proto":"HTTP/2.0","method":"GET","uri":"/attacker-controlled-name/file","headers":{}},"duration":0.01,"size":128,"status":200,"serverip":"192.0.2.20","scheme":"https","http_host":"mirror.example.edu.cn","request_id":"abcdef01-2345-6789-abcd-ef0123456789"}
+    outputs:
+      - extract_from: repo_download_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.download_bytes, 128)
+              assert_eq!(.repo, "_other")

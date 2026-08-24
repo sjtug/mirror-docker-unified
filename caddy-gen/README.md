@@ -2,8 +2,16 @@
 
 The Caddyfile generator for SJTUG mirror.
 
-caddy-gen reads lug configuration of Siyuan and Zhiyuan, then generate
-corresponding Caddyfile for both servers.
+caddy-gen reads lug configuration of Siyuan and Zhiyuan, then generates the
+corresponding Caddyfile for both servers. It also emits two monitoring inputs
+per site:
+
+- `caddy/repositories.<site>.csv`: bounded repository labels loaded by Vector;
+- `caddy/local-repositories.<site>.txt`: local top-level repository names used
+  by the node-exporter size collector.
+
+These files are generated artifacts and are checked by `--fail-on-change` with
+the Caddyfiles.
 
 lug configuration for a repo can always be viewed in two parts:
 

@@ -46,6 +46,9 @@ google-fonts.mirrors.sjtug.sjtu.edu.cn {
 	log_append uri {http.request.uri.path}
 	log_append http_host {http.request.host}
 	log_append request_id {http.request.uuid}
+	log_append upstream_addr {http.reverse_proxy.upstream.hostport}
+	log_append upstream_header_time_ms {http.reverse_proxy.upstream.latency_ms}
+	log_append upstream_response_time_ms {http.reverse_proxy.upstream.duration_ms}
 	redir * https://fonts.googleapis.com{uri} 302
 	header * x-sjtug-mirror-id zhiyuan
 }
@@ -67,6 +70,9 @@ http://mirrors.sjtug.sjtu.edu.cn {
 	log_append uri {http.request.uri.path}
 	log_append http_host {http.request.host}
 	log_append request_id {http.request.uuid}
+	log_append upstream_addr {http.reverse_proxy.upstream.hostport}
+	log_append upstream_header_time_ms {http.reverse_proxy.upstream.latency_ms}
+	log_append upstream_response_time_ms {http.reverse_proxy.upstream.duration_ms}
 
 	handle {
 		redir https://{hostport}{uri} 308 # redirect remaining http requests to https
@@ -143,6 +149,9 @@ https://mirrors.sjtug.sjtu.edu.cn {
 	log_append uri {http.request.uri.path}
 	log_append http_host {http.request.host}
 	log_append request_id {http.request.uuid}
+	log_append upstream_addr {http.reverse_proxy.upstream.hostport}
+	log_append upstream_header_time_ms {http.reverse_proxy.upstream.latency_ms}
+	log_append upstream_response_time_ms {http.reverse_proxy.upstream.duration_ms}
 
 	handle {
 		reverse_proxy /* frontend:3000
@@ -181,6 +190,9 @@ https://mirrors.sjtug.sjtu.edu.cn {
 		}
 		handle_path /monitor/mirror-intel/* {
 			reverse_proxy mirror-intel:8000
+		}
+		handle_path /monitor/vector/* {
+			reverse_proxy vector:9598
 		}
 		handle_path /monitor/rsync-gateway/* {
 			reverse_proxy rsync-gateway:8000

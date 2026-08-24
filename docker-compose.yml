@@ -184,24 +184,38 @@ services:
     memswap_limit: 2G
 
   vector:
-    image: timberio/vector:0.57.0-alpine
-    command: --config /etc/vector/vector.yaml
+    image: timberio/vector:0.55.0-alpine
+    command:
+      - --config
+      - /etc/vector/vector.yaml
+      - --require-healthy
+      - "true"
     restart: unless-stopped
+    user: "0:0"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     networks:
       - ipv6-service-net
     volumes:
-      - "./vector.yaml:/etc/vector/vector.yaml:ro"
+      - "./vector/vector.yaml:/etc/vector/vector.yaml:ro"
+      - "./caddy/repositories.local.csv:/etc/vector/repositories.csv:ro"
       - "./data/vector:/var/lib/vector"
       - "./data/caddy/log:/var/log/caddy:ro"
       - "/etc/mirrorz/vector/tls:/etc/mirrorz/vector/tls:ro"
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
+    stop_grace_period: 30s
     logging:
       options:
-        max-size: "4M"
-        max-file: "20"
+        max-size: "20M"
+        max-file: "3"
     ulimits:
       nofile:
-        soft: 80000
-        hard: 120000
+        soft: 262144
+        hard: 262144
     mem_limit: 2G
     memswap_limit: 2G
 
@@ -327,4 +341,3 @@ networks:
 
 volumes:
   mirrorz-volume:
-  vector-data:

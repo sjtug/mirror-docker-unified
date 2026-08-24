@@ -51,6 +51,15 @@ def log() -> list[Node]:
         Node("log_append uri {http.request.uri.path}"),
         Node("log_append http_host {http.request.host}"),
         Node("log_append request_id {http.request.uuid}"),
+        # Reverse-proxy placeholders are empty for file-server responses. Vector
+        # conditionally forwards them only when an upstream was selected.
+        Node("log_append upstream_addr {http.reverse_proxy.upstream.hostport}"),
+        Node(
+            "log_append upstream_header_time_ms {http.reverse_proxy.upstream.latency_ms}"
+        ),
+        Node(
+            "log_append upstream_response_time_ms {http.reverse_proxy.upstream.duration_ms}"
+        ),
     ]
 
 

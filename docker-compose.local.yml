@@ -3,6 +3,12 @@ services:
     volumes:
       - "/srv:/srv"
       - "./caddy/Caddyfile.local:/etc/caddy/Caddyfile:ro"
+  vector:
+    environment:
+      VECTOR_ORG: sjtug
+      VECTOR_SERVER: local
+    volumes:
+      - "./caddy/repositories.local.csv:/etc/vector/repositories.csv:ro"
   lug:
     volumes:
       - "./lug/config.local.yaml:/config.local.yaml:ro"

@@ -22,6 +22,8 @@ services:
     environment:
       VECTOR_ORG: sjtug
       VECTOR_SERVER: zhiyuan
+    volumes:
+      - "./caddy/repositories.zhiyuan.csv:/etc/vector/repositories.csv:ro"
 
   lug:
     container_name: zhiyuan-lug

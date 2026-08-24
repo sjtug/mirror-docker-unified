@@ -24,6 +24,8 @@ services:
     environment:
       VECTOR_ORG: sjtug
       VECTOR_SERVER: siyuan
+    volumes:
+      - "./caddy/repositories.siyuan.csv:/etc/vector/repositories.csv:ro"
 
   lug:
     container_name: siyuan-lug

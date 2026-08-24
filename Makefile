@@ -22,6 +22,9 @@ caddy-verify-config:
 > docker compose run --rm caddy caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile.siyuan
 > docker compose run --rm caddy caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile.zhiyuan
 
+vector-check:
+> ./scripts/check-vector.sh
+
 # Require UV to build Python virtualenv
 configure-venv:
 > @if command -v uv >/dev/null 2>&1; then \

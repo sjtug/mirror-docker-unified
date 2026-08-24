@@ -3,6 +3,12 @@ services:
     build:
       args:
         - USE_GOPROXY=false
+  vector:
+    environment:
+      VECTOR_ORG: sjtug
+      VECTOR_SERVER: ci
+    volumes:
+      - "./caddy/repositories.local.csv:/etc/vector/repositories.csv:ro"
   git-backend:
     build:
       args:

@@ -1,0 +1,149 @@
+data_dir: /var/lib/vector
+timezone: UTC
+
+api:
+  enabled: true
+  address: 127.0.0.1:8686
+
+enrichment_tables:
+  repositories:
+    type: file
+    file:
+      path: /etc/vector/repositories.csv
+      encoding:
+        type: csv
+
+sources:
+  caddy_files:
+    type: file
+    include:
+      - /var/log/caddy/mirrorz/*.log
+    read_from: beginning
+    max_line_bytes: 262144
+    glob_minimum_cooldown_ms: 1000
+
+transforms:
+  normalize_logs:
+    type: remap
+    inputs: [caddy_files]
+    drop_on_abort: true
+    reroute_dropped: true
+    source: |
+      # Caddy safely writes its native nested JSON format. Convert only the
+      # fields accepted by mirrorz-log into the flat edge payload expected by
+      # the central Vector pipeline.
+      payload = parse_json!(string!(.message))
+      if !is_object(payload) { abort }
+
+      mirrorz = {
+        "timestamp": to_float(payload.timestamp) ?? 0.0,
+        "clientip": to_string(payload.request.remote_ip) ?? "",
+        "serverip": to_string(payload.serverip) ?? "",
+        "method": to_string(payload.request.method) ?? "",
+        "scheme": to_string(payload.scheme) ?? "",
+        "url": to_string(payload.request.uri) ?? "",
+        "status": to_int(payload.status) ?? 0,
+        "size": to_int(payload.size) ?? 0,
+        "resp_time": to_float(payload.duration) ?? 0.0,
+        "http_host": to_string(payload.http_host) ?? "",
+        "referer": to_string(payload.request.headers.Referer[0]) ?? "",
+        "user_agent": to_string(payload.request.headers."User-Agent"[0]) ?? "",
+        "request_id": to_string(payload.request_id) ?? "",
+        "proto": to_string(payload.request.proto) ?? "",
+        "sent_http_content_type": to_string(payload.resp_headers."Content-Type"[0]) ?? ""
+      }
+
+      # Caddy exposes selected-upstream and timing placeholders only for
+      # reverse-proxy responses. Omit these keys entirely for static files so
+      # the dominant traffic path stays compact; the central normalizer
+      # supplies its usual empty/zero defaults.
+      upstream_addr = to_string(payload.upstream_addr) ?? ""
+      if upstream_addr != "" {
+        mirrorz.upstream_addr = upstream_addr
+        mirrorz.upstream_header_time =
+          (to_float(payload.upstream_header_time_ms) ?? 0.0) / 1000.0
+        mirrorz.upstream_response_time =
+          (to_float(payload.upstream_response_time_ms) ?? 0.0) / 1000.0
+      }
+
+      .message = encode_json(mirrorz)
+      .org = get_env_var!("VECTOR_ORG")
+      .server = get_env_var!("VECTOR_SERVER")
+
+  repo_download_fields:
+    type: remap
+    inputs: [normalize_logs]
+    drop_on_abort: true
+    source: |
+      payload = parse_json!(string!(.message))
+      url = to_string(payload.url) ?? ""
+      method = to_string(payload.method) ?? ""
+      status = to_int(payload.status) ?? 0
+      if method != "GET" || status < 200 || status >= 300 || url == "/" || starts_with(url, "/monitor/") || starts_with(url, "/lug/") {
+        abort
+      }
+      git_repo, git_error = parse_regex(url, r'^/*git/+(?P<repo>[^/?]+)')
+      normal_repo, normal_error = parse_regex(url, r'^/*(?P<repo>[^/?]+)')
+      .repo = if git_error == null {
+        "/git/" + to_string(git_repo.repo)
+      } else if normal_error == null {
+        to_string(normal_repo.repo)
+      } else {
+        "/"
+      }
+      known_repositories = find_enrichment_table_records!("repositories", {"repo": .repo})
+      if length(known_repositories) == 0 {
+        .repo = "_other"
+      }
+      .download_bytes = to_int(payload.size) ?? 0
+
+  repo_download_metrics:
+    type: log_to_metric
+    inputs: [repo_download_fields]
+    metrics:
+      - type: counter
+        field: download_bytes
+        name: mirror_repo_download_bytes_total
+        increment_by_value: true
+        tags:
+          repo: "{{ repo }}"
+
+sinks:
+  central_vector:
+    type: vector
+    inputs: [normalize_logs]
+    address: https://repo.nju.edu.cn:49544
+    compression: true
+    acknowledgements:
+      enabled: true
+    batch:
+      max_events: 5000
+      max_bytes: 8388608
+      timeout_secs: 1
+    buffer:
+      type: disk
+      max_size: 4294967296
+      when_full: block
+    request:
+      timeout_secs: 60
+      concurrency: adaptive
+    tls:
+      enabled: true
+      ca_file: /etc/mirrorz/vector/tls/ca.crt
+      crt_file: /etc/mirrorz/vector/tls/client.crt
+      key_file: /etc/mirrorz/vector/tls/client.key
+      server_name: repo.nju.edu.cn
+      verify_certificate: true
+      verify_hostname: true
+
+  parse_errors:
+    type: file
+    inputs: [normalize_logs.dropped]
+    path: /var/lib/vector/parse-errors-%Y-%m-%d.log
+    encoding:
+      codec: json
+
+  repo_metrics:
+    type: prometheus_exporter
+    inputs: [repo_download_metrics]
+    address: 0.0.0.0:9598

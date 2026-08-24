@@ -3,7 +3,9 @@
 import yaml
 from loguru import logger
 import argparse
+import csv
 import difflib
+import io
 
 from config import *
 from repos import *
@@ -15,6 +17,34 @@ DESC = "A simple Caddyfile generator for siyuan."
 
 def is_local(base: str):
     return base.startswith(":")
+
+
+def write_generated(path: str, content: str, fail_on_change: bool) -> bool:
+    try:
+        with open(path) as fp:
+            old_content = fp.read()
+    except FileNotFoundError:
+        old_content = None
+
+    with open(path, "w") as fp:
+        fp.write(content)
+
+    if not fail_on_change or old_content == content:
+        return False
+
+    logger.error(f"{path}: has changed")
+    print(
+        "".join(
+            difflib.unified_diff(
+                (old_content or "").splitlines(keepends=True),
+                content.splitlines(keepends=True),
+                fromfile=f"{path} (current)",
+                tofile=f"{path} (generated)",
+            )
+        ),
+        end="",
+    )
+    return True
 
 
 def common() -> list[Node]:
@@ -74,6 +104,7 @@ def common() -> list[Node]:
             *reverse_proxy("/monitor/cadvisor", CADVISOR_ADDR),
             *reverse_proxy("/monitor/lug", LUG_EXPORTER_ADDR),
             *reverse_proxy("/monitor/mirror-intel", MIRROR_INTEL_ADDR),
+            *reverse_proxy("/monitor/vector", "vector:9598"),
             *reverse_proxy("/monitor/rsync-gateway", RSYNC_GATEWAY_ADDR),
             Node(
                 "handle /monitor/caddy/metrics",
@@ -413,11 +444,19 @@ if __name__ == "__main__":
 
     sites = args.site.split(",")
     site_configs = {}
+    local_top_level_repos = {}
     for site in sites:
         logger.info(f"parsing config for {site}")
         with open(f"{args.input}/config.{site}.yaml", "r") as fp:
             content = fp.read().replace("\t", "")
             site_configs[site] = yaml.load(content, Loader=yaml.FullLoader)
+            local_top_level_repos[site] = sorted(
+                {
+                    repo["name"].split("/", 1)[0]
+                    for repo in site_configs[site]["repos"]
+                    if repo.get("unified", "") != "disable"
+                }
+            )
 
     logger.info("rewriting configs")
     rewritten_repos = {}
@@ -519,30 +558,30 @@ if __name__ == "__main__":
         )
 
         output = f"{args.output}/Caddyfile.{site}"
-        try:
-            with open(output, "r") as fp:
-                old_content = fp.read()
-        except FileNotFoundError:
-            old_content = None
-
-        new_content = "\n\n".join(str(root) for root in roots) + "\n"
-        with open(output, "w") as fp:
-            fp.write(new_content)
-
-        if args.fail_on_change and old_content != new_content:
-            logger.error(f"{output}: has changed")
-            print(
-                "".join(
-                    difflib.unified_diff(
-                        (old_content or "").splitlines(keepends=True),
-                        new_content.splitlines(keepends=True),
-                        fromfile=f"{output} (current)",
-                        tofile=f"{output} (generated)",
-                    )
-                ),
-                end="",
+        repositories_csv = f"{args.output}/repositories.{site}.csv"
+        local_repositories_file = f"{args.output}/local-repositories.{site}.txt"
+        csv_output = io.StringIO(newline="")
+        writer = csv.writer(csv_output, lineterminator="\n")
+        writer.writerow(["repo"])
+        writer.writerows(
+            [name]
+            for name in sorted(
+                {
+                    "/" + repo["name"]
+                    if repo["name"].startswith("git/")
+                    else repo["name"].split("/", 1)[0]
+                    for repo in config_yaml["repos"]
+                }
             )
-            changed_outputs.append(output)
+        )
+        generated_files = {
+            output: "\n\n".join(str(root) for root in roots) + "\n",
+            repositories_csv: csv_output.getvalue(),
+            local_repositories_file: "\n".join(local_top_level_repos[site]) + "\n",
+        }
+        for path, content in generated_files.items():
+            if write_generated(path, content, args.fail_on_change):
+                changed_outputs.append(path)
 
         logger.info(f"{output}: done")
 
