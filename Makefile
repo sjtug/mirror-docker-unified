@@ -18,6 +18,7 @@ SUDO ?= sudo
 NIX_FLAGS ?= --accept-flake-config --option warn-dirty false
 G_STORAGE_DIR ?= monitor/g-storage
 G_STORAGE_COMPOSE = $(SUDO) nerdctl --address /run/containerd/containerd.sock --namespace default compose --project-directory $(G_STORAGE_DIR) --project-name docker-prometheus-grafana -f $(G_STORAGE_DIR)/docker-compose.yml
+G_STORAGE_SOPS_SSH_KEY_FILE ?= /etc/ssh/ssh_host_ed25519_key
 MIRROR_SITE ?=
 
 
@@ -90,20 +91,25 @@ build-zhiyuan: $(COMPOSE_TASK_DEPS)
 
 
 g-storage-secrets:
-> # Decrypt with the host SSH key as an age identity when available.
-> if [ -r /etc/ssh/ssh_host_ed25519_key ]; then
->   export SOPS_AGE_SSH_PRIVATE_KEY_FILE=/etc/ssh/ssh_host_ed25519_key
-> fi
+> # Use the deployment host's SSH host key explicitly; never rely on the
+> # invoking user's default age identity path.
+> test -r "$(G_STORAGE_SOPS_SSH_KEY_FILE)" || {
+>   echo "SOPS SSH identity is not readable: $(G_STORAGE_SOPS_SSH_KEY_FILE)" >&2
+>   exit 1
+> }
 > if [ -f $(G_STORAGE_DIR)/g-storage.sops.env ]; then
->   sops -d --output $(G_STORAGE_DIR)/.env $(G_STORAGE_DIR)/g-storage.sops.env
+>   SOPS_AGE_SSH_PRIVATE_KEY_FILE="$(G_STORAGE_SOPS_SSH_KEY_FILE)" \
+>     sops -d --output $(G_STORAGE_DIR)/.env $(G_STORAGE_DIR)/g-storage.sops.env
 >   chmod 600 $(G_STORAGE_DIR)/.env
 > fi
 > if [ -f $(G_STORAGE_DIR)/bot.sops.env ]; then
->   sops -d --output $(G_STORAGE_DIR)/bot.env $(G_STORAGE_DIR)/bot.sops.env
+>   SOPS_AGE_SSH_PRIVATE_KEY_FILE="$(G_STORAGE_SOPS_SSH_KEY_FILE)" \
+>     sops -d --output $(G_STORAGE_DIR)/bot.env $(G_STORAGE_DIR)/bot.sops.env
 >   chmod 600 $(G_STORAGE_DIR)/bot.env
 > fi
 > if [ -f $(G_STORAGE_DIR)/xray/config.sops.json ]; then
->   sops -d --output $(G_STORAGE_DIR)/xray/config.json $(G_STORAGE_DIR)/xray/config.sops.json
+>   SOPS_AGE_SSH_PRIVATE_KEY_FILE="$(G_STORAGE_SOPS_SSH_KEY_FILE)" \
+>     sops -d --output $(G_STORAGE_DIR)/xray/config.json $(G_STORAGE_DIR)/xray/config.sops.json
 >   chmod 600 $(G_STORAGE_DIR)/xray/config.json
 > fi
 

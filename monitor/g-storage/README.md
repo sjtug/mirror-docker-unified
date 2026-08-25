@@ -9,10 +9,15 @@ alias used by the proxy URL.
 
 Host-local values are committed SOPS-encrypted as
 `monitor/g-storage/g-storage.sops.env`, `monitor/g-storage/bot.sops.env`, and
-`monitor/g-storage/xray/config.sops.json`; the Make targets decrypt them (via
-the host SSH key) to the ignored runtime filenames below before validation.
+`monitor/g-storage/xray/config.sops.json`; the Make targets decrypt them to the
+ignored runtime filenames below before validation. Every SOPS invocation sets
+`SOPS_AGE_SSH_PRIVATE_KEY_FILE` explicitly to
+`G_STORAGE_SOPS_SSH_KEY_FILE` (default:
+`/etc/ssh/ssh_host_ed25519_key`) instead of relying on a per-user age identity.
 Fresh hosts only need a checkout: `sudo make g-storage-up` performs the whole
-check → decrypt → render → validate → up chain.
+check → decrypt → render → validate → up chain. Override the host-key path, if
+needed, with `G_STORAGE_SOPS_SSH_KEY_FILE=/path/to/ssh_host_key` as a Make
+argument.
 
 ### Unified xray tunnel
 
@@ -74,10 +79,13 @@ read-only files under `/run/secrets`.
 
 ```sh
 make g-storage-check
-make g-storage-render
-make g-storage-config
-make g-storage-build
-make g-storage-up
+sudo make g-storage-render
+sudo make g-storage-config
+sudo make g-storage-build
+sudo make g-storage-up
+
+# Non-default host-key location:
+sudo make g-storage-up G_STORAGE_SOPS_SSH_KEY_FILE=/path/to/ssh_host_key
 ```
 
 `g-storage-up` never pulls or builds images. Preload missing images into the
