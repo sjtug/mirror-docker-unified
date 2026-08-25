@@ -24,6 +24,7 @@ services:
     environment:
       VECTOR_ORG: sjtug
       VECTOR_SERVER: siyuan
+      VECTOR_REQUIRE_CENTRAL_FORWARDING: "true"
     volumes:
       - "./caddy/repositories.siyuan.csv:/etc/vector/repositories.csv:ro"
 

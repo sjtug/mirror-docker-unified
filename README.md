@@ -42,10 +42,11 @@ See <https://nixos.org/download/> or <https://lix.systems/install/> for Nix inst
 
 Caddy writes safely escaped native JSON to
 `./data/caddy/log/mirrorz/access.log`. The edge Vector service converts the
-nested Caddy event into the flat `mirrorz-log` schema, adds the site-specific
-`org` and `server` values from the Compose override, and sends it to the
-central collector. Invalid Caddy JSON is excluded from the central stream and
-written under `./data/vector/parse-errors-YYYY-MM-DD.log`. The exact forwarded
+nested Caddy event into the flat `mirrorz-log` schema and adds the site-specific
+`org` and `server` values from the Compose override. When per-host mTLS
+credentials are installed it also sends the events to the central collector.
+Invalid Caddy JSON is excluded from downstream processing and written under
+`./data/vector/parse-errors-YYYY-MM-DD.log`. The exact forwarded
 field contract and intentionally omitted Nginx-only fields are documented in
 [`vector/README.md`](vector/README.md). Vector also exposes per-repository
 response-byte counters through authenticated `/monitor/vector/metrics`.
@@ -71,10 +72,13 @@ host-local files on each mirror server:
 ```
 
 `docker-compose.yml` mounts `/etc/mirrorz/vector/tls` read-only into the Vector
-container. Vector will fail to start or connect if any credential is missing
-or unreadable. Keep the client key private (mode `0600`) and never commit these
-credentials to this repository. Each edge node must use its own client
-certificate.
+container. `vector/run.sh` loads the central sink only when all three files are
+readable, so missing forwarding credentials do not take down the local
+Prometheus metrics endpoint. The Siyuan and Zhiyuan Compose overrides set
+`VECTOR_REQUIRE_CENTRAL_FORWARDING=true`, so production startup fails closed
+when these files are absent. Keep the client key private (mode `0600`) and never
+commit these credentials to this repository. The current deployment uses the
+shared mirror-host client identity.
 
 ### TODOs
 

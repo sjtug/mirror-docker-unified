@@ -1,11 +1,12 @@
 # Edge Caddy log adapter
 
 This directory is the edge adapter between Caddy's native structured access
-log and the `mirrorz-log` central Vector interface. Caddy remains responsible
-for safely encoding untrusted request values. Edge Vector parses that JSON,
-selects the downstream fields, and re-encodes one compact JSON object in the
-Vector event's `message` field. The event also retains Vector's `file` field
-and adds `org` and `server` outside `message`.
+log, local repository metrics, and the optional `mirrorz-log` central Vector
+interface. Caddy remains responsible for safely encoding untrusted request
+values. Edge Vector parses that JSON, selects the downstream fields, and
+re-encodes one compact JSON object in the Vector event's `message` field. The
+event also retains Vector's `file` field and adds `org` and `server` outside
+`message`.
 
 ## Forwarded fields
 
@@ -63,4 +64,13 @@ Vector exposes the following log-derived metrics on port 9598:
 Caddy publishes the endpoint as authenticated `/monitor/vector/metrics`.
 Vector restarts reset counters and Prometheus `rate`/`increase` handle resets.
 
-Run `make vector-check` to validate the configuration and its field contract.
+`run.sh` always loads `vector.yaml`, which owns parsing, metrics, and parse-error
+output. It adds `central-sink.yaml` only when `ca.crt`, `client.crt`, and
+`client.key` are all readable under `/etc/mirrorz/vector/tls`. This keeps the
+monitoring endpoint available before optional forwarding credentials are
+provisioned. The Siyuan and Zhiyuan Compose overrides set
+`VECTOR_REQUIRE_CENTRAL_FORWARDING=true`, making central forwarding mandatory
+for production while local and CI configurations remain metrics-only.
+
+Run `make vector-check` to validate both configuration layers, their field
+contract, and metrics-only startup without TLS credentials.

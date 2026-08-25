@@ -185,11 +185,8 @@ services:
 
   vector:
     image: timberio/vector:0.55.0-alpine
-    command:
-      - --config
-      - /etc/vector/vector.yaml
-      - --require-healthy
-      - "true"
+    entrypoint:
+      - /etc/vector/run.sh
     restart: unless-stopped
     user: "0:0"
     read_only: true
@@ -201,6 +198,8 @@ services:
       - ipv6-service-net
     volumes:
       - "./vector/vector.yaml:/etc/vector/vector.yaml:ro"
+      - "./vector/central-sink.yaml:/etc/vector/central-sink.yaml:ro"
+      - "./vector/run.sh:/etc/vector/run.sh:ro"
       - "./caddy/repositories.local.csv:/etc/vector/repositories.csv:ro"
       - "./data/vector:/var/lib/vector"
       - "./data/caddy/log:/var/log/caddy:ro"
