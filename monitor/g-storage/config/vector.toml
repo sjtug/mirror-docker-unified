@@ -1,0 +1,26 @@
+# Receives structured Caddy access logs shipped by the mirror hosts through
+# the unified xray tunnel (door 5104) and forwards them to Loki.
+
+[sources.caddy_logs]
+type = "socket"
+mode = "tcp"
+address = "0.0.0.0:5104"
+decoding.codec = "bytes"
+
+[transforms.parse_caddy]
+type = "remap"
+inputs = ["caddy_logs"]
+source = '''
+. = parse_json!(.message)
+'''
+
+[sinks.loki]
+type = "loki"
+inputs = ["parse_caddy"]
+endpoint = "http://loki:3100"
+encoding.codec = "json"
+healthcheck.enabled = false
+
+[sinks.loki.labels]
+job = "caddy-access"
+host = "{{ host }}"

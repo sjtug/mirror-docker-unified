@@ -31,9 +31,24 @@
 
 http://:80 {
 	log {
-		output stdout
-		format transform "{common_log}" # log in v1 style, caddyserver/transform-encoder required
+		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
+			mode 0644
+		}
+		format json {
+			time_key timestamp
+			time_format unix_seconds_float
+			duration_format seconds
+		}
 	}
+	log_append serverip {http.request.local.host}
+	log_append server_port {http.request.local.port}
+	log_append scheme {http.request.scheme}
+	log_append uri {http.request.uri.path}
+	log_append http_host {http.request.host}
+	log_append request_id {http.request.uuid}
+	log_append upstream_addr {http.reverse_proxy.upstream.hostport}
+	log_append upstream_header_time_ms {http.reverse_proxy.upstream.latency_ms}
+	log_append upstream_response_time_ms {http.reverse_proxy.upstream.duration_ms}
 
 	handle {
 		reverse_proxy /* frontend:3000
@@ -73,12 +88,17 @@ http://:80 {
 		handle_path /monitor/mirror-intel/* {
 			reverse_proxy mirror-intel:8000
 		}
+		handle_path /monitor/vector/* {
+			reverse_proxy vector:9598
+		}
 		handle_path /monitor/rsync-gateway/* {
 			reverse_proxy rsync-gateway:8000
 		}
 		handle /monitor/caddy/metrics {
 			rewrite * /metrics
-			reverse_proxy 127.0.0.1:2019
+			reverse_proxy 127.0.0.1:2019 {
+				header_up Host localhost:2019
+			}
 		}
 		handle_path /monitor/docker-gcr/* {
 			reverse_proxy siyuan-gcr-registry:5001

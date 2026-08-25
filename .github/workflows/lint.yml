@@ -25,6 +25,16 @@ jobs:
             extra-substituters = https://sjtug.cachix.org
             extra-trusted-public-keys = sjtug.cachix.org-1:0bD3nO47HROvtvVfkodDpE7AUwjFxQ/6l4fCbcC+7bc=
       - run: nix flake check
+  test-vector:
+    name: Vector edge configuration
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - run: make vector-check
   test-docker-build:
     name: docker build
     runs-on: ubuntu-latest

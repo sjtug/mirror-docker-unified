@@ -1,0 +1,246 @@
+groups:
+  - name: mirror-targets
+    rules:
+      - alert: MirrorMonitoringTargetDown
+        expr: up{job=~"prometheus|alertmanager|blackbox_exporter|node_exporter_g_storage|node_exporter_mirrors|cadvisor_mirrors|caddy_mirrors|lug_mirrors|mirror_intel_mirrors|vector_mirrors|rsync_gateway_mirrors"} == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Monitoring target is down: {{ $labels.job }} {{ $labels.instance }}"
+          description: "Prometheus cannot scrape {{ $labels.job }} on {{ $labels.instance }} for more than 5 minutes. Host label: {{ $labels.host }}."
+
+      - alert: MirrorNodeTextfileScrapeError
+        expr: node_textfile_scrape_error{job=~"node_exporter_g_storage|node_exporter_mirrors"} == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "node-exporter rejected a textfile on {{ $labels.host }}"
+          description: "At least one textfile collector output is malformed. Validate every .prom file with promtool check metrics."
+
+      - alert: MirrorBlackboxEndpointDown
+        expr: probe_success{job=~"blackbox_public_http|blackbox_monitor_auth"} == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Endpoint probe failed: {{ $labels.instance }}"
+          description: "Blackbox probe {{ $labels.job }} for {{ $labels.instance }} has failed for more than 3 minutes. Host={{ $labels.host }} service={{ $labels.service }}."
+
+      - alert: MirrorBlackboxEndpointSlow
+        expr: probe_duration_seconds{job=~"blackbox_public_http|blackbox_monitor_auth"} > 15
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Endpoint probe is slow: {{ $labels.instance }}"
+          description: "Blackbox probe {{ $labels.job }} for {{ $labels.instance }} has taken more than 15 seconds for one hour."
+
+  - name: mirror-capacity-io
+    rules:
+      - alert: MirrorFilesystemUsageHigh
+        expr: |
+          100 * (1 - (
+            node_filesystem_avail_bytes{job=~"node_exporter_mirrors|node_exporter_g_storage",fstype!~"tmpfs|devtmpfs|overlay|squashfs|proc|sysfs|cgroup2?",mountpoint!~"/run($|/).*|/var/lib/docker($|/).*"}
+            /
+            node_filesystem_size_bytes{job=~"node_exporter_mirrors|node_exporter_g_storage",fstype!~"tmpfs|devtmpfs|overlay|squashfs|proc|sysfs|cgroup2?",mountpoint!~"/run($|/).*|/var/lib/docker($|/).*"}
+          )) > 85
+          unless on(instance, device, mountpoint)
+          node_filesystem_avail_bytes{host="mirror-zhiyuan",mountpoint="/mnt/data12T"}
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Filesystem usage high on {{ $labels.host }} {{ $labels.mountpoint }}"
+          description: "{{ $labels.host }} filesystem {{ $labels.mountpoint }} is above 85% used for 30 minutes."
+
+      - alert: MirrorFilesystemUsageHighZhiyuanData12T
+        expr: |
+          100 * (1 - (
+            node_filesystem_avail_bytes{job="node_exporter_mirrors",host="mirror-zhiyuan",mountpoint="/mnt/data12T"}
+            /
+            node_filesystem_size_bytes{job="node_exporter_mirrors",host="mirror-zhiyuan",mountpoint="/mnt/data12T"}
+          )) > 90
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Filesystem usage high on mirror-zhiyuan /mnt/data12T"
+          description: "mirror-zhiyuan /mnt/data12T is above 90% used for 30 minutes."
+
+      - alert: MirrorFilesystemUsageCritical
+        expr: |
+          100 * (1 - (
+            node_filesystem_avail_bytes{job=~"node_exporter_mirrors|node_exporter_g_storage",fstype!~"tmpfs|devtmpfs|overlay|squashfs|proc|sysfs|cgroup2?",mountpoint!~"/run($|/).*|/var/lib/docker($|/).*"}
+            /
+            node_filesystem_size_bytes{job=~"node_exporter_mirrors|node_exporter_g_storage",fstype!~"tmpfs|devtmpfs|overlay|squashfs|proc|sysfs|cgroup2?",mountpoint!~"/run($|/).*|/var/lib/docker($|/).*"}
+          )) > 95
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Filesystem usage critical on {{ $labels.host }} {{ $labels.mountpoint }}"
+          description: "{{ $labels.host }} filesystem {{ $labels.mountpoint }} is above 95% used for 10 minutes."
+
+      - alert: MirrorFilesystemReadonly
+        expr: node_filesystem_readonly{job="node_exporter_mirrors",host="mirror-zhiyuan",mountpoint="/mnt/data12T"} == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $labels.host }} {{ $labels.mountpoint }} is read-only"
+          description: "The data filesystem on mirror-zhiyuan has switched to read-only mode. Check dmesg and LVM/XFS state immediately."
+
+      - alert: MirrorZhiyuanData12TMountMissing
+        expr: absent(node_filesystem_size_bytes{job="node_exporter_mirrors",host="mirror-zhiyuan",mountpoint="/mnt/data12T",device="/dev/mapper/vg0-mirror.sjtug",fstype="xfs"})
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "mirror-zhiyuan /mnt/data12T LVM xfs mount is missing or replaced"
+          description: "node_exporter does not report /dev/mapper/vg0-mirror.sjtug xfs at /mnt/data12T. The LVM mount may be gone or a wrong filesystem is mounted there."
+
+  - name: mirror-iscsi-ext4
+    rules:
+      - alert: MirrorSiyuanISCSICollectorFailed
+        expr: (mirror_siyuan_iscsi_collector_success{host="mirror-siyuan"} != 1) or absent(mirror_siyuan_iscsi_collector_success{host="mirror-siyuan"})
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "mirror-siyuan iSCSI/ext4 collector failed"
+          description: "The g-storage textfile collector could not collect mirror-siyuan iSCSI/ext4 health metrics for more than 3 minutes."
+
+      - alert: MirrorSiyuanISCSICollectorStale
+        expr: time() - mirror_siyuan_iscsi_collector_timestamp_seconds > 180
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "mirror-siyuan iSCSI/ext4 collector is stale"
+          description: "The last successful mirror-siyuan iSCSI/ext4 collector run is older than 3 minutes."
+
+      - alert: MirrorSiyuanData55TMountDegraded
+        expr: mirror_siyuan_data55t_mount_ok{host="mirror-siyuan",mountpoint="/mnt/data55T"} != 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "mirror-siyuan /mnt/data55T has no source or is read-only"
+          description: "findmnt does not report a source mounted read-write at /mnt/data55T. Run 'findmnt /mnt/data55T' and check dmesg/iSCSI state."
+
+      - alert: MirrorSiyuanPostgresBindMountDegraded
+        expr: (mirror_siyuan_postgres_bind_mount_present != 1) or (mirror_siyuan_postgres_bind_mount_source_ok != 1)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "mirror-siyuan postgres bind mount is not the expected data55T mount"
+          description: "/srv/mirror/postgres-data should be a bind mount from /mnt/data55T/mirror-postgres-data. Verify fstab/systemd mount units."
+
+      - alert: MirrorStorageTgtCollectorFailed
+        expr: (mirror_storage_tgt_collector_success{host="g-storage"} != 1) or absent(mirror_storage_tgt_collector_success{host="g-storage"})
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "g-storage tgt collector failed"
+          description: "The g-storage textfile collector could not collect tgt/backing-store health metrics for more than 3 minutes."
+
+      - alert: MirrorStorageTgtCollectorStale
+        expr: time() - mirror_storage_tgt_collector_timestamp_seconds > 180
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "g-storage tgt collector is stale"
+          description: "The last successful g-storage tgt collector run is older than 3 minutes."
+
+      - alert: MirrorStorageTgtDegraded
+        expr: |
+          (mirror_storage_tgt_service_active != 1)
+          or (mirror_storage_tgt_target_ready != 1)
+          or (mirror_storage_tgt_lun_online != 1)
+          or (mirror_storage_tgt_lun_readonly != 0)
+          or (mirror_storage_tgt_backing_store_matches != 1)
+          or (mirror_storage_backing_block_readonly != 0)
+          or (mirror_storage_backing_fs_type_ext4 != 1)
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "g-storage iSCSI target/backing store degraded"
+          description: "tgt service, target readiness, LUN online/read-write state, or backing-store state is unhealthy."
+
+      - alert: MirrorStorageTgtNoInitiators
+        expr: mirror_storage_tgt_active_connections < 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "g-storage iSCSI target has no active initiator connections"
+          description: "The expected data55T target has no active mirror-siyuan connections. Check network and open-iscsi state."
+
+  - name: mirror-intel-cache
+    rules:
+      - alert: MirrorIntelCacheSizeScanFailed
+        expr: |
+          (mirror_intel_cache_size_scan_success{job="mirror_intel_mirrors",host=~"mirror-siyuan|mirror-zhiyuan"} != 1)
+          or absent(mirror_intel_cache_size_scan_success{job="mirror_intel_mirrors",host="mirror-siyuan"})
+          or absent(mirror_intel_cache_size_scan_success{job="mirror_intel_mirrors",host="mirror-zhiyuan"})
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "mirror-intel cache size scan failed on {{ $labels.host }}"
+          description: "mirror-intel has not completed a successful buffer_path size scan. Check the mirror-intel logs and cache mount."
+
+      - alert: MirrorIntelCacheSizeScanStale
+        expr: |
+          (time() - mirror_intel_cache_size_scan_timestamp_seconds{job="mirror_intel_mirrors",host=~"mirror-siyuan|mirror-zhiyuan"} > 7200)
+          and mirror_intel_cache_size_scan_timestamp_seconds{job="mirror_intel_mirrors",host=~"mirror-siyuan|mirror-zhiyuan"} > 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "mirror-intel cache size scan is stale on {{ $labels.host }}"
+          description: "The last successful buffer_path size scan is older than two hours."
+
+  - name: mirror-repo-sizes
+    rules:
+      - alert: MirrorRepoSizeCollectorFailed
+        expr: |
+          (mirror_repo_size_collector_success{job="node_exporter_mirrors",host=~"mirror-siyuan|mirror-zhiyuan"} != 1)
+          or absent(mirror_repo_size_collector_success{job="node_exporter_mirrors",host="mirror-siyuan"})
+          or absent(mirror_repo_size_collector_success{job="node_exporter_mirrors",host="mirror-zhiyuan"})
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "repository size collector failed on {{ $labels.host }}"
+          description: "The local per-repository size collector has not completed successfully. Check mirror-repo-size-textfile.service."
+
+      - alert: MirrorRepoSizeScanStale
+        expr: |
+          (time() - mirror_repo_size_scan_timestamp_seconds{job="node_exporter_mirrors",host=~"mirror-siyuan|mirror-zhiyuan"} > 129600)
+          or absent(mirror_repo_size_scan_timestamp_seconds{job="node_exporter_mirrors",host="mirror-siyuan"})
+          or absent(mirror_repo_size_scan_timestamp_seconds{job="node_exporter_mirrors",host="mirror-zhiyuan"})
+        for: 2h
+        labels:
+          severity: warning
+        annotations:
+          summary: "repository size scan is stale on {{ $labels.host }}"
+          description: "The latest successful per-repository size scan is missing or older than 36 hours."
+
+      - alert: MirrorRepoSizesUnavailable
+        expr: |
+          (mirror_repo_size_repositories{job="node_exporter_mirrors",host=~"mirror-siyuan|mirror-zhiyuan"} < 1)
+          or absent(mirror_repo_size_repositories{job="node_exporter_mirrors",host="mirror-siyuan"})
+          or absent(mirror_repo_size_repositories{job="node_exporter_mirrors",host="mirror-zhiyuan"})
+        for: 12h
+        labels:
+          severity: warning
+        annotations:
+          summary: "repository sizes are unavailable on {{ $labels.host }}"
+          description: "No per-repository size series are available from the local textfile collector."

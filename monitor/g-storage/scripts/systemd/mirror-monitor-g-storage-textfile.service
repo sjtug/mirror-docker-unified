@@ -1,0 +1,9 @@
+[Unit]
+Description=Collect g-storage tgt/backing-store health metrics for node_exporter
+Wants=network-online.target
+After=network-online.target tgt.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/mirror-monitor/g-storage.env
+ExecStart=/usr/local/sbin/mirror-monitor-collect-g-storage.sh

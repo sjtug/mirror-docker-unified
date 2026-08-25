@@ -147,6 +147,7 @@
           treefmt = {
             projectRootFile = ".git/config";
             settings.global.excludes = [
+              "monitor/g-storage/**/*.sops.*"
               "rsync-gateway/config.*.toml"
             ];
 
@@ -229,6 +230,10 @@
               pkgs.cachix
               pkgs.jq
               pkgs.nix-fast-build
+              pkgs.prometheus-alertmanager
+              pkgs.prometheus-blackbox-exporter
+              pkgs.prometheus.cli
+              pkgs.shellcheck
               pkgs.sops
             ];
 

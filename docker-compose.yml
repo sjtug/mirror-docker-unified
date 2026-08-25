@@ -17,6 +17,7 @@ services:
     volumes:
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"
+      - "./data/caddy/log:/var/log/caddy"
       - "mirrorz-volume:/var/www/mirrorz:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile.siyuan:ro"
       - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile.zhiyuan:ro"
@@ -182,6 +183,41 @@ services:
     mem_limit: 2G
     memswap_limit: 2G
 
+  vector:
+    image: timberio/vector:0.55.0-alpine
+    entrypoint:
+      - /etc/vector/run.sh
+    restart: unless-stopped
+    user: "0:0"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - ipv6-service-net
+    volumes:
+      - "./vector/vector.yaml:/etc/vector/vector.yaml:ro"
+      - "./vector/central-sink.yaml:/etc/vector/central-sink.yaml:ro"
+      - "./vector/run.sh:/etc/vector/run.sh:ro"
+      - "./caddy/repositories.local.csv:/etc/vector/repositories.csv:ro"
+      - "./data/vector:/var/lib/vector"
+      - "./data/caddy/log:/var/log/caddy:ro"
+      - "/etc/mirrorz/vector/tls:/etc/mirrorz/vector/tls:ro"
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
+    stop_grace_period: 30s
+    logging:
+      options:
+        max-size: "20M"
+        max-file: "3"
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    mem_limit: 2G
+    memswap_limit: 2G
+
   cadvisor:
     restart: unless-stopped
     networks:
@@ -233,7 +269,7 @@ services:
       context: ./mirror-intel
       args:
         - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.41
+        - INTEL_VERSION=v0.1.42
     networks:
       - ipv6-service-net
     expose:

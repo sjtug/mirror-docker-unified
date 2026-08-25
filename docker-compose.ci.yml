@@ -3,6 +3,12 @@ services:
     build:
       args:
         - USE_GOPROXY=false
+  vector:
+    environment:
+      VECTOR_ORG: sjtug
+      VECTOR_SERVER: ci
+    volumes:
+      - "./caddy/repositories.local.csv:/etc/vector/repositories.csv:ro"
   git-backend:
     build:
       args:
@@ -11,6 +17,7 @@ services:
     build:
       args:
         - USE_SJTUG=false
+        - CI=true
     volumes:
       - "./lug/config.local.yaml:/config.local.yaml:ro"
     command: -c /config.local.yaml
