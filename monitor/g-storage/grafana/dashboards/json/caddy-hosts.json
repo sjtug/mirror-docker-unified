@@ -2455,7 +2455,11 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
         "label": "Datasource",
         "name": "datasource",
         "options": [],
@@ -2465,7 +2469,11 @@
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "caddy_mirrors",
+          "value": "caddy_mirrors"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "Prometheus"
@@ -2484,7 +2492,11 @@
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "mirror.sjtu.edu.cn",
+          "value": "mirror.sjtu.edu.cn"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "Prometheus"
@@ -2556,8 +2568,12 @@
       },
       {
         "allValue": ".*",
-        "current": {},
-        "definition": "label_values(host)",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": ".*"
+        },
+        "definition": "label_values(caddy_http_requests_total{job=\"$job\",instance=\"$instance\"},host)",
         "description": "",
         "includeAll": true,
         "label": "Host",
@@ -2565,7 +2581,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(host)",
+          "query": "label_values(caddy_http_requests_total{job=\"$job\",instance=\"$instance\"},host)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,

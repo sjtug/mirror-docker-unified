@@ -77,6 +77,19 @@ amtool check-config runtime/alertmanager.yml
 blackbox_exporter --config.file=runtime/blackbox.yml --config.check
 python3 -m json.tool grafana/dashboards/json/mirror-monitor-overview.json >/dev/null
 python3 -m json.tool grafana/dashboards/json/mirror-repository-traffic.json >/dev/null
+python3 - <<'PY'
+import json
+
+with open("grafana/dashboards/json/caddy-hosts.json") as dashboard_file:
+    dashboard = json.load(dashboard_file)
+variables = {
+    variable["name"]: variable for variable in dashboard["templating"]["list"]
+}
+assert variables["datasource"]["current"]["value"] == "Prometheus"
+assert variables["job"]["current"]["value"] == "caddy_mirrors"
+assert variables["instance"]["current"]["value"] == "mirror.sjtu.edu.cn"
+assert variables["host"]["current"]["value"] == ".*"
+PY
 grep -Fq 'mirror_intel_cache_size_bytes{job=\"mirror_intel_mirrors\",host=~\"mirror-siyuan|mirror-zhiyuan\"}' \
   grafana/dashboards/json/mirror-monitor-overview.json
 grep -Fq 'mirror_repo_size_bytes{job=\"node_exporter_mirrors\"}' \

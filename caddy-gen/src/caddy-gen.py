@@ -110,7 +110,10 @@ def common() -> list[Node]:
                 "handle /monitor/caddy/metrics",
                 [
                     Node("rewrite * /metrics"),
-                    Node("reverse_proxy 127.0.0.1:2019"),
+                    Node(
+                        "reverse_proxy 127.0.0.1:2019",
+                        [Node("header_up Host localhost:2019")],
+                    ),
                 ],
             ),
             *reverse_proxy("/monitor/docker-gcr", "siyuan-gcr-registry:5001"),

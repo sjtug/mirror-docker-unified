@@ -269,7 +269,9 @@ https://mirror.sjtu.edu.cn {
 		}
 		handle /monitor/caddy/metrics {
 			rewrite * /metrics
-			reverse_proxy 127.0.0.1:2019
+			reverse_proxy 127.0.0.1:2019 {
+				header_up Host localhost:2019
+			}
 		}
 		handle_path /monitor/docker-gcr/* {
 			reverse_proxy siyuan-gcr-registry:5001

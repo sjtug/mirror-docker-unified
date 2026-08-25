@@ -46,6 +46,11 @@ traffic shares across Siyuan and Zhiyuan without indexing client identifiers.
 It combines the traffic series with repository sizes from each host's local
 textfile collector to show storage share and download turnover.
 
+The authenticated `/monitor/caddy/metrics` proxy explicitly sends
+`Host: localhost:2019` upstream. Caddy's admin API rejects the public request
+host with `403 host not allowed`; without this override the `caddy_mirrors`
+targets and the `Caddy Hosts` dashboard have no data.
+
 The g-storage `vector` → `loki` pipeline on port `5104` is retained temporarily
 for historical queries and rollback while central forwarding is verified. Its
 configs live in `config/vector.toml` and `config/loki.yml`. Do not re-enable the
