@@ -59,7 +59,11 @@ RUN cd $(mktemp -d) \
     && install -m 755 apt-mirror /usr/bin/apt-mirror
 
 # general config
-RUN mkdir -p /root/.ssh && ssh-keyscan cran.r-project.org >>/root/.ssh/known_hosts
+ARG CI=false
+RUN mkdir -p /root/.ssh \
+    && if [ "$CI" != true ]; then \
+        ssh-keyscan cran.r-project.org >>/root/.ssh/known_hosts; \
+    fi
 RUN git config --global credential.helper /worker-script/git-credential-helper.sh
 COPY ssh_config /root/.ssh/config
 
