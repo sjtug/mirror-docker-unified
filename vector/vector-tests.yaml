@@ -35,6 +35,30 @@ tests:
               assert!(!exists(payload.http_x_forwarded_for))
               assert_eq!(.org, "sjtug")
               assert_eq!(.server, "test-edge")
+      - extract_from: repo_access_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.repo, "archlinux")
+              assert_eq!(.method, "GET")
+              assert_eq!(.status, 206)
+              assert_eq!(.status_class, "2xx")
+              assert_eq!(.response_bytes, 1024)
+              assert_eq!(.response_time_seconds, 0.25)
+      - extract_from: repo_request_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "mirror_repo_requests_total")
+              assert_eq!(.tags.method, "GET")
+              assert_eq!(.tags.repo, "archlinux")
+              assert_eq!(.tags.status_class, "2xx")
+      - extract_from: repo_response_time_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "mirror_repo_response_time_seconds")
+              assert_eq!(.tags.repo, "archlinux")
       - extract_from: repo_download_fields
         conditions:
           - type: vrl
@@ -89,6 +113,30 @@ tests:
             source: |
               assert_eq!(.name, "mirror_repo_download_bytes_total")
               assert_eq!(.tags.repo, "/git/linux.git")
+
+  - name: classify-non-download-access
+    inputs:
+      - insert_at: normalize_logs
+        type: log
+        log_fields:
+          message: >-
+            {"timestamp":1700000003.0,"request":{"remote_ip":"192.0.2.12","proto":"HTTP/2.0","method":"POST","uri":"/archlinux/upload","headers":{}},"duration":0.02,"size":64,"status":404,"serverip":"192.0.2.20","scheme":"https","http_host":"mirror.example.edu.cn","request_id":"abcdef01-2345-6789-abcd-ef0123456789"}
+    outputs:
+      - extract_from: repo_access_fields
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.repo, "archlinux")
+              assert_eq!(.method, "OTHER")
+              assert_eq!(.status_class, "4xx")
+              assert_eq!(.response_time_seconds, 0.02)
+      - extract_from: repo_request_metrics
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.name, "mirror_repo_requests_total")
+              assert_eq!(.tags.method, "OTHER")
+              assert_eq!(.tags.status_class, "4xx")
 
   - name: bound-unknown-repository-cardinality
     inputs:

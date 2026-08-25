@@ -58,14 +58,29 @@ Both mirror hosts run the local repository-size textfile collector. The
 
 `topk(20, mirror_repo_size_bytes{job="node_exporter_mirrors"})`
 
-Edge Vector derives the repository from each Caddy URL and exports response
-bytes as `mirror_repo_download_bytes_total` through `/monitor/vector/metrics`.
-The `Repository download throughput` panel uses:
+Edge Vector derives the repository from each Caddy URL and exports bounded
+log-derived metrics through `/monitor/vector/metrics`:
+
+- `mirror_repo_requests_total{repo,method,status_class}`;
+- `mirror_repo_download_bytes_total{repo}` for successful 2xx GET responses;
+- `mirror_repo_response_time_seconds{repo}`.
+
+The overview's `Repository download throughput` panel uses:
 
 `topk(20, sum by (host, repo) (rate(mirror_repo_download_bytes_total{job="vector_mirrors",repo!="_other"}[5m])))`
 
+The dedicated provisioned `Mirror Repository Traffic` dashboard adds host and
+repository selectors, selected-range totals, request and download-byte share
+pie charts, per-repository request and throughput trends, status and method
+patterns, p95 response time, repository storage share from the textfile
+collectors, and download turnover relative to stored size. It reads only
+bounded Prometheus labels and covers both `mirror-siyuan` and
+`mirror-zhiyuan`.
+
 The first URL path segment is the repository label; `/git/<repo>/...` is
-normalized to `/git/<repo>`.
+normalized to `/git/<repo>`. Root, `/monitor/`, and `/lug/` requests are
+excluded. Unknown repository paths use `_other`, methods are reduced to `GET`,
+`HEAD`, or `OTHER`, and statuses are reduced to HTTP classes.
 
 ## Alerts
 

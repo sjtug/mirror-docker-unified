@@ -38,6 +38,14 @@ Mirror-host Caddy instances write structured JSON access logs under
 Docker Compose configuration reads those files and sends them directly to the
 central collector over mutual TLS.
 
+The edge Vector instances also derive bounded per-repository request,
+download-byte, and response-time metrics from those logs. Prometheus scrapes
+them through authenticated `/monitor/vector/metrics` endpoints, and the
+provisioned `Mirror Repository Traffic` dashboard compares access patterns and
+traffic shares across Siyuan and Zhiyuan without indexing client identifiers.
+It combines the traffic series with repository sizes from each host's local
+textfile collector to show storage share and download turnover.
+
 The g-storage `vector` → `loki` pipeline on port `5104` is retained temporarily
 for historical queries and rollback while central forwarding is verified. Its
 configs live in `config/vector.toml` and `config/loki.yml`. Do not re-enable the

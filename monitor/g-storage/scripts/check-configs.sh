@@ -76,12 +76,20 @@ promtool check rules prometheus/rules/*.yml
 amtool check-config runtime/alertmanager.yml
 blackbox_exporter --config.file=runtime/blackbox.yml --config.check
 python3 -m json.tool grafana/dashboards/json/mirror-monitor-overview.json >/dev/null
+python3 -m json.tool grafana/dashboards/json/mirror-repository-traffic.json >/dev/null
 grep -Fq 'mirror_intel_cache_size_bytes{job=\"mirror_intel_mirrors\",host=~\"mirror-siyuan|mirror-zhiyuan\"}' \
   grafana/dashboards/json/mirror-monitor-overview.json
 grep -Fq 'mirror_repo_size_bytes{job=\"node_exporter_mirrors\"}' \
   grafana/dashboards/json/mirror-monitor-overview.json
 grep -Fq 'mirror_repo_download_bytes_total{job=\"vector_mirrors\"' \
   grafana/dashboards/json/mirror-monitor-overview.json
+for metric in \
+  mirror_repo_requests_total \
+  mirror_repo_download_bytes_total \
+  mirror_repo_response_time_seconds_bucket \
+  mirror_repo_size_bytes; do
+  grep -Fq "$metric" grafana/dashboards/json/mirror-repository-traffic.json
+done
 grep -Fq 'mirror_intel_cache_size_scan_success' \
   prometheus/rules/mirror-alerts.yml
 grep -Fq 'job_name: vector_mirrors' runtime/prometheus.yml

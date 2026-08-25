@@ -44,16 +44,23 @@ Nginx `$remote_addr`; it does not trust `X-Forwarded-For`.
 Invalid Caddy JSON is rerouted to the edge parse-error file and never reaches
 the central sink.
 
-The same normalized event feeds a local Prometheus counter. Vector derives the
+The same normalized event feeds local Prometheus metrics. Vector derives the
 repository from the first URL path segment (`/git/<repo>` is kept as a compound
 repository name), excludes root and operational `/monitor/` and `/lug/`
-requests, ignores non-GET and non-2xx responses, and validates the label
-against the site-specific generated
+requests, and validates the label against the site-specific generated
 `caddy/repositories.<site>.csv` enrichment table. Unknown public path segments
 share the bounded `_other` label instead of creating attacker-controlled time
-series. Vector increments `mirror_repo_download_bytes_total{repo=...}` by the
-Caddy response body size and exposes it on port 9598. Caddy publishes that
-endpoint as authenticated `/monitor/vector/metrics`; Vector restarts reset the
-counter and Prometheus `rate`/`increase` handle the reset.
+series. Method labels are similarly bounded to `GET`, `HEAD`, or `OTHER`, and
+status labels to HTTP classes.
+
+Vector exposes the following log-derived metrics on port 9598:
+
+- `mirror_repo_requests_total{repo,method,status_class}` for access patterns;
+- `mirror_repo_download_bytes_total{repo}` for successful 2xx GET response
+  bytes;
+- `mirror_repo_response_time_seconds{repo}` as a response-time histogram.
+
+Caddy publishes the endpoint as authenticated `/monitor/vector/metrics`.
+Vector restarts reset counters and Prometheus `rate`/`increase` handle resets.
 
 Run `make vector-check` to validate the configuration and its field contract.

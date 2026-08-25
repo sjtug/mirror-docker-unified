@@ -70,18 +70,17 @@ transforms:
       .org = get_env_var!("VECTOR_ORG")
       .server = get_env_var!("VECTOR_SERVER")
 
-  repo_download_fields:
+  repo_access_fields:
     type: remap
     inputs: [normalize_logs]
     drop_on_abort: true
     source: |
       payload = parse_json!(string!(.message))
       url = to_string(payload.url) ?? ""
-      method = to_string(payload.method) ?? ""
-      status = to_int(payload.status) ?? 0
-      if method != "GET" || status < 200 || status >= 300 || url == "/" || starts_with(url, "/monitor/") || starts_with(url, "/lug/") {
+      if url == "/" || starts_with(url, "/monitor/") || starts_with(url, "/lug/") {
         abort
       }
+
       git_repo, git_error = parse_regex(url, r'^/*git/+(?P<repo>[^/?]+)')
       normal_repo, normal_error = parse_regex(url, r'^/*(?P<repo>[^/?]+)')
       .repo = if git_error == null {
@@ -95,7 +94,66 @@ transforms:
       if length(known_repositories) == 0 {
         .repo = "_other"
       }
-      .download_bytes = to_int(payload.size) ?? 0
+
+      request_method = upcase(to_string(payload.method) ?? "")
+      .method = if includes(["GET", "HEAD"], request_method) {
+        request_method
+      } else {
+        "OTHER"
+      }
+      status = to_int(payload.status) ?? 0
+      .status_class = if status < 100 || status >= 600 {
+        "other"
+      } else if status < 200 {
+        "1xx"
+      } else if status < 300 {
+        "2xx"
+      } else if status < 400 {
+        "3xx"
+      } else if status < 500 {
+        "4xx"
+      } else {
+        "5xx"
+      }
+      .status = status
+      .request_count = 1
+      .response_bytes = to_int(payload.size) ?? 0
+      .response_time_seconds = to_float(payload.resp_time) ?? 0.0
+
+  repo_request_metrics:
+    type: log_to_metric
+    inputs: [repo_access_fields]
+    metrics:
+      - type: counter
+        field: request_count
+        name: mirror_repo_requests_total
+        increment_by_value: true
+        tags:
+          method: "{{ method }}"
+          repo: "{{ repo }}"
+          status_class: "{{ status_class }}"
+
+  repo_response_time_metrics:
+    type: log_to_metric
+    inputs: [repo_access_fields]
+    metrics:
+      - type: histogram
+        field: response_time_seconds
+        name: mirror_repo_response_time_seconds
+        tags:
+          repo: "{{ repo }}"
+
+  repo_download_fields:
+    type: remap
+    inputs: [repo_access_fields]
+    drop_on_abort: true
+    source: |
+      method = string!(.method)
+      status = int!(.status)
+      if method != "GET" || status < 200 || status >= 300 {
+        abort
+      }
+      .download_bytes = int!(.response_bytes)
 
   repo_download_metrics:
     type: log_to_metric
@@ -145,5 +203,8 @@ sinks:
 
   repo_metrics:
     type: prometheus_exporter
-    inputs: [repo_download_metrics]
+    inputs:
+      - repo_download_metrics
+      - repo_request_metrics
+      - repo_response_time_metrics
     address: 0.0.0.0:9598
