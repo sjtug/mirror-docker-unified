@@ -11,7 +11,11 @@ per site:
   by the node-exporter size collector.
 
 These files are generated artifacts and are checked by `--fail-on-change` with
-the Caddyfiles.
+the Caddyfiles. The common generated monitor routes expose authenticated Caddy,
+node-exporter, cAdvisor, LUG, mirror-intel, Vector, and rsync-gateway metrics.
+The Caddy admin proxy rewrites to `/metrics` and sends
+`Host: localhost:2019`; omitting that header makes the admin API return
+`403 host not allowed`.
 
 lug configuration for a repo can always be viewed in two parts:
 

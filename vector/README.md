@@ -1,12 +1,13 @@
 # Edge Caddy log adapter
 
 This directory is the edge adapter between Caddy's native structured access
-log, local repository metrics, and the optional `mirrorz-log` central Vector
-interface. Caddy remains responsible for safely encoding untrusted request
-values. Edge Vector parses that JSON, selects the downstream fields, and
-re-encodes one compact JSON object in the Vector event's `message` field. The
-event also retains Vector's `file` field and adds `org` and `server` outside
-`message`.
+log, local repository metrics, and the `mirrorz-log` central Vector interface.
+Caddy remains responsible for safely encoding untrusted request values. Edge
+Vector parses that JSON, selects the downstream fields, and re-encodes one
+compact JSON object in the Vector event's `message` field. The event also
+retains Vector's `file` field and adds `org` and `server` outside `message`.
+Central forwarding is required on Siyuan and Zhiyuan and uses the shared
+`CN=sjtu` mTLS client identity; local and CI configurations remain metrics-only.
 
 ## Forwarded fields
 
@@ -28,6 +29,11 @@ For a Caddy `reverse_proxy` response only, the adapter also sends:
 
 The presence of `upstream_addr` lets the central normalizer derive `proxied=1`.
 Static-file events omit all upstream keys instead of sending empty placeholders.
+The central normalizer maps `size` to `body_bytes_sent`, `resp_time` to
+`request_time`, `referer` to `http_referer`, and `user_agent` to
+`http_user_agent`; it derives request method, URL, and HTTP version from
+`method`, `url`, and `proto`. It preserves outer `org` and `server` before
+parsing `message`.
 
 ## Deliberately omitted
 
@@ -65,12 +71,12 @@ Caddy publishes the endpoint as authenticated `/monitor/vector/metrics`.
 Vector restarts reset counters and Prometheus `rate`/`increase` handle resets.
 
 `run.sh` always loads `vector.yaml`, which owns parsing, metrics, and parse-error
-output. It adds `central-sink.yaml` only when `ca.crt`, `client.crt`, and
-`client.key` are all readable under `/etc/mirrorz/vector/tls`. This keeps the
-monitoring endpoint available before optional forwarding credentials are
-provisioned. The Siyuan and Zhiyuan Compose overrides set
-`VECTOR_REQUIRE_CENTRAL_FORWARDING=true`, making central forwarding mandatory
-for production while local and CI configurations remain metrics-only.
+output. It adds `central-sink.yaml` when `ca.crt`, `client.crt`, and
+`client.key` are readable under `/etc/mirrorz/vector/tls`. The Siyuan and
+Zhiyuan Compose overrides set `VECTOR_REQUIRE_CENTRAL_FORWARDING=true`, so
+production fails closed when credentials are absent. Central sink healthchecks
+are disabled because its 4 GiB disk buffer is the outage boundary: collector
+unavailability queues logs without taking down `/monitor/vector/metrics`.
 
 Run `make vector-check` to validate both configuration layers, their field
 contract, and metrics-only startup without TLS credentials.

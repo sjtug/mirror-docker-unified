@@ -1,11 +1,11 @@
 # g-storage monitoring
 
 This directory is the source of truth for the monitoring stack deployed on
-`g-storage`. Like the mirror hosts, it uses rootful containerd through
+`g-storage`. The active checkout and bind-mount root is
+`/home/sjtug/mirror-docker-g-storage`; the stack uses rootful containerd through
 `nerdctl compose`. Alertmanager joins the externally managed containerd CNI
-network `metacubexd_default`; migrate mihomo into that network before cutting
-the monitoring stack over from Docker, preserving the `metacubexd` network
-alias used by the proxy URL.
+network `metacubexd_default` and reaches mihomo through its `metacubexd` alias.
+The mirror hosts continue to use Docker Compose.
 
 Host-local values are committed SOPS-encrypted as
 `monitor/g-storage/g-storage.sops.env`, `monitor/g-storage/bot.sops.env`, and
@@ -21,27 +21,27 @@ argument.
 
 ### Unified xray tunnel
 
-The three hosts run one unified xray tunnel configuration (VLESS, shared UUID):
+The three hosts run one VLESS tunnel configuration with a shared UUID:
 
-- **g-storage** (`xray/config.sops.json`): VLESS server inbound on container
-  port 1080, published as host port `19200` — this is the tunnel endpoint the
-  mirror hosts dial — plus the internal HTTP proxy on port 1081 for
-  alertmanager/grafana egress.
-- **mirror-siyuan / mirror-zhiyuan** (`secrets/{siyuan,zhiyuan}/xray.json.sops`):
-  dokodemo-door inbounds `5003`-`5010` that tunnel to g-storage `19200`, e.g.
-  logspout syslog on `5004` lands on g-storage's logstash input.
+- **g-storage** (`xray/config.sops.json`) publishes the tunnel endpoint on host
+  port `19200` and provides the internal HTTP proxy on port 1081 for
+  Alertmanager/Grafana egress.
+- **mirror-siyuan / mirror-zhiyuan**
+  (`secrets/{siyuan,zhiyuan}/xray.json.sops`) expose dokodemo-door ports
+  `5003`-`5010` to services on g-storage.
 
-Door destinations use g-storage's public address (hairpin) instead of the
-legacy Docker bridge (`172.17.0.1`), so the tunnel survives the nerdctl-only
-cutover. Hosts shipping logs must keep the matching logstash input ports
-published on g-storage.
+Door destinations use g-storage's public address rather than a Docker bridge,
+so they remain valid for the rootful nerdctl stack. Legacy logspout traffic on
+port `5004` is still consumed by the separate Docker Logstash deployment; it is
+not part of the active Prometheus/Grafana Compose project.
 
 ### Caddy access logs
 
 Mirror-host Caddy instances write structured JSON access logs under
-`/var/log/caddy/mirrorz`. The Vector service defined by the repository-level
-Docker Compose configuration reads those files and sends them directly to the
-central collector over mutual TLS.
+`/var/log/caddy/mirrorz`. Edge Vector reads those files and sends them directly
+to the central collector using the shared `CN=sjtu` mTLS client identity. The
+Siyuan and Zhiyuan Compose overrides require central forwarding; Vector buffers
+events on disk while the collector is unavailable.
 
 The edge Vector instances also derive bounded per-repository request,
 download-byte, and response-time metrics from those logs. Prometheus scrapes
@@ -56,11 +56,20 @@ The authenticated `/monitor/caddy/metrics` proxy explicitly sends
 host with `403 host not allowed`; without this override the `caddy_mirrors`
 targets and the `Caddy Hosts` dashboard have no data.
 
-The g-storage `vector` → `loki` pipeline on port `5104` is retained temporarily
-for historical queries and rollback while central forwarding is verified. Its
-configs live in `config/vector.toml` and `config/loki.yml`. Do not re-enable the
-old Caddy tunnel output in parallel with file forwarding, or access events will
-be duplicated.
+Central forwarding is verified. The g-storage `vector` → `loki` pipeline on
+port `5104` remains only for historical queries and rollback; it is not the
+primary Caddy stream. Its configs live in `config/vector.toml` and
+`config/loki.yml`. Enabling the old Caddy tunnel output alongside edge Vector
+would duplicate access events.
+
+### Current deployment
+
+As of 2026-08-25, every configured scrape group and blackbox probe is healthy,
+and all four provisioned dashboards render data. Two host issues remain outside
+the containers: g-storage's retired SSH repository collector produces a
+malformed textfile, and Siyuan's `/srv/mirror/postgres-data` bind mount is
+absent. See [`../../MAINTENANCE.md`](../../MAINTENANCE.md) for current alerts,
+cleanup steps, and rollback state.
 
 Keep the Telegram token in an ignored `bot.env`:
 
@@ -72,12 +81,13 @@ EOF
 chmod 600 bot.env
 ```
 
-Use the repository-level Make targets to render, validate, and deploy the
-stack. Generated configurations and credential files are written atomically
-under the ignored `runtime/` directory and mounted into individual services as
-read-only files under `/run/secrets`.
+Use the repository-level Make targets from the active checkout to render,
+validate, and deploy the stack. Generated configurations and credential files
+are written atomically under the ignored `runtime/` directory and mounted into
+individual services as read-only files under `/run/secrets`.
 
 ```sh
+cd /home/sjtug/mirror-docker-g-storage
 make g-storage-check
 sudo make g-storage-render
 sudo make g-storage-config
@@ -94,20 +104,22 @@ for the custom Grafana image. Rootful BuildKit must be running for builds.
 `g-storage-reload` recreates the containers because an atomic replacement of a
 bind-mounted configuration file is not visible through the old mount.
 
-Docker and containerd have separate named-volume stores. Export and restore
-the existing Prometheus, Alertmanager, and Grafana Docker volumes before the
-first nerdctl deployment; the matching Compose project name does not migrate
-their contents automatically.
+Docker and containerd have separate named-volume stores. The active monitoring
+state now lives in rootful containerd volumes; the matching Compose project
+name does not make Docker volumes interchangeable. Never use `down -v` during
+normal deployment or rollback.
 
 All dashboards are provisioned from this tree: `Mirror Monitor Overview`,
-`Node Exporter Full` (`rYdddlPWk`), and `Caddy Hosts` are shipped as JSON under
-`grafana/dashboards/json/` and picked up by the provisioning provider.
-Run `make g-storage-enable-collectors` on g-storage to install its local target
-collector.
+`Mirror Repository Traffic`, `Node Exporter Full` (`rYdddlPWk`), and
+`Caddy Hosts` are shipped as JSON under `grafana/dashboards/json/` and picked up
+by the provisioning provider.
+Run `make g-storage-enable-collectors` on g-storage to refresh its local target
+collector and remove the retired repository-statistics unit.
 
-Per-repository sizes are collected locally on both mirror hosts and written
-atomically to their existing node-exporter textfile directories. From each
-host's checkout, install the matching hardened systemd service and daily timer:
+Per-repository sizes are already collected locally on both mirror hosts and
+written atomically to their existing node-exporter textfile directories. From
+each host's checkout, refresh the matching hardened systemd service and daily
+timer with:
 
 ```sh
 # mirror-siyuan
@@ -127,14 +139,17 @@ The Python size collector intersects disk directories with the generated
 `caddy/local-repositories.<site>.txt` manifest, so cache/database directories
 are not mislabeled as repositories. It runs `du` with systemd idle I/O
 priority, retains the last successful size file after failures, and emits
-separate attempt-health metrics. No SSH key, forced command, or g-storage polling service is required.
+separate attempt-health metrics. The active design requires no SSH polling from
+g-storage, but the retired repository and iSCSI SSH units still need removal;
+see `MAINTENANCE.md`.
 
 Mirror-intel 0.1.42 independently exposes `mirror_intel_cache_size_bytes` and
 scan-health metrics through the existing mirror-intel Prometheus endpoint.
-Edge Vector exports `mirror_repo_download_bytes_total` through the new
-authenticated `/monitor/vector/metrics` endpoint on both hosts.
+Edge Vector exports bounded `mirror_repo_requests_total`,
+`mirror_repo_download_bytes_total`, and `mirror_repo_response_time_seconds`
+metrics through authenticated `/monitor/vector/metrics` on both hosts.
 
-siyuan's iSCSI/ext4 metrics are produced locally by a siyuan systemd timer
-(`scripts/systemd/siyuan/mirror-siyuan-iscsi-textfile.{service,timer}`) that
-writes the node_exporter textfile; they are scraped through the existing
-`/monitor/node_exporter` endpoint instead of an SSH forced command.
+Siyuan's iSCSI/ext4 metrics are produced locally by
+`mirror-siyuan-iscsi-textfile.timer` and scraped through the existing
+`/monitor/node_exporter` endpoint. The data55T mount is currently healthy and
+read-write; the separate Postgres bind mount is degraded.
