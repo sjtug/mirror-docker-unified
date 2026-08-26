@@ -33,6 +33,9 @@ CHECK_ENV=(
   GITHUB_CLIENT_SECRET=check-client-secret
   MONITOR_USERNAME=check-user
   MONITOR_PASSWORD=check-only-secret
+  HOTSPOT_CLICKHOUSE_INGEST_PASSWORD=check-hotspot-ingest-password
+  HOTSPOT_CLICKHOUSE_GRAFANA_PASSWORD=check-hotspot-grafana-password
+  HOTSPOT_CLIENT_HASH_KEY=check-hotspot-client-hash-key-32-bytes-minimum
 )
 env "${CHECK_ENV[@]}" python3 ./scripts/render-monitor-configs.py
 env "${CHECK_ENV[@]}" python3 ./scripts/render-prometheus-config.py
@@ -57,6 +60,10 @@ if [ -f effective-compose.yml ]; then
     echo "GitHub client secret was embedded in the Compose model" >&2
     exit 1
   fi
+  if grep -Eq 'check-hotspot-(ingest|grafana|client)' effective-compose.yml; then
+    echo "Hotspot analytics secrets were embedded in the Compose model" >&2
+    exit 1
+  fi
 fi
 
 if grep -q 'check-only-secret' runtime/*.yml; then
@@ -64,6 +71,15 @@ if grep -q 'check-only-secret' runtime/*.yml; then
   exit 1
 fi
 grep -Fqx 'check-client-secret' runtime/github_client_secret
+grep -Fqx 'check-hotspot-ingest-password' runtime/hotspot_clickhouse_ingest_password
+grep -Fqx 'check-hotspot-client-hash-key-32-bytes-minimum' runtime/hotspot_client_hash_key
+if grep -Eq 'check-hotspot-(ingest|grafana)-password' runtime/clickhouse-users.xml; then
+  echo "Plaintext ClickHouse passwords were embedded in users.xml" >&2
+  exit 1
+fi
+grep -Fq '<password_sha256_hex>' runtime/clickhouse-users.xml
+grep -Fq 'uid: hotspot-clickhouse' runtime/hotspot-clickhouse-datasource.yml
+test -f runtime/hotspot-dashboards/mirror-hotspot-analytics.json
 grep -Fq "client_secret = \$__file{/run/secrets/github_client_secret}" grafana/grafana.ini
 
 if [ "$(grep -c '^    honor_labels: true$' runtime/prometheus.yml || true)" -ne 2 ]; then
@@ -77,6 +93,7 @@ amtool check-config runtime/alertmanager.yml
 blackbox_exporter --config.file=runtime/blackbox.yml --config.check
 python3 -m json.tool grafana/dashboards/json/mirror-monitor-overview.json >/dev/null
 python3 -m json.tool grafana/dashboards/json/mirror-repository-traffic.json >/dev/null
+python3 -m json.tool grafana/dashboards/hotspot/mirror-hotspot-analytics.json >/dev/null
 python3 - <<'PY'
 import json
 
@@ -106,6 +123,8 @@ done
 grep -Fq 'mirror_intel_cache_size_scan_success' \
   prometheus/rules/mirror-alerts.yml
 grep -Fq 'job_name: vector_mirrors' runtime/prometheus.yml
+grep -Fq 'job_name: hotspot_vector' runtime/prometheus.yml
+grep -Fq 'job_name: hotspot_clickhouse' runtime/prometheus.yml
 grep -Fq 'mirror_repo_size_collector_success' \
   prometheus/rules/mirror-alerts.yml
 grep -Fq 'mirror_siyuan_data55t_mount_ok' \
@@ -124,6 +143,13 @@ python3 -m py_compile \
   scripts/render-monitor-configs.py \
   scripts/render-prometheus-config.py \
   scripts/remote/mirror-repo-size-collector.py
+
+if grep -Fq 'profiles: [hotspot]' docker-compose.yml; then
+  echo "Hotspot analytics must be part of the normal monitoring stack" >&2
+  exit 1
+fi
+grep -Fq 'grafana-clickhouse-datasource' grafana/builder/Dockerfile
+grep -Fq 'hotspot.repo_5m_totals' config/clickhouse/schema.sql
 
 mkdir -p fixture/mount/bin fixture/mount/output
 cat >fixture/mount/bin/findmnt <<'EOF'

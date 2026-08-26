@@ -1,0 +1,537 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "description": "SJTUG request, repository, and object hotspots from privacy-reduced Caddy events stored in ClickHouse.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "title": "Requests",
+      "type": "stat",
+      "description": "Requests represented by the selected 5-minute rollups.",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT sum(requests) AS Requests\nFROM hotspot.repo_5m_totals\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 2,
+      "title": "Response bytes",
+      "type": "stat",
+      "description": "Response body bytes for the selected range.",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT sum(bytes) AS Bytes\nFROM hotspot.repo_5m_totals\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 3,
+      "title": "Approximate unique clients",
+      "type": "stat",
+      "description": "Sum of per-bucket HMAC-pseudonymized client estimates; not a cross-range exact UV.",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT sum(unique_clients) AS Clients\nFROM hotspot.repo_5m_totals\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 4,
+      "title": "2xx request share",
+      "type": "stat",
+      "description": "",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT sumIf(requests, status_class = '2xx') / greatest(sum(requests), 1) AS Share\nFROM hotspot.repo_5m\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 5,
+      "title": "Top repositories by requests",
+      "type": "barchart",
+      "description": "",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT repo AS Repository, sum(requests) AS Requests\nFROM hotspot.repo_5m_totals\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)\nGROUP BY repo\nORDER BY Requests DESC\nLIMIT 20",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "legend": {
+          "displayMode": "hidden",
+          "showLegend": false
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Top repositories by bytes",
+      "type": "barchart",
+      "description": "",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT repo AS Repository, sum(bytes) AS Bytes\nFROM hotspot.repo_5m_totals\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)\nGROUP BY repo\nORDER BY Bytes DESC\nLIMIT 20",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "legend": {
+          "displayMode": "hidden",
+          "showLegend": false
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Repository request rate",
+      "type": "timeseries",
+      "description": "",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 14,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT bucket AS time, repo, sum(requests) / 300 AS Requests\nFROM hotspot.repo_5m_totals\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)\nGROUP BY time, repo\nORDER BY time, repo",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "fillOpacity": 12,
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Repository p95 response time",
+      "type": "timeseries",
+      "description": "",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 14,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT bucket AS time, repo, max(request_time_p95) AS p95\nFROM hotspot.repo_5m_totals\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)\nGROUP BY time, repo\nORDER BY time, repo",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "fillOpacity": 12,
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Rising repositories: last 15m versus prior 7d",
+      "type": "table",
+      "description": "A score above 1 means the last 15 minutes are hotter than the average 15-minute period over the preceding seven days.",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 23,
+        "w": 24,
+        "h": 10
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "WITH\ncurrent AS (\n  SELECT repo, sum(requests) AS current_requests, sum(bytes) AS current_bytes\n  FROM hotspot.repo_5m_totals\n  WHERE bucket >= now() - INTERVAL 15 MINUTE\n    AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  GROUP BY repo\n),\nbaseline AS (\n  SELECT repo, sum(requests) / 671.0 AS baseline_requests\n  FROM hotspot.repo_5m_totals\n  WHERE bucket >= now() - INTERVAL 7 DAY\n    AND bucket < now() - INTERVAL 15 MINUTE\n    AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  GROUP BY repo\n)\nSELECT\n  current.repo AS Repository,\n  current_requests AS \"Requests (15m)\",\n  current_bytes AS \"Bytes (15m)\",\n  round(ifNull(baseline_requests, 0), 2) AS \"Baseline / 15m\",\n  round(current_requests / greatest(ifNull(baseline_requests, 0), 1), 2) AS \"Hotspot score\"\nFROM current\nLEFT JOIN baseline USING repo\nWHERE current_requests >= 100\n  AND $__conditionalAll(current.repo IN (${repo:singlequote}), $repo)\nORDER BY \"Hotspot score\" DESC, current_requests DESC\nLIMIT 50",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": []
+      }
+    },
+    {
+      "id": 10,
+      "title": "Hot objects",
+      "type": "table",
+      "description": "Paths are stored without query strings. Client estimates are pseudonymized and approximate.",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "hotspot-clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 33,
+        "w": 24,
+        "h": 11
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "hotspot-clickhouse"
+          },
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT\n  repo AS Repository,\n  path AS Path,\n  sum(requests) AS Requests,\n  sum(bytes) AS Bytes,\n  sum(unique_clients) AS \"Client estimates\",\n  sum(range_requests) AS \"Range requests\"\nFROM hotspot.object_1h_totals\nWHERE $__timeFilter(bucket)\n  AND $__conditionalAll(server IN (${server:singlequote}), $server)\n  AND $__conditionalAll(repo IN (${repo:singlequote}), $repo)\nGROUP BY repo, path\nORDER BY Bytes DESC\nLIMIT 100",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": []
+      }
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "tags": ["mirror", "hotspot", "clickhouse"],
+  "templating": {
+    "list": [
+      {
+        "name": "server",
+        "label": "Server",
+        "type": "query",
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "hotspot-clickhouse"
+        },
+        "definition": "SELECT DISTINCT server FROM hotspot.repo_5m_totals ORDER BY server",
+        "query": "SELECT DISTINCT server FROM hotspot.repo_5m_totals ORDER BY server",
+        "refresh": 1,
+        "multi": true,
+        "includeAll": true,
+        "options": [],
+        "current": {
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
+        }
+      },
+      {
+        "name": "repo",
+        "label": "Repository",
+        "type": "query",
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "hotspot-clickhouse"
+        },
+        "definition": "SELECT repo FROM hotspot.repo_5m_totals WHERE $__timeFilter(bucket) AND $__conditionalAll(server IN (${server:singlequote}), $server) GROUP BY repo ORDER BY sum(requests) DESC",
+        "query": "SELECT repo FROM hotspot.repo_5m_totals WHERE $__timeFilter(bucket) AND $__conditionalAll(server IN (${server:singlequote}), $server) GROUP BY repo ORDER BY sum(requests) DESC",
+        "refresh": 2,
+        "multi": true,
+        "includeAll": true,
+        "options": [],
+        "current": {
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
+        }
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Mirror Hotspot Analytics",
+  "uid": "mirror-hotspot-analytics",
+  "version": 1,
+  "weekStart": ""
+}

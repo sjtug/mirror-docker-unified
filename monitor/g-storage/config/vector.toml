@@ -1,11 +1,17 @@
-# Receives structured Caddy access logs shipped by the mirror hosts through
-# the unified xray tunnel (door 5104) and forwards them to Loki.
+data_dir = "/var/lib/vector"
 
+# The existing unified xray tunnel forwards edge hotspot events to this socket.
+# Legacy structured Caddy events can still arrive on the same rollback port.
 [sources.caddy_logs]
 type = "socket"
 mode = "tcp"
 address = "0.0.0.0:5104"
 decoding.codec = "bytes"
+
+[sources.internal_metrics]
+type = "internal_metrics"
+namespace = "vector"
+scrape_interval_secs = 10
 
 [transforms.parse_caddy]
 type = "remap"
@@ -14,9 +20,121 @@ source = '''
 . = parse_json!(.message)
 '''
 
+# Do not duplicate the new hotspot stream into Loki. It contains the compact
+# pre-sanitization payload while ClickHouse receives only normalize_hotspot.
+[transforms.legacy_loki_events]
+type = "remap"
+inputs = ["parse_caddy"]
+drop_on_abort = true
+source = '''
+if to_bool(.hotspot_analytics) ?? false { abort }
+'''
+
+[transforms.normalize_hotspot]
+type = "remap"
+inputs = ["parse_caddy"]
+drop_on_abort = true
+reroute_dropped = true
+source = '''
+if !(to_bool(.hotspot_analytics) ?? false) { abort }
+org = to_string(.org) ?? ""
+server = to_string(.server) ?? ""
+repo = to_string(.repo) ?? "_other"
+payload = parse_json!(string!(.message))
+
+event_timestamp = to_float(payload.timestamp) ?? 0.0
+if event_timestamp <= 0.0 { abort }
+timestamp_ms = to_int(event_timestamp * 1000.0)
+event_time = format_timestamp!(
+  from_unix_timestamp!(timestamp_ms, unit: "milliseconds"),
+  format: "%Y-%m-%d %H:%M:%S%.3f", timezone: "UTC"
+)
+
+raw_url = to_string(payload.url) ?? "/"
+path_parts = split(raw_url, "?", limit: 2)
+path = to_string(path_parts[0])
+if path == "" { path = "/" }
+
+method_raw = upcase(to_string(payload.method) ?? "")
+method = if includes(["GET", "HEAD"], method_raw) { method_raw } else { "OTHER" }
+status = to_int(payload.status) ?? 0
+status_class = if status < 100 || status >= 600 {
+  "other"
+} else if status < 200 {
+  "1xx"
+} else if status < 300 {
+  "2xx"
+} else if status < 400 {
+  "3xx"
+} else if status < 500 {
+  "4xx"
+} else {
+  "5xx"
+}
+
+client_ip = to_string(payload.clientip) ?? ""
+hash_key = get_env_var!("HOTSPOT_CLIENT_HASH_KEY")
+client_key = encode_base16(hmac(client_ip, hash_key, algorithm: "SHA-256"))
+request_id = to_string(payload.request_id) ?? ""
+event_material = org + "\n" + server + "\n" + request_id + "\n" +
+  to_string(event_timestamp) + "\n" + path + "\n" + client_key
+event_id = encode_base16(hmac(event_material, hash_key, algorithm: "SHA-256"))
+
+referer = to_string(payload.referer) ?? ""
+referer_url, referer_error = parse_url(referer)
+referer_host = if referer_error == null { to_string(referer_url.host) } else { "" }
+
+ua = parse_user_agent(to_string(payload.user_agent) ?? "", mode: "fast")
+device_category = downcase(to_string(ua.device.category))
+device_type = if includes(["pc", "desktop"], device_category) {
+  "Desktop"
+} else if includes(["smartphone", "mobile"], device_category) {
+  "Mobile"
+} else if device_category == "tablet" {
+  "Tablet"
+} else if includes(["spider", "bot", "crawler"], device_category) {
+  "Bot"
+} else {
+  "Other"
+}
+is_bot = if device_type == "Bot" { 1 } else { 0 }
+
+upstream_addr = to_string(payload.upstream_addr) ?? ""
+proxied = if upstream_addr != "" { 1 } else { 0 }
+
+. = {
+  "event_time": event_time,
+  "event_id": event_id,
+  "org": org,
+  "server": server,
+  "http_host": downcase(to_string(payload.http_host) ?? ""),
+  "repo": repo,
+  "path": path,
+  "request_method": method,
+  "status": status,
+  "status_class": status_class,
+  "body_bytes_sent": to_int(payload.size) ?? 0,
+  "request_time": to_float(payload.resp_time) ?? 0.0,
+  "upstream_response_time": to_float(payload.upstream_response_time) ?? 0.0,
+  "content_type": to_string(payload.sent_http_content_type) ?? "",
+  "proxied": proxied,
+  "range_requested": to_int(payload.range_requested) ?? 0,
+  "client_key": client_key,
+  "referer_host": referer_host,
+  "ua_browser": to_string(ua.browser.family),
+  "ua_os": to_string(ua.os.family),
+  "ua_device_type": device_type,
+  "client_country_code": "",
+  "client_region": "",
+  "client_asn": 0,
+  "is_bot": is_bot,
+  "request_id": request_id
+}
+'''
+
 [sinks.loki]
 type = "loki"
-inputs = ["parse_caddy"]
+inputs = ["legacy_loki_events"]
 endpoint = "http://loki:3100"
 encoding.codec = "json"
 healthcheck.enabled = false
@@ -24,3 +142,34 @@ healthcheck.enabled = false
 [sinks.loki.labels]
 job = "caddy-access"
 host = "{{ host }}"
+
+[sinks.clickhouse]
+type = "clickhouse"
+inputs = ["normalize_hotspot"]
+endpoint = "http://clickhouse:8123"
+database = "hotspot"
+table = "requests_raw"
+format = "json_each_row"
+compression = "gzip"
+auth.strategy = "basic"
+auth.user = "hotspot_ingest"
+auth.password = "${HOTSPOT_CLICKHOUSE_INGEST_PASSWORD}"
+batch.max_events = 20000
+batch.max_bytes = 33554432
+batch.timeout_secs = 1
+buffer.type = "disk"
+buffer.max_size = 17179869184
+buffer.when_full = "block"
+request.timeout_secs = 60
+request.concurrency = "adaptive"
+
+[sinks.parse_errors]
+# Rejected central events can contain raw IP/URL/UA data. Edge Vector retains
+# local parse-error files; centrally keep only internal error counters.
+type = "blackhole"
+inputs = ["normalize_hotspot.dropped"]
+
+[sinks.prometheus]
+type = "prometheus_exporter"
+inputs = ["internal_metrics"]
+address = "0.0.0.0:9599"

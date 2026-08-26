@@ -196,6 +196,7 @@ services:
       - ALL
     networks:
       - ipv6-service-net
+      - tunnel-net
     volumes:
       - "./vector/vector.yaml:/etc/vector/vector.yaml:ro"
       - "./vector/central-sink.yaml:/etc/vector/central-sink.yaml:ro"

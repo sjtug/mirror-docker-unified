@@ -3,6 +3,7 @@ ARG GRAFANA_VERSION="11.4.0"
 FROM grafana/grafana:${GRAFANA_VERSION}
 
 ARG GF_INSTALL_IMAGE_RENDERER_PLUGIN="false"
+ARG GRAFANA_CLICKHOUSE_DATASOURCE_VERSION="4.14.0"
 ARG GF_GID="0"
 
 ENV GF_PATHS_PLUGINS="/var/lib/grafana-plugins"
@@ -30,6 +31,13 @@ RUN mkdir -p "$GF_PATHS_PLUGINS" && \
     fi
 
 USER grafana
+
+# 4.14.x is the newest plugin line compatible with the deployed Grafana 11.4.
+# Pin it because g-storage deployments never pull plugins at container startup.
+RUN grafana cli \
+    --pluginsDir "$GF_PATHS_PLUGINS" \
+    plugins install grafana-clickhouse-datasource \
+    "$GRAFANA_CLICKHOUSE_DATASOURCE_VERSION"
 
 RUN if [ "$GF_INSTALL_IMAGE_RENDERER_PLUGIN" = "true" ]; then \
       if grep -i -q alpine /etc/issue; then \

@@ -35,6 +35,7 @@ transforms:
       payload = parse_json!(string!(.message))
       if !is_object(payload) { abort }
 
+      range_requested = if exists(payload.request.headers.Range[0]) { 1 } else { 0 }
       mirrorz = {
         "timestamp": to_float(payload.timestamp) ?? 0.0,
         "clientip": to_string(payload.request.remote_ip) ?? "",
@@ -50,7 +51,10 @@ transforms:
         "user_agent": to_string(payload.request.headers."User-Agent"[0]) ?? "",
         "request_id": to_string(payload.request_id) ?? "",
         "proto": to_string(payload.request.proto) ?? "",
-        "sent_http_content_type": to_string(payload.resp_headers."Content-Type"[0]) ?? ""
+        "sent_http_content_type": to_string(payload.resp_headers."Content-Type"[0]) ?? "",
+        # Preserve only whether this was a range request. The raw Range header
+        # is unnecessary for hotspot analytics and can contain unbounded input.
+        "range_requested": range_requested
       }
 
       # Caddy exposes selected-upstream and timing placeholders only for
@@ -69,6 +73,34 @@ transforms:
       .message = encode_json(mirrorz)
       .org = get_env_var!("VECTOR_ORG")
       .server = get_env_var!("VECTOR_SERVER")
+
+  hotspot_event:
+    type: remap
+    inputs: [normalize_logs]
+    drop_on_abort: true
+    source: |
+      payload = parse_json!(string!(.message))
+      url = to_string(payload.url) ?? ""
+      url_parts = split(url, "?", limit: 2)
+      url_path = to_string(url_parts[0])
+      if includes(["/", "/monitor", "/lug", "/.cerberus"], url_path) ||
+         starts_with(url_path, "/monitor/") || starts_with(url_path, "/lug/") ||
+         starts_with(url_path, "/.cerberus/") {
+        abort
+      }
+
+      git_repo, git_error = parse_regex(url_path, r'^/*git/+(?P<repo>[^/?]+)')
+      normal_repo, normal_error = parse_regex(url_path, r'^/*(?P<repo>[^/?]+)')
+      repo = if git_error == null {
+        "/git/" + to_string(git_repo.repo)
+      } else if normal_error == null {
+        to_string(normal_repo.repo)
+      } else {
+        "_other"
+      }
+      known_repositories = find_enrichment_table_records!("repositories", {"repo": repo})
+      .repo = if length(known_repositories) == 0 { "_other" } else { repo }
+      .hotspot_analytics = true
 
   repo_access_fields:
     type: remap
@@ -173,6 +205,24 @@ sinks:
     path: /var/lib/vector/parse-errors-%Y-%m-%d.log
     encoding:
       codec: json
+
+  hotspot_central:
+    type: socket
+    inputs: [hotspot_event]
+    mode: tcp
+    address: tunnel:5104
+    framing:
+      method: newline_delimited
+    encoding:
+      codec: json
+    healthcheck:
+      # The existing xray tunnel is the encrypted transport. Collector
+      # availability must not take down local metrics or MirrorZ forwarding.
+      enabled: false
+    buffer:
+      type: disk
+      max_size: 4294967296
+      when_full: block
 
   repo_metrics:
     type: prometheus_exporter

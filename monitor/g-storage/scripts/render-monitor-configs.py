@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
+import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,10 +39,12 @@ env = {
 }
 
 
-def required_value(name: str, placeholder: str) -> str:
+def required_value(name: str, placeholder: str, *, minimum_length: int = 1) -> str:
     value = env.get(name, "").strip()
     if not value or value == placeholder:
         raise SystemExit(f"{name} must be set to a non-placeholder value")
+    if len(value) < minimum_length:
+        raise SystemExit(f"{name} must be at least {minimum_length} characters")
     return value
 
 
@@ -154,6 +158,114 @@ write(RUNTIME_DIR / "blackbox.yml", blackbox)
 write(RUNTIME_DIR / "telegram_bot_token", telegram_token + "\n")
 write(RUNTIME_DIR / "monitor_password", monitor_password + "\n")
 write(RUNTIME_DIR / "github_client_secret", github_client_secret + "\n")
+
+hotspot_dashboard_dir = RUNTIME_DIR / "hotspot-dashboards"
+hotspot_dashboard_dir.mkdir(parents=True, exist_ok=True, mode=0o755)
+hotspot_dashboard_dir.chmod(0o755)
+for old_dashboard in hotspot_dashboard_dir.glob("*.json"):
+    old_dashboard.unlink()
+
+hotspot_datasource_path = RUNTIME_DIR / "hotspot-clickhouse-datasource.yml"
+ingest_password = required_value(
+    "HOTSPOT_CLICKHOUSE_INGEST_PASSWORD",
+    "hotspot_ingest_password",
+    minimum_length=16,
+)
+grafana_password = required_value(
+    "HOTSPOT_CLICKHOUSE_GRAFANA_PASSWORD",
+    "hotspot_grafana_password",
+    minimum_length=16,
+)
+client_hash_key = required_value(
+    "HOTSPOT_CLIENT_HASH_KEY", "hotspot_client_hash_key", minimum_length=32
+)
+
+ingest_hash = hashlib.sha256(ingest_password.encode()).hexdigest()
+grafana_hash = hashlib.sha256(grafana_password.encode()).hexdigest()
+clickhouse_users = f"""<clickhouse>
+  <profiles>
+    <hotspot_ingest>
+      <max_threads>4</max_threads>
+      <max_memory_usage>4294967296</max_memory_usage>
+    </hotspot_ingest>
+    <hotspot_readonly>
+      <readonly>1</readonly>
+      <max_threads>8</max_threads>
+      <max_execution_time>60</max_execution_time>
+      <max_memory_usage>8589934592</max_memory_usage>
+      <max_result_rows>100000</max_result_rows>
+      <result_overflow_mode>throw</result_overflow_mode>
+    </hotspot_readonly>
+  </profiles>
+  <users>
+    <default>
+      <networks replace=\"replace\"><ip>127.0.0.1</ip><ip>::1</ip></networks>
+    </default>
+    <hotspot_ingest>
+      <password_sha256_hex>{ingest_hash}</password_sha256_hex>
+      <networks><ip>0.0.0.0/0</ip><ip>::/0</ip></networks>
+      <profile>hotspot_ingest</profile>
+      <quota>default</quota>
+      <grants>
+        <query>GRANT SELECT, INSERT ON hotspot.requests_raw</query>
+      </grants>
+    </hotspot_ingest>
+    <hotspot_grafana>
+      <password_sha256_hex>{grafana_hash}</password_sha256_hex>
+      <networks><ip>0.0.0.0/0</ip><ip>::/0</ip></networks>
+      <profile>hotspot_readonly</profile>
+      <quota>default</quota>
+      <grants>
+        <query>GRANT SELECT ON hotspot.repo_5m</query>
+        <query>GRANT SELECT ON hotspot.repo_5m_totals</query>
+        <query>GRANT SELECT ON hotspot.repo_5m_state</query>
+        <query>GRANT SELECT ON hotspot.object_1h</query>
+        <query>GRANT SELECT ON hotspot.object_1h_totals</query>
+        <query>GRANT SELECT ON hotspot.object_1h_state</query>
+        <query>GRANT SELECT ON system.columns</query>
+        <query>GRANT SELECT ON system.databases</query>
+        <query>GRANT SELECT ON system.tables</query>
+      </grants>
+    </hotspot_grafana>
+  </users>
+</clickhouse>
+"""
+write(RUNTIME_DIR / "clickhouse-users.xml", clickhouse_users)
+write(
+    RUNTIME_DIR / "hotspot_clickhouse_ingest_password",
+    ingest_password + "\n",
+    mode=0o600,
+)
+write(RUNTIME_DIR / "hotspot_client_hash_key", client_hash_key + "\n", mode=0o600)
+
+hotspot_datasource = f"""apiVersion: 1
+
+datasources:
+  - name: Hotspot ClickHouse
+    uid: hotspot-clickhouse
+    type: grafana-clickhouse-datasource
+    access: proxy
+    isDefault: false
+    editable: false
+    jsonData:
+      host: clickhouse
+      port: 9000
+      protocol: native
+      defaultDatabase: hotspot
+      username: hotspot_grafana
+      tlsSkipVerify: false
+      queryTimeout: \"60\"
+    secureJsonData:
+      password: {json.dumps(grafana_password)}
+"""
+# The host runtime directory is 0700. The bind-mounted file must remain
+# readable by Grafana's non-root container user.
+write(hotspot_datasource_path, hotspot_datasource)
+shutil.copyfile(
+    ROOT / "grafana/dashboards/hotspot/mirror-hotspot-analytics.json",
+    hotspot_dashboard_dir / "mirror-hotspot-analytics.json",
+)
+(hotspot_dashboard_dir / "mirror-hotspot-analytics.json").chmod(0o644)
 
 print("rendered runtime/alertmanager.yml and runtime/blackbox.yml")
 print(f"telegram_enabled={str(telegram_enabled).lower()}")

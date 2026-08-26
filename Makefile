@@ -134,12 +134,15 @@ g-storage-config: g-storage-render
 > $(G_STORAGE_COMPOSE) config --quiet
 
 
-g-storage-check:
+g-storage-check: vector-check
 > nix develop $(NIX_FLAGS) -c $(G_STORAGE_DIR)/scripts/check-configs.sh
+> nix develop $(NIX_FLAGS) -c $(G_STORAGE_DIR)/scripts/check-hotspot-analytics.sh
 
 
 g-storage-preflight: g-storage-check g-storage-config
 > $(SUDO) $(shell command -v nerdctl 2>/dev/null || printf nerdctl) --address /run/containerd/containerd.sock --namespace default network inspect metacubexd_default >/dev/null
+> $(SUDO) install -d -m 0750 -o 101 -g 101 /var/lib/mirror-monitor/hotspot-clickhouse
+> $(SUDO) install -d -m 0750 -o 0 -g 0 /var/lib/mirror-monitor/hotspot-vector
 > @test -d /var/lib/mirror-monitor/textfile_collector || { echo "Run 'make g-storage-enable-collectors' first" >&2; exit 1; }
 > $(SUDO) systemctl is-enabled --quiet mirror-monitor-g-storage-textfile.timer
 > $(SUDO) systemctl is-active --quiet mirror-monitor-g-storage-textfile.timer
@@ -151,6 +154,7 @@ g-storage-build: g-storage-config
 
 g-storage-up: g-storage-preflight
 > $(G_STORAGE_COMPOSE) up -d --no-build --pull never
+> $(G_STORAGE_COMPOSE) exec -T clickhouse clickhouse-client --multiquery < $(G_STORAGE_DIR)/config/clickhouse/schema.sql
 
 
 g-storage-ps:
@@ -158,12 +162,13 @@ g-storage-ps:
 
 
 g-storage-logs:
-> $(G_STORAGE_COMPOSE) logs --tail=100 prometheus alertmanager blackbox-exporter node-exporter grafana loki vector
+> $(G_STORAGE_COMPOSE) logs --tail=100 prometheus alertmanager blackbox-exporter node-exporter grafana clickhouse loki vector
 
 
 g-storage-reload: g-storage-check g-storage-config
 > # Renderers replace files atomically, so recreate containers to refresh their bind mounts.
 > $(G_STORAGE_COMPOSE) up -d --force-recreate --no-build --pull never
+> $(G_STORAGE_COMPOSE) exec -T clickhouse clickhouse-client --multiquery < $(G_STORAGE_DIR)/config/clickhouse/schema.sql
 
 
 g-storage-collector-status:

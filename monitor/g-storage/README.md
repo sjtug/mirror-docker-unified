@@ -27,8 +27,9 @@ The three hosts run one VLESS tunnel configuration with a shared UUID:
   port `19200` and provides the internal HTTP proxy on port 1081 for
   Alertmanager/Grafana egress.
 - **mirror-siyuan / mirror-zhiyuan**
-  (`secrets/{siyuan,zhiyuan}/xray.json.sops`) expose dokodemo-door ports
-  `5003`-`5010` to services on g-storage.
+  (`secrets/{siyuan,zhiyuan}/xray.json.sops`) expose the existing dokodemo-door
+  ports to services on g-storage, including `5104` for central log/analytics
+  forwarding.
 
 Door destinations use g-storage's public address rather than a Docker bridge,
 so they remain valid for the rootful nerdctl stack. Legacy logspout traffic on
@@ -56,11 +57,62 @@ The authenticated `/monitor/caddy/metrics` proxy explicitly sends
 host with `403 host not allowed`; without this override the `caddy_mirrors`
 targets and the `Caddy Hosts` dashboard have no data.
 
-Central forwarding is verified. The g-storage `vector` → `loki` pipeline on
-port `5104` remains only for historical queries and rollback; it is not the
-primary Caddy stream. Its configs live in `config/vector.toml` and
-`config/loki.yml`. Enabling the old Caddy tunnel output alongside edge Vector
-would duplicate access events.
+Central forwarding is verified. Port `5104` remains the existing unified xray
+log door and now carries the hotspot event branch to the same g-storage Vector
+instance that owns the legacy Loki rollback branch. Hotspot events carry an
+explicit marker: Vector sanitizes and writes them to ClickHouse but excludes
+them from Loki, avoiding a second raw-log copy. Legacy unmarked Caddy events can
+still reach Loki for rollback. The shared configuration lives in
+`config/vector.toml` and `config/loki.yml`.
+
+### Hotspot analytics
+
+Hotspot analytics is part of the normal monitoring stack and does not replace
+the existing Prometheus repository metrics or external MirrorZ sink:
+
+```text
+edge Vector -> existing xray door tunnel:5104 -> g-storage Vector
+  -> privacy normalization -> hotspot.requests_raw
+  -> 5-minute repository and 1-hour object rollups
+  -> provisioned Hotspot ClickHouse datasource and Mirror Hotspot Analytics dashboard
+```
+
+No additional TLS certificates are required: the existing xray tunnel is the
+encrypted transport. The g-storage `5104` listener must remain reachable only
+through the established tunnel/firewall policy.
+
+Raw ClickHouse events retain no query string, raw client IP, full Referer, or
+full User-Agent. Central Vector stores a keyed HMAC client identifier, Referer
+host, parsed UA classes, and request path. Raw events expire after 14 days;
+repository rollups after 365 days and object rollups after 90 days. The current
+first slice reserves geography columns but does not load GeoLite databases.
+GeoIP enrichment requires an explicit database-update and privacy policy.
+
+The non-secret paths and transport are committed directly in Compose and
+Vector configuration:
+
+```text
+ClickHouse data: /var/lib/mirror-monitor/hotspot-clickhouse
+Vector state:    /var/lib/mirror-monitor/hotspot-vector
+Tunnel door:     tunnel:5104 -> g-storage:5104
+```
+
+Only these values belong in the existing `g-storage.sops.env`:
+
+```dotenv
+HOTSPOT_CLICKHOUSE_INGEST_PASSWORD=...
+HOTSPOT_CLICKHOUSE_GRAFANA_PASSWORD=...
+HOTSPOT_CLIENT_HASH_KEY=... # at least 32 random characters
+```
+
+`HOTSPOT_CLIENT_HASH_KEY` must remain stable while analytics data is retained;
+rotating it starts a new pseudonymous-client epoch. Normal `g-storage-check`,
+`g-storage-build`, `g-storage-up`, `g-storage-reload`, and `g-storage-logs`
+targets validate and operate the complete stack. Preload
+`clickhouse/clickhouse-server:26.3` and `timberio/vector:0.55.0-alpine` into
+rootful containerd before `g-storage-up`; deployments never pull implicitly.
+`g-storage-up` and `g-storage-reload` reapply the idempotent ClickHouse schema.
+Never use `nerdctl compose down -v`.
 
 ### Current deployment
 
@@ -110,9 +162,9 @@ name does not make Docker volumes interchangeable. Never use `down -v` during
 normal deployment or rollback.
 
 All dashboards are provisioned from this tree: `Mirror Monitor Overview`,
-`Mirror Repository Traffic`, `Node Exporter Full` (`rYdddlPWk`), and
-`Caddy Hosts` are shipped as JSON under `grafana/dashboards/json/` and picked up
-by the provisioning provider.
+`Mirror Repository Traffic`, `Mirror Hotspot Analytics`, `Node Exporter Full`
+(`rYdddlPWk`), and `Caddy Hosts`. The hotspot renderer copies its dashboard into
+the runtime provider directory alongside the generated ClickHouse datasource.
 Run `make g-storage-enable-collectors` on g-storage to refresh its local target
 collector and remove the retired repository-statistics unit.
 

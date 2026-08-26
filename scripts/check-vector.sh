@@ -48,5 +48,5 @@ if [ "$startup_status" -ne 124 ]; then
   echo "Vector did not remain active without central-forwarding TLS files" >&2
   exit 1
 fi
-grep -Fq 'central forwarding disabled' "$startup_log"
+grep -Fq 'MirrorZ forwarding disabled' "$startup_log"
 grep -Fq 'Vector has started' "$startup_log"

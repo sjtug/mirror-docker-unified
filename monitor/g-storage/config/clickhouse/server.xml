@@ -1,0 +1,24 @@
+<clickhouse>
+  <logger>
+    <level>information</level>
+    <console>1</console>
+  </logger>
+  <max_server_memory_usage_to_ram_ratio>0.75</max_server_memory_usage_to_ram_ratio>
+  <max_concurrent_queries>32</max_concurrent_queries>
+  <max_concurrent_select_queries>24</max_concurrent_select_queries>
+  <max_concurrent_insert_queries>8</max_concurrent_insert_queries>
+  <background_pool_size>16</background_pool_size>
+  <mark_cache_size>1073741824</mark_cache_size>
+  <uncompressed_cache_size>1073741824</uncompressed_cache_size>
+  <compression>
+    <case><method>zstd</method><level>3</level></case>
+  </compression>
+  <prometheus>
+    <endpoint>/metrics</endpoint>
+    <port>9363</port>
+    <metrics>true</metrics>
+    <events>true</events>
+    <asynchronous_metrics>true</asynchronous_metrics>
+    <errors>true</errors>
+  </prometheus>
+</clickhouse>

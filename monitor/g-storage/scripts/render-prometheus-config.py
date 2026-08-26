@@ -154,6 +154,23 @@ def mirror_scrape_job(
 
 jobs = [header]
 jobs.append(
+    """
+  - job_name: hotspot_vector
+    static_configs:
+      - targets: ["vector:9599"]
+        labels:
+          host: g-storage
+          role: analytics
+
+  - job_name: hotspot_clickhouse
+    static_configs:
+      - targets: ["clickhouse:9363"]
+        labels:
+          host: g-storage
+          role: analytics
+"""
+)
+jobs.append(
     mirror_scrape_job("node_exporter_mirrors", "/monitor/node_exporter/metrics")
 )
 jobs.append(mirror_scrape_job("cadvisor_mirrors", "/monitor/cadvisor/metrics"))
@@ -244,5 +261,5 @@ write(RUNTIME_DIR / "monitor_password", password + "\n")
 print("rendered runtime/prometheus.yml")
 print(
     "jobs: node_exporter_g_storage, mirror exporters, cAdvisor, Caddy, LUG, "
-    "mirror-intel, Vector, rsync-gateway, blackbox"
+    "mirror-intel, Vector, rsync-gateway, blackbox, hotspot analytics"
 )

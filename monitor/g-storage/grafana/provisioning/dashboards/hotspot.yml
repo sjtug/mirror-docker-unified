@@ -1,0 +1,12 @@
+apiVersion: 1
+
+providers:
+  - name: Mirror Hotspot Analytics
+    orgId: 1
+    folder: Mirror Monitoring
+    type: file
+    disableDeletion: false
+    allowUiUpdates: true
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/hotspot-dashboards

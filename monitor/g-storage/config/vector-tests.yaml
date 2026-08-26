@@ -1,0 +1,86 @@
+tests:
+  - name: preserve-unmarked-legacy-loki-event
+    inputs:
+      - insert_at: parse_caddy
+        type: log
+        log_fields:
+          message: >-
+            {"host":"mirror-siyuan","status":200,"request":{"uri":"/legacy"}}
+    outputs:
+      - extract_from: legacy_loki_events
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.host, "mirror-siyuan")
+              assert_eq!(.request.uri, "/legacy")
+
+  - name: route-xray-json-to-hotspot
+    inputs:
+      - insert_at: parse_caddy
+        type: log
+        log_fields:
+          message: >-
+            {"hotspot_analytics":true,"org":"sjtug","server":"siyuan","repo":"archlinux","message":"{\"timestamp\":1700000000.125,\"clientip\":\"192.0.2.10\",\"method\":\"GET\",\"url\":\"/archlinux/file.pkg?token=drop\",\"status\":200,\"size\":1,\"resp_time\":0.1,\"http_host\":\"mirror.sjtu.edu.cn\",\"request_id\":\"fixture\"}"}
+    outputs:
+      - extract_from: normalize_hotspot
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.repo, "archlinux")
+              assert_eq!(.path, "/archlinux/file.pkg")
+              assert!(!exists(.hotspot_analytics))
+
+  - name: sanitize-and-pseudonymize-edge-event
+    inputs:
+      - insert_at: normalize_hotspot
+        type: log
+        log_fields:
+          hotspot_analytics: true
+          org: sjtug
+          server: siyuan
+          repo: archlinux
+          message: >-
+            {"timestamp":1700000000.125,"clientip":"192.0.2.10","method":"GET","url":"/archlinux/file.pkg?token=must-not-survive","status":206,"size":1024,"resp_time":0.25,"http_host":"Mirror.SJTU.edu.cn","referer":"https://example.edu.cn/page?private=yes","user_agent":"curl/8.0","request_id":"01234567-89ab-cdef-0123-456789abcdef","sent_http_content_type":"application/octet-stream","range_requested":1,"upstream_addr":"backend:8080","upstream_response_time":0.24}
+    outputs:
+      - extract_from: normalize_hotspot
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.event_time, "2023-11-14 22:13:20.125")
+              assert_eq!(.org, "sjtug")
+              assert_eq!(.server, "siyuan")
+              assert_eq!(.repo, "archlinux")
+              assert_eq!(.path, "/archlinux/file.pkg")
+              assert_eq!(.http_host, "mirror.sjtu.edu.cn")
+              assert_eq!(.referer_host, "example.edu.cn")
+              assert_eq!(.request_method, "GET")
+              assert_eq!(.status_class, "2xx")
+              assert_eq!(.range_requested, 1)
+              assert_eq!(.proxied, 1)
+              assert_eq!(length(string!(.client_key)), 64)
+              assert_eq!(length(string!(.event_id)), 64)
+              assert!(!exists(.clientip))
+              assert!(!exists(.url))
+              assert!(!exists(.user_agent))
+              assert!(!contains(string!(.path), "token"))
+
+  - name: normalize-bounded-method-and-status
+    inputs:
+      - insert_at: normalize_hotspot
+        type: log
+        log_fields:
+          hotspot_analytics: true
+          org: sjtug
+          server: zhiyuan
+          repo: _other
+          message: >-
+            {"timestamp":1700000001.0,"clientip":"2001:db8::10","method":"POST","url":"/unknown","status":700,"size":1,"resp_time":0.01,"http_host":"mirrors.sjtug.sjtu.edu.cn","referer":"not a url","user_agent":"","request_id":""}
+    outputs:
+      - extract_from: normalize_hotspot
+        conditions:
+          - type: vrl
+            source: |
+              assert_eq!(.request_method, "OTHER")
+              assert_eq!(.status_class, "other")
+              assert_eq!(.referer_host, "")
+              assert_eq!(.repo, "_other")

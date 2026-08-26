@@ -17,7 +17,9 @@ Every valid access event sends the compact fields consumed by
 - numeric `timestamp`, `status`, `size`, and `resp_time`;
 - `clientip`, `serverip`, `method`, `scheme`, `url`, and `proto`;
 - `http_host`, `referer`, `user_agent`, and `request_id`;
-- `sent_http_content_type`, taken from Caddy's final response headers.
+- `sent_http_content_type`, taken from Caddy's final response headers;
+- `range_requested`, a bounded 0/1 value derived from the presence of the
+  request `Range` header. The raw header is not forwarded.
 
 For a Caddy `reverse_proxy` response only, the adapter also sends:
 
@@ -78,5 +80,13 @@ production fails closed when credentials are absent. Central sink healthchecks
 are disabled because its 4 GiB disk buffer is the outage boundary: collector
 unavailability queues logs without taking down `/monitor/vector/metrics`.
 
-Run `make vector-check` to validate both configuration layers, their field
-contract, and metrics-only startup without TLS credentials.
+The same `vector.yaml` also sends a hotspot branch through the existing
+`tunnel:5104` xray door. It classifies repositories against the generated
+catalog, drops operational paths, marks the event for the central router, and
+uses an independent 4 GiB disk buffer. No additional TLS configuration is
+needed because xray is the encrypted transport. The central Vector excludes
+these marked events from the legacy Loki branch and writes only the sanitized
+form to ClickHouse.
+
+Run `make vector-check` to validate the shared configuration, field contract,
+and startup without the optional external MirrorZ TLS credentials.

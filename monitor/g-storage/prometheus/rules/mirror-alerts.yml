@@ -2,7 +2,7 @@ groups:
   - name: mirror-targets
     rules:
       - alert: MirrorMonitoringTargetDown
-        expr: up{job=~"prometheus|alertmanager|blackbox_exporter|node_exporter_g_storage|node_exporter_mirrors|cadvisor_mirrors|caddy_mirrors|lug_mirrors|mirror_intel_mirrors|vector_mirrors|rsync_gateway_mirrors"} == 0
+        expr: up{job=~"prometheus|alertmanager|blackbox_exporter|node_exporter_g_storage|node_exporter_mirrors|cadvisor_mirrors|caddy_mirrors|lug_mirrors|mirror_intel_mirrors|vector_mirrors|rsync_gateway_mirrors|hotspot_vector|hotspot_clickhouse"} == 0
         for: 5m
         labels:
           severity: warning
@@ -244,3 +244,25 @@ groups:
         annotations:
           summary: "repository sizes are unavailable on {{ $labels.host }}"
           description: "No per-repository size series are available from the local textfile collector."
+
+  - name: mirror-hotspot-analytics
+    rules:
+      - alert: MirrorHotspotVectorErrors
+        expr: rate(vector_component_errors_total{job="hotspot_vector"}[5m]) > 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hotspot analytics ingestion is reporting Vector errors"
+          description: "The central hotspot Vector has reported component errors for more than 10 minutes. Inspect its container logs and the edge parse-error files before changing the schema."
+
+      - alert: MirrorHotspotVectorBufferHigh
+        expr: |
+          vector_buffer_size_bytes{job="hotspot_vector"}
+          / clamp_min(vector_buffer_max_size_bytes{job="hotspot_vector"}, 1) > 0.8
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hotspot analytics Vector buffer is above 80%"
+          description: "The ClickHouse sink buffer has remained above 80% for 15 minutes. Check ClickHouse health, insert errors, and disk capacity."

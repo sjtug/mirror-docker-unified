@@ -141,11 +141,14 @@ services:
       args:
         GF_INSTALL_IMAGE_RENDERER_PLUGIN: "true"
         GRAFANA_VERSION: ${GRAFANA_VERSION:-11.4.0}
+        GRAFANA_CLICKHOUSE_DATASOURCE_VERSION: ${GRAFANA_CLICKHOUSE_DATASOURCE_VERSION:-4.14.0}
     volumes:
       - grafana:/var/lib/grafana
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
       - ./grafana/dashboards/json:/var/lib/grafana/dashboards:ro
+      - ./runtime/hotspot-dashboards:/var/lib/grafana/hotspot-dashboards:ro
+      - ./runtime/hotspot-clickhouse-datasource.yml:/etc/grafana/provisioning/datasources/hotspot-clickhouse.yml:ro
       - ./runtime/github_client_secret:/run/secrets/github_client_secret:ro
     ports:
       - 127.0.0.1:3000:3000
@@ -158,35 +161,87 @@ services:
       https_proxy: http://xray:1081
       HTTP_PROXY: http://xray:1081
       HTTPS_PROXY: http://xray:1081
-      no_proxy: localhost,127.0.0.1,::1,alertmanager,prometheus,blackbox-exporter,node-exporter,grafana
-      NO_PROXY: localhost,127.0.0.1,::1,alertmanager,prometheus,blackbox-exporter,node-exporter,grafana
+      no_proxy: localhost,127.0.0.1,::1,alertmanager,prometheus,blackbox-exporter,node-exporter,grafana,clickhouse,vector
+      NO_PROXY: localhost,127.0.0.1,::1,alertmanager,prometheus,blackbox-exporter,node-exporter,grafana,clickhouse,vector
     depends_on:
-      - prometheus
-      - xray
+      clickhouse:
+        condition: service_healthy
+      prometheus:
+        condition: service_started
+      xray:
+        condition: service_started
     mem_limit: 2G
     cpus: 1
 
-  vector:
-    image: timberio/vector:0.44.0-alpine
+  clickhouse:
+    image: clickhouse/clickhouse-server:26.3
     restart: always
+    expose:
+      - 8123
+      - 9000
+      - 9363
+    volumes:
+      - /var/lib/mirror-monitor/hotspot-clickhouse:/var/lib/clickhouse
+      - ./config/clickhouse/server.xml:/etc/clickhouse-server/config.d/hotspot.xml:ro
+      - ./runtime/clickhouse-users.xml:/etc/clickhouse-server/users.d/hotspot-users.xml:ro
+      - ./config/clickhouse/schema.sql:/docker-entrypoint-initdb.d/00-hotspot-schema.sql:ro
+    networks:
+      - pg
+    healthcheck:
+      test: ["CMD-SHELL", "clickhouse-client --query='SELECT 1' >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    mem_limit: 32G
+    cpus: 8
+    logging:
+      options:
+        max-size: "20M"
+        max-file: "5"
+
+  vector:
+    image: timberio/vector:0.55.0-alpine
+    entrypoint: /etc/vector/run.sh
+    restart: always
+    user: "0:0"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     volumes:
       - ./config/vector.toml:/etc/vector/vector.toml:ro
+      - ./scripts/run-vector.sh:/etc/vector/run.sh:ro
+      - ./runtime/hotspot_clickhouse_ingest_password:/run/secrets/hotspot_clickhouse_ingest_password:ro
+      - ./runtime/hotspot_client_hash_key:/run/secrets/hotspot_client_hash_key:ro
+      - /var/lib/mirror-monitor/hotspot-vector:/var/lib/vector
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
     ports:
       - 5104:5104
+    expose:
+      - 9599
     networks:
       - pg
     depends_on:
-      - loki
+      clickhouse:
+        condition: service_healthy
+      loki:
+        condition: service_started
     ulimits:
       nofile:
-        soft: 65536
-        hard: 131072
-    mem_limit: 512M
-    cpus: 1
+        soft: 262144
+        hard: 262144
+    mem_limit: 2G
+    cpus: 2
     logging:
       options:
-        max-size: "4M"
-        max-file: "10"
+        max-size: "20M"
+        max-file: "5"
 
   loki:
     image: grafana/loki:3.4.2
