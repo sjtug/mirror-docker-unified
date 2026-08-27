@@ -78,6 +78,11 @@ if grep -Eq 'check-hotspot-(ingest|grafana)-password' runtime/clickhouse-users.x
   exit 1
 fi
 grep -Fq '<password_sha256_hex>' runtime/clickhouse-users.xml
+grep -Fq '<readonly>2</readonly>' runtime/clickhouse-users.xml
+if grep -Fq '<readonly>1</readonly>' runtime/clickhouse-users.xml; then
+  echo "Grafana ClickHouse profile blocks plugin query settings" >&2
+  exit 1
+fi
 grep -Fq 'uid: hotspot-clickhouse' runtime/hotspot-clickhouse-datasource.yml
 if [ ! -f grafana/provisioning/datasources/hotspot-clickhouse.yml ]; then
   echo "Grafana hotspot datasource bind-mount target placeholder is missing" >&2

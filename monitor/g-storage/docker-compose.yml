@@ -25,7 +25,7 @@ services:
     # Preserve the legacy VMess listener when reusing the existing host-local config.
     # The safe example intentionally defines only the internal HTTP proxy on 1081.
     ports:
-      - 19200:1080
+      - 10.32.36.148:19200:1080
     ulimits:
       nofile:
         soft: 80000

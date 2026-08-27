@@ -258,6 +258,9 @@ mirror-up site: caddy-gen gateway-gen (_mirror "up" site)
 # Recreate only xray and verify that door 5104 is listening.
 mirror-tunnel-reload site: (_mirror "tunnel-reload" site)
 
+# Show every container in a mirror Compose project without decrypting secrets.
+mirror-ps site: (_mirror "ps" site)
+
 # Show xray, Vector, and disk-buffer status without decrypting secrets.
 mirror-tunnel-status site: (_mirror "tunnel-status" site)
 
@@ -284,6 +287,26 @@ _mirror action site:
       exit 1
     fi
 
+    project="mirror-docker-$site"
+    if [[ "$action" == ps ]]; then
+      docker ps --all \
+        --filter "label=com.docker.compose.project=$project"
+      exit 0
+    fi
+    if [[ "$action" == tunnel-status ]]; then
+      docker ps --all \
+        --filter "name=^/${site}-(tunnel|vector)$"
+      connections=$(docker exec "$site-tunnel" netstat -nt)
+      printf '%s\n' "$connections" | grep -E '(:5104|:19200)' || true
+      docker exec "$site-vector" sh -c \
+        "du -sh /var/lib/vector/buffer/v2/* 2>/dev/null || true"
+      if ! grep -Eq '10\.32\.36\.148:19200[[:space:]]+ESTABLISHED' <<<"$connections"; then
+        echo "$site has no established VLESS connection to g-storage" >&2
+        exit 1
+      fi
+      exit 0
+    fi
+
     xray_env="$deploy_dir/secrets/$site/xray.env.sops"
     identity=${MIRROR_SOPS_SSH_KEY_FILE:-/etc/ssh/ssh_host_ed25519_key}
     for path in \
@@ -301,21 +324,12 @@ _mirror action site:
 
     compose=(
       docker compose
-      --project-name "mirror-docker-$site"
+      --project-name "$project"
       --project-directory "$deploy_dir"
       -f "$deploy_dir/docker-compose.yml"
       -f "$deploy_dir/docker-compose.mirror.yml"
       -f "$deploy_dir/docker-compose.$site.yml"
     )
-
-    if [[ "$action" == tunnel-status ]]; then
-      "${compose[@]}" ps tunnel vector
-      "${compose[@]}" exec -T tunnel sh -c \
-        "grep -H ':13F0 ' /proc/net/tcp /proc/net/tcp6"
-      "${compose[@]}" exec -T vector sh -c \
-        "du -sh /var/lib/vector/buffer/v2/* 2>/dev/null || true"
-      exit 0
-    fi
 
     command -v sops >/dev/null || {
       echo "sops is required" >&2
@@ -355,14 +369,17 @@ _mirror action site:
     if [[ "$action" != tunnel-reload ]]; then
       exit 0
     fi
-    for _ in {1..15}; do
-      if "${compose[@]}" exec -T tunnel sh -c \
-        "grep -q ':13F0 ' /proc/net/tcp /proc/net/tcp6"; then
-        echo "$site xray door 5104 is listening"
+    for _ in {1..30}; do
+      if docker exec "$site-tunnel" sh -c \
+        "grep -q ':13F0 ' /proc/net/tcp /proc/net/tcp6 && \
+         netstat -nt | grep -Eq '10\\.32\\.36\\.148:19200[[:space:]]+ESTABLISHED'"; then
+        echo "$site xray door 5104 is listening and VLESS is connected"
         exit 0
       fi
       sleep 1
     done
-    "${compose[@]}" logs --tail=50 tunnel
-    echo "$site xray door 5104 did not become ready" >&2
+    docker logs --tail=50 "$site-tunnel"
+    docker exec "$site-tunnel" sh -c \
+      "netstat -nt | grep -E '(:5104|:19200)' || true"
+    echo "$site xray door 5104 or its VLESS connection did not become ready" >&2
     exit 1

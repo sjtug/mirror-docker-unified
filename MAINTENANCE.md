@@ -130,15 +130,19 @@ The running nerdctl containers bind configuration and rendered secrets from
   healthy. Node-exporter textfile scrape errors are zero on all hosts.
 - Storage: Siyuan's data55T iSCSI mount is present and read-write; target and
   LUN on g-storage are ready.
-- Alerts: `MirrorSiyuanPostgresBindMountDegraded` fires on the retired
-  `/srv/mirror/postgres-data` bind path. Postgres now mounts
-  `/mnt/data55T/mirror-postgres-data` directly; update the alert contract.
 - Hotspot analytics: g-storage runs Vector, ClickHouse, and Grafana, but
-  ClickHouse has zero request rows because edge xray configs lack door `5104`.
-  Siyuan buffers ~1.9 GiB; Zhiyuan buffers ~2.1 GiB.
-- Deployment: commit `37aa0df` is ready for rollout across all checkouts.
-  Activate xray with `sudo just mirror-tunnel-reload SITE` from the `/opt`
-  checkouts, then monitor buffer drain and dashboard population.
+  ClickHouse has zero request rows. Both edge tunnels listen on door `5104`,
+  while their VLESS connections to g-storage port `19200` remain in `SYN_SENT`.
+  The storage network currently permits TCP `2222` and `3260` but drops
+  `19200`; Siyuan and Zhiyuan hotspot buffers are each about 2.5 GiB and
+  growing.
+- Dashboard: the ClickHouse datasource health check passes, but panel queries
+  fail because readonly mode 1 rejects the plugin's `max_execution_time`
+  setting. The pending configuration changes use readonly mode 2 while keeping
+  the Grafana account restricted to `SELECT` grants.
+- Deployment: all three active checkouts run commit `53b9bea`. Deploy the
+  pending private-endpoint, dashboard-profile, and monitoring fixes after the
+  storage-network ACL permits TCP `19200` from both mirror hosts.
 - Paths: mirror Caddy and Vector containers run from `/opt/mirror-docker-*`.
   Unused `~/.cache/mirror-monitor-vector-hotfix` directories can be removed.
 - Root filesystems: Siyuan is at 58% usage; Zhiyuan is at 35%.
@@ -176,8 +180,8 @@ Grafana uses GitHub OAuth restricted to the `sjtug` organization and mirrors
 maintainer team. Provisioned datasources and dashboards live under
 `monitor/g-storage/grafana/`. The active set is `Mirror Monitor Overview`,
 `Mirror Repository Traffic`, `Mirror Hotspot Analytics`, `Caddy Hosts`, and
-`Node Exporter Full`. The hotspot dashboard queries successfully but remains
-empty until edge xray door `5104` is activated.
+`Node Exporter Full`. The hotspot dashboard remains empty until the private
+xray path is reachable and the ClickHouse readonly profile fix is deployed.
 
 ### Render, validate, and deploy
 
@@ -218,10 +222,14 @@ the canonical checkout, for example:
 cd /opt/mirror-docker-siyuan
 sudo just mirror-config siyuan
 sudo just mirror-tunnel-reload siyuan
+sudo just mirror-ps siyuan
 sudo just mirror-tunnel-status siyuan
 ```
 
-Use `zhiyuan` from `/opt/mirror-docker-zhiyuan` for the other edge.
+Use `zhiyuan` from `/opt/mirror-docker-zhiyuan` for the other edge. Use the
+status recipes rather than a raw `docker compose ps`: the mirror model has
+three Compose layers, and its xray environment exists only during SOPS
+activation.
 
 ### Alerts and probes
 
@@ -259,8 +267,7 @@ and fires when the source is absent or the mount is read-only. The collector
 still publishes filesystem, stable by-path, block, iSCSI session, and
 connection metrics for incident diagnosis, but those diagnostics do not
 independently page. Postgres mounts
-`/mnt/data55T/mirror-postgres-data` directly; retire the obsolete
-`MirrorSiyuanPostgresBindMountDegraded` check for `/srv/mirror/postgres-data`.
+`/mnt/data55T/mirror-postgres-data` directly.
 
 ### Textfile collectors
 
@@ -380,12 +387,13 @@ nerdctl stack itself must be abandoned.
 
 ## TODO List (with severity)
 
-- High: rollout `37aa0df` to g-storage, Siyuan, and Zhiyuan. Reconcile the
-  dirty g-storage checkout, then run `sudo just mirror-tunnel-reload SITE` from each
-  canonical `/opt` checkout. Verify xray port `5104`, confirm buffer drain into
-  ClickHouse, and check Grafana dashboard rendering.
-- High: retire `MirrorSiyuanPostgresBindMountDegraded` rule/collector; Postgres
-  now uses `/mnt/data55T/mirror-postgres-data` directly.
+- High: allow TCP `19200` from Siyuan and Zhiyuan to g-storage's private
+  address `10.32.36.148`, then deploy the pending xray endpoint change. Verify
+  an `ESTABLISHED` VLESS connection with `mirror-tunnel-status`, confirm both
+  edge hotspot buffers drain, and confirm ClickHouse receives rows.
+- High: deploy the ClickHouse readonly-mode fix and verify every hotspot
+  dashboard query through Grafana. The datasource health check alone is not a
+  sufficient test.
 - High: remove retired `mirror-monitor-siyuan-iscsi-textfile` unit, script, SSH
   key, and output on g-storage.
 - Medium: delete unreferenced `~/.cache/mirror-monitor-vector-hotfix` on mirror

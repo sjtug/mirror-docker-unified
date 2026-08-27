@@ -23,9 +23,11 @@ the Just invocation.
 
 The three hosts run one VLESS tunnel configuration with a shared UUID:
 
-- **g-storage** (`xray/config.sops.json`) publishes the tunnel endpoint on host
-  port `19200` and provides the internal HTTP proxy on port 1081 for
-  Alertmanager/Grafana egress.
+- **g-storage** (`xray/config.sops.json`) publishes the tunnel endpoint on its
+  private address `10.32.36.148:19200` and provides the internal HTTP proxy on
+  port 1081 for Alertmanager/Grafana egress. The storage-network ACL must allow
+  TCP `19200` from both mirror hosts; TCP `2222` and `3260` alone are not
+  sufficient.
 - **mirror-siyuan / mirror-zhiyuan** use the reviewable non-secret template
   `xray/config.edge.json` for their existing dokodemo-door ports, including
   `5104` for central log/analytics forwarding. The shared VLESS user ID is the
@@ -43,24 +45,30 @@ and waits for door `5104` to listen:
 # mirror-siyuan
 cd /opt/mirror-docker-siyuan
 sudo just mirror-tunnel-reload siyuan
+sudo just mirror-ps siyuan
 sudo just mirror-tunnel-status siyuan
 
 # mirror-zhiyuan
 cd /opt/mirror-docker-zhiyuan
 sudo just mirror-tunnel-reload zhiyuan
+sudo just mirror-ps zhiyuan
 sudo just mirror-tunnel-status zhiyuan
 ```
 
-The `mirror-up` and `mirror-build` recipes use the same activation path.
+Use these status recipes instead of raw `docker compose ps`. The deployed
+model combines `docker-compose.yml`, `docker-compose.mirror.yml`, and the site
+overlay, while the xray environment exists only during SOPS activation. The
+`mirror-up` and `mirror-build` recipes use the same activation path.
 
 Override `MIRROR_SOPS_SSH_KEY_FILE` only when the deployment host key is stored
 somewhere other than `/etc/ssh/ssh_host_ed25519_key`. There is no generated
 host-side `secrets/xray.json`; use the activation targets instead.
 
-Door destinations use g-storage's public address rather than a Docker bridge,
-so they remain valid for the rootful nerdctl stack. Legacy logspout traffic on
-port `5004` is still consumed by the separate Docker Logstash deployment; it is
-not part of the active Prometheus/Grafana Compose project.
+Door destinations use g-storage's stable private address rather than a Docker
+bridge or public NAT endpoint, so they remain valid for the rootful nerdctl
+stack. Legacy logspout traffic on port `5004` is still consumed by the separate
+Docker Logstash deployment; it is not part of the active Prometheus/Grafana
+Compose project.
 
 ### Caddy access logs
 
@@ -142,10 +150,11 @@ Never use `nerdctl compose down -v`.
 
 ### Current deployment
 
-Every scrape target and blackbox probe is healthy, and all provisioned
-dashboards render data. Two non-container host cleanups remain: g-storage's
-retired SSH iSCSI unit and the stale Postgres bind-mount monitoring rule. See
-[`../../MAINTENANCE.md`](../../MAINTENANCE.md) for alert status and rollout
+Every scrape target and blackbox probe is healthy. Hotspot ingestion remains
+blocked until the storage-network ACL admits the private xray endpoint; the
+ClickHouse datasource also needs the pending readonly-profile fix. The retired
+g-storage SSH iSCSI unit remains for cleanup. See
+[`../../MAINTENANCE.md`](../../MAINTENANCE.md) for current status and rollout
 steps.
 
 Keep the Telegram token in an ignored `bot.env`:
@@ -229,4 +238,4 @@ metrics through authenticated `/monitor/vector/metrics` on both hosts.
 Siyuan's iSCSI/ext4 metrics are produced locally by
 `mirror-siyuan-iscsi-textfile.timer` and scraped through the existing
 `/monitor/node_exporter` endpoint. The data55T mount is currently healthy and
-read-write; the separate Postgres bind mount is degraded.
+read-write. Postgres mounts `/mnt/data55T/mirror-postgres-data` directly.

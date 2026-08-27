@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 EXPECTED_DOOR_PORTS = {5003, 5004, 5005, 5007, 5009, 5104}
+EXPECTED_G_STORAGE_ADDRESS = "10.32.36.148"
 
 
 def fail(message: str) -> None:
@@ -44,6 +45,12 @@ def validate(path: Path, template: bool) -> None:
         fail(
             f"dokodemo-door ports must be {sorted(EXPECTED_DOOR_PORTS)}, got {got_ports}"
         )
+    destinations = {item.get("settings", {}).get("address") for item in doors}
+    if destinations != {EXPECTED_G_STORAGE_ADDRESS}:
+        fail(
+            "all dokodemo-door destinations must use the private g-storage "
+            f"address {EXPECTED_G_STORAGE_ADDRESS}"
+        )
 
     door_5104 = one(
         [item for item in doors if item.get("tag") == "door-5104"],
@@ -55,8 +62,11 @@ def validate(path: Path, template: bool) -> None:
     if settings.get("port") != 5104 or "tcp" not in settings.get("network", ""):
         fail("door-5104 must forward TCP port 5104")
     destination = settings.get("address")
-    if not isinstance(destination, str) or not destination:
-        fail("door-5104 destination address is missing")
+    if destination != EXPECTED_G_STORAGE_ADDRESS:
+        fail(
+            "door-5104 destination must use the private g-storage address "
+            f"{EXPECTED_G_STORAGE_ADDRESS}"
+        )
 
     g_storage = one(
         [item for item in outbounds if item.get("tag") == "g-storage"],
@@ -68,6 +78,8 @@ def validate(path: Path, template: bool) -> None:
     server = one(vnext, "g-storage VLESS server")
     if server.get("address") != destination:
         fail("door-5104 and VLESS outbound must use the same g-storage address")
+    if server.get("port") != 19200:
+        fail("g-storage VLESS outbound must use port 19200")
     user = one(server.get("users", []), "g-storage VLESS user")
     user_id = user.get("id")
     if not isinstance(user_id, str):

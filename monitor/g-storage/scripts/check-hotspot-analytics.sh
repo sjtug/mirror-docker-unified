@@ -36,9 +36,30 @@ shellcheck "$ROOT/scripts/run-vector.sh"
 python3 -m json.tool \
   "$ROOT/grafana/dashboards/hotspot/mirror-hotspot-analytics.json" >/dev/null
 
+cat >"$TMP_DIR/dashboard-check-user.xml" <<'EOF_USER'
+<clickhouse>
+  <profiles>
+    <dashboard_check>
+      <readonly>2</readonly>
+      <max_execution_time>60</max_execution_time>
+    </dashboard_check>
+  </profiles>
+  <users>
+    <dashboard_check>
+      <password></password>
+      <networks><ip>127.0.0.1</ip><ip>::1</ip></networks>
+      <profile>dashboard_check</profile>
+      <quota>default</quota>
+      <grants><query>GRANT SELECT ON *.*</query></grants>
+    </dashboard_check>
+  </users>
+</clickhouse>
+EOF_USER
+
 "$RUNTIME" run -d --name "$CLICKHOUSE_CONTAINER" \
   -v "$ROOT/config/clickhouse/server.xml:/etc/clickhouse-server/config.d/hotspot.xml:ro" \
   -v "$ROOT/config/clickhouse/schema.sql:/docker-entrypoint-initdb.d/00-hotspot-schema.sql:ro" \
+  -v "$TMP_DIR/dashboard-check-user.xml:/etc/clickhouse-server/users.d/dashboard-check.xml:ro" \
   "$CLICKHOUSE_IMAGE" >/dev/null
 
 ready=false
@@ -54,6 +75,19 @@ done
 if [ "$ready" != true ]; then
   "$RUNTIME" logs "$CLICKHOUSE_CONTAINER" >&2 || true
   echo "temporary ClickHouse did not become ready" >&2
+  exit 1
+fi
+
+# Grafana's ClickHouse plugin sets max_execution_time for each query. Readonly
+# mode 1 rejects that setting before SQL runs; mode 2 permits settings but not
+# writes.
+"$RUNTIME" exec "$CLICKHOUSE_CONTAINER" clickhouse-client \
+  --user dashboard_check --max_execution_time 1 --query "SELECT 1" |
+  grep -qx 1
+if "$RUNTIME" exec "$CLICKHOUSE_CONTAINER" clickhouse-client \
+  --user dashboard_check --query "CREATE TABLE hotspot.forbidden (value UInt8) ENGINE = Memory" \
+  >/dev/null 2>&1; then
+  echo "dashboard_check unexpectedly modified ClickHouse" >&2
   exit 1
 fi
 

@@ -189,7 +189,8 @@ clickhouse_users = f"""<clickhouse>
       <max_memory_usage>4294967296</max_memory_usage>
     </hotspot_ingest>
     <hotspot_readonly>
-      <readonly>1</readonly>
+      <!-- Mode 2 permits query-scoped settings while still rejecting writes. -->
+      <readonly>2</readonly>
       <max_threads>8</max_threads>
       <max_execution_time>60</max_execution_time>
       <max_memory_usage>8589934592</max_memory_usage>
