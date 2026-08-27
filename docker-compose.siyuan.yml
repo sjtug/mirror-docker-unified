@@ -74,8 +74,6 @@ services:
 
   tunnel:
     container_name: siyuan-tunnel
-    restart: unless-stopped
-    image: teddysun/xray
     expose:
       - 5003
       - 5004
@@ -84,20 +82,6 @@ services:
       - 5104
     ports:
       - "127.0.0.1:5005:5005"
-    networks:
-      - tunnel-net
-    volumes:
-      - "./secrets/xray.json:/etc/xray/config.json:z,ro"
-    logging:
-      options:
-        max-size: "4M"
-        max-file: "20"
-    ulimits:
-      nofile:
-        soft: 80000
-        hard: 120000
-    mem_limit: 2G
-    memswap_limit: 2G
 
   rsyncd:
     container_name: siyuan-rsyncd

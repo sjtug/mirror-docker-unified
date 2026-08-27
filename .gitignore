@@ -8,6 +8,12 @@ docker-compose.override.yml
 !/secrets/*.sops.json
 !/secrets/*.sops.yaml
 !/secrets/*.sops.yml
+!/secrets/siyuan/
+/secrets/siyuan/*
+!/secrets/siyuan/xray.env.sops
+!/secrets/zhiyuan/
+/secrets/zhiyuan/*
+!/secrets/zhiyuan/xray.env.sops
 __pycache__/
 .pytest_cache/
 .ruff_cache/

@@ -1,0 +1,4 @@
+# Keep this target present inside the read-only provisioning bind mount.
+# The generated datasource containing credentials is mounted over it at runtime.
+apiVersion: 1
+datasources: []

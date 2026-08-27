@@ -6,6 +6,20 @@ keys:
   - &age_g_storage ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+qSGGWUP03xS6iwFXnK3Z1N6gez+pfexZ30/IYaODC
 
 creation_rules:
+  - path_regex: ^secrets/siyuan/xray\.env\.sops$
+    input_type: dotenv
+    output_type: dotenv
+    pgp:
+      - *pgp_comonad
+    age:
+      - *age_siyuan
+  - path_regex: ^secrets/zhiyuan/xray\.env\.sops$
+    input_type: dotenv
+    output_type: dotenv
+    pgp:
+      - *pgp_comonad
+    age:
+      - *age_zhiyuan
   - path_regex: ^secrets/[^/]+\.sops\.(env|json|ya?ml)$
     pgp:
       - *pgp_comonad

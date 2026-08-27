@@ -1,0 +1,129 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "door-5003",
+      "listen": "0.0.0.0",
+      "port": 5003,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "218.193.179.247",
+        "port": 5003,
+        "network": "tcp,udp",
+        "timeout": 0,
+        "followRedirect": false
+      }
+    },
+    {
+      "tag": "door-5004",
+      "listen": "0.0.0.0",
+      "port": 5004,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "218.193.179.247",
+        "port": 5004,
+        "network": "tcp,udp",
+        "timeout": 0,
+        "followRedirect": false
+      }
+    },
+    {
+      "tag": "door-5005",
+      "listen": "0.0.0.0",
+      "port": 5005,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "218.193.179.247",
+        "port": 5005,
+        "network": "tcp,udp",
+        "timeout": 0,
+        "followRedirect": false
+      }
+    },
+    {
+      "tag": "door-5007",
+      "listen": "0.0.0.0",
+      "port": 5007,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "218.193.179.247",
+        "port": 5007,
+        "network": "tcp,udp",
+        "timeout": 0,
+        "followRedirect": false
+      }
+    },
+    {
+      "tag": "door-5009",
+      "listen": "0.0.0.0",
+      "port": 5009,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "218.193.179.247",
+        "port": 5009,
+        "network": "tcp,udp",
+        "timeout": 0,
+        "followRedirect": false
+      }
+    },
+    {
+      "tag": "door-5104",
+      "listen": "0.0.0.0",
+      "port": 5104,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "218.193.179.247",
+        "port": 5104,
+        "network": "tcp,udp",
+        "timeout": 0,
+        "followRedirect": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vless",
+      "tag": "g-storage",
+      "settings": {
+        "vnext": [
+          {
+            "address": "218.193.179.247",
+            "port": 19200,
+            "users": [
+              {
+                "id": "__XRAY_UUID__",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp"
+      }
+    },
+    {
+      "protocol": "freedom",
+      "tag": "direct",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "door-5003",
+          "door-5004",
+          "door-5005",
+          "door-5007",
+          "door-5009",
+          "door-5104"
+        ],
+        "outboundTag": "g-storage"
+      }
+    ]
+  }
+}

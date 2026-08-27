@@ -15,6 +15,7 @@ endif
 COMPOSE_TASK_DEPS := $(if $(DEV),,caddy-gen gateway-gen)
 
 SUDO ?= sudo
+JUST ?= $(shell command -v just 2>/dev/null || printf /nix/var/nix/profiles/default/bin/just)
 NIX_FLAGS ?= --accept-flake-config --option warn-dirty false
 G_STORAGE_DIR ?= monitor/g-storage
 G_STORAGE_COMPOSE = $(SUDO) nerdctl --address /run/containerd/containerd.sock --namespace default compose --project-directory $(G_STORAGE_DIR) --project-name docker-prometheus-grafana -f $(G_STORAGE_DIR)/docker-compose.yml
@@ -31,6 +32,12 @@ caddy-verify-config:
 
 vector-check:
 > ./scripts/check-vector.sh
+> python3 ./scripts/validate-mirror-xray-config.py --template xray/config.edge.json
+> for site in siyuan zhiyuan; do
+>   grep -Eq '^XRAY_UUID=ENC\[' "secrets/$$site/xray.env.sops"
+>   sops filestatus --input-type dotenv "secrets/$$site/xray.env.sops" | \
+>     grep -Fq '"encrypted":true'
+> done
 
 # Require UV to build Python virtualenv
 configure-venv:
@@ -75,19 +82,19 @@ up: $(COMPOSE_TASK_DEPS)
 > docker compose up -d --build
 
 up-siyuan: $(COMPOSE_TASK_DEPS)
-> docker compose -f docker-compose.yml -f docker-compose.siyuan.yml up -d --build
+> $(JUST) mirror-up siyuan
 
 up-zhiyuan: $(COMPOSE_TASK_DEPS)
-> docker compose -f docker-compose.yml -f docker-compose.zhiyuan.yml up -d --build
+> $(JUST) mirror-up zhiyuan
 
 build: $(COMPOSE_TASK_DEPS)
 > docker compose build
 
 build-siyuan: $(COMPOSE_TASK_DEPS)
-> docker compose -f docker-compose.yml -f docker-compose.siyuan.yml build
+> $(JUST) mirror-build siyuan
 
 build-zhiyuan: $(COMPOSE_TASK_DEPS)
-> docker compose -f docker-compose.yml -f docker-compose.zhiyuan.yml build
+> $(JUST) mirror-build zhiyuan
 
 
 g-storage-secrets:

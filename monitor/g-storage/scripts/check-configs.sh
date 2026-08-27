@@ -79,6 +79,10 @@ if grep -Eq 'check-hotspot-(ingest|grafana)-password' runtime/clickhouse-users.x
 fi
 grep -Fq '<password_sha256_hex>' runtime/clickhouse-users.xml
 grep -Fq 'uid: hotspot-clickhouse' runtime/hotspot-clickhouse-datasource.yml
+if [ ! -f grafana/provisioning/datasources/hotspot-clickhouse.yml ]; then
+  echo "Grafana hotspot datasource bind-mount target placeholder is missing" >&2
+  exit 1
+fi
 test -f runtime/hotspot-dashboards/mirror-hotspot-analytics.json
 grep -Fq "client_secret = \$__file{/run/secrets/github_client_secret}" grafana/grafana.ini
 

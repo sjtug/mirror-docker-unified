@@ -1,0 +1,24 @@
+services:
+  tunnel:
+    image: teddysun/xray
+    restart: unless-stopped
+    entrypoint: /etc/xray/run.sh
+    environment:
+      XRAY_UUID: ${XRAY_UUID:?activate mirror Compose through SOPS}
+    networks:
+      - tunnel-net
+    volumes:
+      - ./xray/config.edge.json:/etc/xray/config.template.json:ro
+      - ./xray/run-edge.sh:/etc/xray/run.sh:ro
+    tmpfs:
+      - /run/xray:rw,noexec,nosuid,nodev,size=1m,mode=0700
+    logging:
+      options:
+        max-size: 4M
+        max-file: "20"
+    ulimits:
+      nofile:
+        soft: 80000
+        hard: 120000
+    mem_limit: 2G
+    memswap_limit: 2G

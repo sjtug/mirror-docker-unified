@@ -26,10 +26,37 @@ The three hosts run one VLESS tunnel configuration with a shared UUID:
 - **g-storage** (`xray/config.sops.json`) publishes the tunnel endpoint on host
   port `19200` and provides the internal HTTP proxy on port 1081 for
   Alertmanager/Grafana egress.
-- **mirror-siyuan / mirror-zhiyuan**
-  (`secrets/{siyuan,zhiyuan}/xray.json.sops`) expose the existing dokodemo-door
-  ports to services on g-storage, including `5104` for central log/analytics
-  forwarding.
+- **mirror-siyuan / mirror-zhiyuan** use the reviewable non-secret template
+  `xray/config.edge.json` for their existing dokodemo-door ports, including
+  `5104` for central log/analytics forwarding. The shared VLESS user ID is the
+  only value in the per-host `secrets/{siyuan,zhiyuan}/xray.env.sops` files.
+
+Deploy edge tunnel changes only through the site-specific targets from the
+canonical checkout. They require `/opt/mirror-docker-*` and activate the
+host-specific dotenv file with `sops exec-file --no-fifo`. Compose consumes the
+short-lived file through `--env-file`; the xray entrypoint creates its complete
+configuration in container tmpfs, validates it, and removes the UUID from the
+xray process environment. The tunnel reload target recreates only that service
+and waits for door `5104` to listen:
+
+```sh
+# mirror-siyuan
+cd /opt/mirror-docker-siyuan
+sudo just mirror-tunnel-reload siyuan
+sudo just mirror-tunnel-status siyuan
+
+# mirror-zhiyuan
+cd /opt/mirror-docker-zhiyuan
+sudo just mirror-tunnel-reload zhiyuan
+sudo just mirror-tunnel-status zhiyuan
+```
+
+The existing `make up-{siyuan,zhiyuan}` and `make build-{siyuan,zhiyuan}`
+entrypoints delegate their secret activation to these Just recipes.
+
+Override `MIRROR_SOPS_SSH_KEY_FILE` only when the deployment host key is stored
+somewhere other than `/etc/ssh/ssh_host_ed25519_key`. There is no generated
+host-side `secrets/xray.json`; use the activation targets instead.
 
 Door destinations use g-storage's public address rather than a Docker bridge,
 so they remain valid for the rootful nerdctl stack. Legacy logspout traffic on
