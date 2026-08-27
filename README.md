@@ -57,7 +57,7 @@ Vector retains file checkpoints and an at-least-once 4 GiB disk buffer under
 the pinned edge configuration and its Caddy mapping with:
 
 ```sh
-make vector-check
+just vector-check
 ```
 
 ### Vector TLS credentials

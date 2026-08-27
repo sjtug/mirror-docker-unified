@@ -222,6 +222,8 @@
             strictDeps = true;
 
             nativeBuildInputs = [
+              pkgs.just
+
               pkgs.uv
               virtualenv-dev
 

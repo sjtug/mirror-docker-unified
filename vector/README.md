@@ -86,7 +86,8 @@ catalog, drops operational paths, marks the event for the central router, and
 uses an independent 4 GiB disk buffer. No additional TLS configuration is
 needed because xray is the encrypted transport. The central Vector excludes
 these marked events from the legacy Loki branch and writes only the sanitized
-form to ClickHouse.
+form to ClickHouse. Edge SOPS activation, tunnel reload, and buffer checks are
+documented under **Unified xray tunnel** in `monitor/g-storage/README.md`.
 
-Run `make vector-check` to validate the shared configuration, field contract,
+Run `just vector-check` to validate the shared configuration, field contract,
 and startup without the optional external MirrorZ TLS credentials.

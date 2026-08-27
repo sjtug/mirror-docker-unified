@@ -9,15 +9,15 @@ The mirror hosts continue to use Docker Compose.
 
 Host-local values are committed SOPS-encrypted as
 `monitor/g-storage/g-storage.sops.env`, `monitor/g-storage/bot.sops.env`, and
-`monitor/g-storage/xray/config.sops.json`; the Make targets decrypt them to the
+`monitor/g-storage/xray/config.sops.json`; the Just recipes decrypt them to the
 ignored runtime filenames below before validation. Every SOPS invocation sets
 `SOPS_AGE_SSH_PRIVATE_KEY_FILE` explicitly to
 `G_STORAGE_SOPS_SSH_KEY_FILE` (default:
 `/etc/ssh/ssh_host_ed25519_key`) instead of relying on a per-user age identity.
-Fresh hosts only need a checkout: `sudo make g-storage-up` performs the whole
+Fresh hosts only need a checkout: `sudo just g-storage-up` performs the whole
 check → decrypt → render → validate → up chain. Override the host-key path, if
-needed, with `G_STORAGE_SOPS_SSH_KEY_FILE=/path/to/ssh_host_key` as a Make
-argument.
+needed, by exporting `G_STORAGE_SOPS_SSH_KEY_FILE=/path/to/ssh_host_key` for
+the Just invocation.
 
 ### Unified xray tunnel
 
@@ -51,8 +51,7 @@ sudo just mirror-tunnel-reload zhiyuan
 sudo just mirror-tunnel-status zhiyuan
 ```
 
-The existing `make up-{siyuan,zhiyuan}` and `make build-{siyuan,zhiyuan}`
-entrypoints delegate their secret activation to these Just recipes.
+The `mirror-up` and `mirror-build` recipes use the same activation path.
 
 Override `MIRROR_SOPS_SSH_KEY_FILE` only when the deployment host key is stored
 somewhere other than `/etc/ssh/ssh_host_ed25519_key`. There is no generated
@@ -84,13 +83,13 @@ The authenticated `/monitor/caddy/metrics` proxy explicitly sends
 host with `403 host not allowed`; without this override the `caddy_mirrors`
 targets and the `Caddy Hosts` dashboard have no data.
 
-Central forwarding is verified. Port `5104` remains the existing unified xray
-log door and now carries the hotspot event branch to the same g-storage Vector
-instance that owns the legacy Loki rollback branch. Hotspot events carry an
-explicit marker: Vector sanitizes and writes them to ClickHouse but excludes
-them from Loki, avoiding a second raw-log copy. Legacy unmarked Caddy events can
-still reach Loki for rollback. The shared configuration lives in
-`config/vector.toml` and `config/loki.yml`.
+Port `5104` is the unified xray door for the hotspot event branch into the same
+g-storage Vector instance that owns the legacy Loki rollback branch. Hotspot
+events carry an explicit marker: Vector sanitizes and writes them to ClickHouse
+but excludes them from Loki, avoiding a second raw-log copy. Legacy unmarked
+Caddy events can still reach Loki for rollback. The shared configuration lives
+in `config/vector.toml` and `config/loki.yml`. Use the Just status recipe and
+ClickHouse row counts to verify forwarding after each edge rollout.
 
 ### Hotspot analytics
 
@@ -143,12 +142,11 @@ Never use `nerdctl compose down -v`.
 
 ### Current deployment
 
-As of 2026-08-25, every configured scrape group and blackbox probe is healthy,
-and all four provisioned dashboards render data. Two host issues remain outside
-the containers: g-storage's retired SSH repository collector produces a
-malformed textfile, and Siyuan's `/srv/mirror/postgres-data` bind mount is
-absent. See [`../../MAINTENANCE.md`](../../MAINTENANCE.md) for current alerts,
-cleanup steps, and rollback state.
+Every scrape target and blackbox probe is healthy, and all provisioned
+dashboards render data. Two non-container host cleanups remain: g-storage's
+retired SSH iSCSI unit and the stale Postgres bind-mount monitoring rule. See
+[`../../MAINTENANCE.md`](../../MAINTENANCE.md) for alert status and rollout
+steps.
 
 Keep the Telegram token in an ignored `bot.env`:
 
@@ -160,21 +158,21 @@ EOF
 chmod 600 bot.env
 ```
 
-Use the repository-level Make targets from the active checkout to render,
+Use the repository-level Just recipes from the active checkout to render,
 validate, and deploy the stack. Generated configurations and credential files
 are written atomically under the ignored `runtime/` directory and mounted into
 individual services as read-only files under `/run/secrets`.
 
 ```sh
 cd /home/sjtug/mirror-docker-g-storage
-make g-storage-check
-sudo make g-storage-render
-sudo make g-storage-config
-sudo make g-storage-build
-sudo make g-storage-up
+just g-storage-check
+sudo just g-storage-render
+sudo just g-storage-config
+sudo just g-storage-build
+sudo just g-storage-up
 
 # Non-default host-key location:
-sudo make g-storage-up G_STORAGE_SOPS_SSH_KEY_FILE=/path/to/ssh_host_key
+sudo env G_STORAGE_SOPS_SSH_KEY_FILE=/path/to/ssh_host_key just g-storage-up
 ```
 
 `g-storage-up` never pulls or builds images. Preload missing images into the
@@ -185,14 +183,14 @@ bind-mounted configuration file is not visible through the old mount.
 
 Docker and containerd have separate named-volume stores. The active monitoring
 state now lives in rootful containerd volumes; the matching Compose project
-name does not make Docker volumes interchangeable. Never use `down -v` during
+name does not imply that Docker volumes are interchangeable. Never use `down -v` during
 normal deployment or rollback.
 
 All dashboards are provisioned from this tree: `Mirror Monitor Overview`,
 `Mirror Repository Traffic`, `Mirror Hotspot Analytics`, `Node Exporter Full`
 (`rYdddlPWk`), and `Caddy Hosts`. The hotspot renderer copies its dashboard into
 the runtime provider directory alongside the generated ClickHouse datasource.
-Run `make g-storage-enable-collectors` on g-storage to refresh its local target
+Run `just g-storage-enable-collectors` on g-storage to refresh its local target
 collector and remove the retired repository-statistics unit.
 
 Per-repository sizes are already collected locally on both mirror hosts and
@@ -202,10 +200,10 @@ timer with:
 
 ```sh
 # mirror-siyuan
-make mirror-enable-collectors MIRROR_SITE=siyuan
+just mirror-enable-collectors siyuan
 
 # mirror-zhiyuan
-make mirror-enable-collectors MIRROR_SITE=zhiyuan
+just mirror-enable-collectors zhiyuan
 ```
 
 The install target verifies the host's existing socket-activated
