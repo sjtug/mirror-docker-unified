@@ -824,7 +824,7 @@ repos:
     <<:
       - *oneshot_common
   - type: shell_script
-    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix macports --s3-buffer-path /var/cache --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/macports --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/macports
+    script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix macports --s3-buffer-path /var/cache --s3-scan-metadata --print-plan 100 rsync --http-base https://mirrors.tuna.tsinghua.edu.cn/macports --rsync-base rsync://mirrors.tuna.tsinghua.edu.cn/macports
     serve_mode: mirror_intel
     interval: 86400
     name: macports
