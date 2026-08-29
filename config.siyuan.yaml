@@ -371,7 +371,7 @@ repos:
     rsync_extra_flags: --exclude "termux-main-21"
     <<:
       - *oneshot_common
-  #ubuntu
+  # ubuntu
   - type: external
     name: ubuntu
     serve_mode: redir
@@ -461,9 +461,42 @@ repos:
     <<:
       - *oneshot_common
   # pytorch-wheels
-  - type: external
-    name: pytorch-wheels
+  - type: shell_script
+    script: >-
+      /worker-script/mirror-clone-v2.sh
+      --workers 4
+      --target-type s3
+      --s3-prefix pytorch-wheels
+      --s3-buffer-path /var/cache
+      --print-plan 100
+      simple-repository
+      --index-base https://download.pytorch.org/whl
+      --rewrite-url-prefix https://download-r2.pytorch.org/whl/=/pytorch-wheels/
+      --rewrite-url-prefix https://download.pytorch.org/whl/=/pytorch-wheels/
+      --rewrite-url-prefix https://files.pythonhosted.org/packages/=/pypi-packages/
+      --rewrite-url-prefix https://pypi.nvidia.com/=https://pypi.nvidia.cn/
     serve_mode: mirror_intel
+    interval: 4900
+    name: pytorch-wheels
+    <<:
+      - *oneshot_common
+  # astral-wheels
+  - type: shell_script
+    script: >-
+      /worker-script/mirror-clone-v2.sh
+      --workers 4
+      --target-type s3
+      --s3-prefix astral-wheels
+      --s3-buffer-path /var/cache
+      --print-plan 100
+      simple-repository
+      --index-base https://wheels.astral.sh/simple/
+      --rewrite-url-prefix https://wheels.astral.sh/artifacts/=/astral-wheels/artifacts/
+    serve_mode: mirror_intel
+    interval: 4900
+    name: astral-wheels
+    <<:
+      - *oneshot_common
   # crates.io
   - type: shell_script
     script: /worker-script/mirror-clone-v2.sh --workers 4 --target-type s3 --s3-prefix crates.io/crates --s3-buffer-path /var/cache --print-plan 100 crates-io
