@@ -13,8 +13,6 @@ PORTAL_ADDR="10.32.36.148"
 PORTAL_PORT="3260"
 PORTAL="${PORTAL_ADDR}:${PORTAL_PORT}"
 MOUNTPOINT="/mnt/data55T"
-BIND_MOUNT="/srv/mirror/postgres-data"
-BIND_SOURCE_EXPECTED="/mnt/data55T/mirror-postgres-data"
 BY_PATH="/dev/disk/by-path/ip-10.32.36.148:3260-iscsi-iqn.2025-05.cn.edu.sjtu.mirror:storage.data55T-lun-1"
 
 now=$(date +%s)
@@ -143,12 +141,6 @@ mirror_siyuan_iscsi_connection_present{host="$HOST_LABEL",portal="$PORTAL"} $con
 # HELP mirror_siyuan_iscsi_connection_up Whether the expected iSCSI portal connection state is up.
 # TYPE mirror_siyuan_iscsi_connection_up gauge
 mirror_siyuan_iscsi_connection_up{host="$HOST_LABEL",portal="$PORTAL"} $connection_up
-# HELP mirror_siyuan_postgres_bind_mount_present Whether /srv/mirror/postgres-data is a mount point.
-# TYPE mirror_siyuan_postgres_bind_mount_present gauge
-mirror_siyuan_postgres_bind_mount_present{host="$HOST_LABEL",mountpoint="$BIND_MOUNT",expected_source="$BIND_SOURCE_EXPECTED"} $bind_present
-# HELP mirror_siyuan_postgres_bind_mount_source_ok Whether /srv/mirror/postgres-data is bound from the expected data55T path.
-# TYPE mirror_siyuan_postgres_bind_mount_source_ok gauge
-mirror_siyuan_postgres_bind_mount_source_ok{host="$HOST_LABEL",mountpoint="$BIND_MOUNT",expected_source="$BIND_SOURCE_EXPECTED"} $bind_source_ok
 METRICS
 } >"$TMP_FILE"
 chmod 0644 "$TMP_FILE"

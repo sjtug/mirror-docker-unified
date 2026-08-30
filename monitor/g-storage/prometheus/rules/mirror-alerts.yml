@@ -130,15 +130,6 @@ groups:
           summary: "mirror-siyuan /mnt/data55T has no source or is read-only"
           description: "findmnt does not report a source mounted read-write at /mnt/data55T. Run 'findmnt /mnt/data55T' and check dmesg/iSCSI state."
 
-      - alert: MirrorSiyuanPostgresBindMountDegraded
-        expr: (mirror_siyuan_postgres_bind_mount_present != 1) or (mirror_siyuan_postgres_bind_mount_source_ok != 1)
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "mirror-siyuan postgres bind mount is not the expected data55T mount"
-          description: "/srv/mirror/postgres-data should be a bind mount from /mnt/data55T/mirror-postgres-data. Verify fstab/systemd mount units."
-
       - alert: MirrorStorageTgtCollectorFailed
         expr: (mirror_storage_tgt_collector_success{host="g-storage"} != 1) or absent(mirror_storage_tgt_collector_success{host="g-storage"})
         for: 3m
