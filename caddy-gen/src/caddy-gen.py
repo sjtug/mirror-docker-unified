@@ -226,9 +226,11 @@ def dict_to_repo(repo: dict[str, str]) -> Repo | None:
 
 def gen_repos(
     base: str, repos: dict[dict[str, str], str], first_site: bool, site: str
-) -> tuple[list[Node], list[Node], list[Node]]:
+) -> tuple[list[Node], list[Node], list[Node], list[str], list[str]]:
     outer_nodes = []
 
+    http_bandwidth_quota_paths: list[str] = []
+    https_bandwidth_quota_paths: list[str] = []
     http_file_server_nodes: list[Node] = []
     http_git_server_nodes: list[Node] = []
     http_gzip_disabled_list = []
@@ -253,6 +255,11 @@ def gen_repos(
                     no_redir_http = True
 
             leaf = repo_redir(repo) + repo.as_repo()
+            quota_path = bandwidth_quota_path(repo)
+            if quota_path is not None:
+                https_bandwidth_quota_paths.append(quota_path)
+                if no_redir_http:
+                    http_bandwidth_quota_paths.append(quota_path)
             if repo.get_name().startswith("git/"):
                 if no_redir_http:
                     http_git_server_nodes += leaf
@@ -263,10 +270,19 @@ def gen_repos(
                 https_file_server_nodes += leaf
 
             if "subdomain" in repo_ and first_site:
+                subdomain_quota = (
+                    bandwidth_quota_policy() + [BLANK_NODE]
+                    if quota_path is not None
+                    else []
+                )
                 outer_nodes += [
                     Node(
                         repo_["subdomain"],
-                        repo.as_subdomain() + [sjtug_mirror_id(site)],
+                        waf_policy()
+                        + [BLANK_NODE]
+                        + subdomain_quota
+                        + repo.as_subdomain()
+                        + [sjtug_mirror_id(site)],
                     )
                 ]
 
@@ -306,7 +322,13 @@ def gen_repos(
         BLANK_NODE,
     ] + https_file_server_nodes
 
-    return outer_nodes, http_file_server_nodes, https_file_server_nodes
+    return (
+        outer_nodes,
+        http_file_server_nodes,
+        https_file_server_nodes,
+        http_bandwidth_quota_paths,
+        https_bandwidth_quota_paths,
+    )
 
 
 def sjtug_mirror_id(site: str) -> Node:
@@ -360,11 +382,27 @@ def cerberus_settings() -> list[Node]:
 
 
 def build_root(base: str, config_yaml: dict, first_site: bool, site: str) -> Node:  # pyright: ignore[reportMissingTypeArgument]
-    no_redir_nodes, http_file_server_nodes, https_file_server_nodes = gen_repos(
-        base, config_yaml["repos"], first_site, site
-    )
+    (
+        no_redir_nodes,
+        http_file_server_nodes,
+        https_file_server_nodes,
+        http_bandwidth_quota_paths,
+        https_bandwidth_quota_paths,
+    ) = gen_repos(base, config_yaml["repos"], first_site, site)
 
-    https_main_children = common() + [BLANK_NODE]
+    https_quota = (
+        bandwidth_quota_policy(https_bandwidth_quota_paths)
+        if https_bandwidth_quota_paths
+        else []
+    )
+    https_main_children = (
+        waf_policy()
+        + [BLANK_NODE]
+        + https_quota
+        + [BLANK_NODE]
+        + common()
+        + [BLANK_NODE]
+    )
     https_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
     https_main_children += cors("/mirrorz/*")  # mirrorz.org protocol support
     https_main_children += [BLANK_NODE] + cerberus_settings()
@@ -375,7 +413,19 @@ def build_root(base: str, config_yaml: dict, first_site: bool, site: str) -> Nod
     if is_local(base):
         return Node("", no_redir_nodes + [Node(f"http://{base}", https_main_children)])
 
-    http_main_children = common_http() + [BLANK_NODE]
+    http_quota = (
+        bandwidth_quota_policy(http_bandwidth_quota_paths)
+        if http_bandwidth_quota_paths
+        else []
+    )
+    http_main_children = (
+        waf_policy()
+        + [BLANK_NODE]
+        + http_quota
+        + [BLANK_NODE]
+        + common_http()
+        + [BLANK_NODE]
+    )
     http_main_children += [sjtug_mirror_id(site)]  # SJTUG mirror ID header
     http_main_children += [BLANK_NODE] + cerberus_settings()
     http_main_children += [BLANK_NODE] + http_file_server_nodes
@@ -540,8 +590,11 @@ if __name__ == "__main__":
                             Node("prefix_cfg 32 64"),
                         ],
                     ),
-                    # to forbid 302 redirect among siyuan, zhiyuan and ftp
-                    Node("order cerberus before redir"),
+                    # Place the deepest dependency first, then move each outer
+                    # middleware into position. Caddy applies repeated `order`
+                    # options sequentially, so changing this sequence changes
+                    # the resulting request pipeline.
+                    *handler_order(),
                 ],
             )
         )

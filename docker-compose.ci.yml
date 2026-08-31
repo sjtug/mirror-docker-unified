@@ -3,6 +3,11 @@ services:
     build:
       args:
         - USE_GOPROXY=false
+    environment:
+      - CADDY_WAF_IP_BLACKLIST_FILE=/etc/caddy/waf/crawler-ip-blacklist.txt.example
+      - CADDY_WAF_IP_WHITELIST_FILE=/etc/caddy/waf/bandwidth-quota-whitelist.txt.example
+      - CADDY_WAF_DNS_BLACKLIST_FILE=/etc/caddy/waf/dns-blacklist.txt.example
+      - CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE=/etc/caddy/waf/bandwidth-quota-whitelist.txt.example
   vector:
     environment:
       VECTOR_ORG: sjtug

@@ -135,6 +135,20 @@
           );
           virtualenv-dev = editablePythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-dev-env" workspace.deps.all;
 
+          caddyValidate =
+            caddyfile:
+            lib.concatStringsSep " " [
+              "${pkgs.coreutils}/bin/env"
+              "CADDY_WAF_IP_BLACKLIST_FILE=caddy/waf/crawler-ip-blacklist.txt.example"
+              "CADDY_WAF_IP_WHITELIST_FILE=caddy/waf/bandwidth-quota-whitelist.txt.example"
+              "CADDY_WAF_DNS_BLACKLIST_FILE=caddy/waf/dns-blacklist.txt.example"
+              "CADDY_WAF_LOG_PATH=/tmp/caddy-waf-validation.log"
+              "CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE=caddy/waf/bandwidth-quota-whitelist.txt.example"
+              "CADDY_BANDWIDTH_QUOTA_DB=/tmp/caddy-bandwidth-quota-validation.db"
+              "${lib.getExe config.packages.caddy}"
+              "validate --adapter caddyfile --config ${caddyfile}"
+            ];
+
           # pythonSet = basePythonSet.pythonPkgsHostHost.overrideScope pyprojectOverrides;
           # virtualenv =
           #   (pythonSet.mkVirtualEnv "${pyproject.project.name or "mirror-docker-unified"}-env" workspace.deps.default)
@@ -173,18 +187,26 @@
               caddy-verify-config-siyuan = {
                 enable = true;
                 name = "Caddyfile.siyuan validated by Caddy server";
-                entry = "${lib.getExe config.packages.caddy} validate --adapter caddyfile --config caddy/Caddyfile.siyuan";
+                entry = caddyValidate "caddy/Caddyfile.siyuan";
                 language = "system";
                 pass_filenames = false;
-                files = "^(caddy/Caddyfile\\.(siyuan|zhiyuan))$";
+                files = "^(caddy/(Caddyfile\\.(local|siyuan|zhiyuan)|waf/.*)|flake\\.nix$)";
               };
               caddy-verify-config-zhiyuan = {
                 enable = true;
                 name = "Caddyfile.zhiyuan validated by Caddy server";
-                entry = "${lib.getExe config.packages.caddy} validate --adapter caddyfile --config caddy/Caddyfile.zhiyuan";
+                entry = caddyValidate "caddy/Caddyfile.zhiyuan";
                 language = "system";
                 pass_filenames = false;
-                files = "^(caddy/Caddyfile\\.(siyuan|zhiyuan))$";
+                files = "^(caddy/(Caddyfile\\.(local|siyuan|zhiyuan)|waf/.*)|flake\\.nix$)";
+              };
+              caddy-verify-config-local = {
+                enable = true;
+                name = "Caddyfile.local validated by Caddy server";
+                entry = caddyValidate "caddy/Caddyfile.local";
+                language = "system";
+                pass_filenames = false;
+                files = "^(caddy/(Caddyfile\\.(local|siyuan|zhiyuan)|waf/.*)|flake\\.nix$)";
               };
               caddy-gen = {
                 enable = true;
@@ -253,10 +275,10 @@
             inherit virtualenv-dev;
             caddy = pkgs.caddy.withPlugins {
               plugins = [
-                "github.com/caddyserver/transform-encoder@v0.0.0-20260423033309-ba4124974830"
                 "github.com/sjtug/cerberus@v0.4.8"
+                "github.com/fabriziosalmi/caddy-waf=github.com/sjtug/caddy-waf@v0.4.1-sjtug.2"
               ];
-              hash = "sha256-pShS64ckH4eVKXJvgDCuDPSrWZb9L8RYjeTqoupRGZE=";
+              hash = "sha256-9dT0JRk3Q0GnmTvHLOgH05PNHQlQGtgrc1+bwwFk2NA=";
             };
             go-queue = pkgs.callPackage ./git-backend/go-queue.nix { };
             git-backend-runtime = pkgs.callPackage ./git-backend/runtime.nix {

@@ -27,9 +27,25 @@
 		prefix_cfg 32 64
 	}
 	order cerberus before redir
+	order bandwidth_quota before cerberus
+	order waf before bandwidth_quota
 }
 
 google-fonts.mirrors.sjtug.sjtu.edu.cn {
+	waf {
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/general-policy.json
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/crawler-policy.json
+		ip_blacklist_file {$CADDY_WAF_IP_BLACKLIST_FILE:caddy/waf/blacklist/crawler-ip-blacklist.txt}
+		ip_whitelist_file {$CADDY_WAF_IP_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		dns_blacklist_file {$CADDY_WAF_DNS_BLACKLIST_FILE:caddy/waf/blacklist/dns-blacklist.txt}
+		anomaly_threshold 10
+		max_request_body_size 1048576
+		log_severity info
+		log_json
+		log_path {$CADDY_WAF_LOG_PATH:/var/log/caddy/mirrorz/waf.log}
+		redact_sensitive_data
+	}
+
 	log {
 		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
 			mode 0644
@@ -54,6 +70,34 @@ google-fonts.mirrors.sjtug.sjtu.edu.cn {
 }
 
 http://mirrors.sjtug.sjtu.edu.cn {
+	waf {
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/general-policy.json
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/crawler-policy.json
+		ip_blacklist_file {$CADDY_WAF_IP_BLACKLIST_FILE:caddy/waf/blacklist/crawler-ip-blacklist.txt}
+		ip_whitelist_file {$CADDY_WAF_IP_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		dns_blacklist_file {$CADDY_WAF_DNS_BLACKLIST_FILE:caddy/waf/blacklist/dns-blacklist.txt}
+		anomaly_threshold 10
+		max_request_body_size 1048576
+		log_severity info
+		log_json
+		log_path {$CADDY_WAF_LOG_PATH:/var/log/caddy/mirrorz/waf.log}
+		redact_sensitive_data
+	}
+
+	@bandwidth_quota_download {
+		method GET
+		path /raspbian/* /ctan/*
+	}
+	bandwidth_quota @bandwidth_quota_download {
+		state_path {$CADDY_BANDWIDTH_QUOTA_DB:/data/bandwidth-quota.db}
+		whitelist_file {$CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		ipv4_prefix 24
+		ipv6_prefix 64
+		window 5h 30GiB
+		window 168h 150GiB
+		window 720h 500GiB
+	}
+
 	log {
 		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
 			mode 0644
@@ -133,6 +177,34 @@ http://mirrors.sjtug.sjtu.edu.cn {
 }
 
 https://mirrors.sjtug.sjtu.edu.cn {
+	waf {
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/general-policy.json
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/crawler-policy.json
+		ip_blacklist_file {$CADDY_WAF_IP_BLACKLIST_FILE:caddy/waf/blacklist/crawler-ip-blacklist.txt}
+		ip_whitelist_file {$CADDY_WAF_IP_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		dns_blacklist_file {$CADDY_WAF_DNS_BLACKLIST_FILE:caddy/waf/blacklist/dns-blacklist.txt}
+		anomaly_threshold 10
+		max_request_body_size 1048576
+		log_severity info
+		log_json
+		log_path {$CADDY_WAF_LOG_PATH:/var/log/caddy/mirrorz/waf.log}
+		redact_sensitive_data
+	}
+
+	@bandwidth_quota_download {
+		method GET
+		path /kali/* /almalinux/* /putty/* /gentoo/* /vim/* /cpan/* /cran/* /ctex/* /gnu/* /cygwin/* /kali-images/* /git/brew.git/* /crates.io-index/* /raspbian/* /parrot/* /raspberrypi/* /mx-isos/* /emacs-elpa/* /julia-releases/* /msys2/* /git/opam-repository.git/* /git/qemu.git/* /linuxliteos/* /CPAN/* /CRAN/* /CTAN/* /ctan/* /homebrew-bottles/* /rust-static/* /pypi-packages/* /dart-pub/* /pytorch-wheels/* /astral-wheels/* /crates.io/* /flutter_infra/* /ghcup/* /elan/* /nix-channels/store/* /guix/* /guix-bordeaux/* /sjtug-internal/* /fedora-ostree/* /fedora-iot/* /flathub/* /github-release/* /opam-cache/* /pypi/web/simple/* /gradle/distributions/* /voidlinux/* /wireshark/* /macports/* /gimp/* /kernel/*
+	}
+	bandwidth_quota @bandwidth_quota_download {
+		state_path {$CADDY_BANDWIDTH_QUOTA_DB:/data/bandwidth-quota.db}
+		whitelist_file {$CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		ipv4_prefix 24
+		ipv6_prefix 64
+		window 5h 30GiB
+		window 168h 150GiB
+		window 720h 500GiB
+	}
+
 	log {
 		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
 			mode 0644

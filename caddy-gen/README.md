@@ -17,6 +17,73 @@ The Caddy admin proxy rewrites to `/metrics` and sends
 `Host: localhost:2019`; omitting that header makes the admin API return
 `403 host not allowed`.
 
+## Web application firewall
+
+Every generated public site runs `caddy-waf` before Cerberus and redirects. Its
+configuration lives under `caddy/waf/`:
+
+- `general-policy.json` is the extension point for general rules and is currently empty;
+- `crawler-policy.json` blocks crawler User-Agents confirmed in `crawler.md`;
+- the private `blacklist` submodule contains `crawler-ip-blacklist.txt`, with
+  the immediate and historical ban networks, `dns-blacklist.txt` for exact
+  hostname bans, and `bandwidth-quota-whitelist.txt` for quota and WAF
+  IP-reputation exemptions.
+
+Initialize the private submodule before generation, validation, or deployment:
+
+```sh
+git submodule update --init caddy/waf/blacklist
+```
+
+Developer and deployment credentials performing that command need read access
+to the private `sjtug/blacklist` repository. GitHub Actions deliberately skips
+the private submodule and selects the tracked, empty `*.txt.example` fixtures
+through `docker-compose.ci.yml` and the flake validation hooks.
+
+Rule paths use `{$CADDY_WAF_DIR:caddy/waf}`. The access-list paths can be
+overridden independently with `CADDY_WAF_IP_BLACKLIST_FILE`,
+`CADDY_WAF_IP_WHITELIST_FILE`, and `CADDY_WAF_DNS_BLACKLIST_FILE`. Production
+Compose points all four variables at the read-only `/etc/caddy/waf` mount and
+its private submodule. WAF events
+default to `/var/log/caddy/mirrorz/waf.log` and can be moved with
+`CADDY_WAF_LOG_PATH`. Generic clients such as `python-requests` and `aria2` are
+deliberately not blocked globally because legitimate mirror clients use them.
+
+## Repository download quotas
+
+Generated repository-serving routes run the `bandwidth_quota` Caddy module from
+the SJTUG `caddy-waf` fork (`v0.4.1-sjtug.2`) after the WAF and before response
+encoding. Redirect-only repositories, frontend pages, `/mirrorz/*`, `/lug/*`,
+`/monitor/*`, and `/.cerberus/*` are not quota-controlled. The policy is local to each mirror host and groups clients by
+IPv4 `/24` or IPv6 `/64`:
+
+- 30 GiB in a rolling 5-hour window;
+- 150 GiB in a rolling 7-day window;
+- 500 GiB in a rolling 30-day window.
+
+Only body bytes successfully written by `GET` responses with status `200`–`299`
+count, including `206` range responses. Accounting happens as responses stream,
+so reaching a limit prevents new repository downloads even while existing
+transfers continue. A request rejected by any window receives `429 Too Many
+Requests`, `Cache-Control: private, no-store`, and a `Retry-After` value for the
+first time all exhausted rolling windows have resumed.
+
+Usage state is shared by all generated hostnames in one Caddy process and is
+persisted at `CADDY_BANDWIDTH_QUOTA_DB` (production defaults to
+`/data/bandwidth-quota.db`). If that database cannot be opened or loaded, Caddy
+logs an error and continues with fresh in-memory state rather than taking the
+mirror offline. A hard shutdown may lose up to one second of flushed state and
+less than 1 MiB of buffered accounting per in-flight response.
+
+Networks listed in the private
+`blacklist/bandwidth-quota-whitelist.txt` bypass quota accounting and
+enforcement and are exempt from the WAF's IP blacklist, country, and ASN
+checks. DNS, rate-limit, and rule-engine checks still apply. WAF exemptions are
+hot-reloaded; reload Caddy after changing the file to also refresh quota
+exemptions. Quota metrics are exposed with the normal Caddy
+metrics as `caddy_bandwidth_quota_counted_bytes_total` and
+`caddy_bandwidth_quota_blocked_requests_total`.
+
 lug configuration for a repo can always be viewed in two parts:
 
 - synchronization config (shell_script / external)
