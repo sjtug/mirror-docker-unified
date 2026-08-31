@@ -13,4 +13,5 @@ __pycache__/
 .ruff_cache/
 venv/
 */.venv
+.direnv/
 .pre-commit-config.flake.yaml
