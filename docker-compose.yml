@@ -56,13 +56,6 @@ services:
       - ipv6-service-net
     expose:
       - 3000
-    healthcheck:
-      # `node:24-alpine` image includes `wget` but no `curl`
-      test: wget --spider -q http://localhost:3000 || exit 1
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
     stop_grace_period: 15s
     logging:
       options:
