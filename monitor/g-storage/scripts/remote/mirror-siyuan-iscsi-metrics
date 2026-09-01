@@ -27,8 +27,6 @@ session_present=0
 session_logged_in=0
 connection_present=0
 connection_up=0
-bind_present=0
-bind_source_ok=0
 device="unknown"
 source_dev="unknown"
 options=""
@@ -85,18 +83,6 @@ for connection in /sys/class/iscsi_connection/connection*; do
   state=$(cat "$connection/state" 2>/dev/null || true)
   [ "$state" = "up" ] && connection_up=1
 done
-
-if bind_line=$(findmnt -rn --mountpoint "$BIND_MOUNT" -o SOURCE,FSTYPE,OPTIONS 2>/dev/null); then
-  # shellcheck disable=SC2086
-  set -- $bind_line
-  bind_source="${1:-unknown}"
-  expected_source_alt="${source_dev}[/mirror-postgres-data]"
-  bind_present=1
-  case "$bind_source" in
-    "$BIND_SOURCE_EXPECTED" | "$expected_source_alt") bind_source_ok=1 ;;
-    *) bind_source_ok=0 ;;
-  esac
-fi
 
 install -d -m 0755 "$OUT_DIR"
 TMP_FILE=$(mktemp "$OUT_DIR/.mirror_siyuan_iscsi.prom.XXXXXX")
