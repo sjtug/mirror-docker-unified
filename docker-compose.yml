@@ -8,6 +8,13 @@ services:
       - host-monitor-net
     env_file:
       - "./secrets/caddy.env"
+    environment:
+      - CADDY_WAF_DIR=/etc/caddy/waf
+      - CADDY_WAF_IP_BLACKLIST_FILE=/etc/caddy/waf/blacklist/crawler-ip-blacklist.txt
+      - CADDY_WAF_IP_WHITELIST_FILE=/etc/caddy/waf/blacklist/bandwidth-quota-whitelist.txt
+      - CADDY_WAF_DNS_BLACKLIST_FILE=/etc/caddy/waf/blacklist/dns-blacklist.txt
+      - CADDY_BANDWIDTH_QUOTA_DB=/data/bandwidth-quota.db
+      - CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE=/etc/caddy/waf/blacklist/bandwidth-quota-whitelist.txt
     build:
       context: ./caddy
       additional_contexts:
@@ -21,6 +28,7 @@ services:
       - "mirrorz-volume:/var/www/mirrorz:ro"
       - "./caddy/Caddyfile.siyuan:/etc/caddy/Caddyfile.siyuan:ro"
       - "./caddy/Caddyfile.zhiyuan:/etc/caddy/Caddyfile.zhiyuan:ro"
+      - "./caddy/waf:/etc/caddy/waf:ro"
       - "./secrets/well-known:/var/www/.well-known:ro"
     ports:
       - 80:80
@@ -48,13 +56,6 @@ services:
       - ipv6-service-net
     expose:
       - 3000
-    healthcheck:
-      # `node:24-alpine` image includes `wget` but no `curl`
-      test: wget --spider -q http://localhost:3000 || exit 1
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
     stop_grace_period: 15s
     logging:
       options:
@@ -77,7 +78,7 @@ services:
       context: ./lug
       args:
         - USE_SJTUG=true
-        - CLONE_V2_VERSION=v0.2.46
+        - CLONE_V2_VERSION=v0.2.46-2
         - RSYNC_SJTUG_VERSION=v0.4.19
         - LUG_VERSION=v0.12.11
     expose:

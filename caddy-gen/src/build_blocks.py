@@ -16,6 +16,72 @@ def auth_guard(matcher: str, username: str, password: str) -> list[Node]:
     return [Node(f"basic_auth {matcher}", [Node(f"{username} {password}")])]
 
 
+def handler_order() -> list[Node]:
+    """Return middleware order; Caddy applies these mutations sequentially."""
+    return [
+        Node("order cerberus before redir"),
+        Node("order bandwidth_quota before cerberus"),
+        Node("order waf before bandwidth_quota"),
+    ]
+
+
+def bandwidth_quota_policy(paths: list[str] | None = None) -> list[Node]:
+    matcher_children = [Node("method GET")]
+    if paths:
+        matcher_children.append(Node(f"path {' '.join(paths)}"))
+    return [
+        Node("@bandwidth_quota_download", matcher_children),
+        Node(
+            "bandwidth_quota @bandwidth_quota_download",
+            [
+                Node("state_path {$CADDY_BANDWIDTH_QUOTA_DB:/data/bandwidth-quota.db}"),
+                Node(
+                    "whitelist_file "
+                    "{$CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE:"
+                    "caddy/waf/blacklist/bandwidth-quota-whitelist.txt}"
+                ),
+                Node("ipv4_prefix 24"),
+                Node("ipv6_prefix 64"),
+                Node("window 5h 30GiB"),
+                Node("window 168h 150GiB"),
+                Node("window 720h 500GiB"),
+            ],
+        ),
+    ]
+
+
+def waf_policy() -> list[Node]:
+    waf_dir = "{$CADDY_WAF_DIR:caddy/waf}"
+    ip_blacklist_file = (
+        "{$CADDY_WAF_IP_BLACKLIST_FILE:caddy/waf/blacklist/crawler-ip-blacklist.txt}"
+    )
+    ip_whitelist_file = (
+        "{$CADDY_WAF_IP_WHITELIST_FILE:"
+        "caddy/waf/blacklist/bandwidth-quota-whitelist.txt}"
+    )
+    dns_blacklist_file = (
+        "{$CADDY_WAF_DNS_BLACKLIST_FILE:caddy/waf/blacklist/dns-blacklist.txt}"
+    )
+    return [
+        Node(
+            "waf",
+            [
+                Node(f"rule_file {waf_dir}/general-policy.json"),
+                Node(f"rule_file {waf_dir}/crawler-policy.json"),
+                Node(f"ip_blacklist_file {ip_blacklist_file}"),
+                Node(f"ip_whitelist_file {ip_whitelist_file}"),
+                Node(f"dns_blacklist_file {dns_blacklist_file}"),
+                Node("anomaly_threshold 10"),
+                Node("max_request_body_size 1048576"),
+                Node("log_severity info"),
+                Node("log_json"),
+                Node("log_path {$CADDY_WAF_LOG_PATH:/var/log/caddy/mirrorz/waf.log}"),
+                Node("redact_sensitive_data"),
+            ],
+        )
+    ]
+
+
 def hidden(exclude: str = "") -> list[Node]:
     if exclude:
         return [

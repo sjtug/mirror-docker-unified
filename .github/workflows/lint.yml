@@ -52,7 +52,9 @@ jobs:
       - uses: actions/checkout@v5
         with:
           persist-credentials: false
-          submodules: "recursive"
+      # The blacklist submodule is private and CI uses public empty fixtures.
+      - name: Initialize public frontend submodule
+        run: git submodule update --init frontend
       - uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3
       - name: use CI config for docker-compose
         run: |
@@ -69,6 +71,7 @@ jobs:
       - name: docker compose build
         uses: docker/bake-action@3acf805d94d93a86cce4ca44798a76464a75b88c # v6
         with:
+          source: .
           files: |
             docker-compose.yml
             docker-compose.${{ matrix.mirror }}.yml

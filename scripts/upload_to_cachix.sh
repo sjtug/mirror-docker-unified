@@ -20,12 +20,14 @@ exec sops exec-env --same-process "$SOPS_FILE" '
   nix-fast-build \
     --flake ".#checks.x86_64-linux" \
     --option warn-dirty false \
+    --option accept-flake-config true \
     --no-nom \
     --cachix-cache sjtug
 
   nix-fast-build \
     --flake ".#packages.x86_64-linux" \
     --option warn-dirty false \
+    --option accept-flake-config true \
     --no-nom \
     --cachix-cache sjtug
 '

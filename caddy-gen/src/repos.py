@@ -247,3 +247,10 @@ class RedirRepo(Repo):
     @override
     def get_name(self) -> str:
         return self.name
+
+
+def bandwidth_quota_path(repo: Repo) -> str | None:
+    """Return the directly served path covered by download-byte quotas."""
+    if isinstance(repo, (FileServerRepo, ProxyRepo)):
+        return f"/{repo.get_name()}/*"
+    return None

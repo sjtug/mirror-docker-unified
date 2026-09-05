@@ -27,9 +27,39 @@
 		prefix_cfg 32 64
 	}
 	order cerberus before redir
+	order bandwidth_quota before cerberus
+	order waf before bandwidth_quota
 }
 
 http://mirror.sjtu.edu.cn {
+	waf {
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/general-policy.json
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/crawler-policy.json
+		ip_blacklist_file {$CADDY_WAF_IP_BLACKLIST_FILE:caddy/waf/blacklist/crawler-ip-blacklist.txt}
+		ip_whitelist_file {$CADDY_WAF_IP_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		dns_blacklist_file {$CADDY_WAF_DNS_BLACKLIST_FILE:caddy/waf/blacklist/dns-blacklist.txt}
+		anomaly_threshold 10
+		max_request_body_size 1048576
+		log_severity info
+		log_json
+		log_path {$CADDY_WAF_LOG_PATH:/var/log/caddy/mirrorz/waf.log}
+		redact_sensitive_data
+	}
+
+	@bandwidth_quota_download {
+		method GET
+		path /debian/* /debian-security/* /docker-ce/* /fedora-secondary/* /ubuntu-ports/* /openwrt/* /rpmfusion/* /alpine/*
+	}
+	bandwidth_quota @bandwidth_quota_download {
+		state_path {$CADDY_BANDWIDTH_QUOTA_DB:/data/bandwidth-quota.db}
+		whitelist_file {$CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		ipv4_prefix 24
+		ipv6_prefix 64
+		window 5h 30GiB
+		window 168h 150GiB
+		window 720h 500GiB
+	}
+
 	log {
 		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
 			mode 0644
@@ -203,6 +233,34 @@ http://mirror.sjtu.edu.cn {
 }
 
 https://mirror.sjtu.edu.cn {
+	waf {
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/general-policy.json
+		rule_file {$CADDY_WAF_DIR:caddy/waf}/crawler-policy.json
+		ip_blacklist_file {$CADDY_WAF_IP_BLACKLIST_FILE:caddy/waf/blacklist/crawler-ip-blacklist.txt}
+		ip_whitelist_file {$CADDY_WAF_IP_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		dns_blacklist_file {$CADDY_WAF_DNS_BLACKLIST_FILE:caddy/waf/blacklist/dns-blacklist.txt}
+		anomaly_threshold 10
+		max_request_body_size 1048576
+		log_severity info
+		log_json
+		log_path {$CADDY_WAF_LOG_PATH:/var/log/caddy/mirrorz/waf.log}
+		redact_sensitive_data
+	}
+
+	@bandwidth_quota_download {
+		method GET
+		path /keyarchos/* /racket/* /bmclapi/* /alhp/* /anthon/* /leopardsh/* /endeavouros/* /debian-cdimage/* /packman/* /pop-os/* /rocky/* /raspberry-pi-os-images/* /archlinuxarm/* /archlinux-cn/* /opencloudos/* /qt/* /debian/* /debian-security/* /docker-ce/* /fedora-secondary/* /openkylin/* /openkylin-cdimage/* /mx-packages/* /termux/* /ubuntu-releases/* /ubuntu-ports/* /openwrt/* /rpmfusion/* /homebrew-bottles/* /rust-static/* /pypi-packages/* /dart-pub/* /pytorch-wheels/* /astral-wheels/* /crates.io/* /flutter_infra/* /ghcup/* /elan/* /git/homebrew-services.git/* /git/guix.git/* /git/llvm-project.git/* /git/flutter-sdk.git/* /apache/* /git/ohmyzsh.git/* /git/spacemacs.git/* /git/doom-emacs.git/* /git/flake-parts.git/* /blackarch/* /nix-channels/store/* /guix/* /guix-bordeaux/* /sjtug-internal/* /fedora-ostree/* /fedora-iot/* /flathub/* /github-release/* /sury/* /opam-cache/* /pypi/web/simple/* /git/dpdk.git/* /gradle/distributions/* /dragonflybsd/* /git/homebrew-install.git/* /manjaro/* /voidlinux/* /bioconductor/* /wireshark/* /test/* /macports/* /gimp/* /anaconda/* /armbian/* /kernel/* /git/linux.git/* /raspbian-addons/* /OpenBSD/* /zorinos-isos/* /ubuntu-cloud-images/* /debian-ports/* /git/homebrew-bundle.git/* /git/spdk.git/* /git/SJTUBeamer.git/* /git/SJTUTeX.git/* /git/SJTUThesis.git/* /git/modern-sjtu-thesis.git/* /git/touying-sjtu.git/* /git/lean4-packages/std4/* /git/lean4-packages/lean4-cli/* /git/lean4-packages/ProofWidgets4/* /git/lean4-packages/aesop/* /git/lean4-packages/quote4/* /git/lean4-packages/mathlib4/* /git/lean4-packages/doc-gen4/* /git/lean4-packages/mathematics_in_lean_source/* /git/lean4-packages/mathematics_in_lean/* /git/lean4-packages/import-graph/* /git/lean4-packages/batteries/* /ros/* /alpine/*
+	}
+	bandwidth_quota @bandwidth_quota_download {
+		state_path {$CADDY_BANDWIDTH_QUOTA_DB:/data/bandwidth-quota.db}
+		whitelist_file {$CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE:caddy/waf/blacklist/bandwidth-quota-whitelist.txt}
+		ipv4_prefix 24
+		ipv6_prefix 64
+		window 5h 30GiB
+		window 168h 150GiB
+		window 720h 500GiB
+	}
+
 	log {
 		output file {$CADDY_LOG_PATH:/tmp/caddy/mirrorz/access.log} {
 			mode 0644

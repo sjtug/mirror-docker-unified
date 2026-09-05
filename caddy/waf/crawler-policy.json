@@ -1,0 +1,13 @@
+[
+  {
+    "id": "crawler-block-confirmed-user-agents",
+    "phase": 1,
+    "pattern": "(?i)^(?:traffic-burner|ByteDance-requests)",
+    "targets": ["USER_AGENT"],
+    "severity": "CRITICAL",
+    "score": 10,
+    "mode": "block",
+    "priority": 200,
+    "description": "Block User-Agents beginning with crawler prefixes confirmed as abusive in crawler.md."
+  }
+]
