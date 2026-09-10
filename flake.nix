@@ -275,10 +275,10 @@
             inherit virtualenv-dev;
             caddy = pkgs.caddy.withPlugins {
               plugins = [
-                "github.com/sjtug/cerberus@v0.4.8"
+                "github.com/sjtug/cerberus@v0.4.9"
                 "github.com/fabriziosalmi/caddy-waf=github.com/sjtug/caddy-waf@v0.4.1-sjtug.2"
               ];
-              hash = "sha256-9dT0JRk3Q0GnmTvHLOgH05PNHQlQGtgrc1+bwwFk2NA=";
+              hash = "sha256-0P5KXDrGBZR+M/JMDJyBopVGJHrk5uLRB17ZOFEI1VU=";
             };
             go-queue = pkgs.callPackage ./git-backend/go-queue.nix { };
             git-backend-runtime = pkgs.callPackage ./git-backend/runtime.nix {
