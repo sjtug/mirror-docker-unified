@@ -1,8 +1,5 @@
 services:
   frontend:
-    build:
-      args:
-        - SITE_NAME=Zhiyuan
     container_name: zhiyuan-frontend
     mem_limit: 1G
     memswap_limit: 1G

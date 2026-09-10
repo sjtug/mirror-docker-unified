@@ -22,94 +22,81 @@ G_STORAGE_SOPS_SSH_KEY_FILE ?= /etc/ssh/ssh_host_ed25519_key
 MIRROR_SITE ?=
 
 
-caddy-update-dist:
-> ./scripts/download_latest_frontend.sh
+# Container images built with nix2container (see nix/containers.nix).
+NIX_IMAGES := caddy git-backend lug rsyncd rsync-gateway mirror-intel clash
 
-caddy-verify-config:
-> docker compose run --rm caddy caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile.siyuan
-> docker compose run --rm caddy caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile.zhiyuan
+nix-images:
+> for img in $(NIX_IMAGES); do \
+>   echo "==> building and loading image-$$img"; \
+>   nix run $(NIX_FLAGS) .\#image-$$img.copyToDockerDaemon; \
+> done
+
+# Frontend images are site-specific (PUBLIC_SITE_NAME is inlined at Astro
+# build time); both are tagged mirror-frontend:latest locally.
+nix-image-frontend-siyuan:
+> nix run $(NIX_FLAGS) .\#image-frontend-siyuan.copyToDockerDaemon
+
+nix-image-frontend-zhiyuan:
+> nix run $(NIX_FLAGS) .\#image-frontend-zhiyuan.copyToDockerDaemon
 
 vector-check:
 > ./scripts/check-vector.sh
 
-# Require UV to build Python virtualenv
-configure-venv:
-> @if command -v uv >/dev/null 2>&1; then \
->   echo "Configure Python virtual environment with uv"; \
->   uv sync --config-file /dev/null --default-index https://pypi.org/simple --locked --all-packages --no-install-workspace; \
->   ln -sfn ../.venv caddy-gen/.venv; \
->   ln -sfn ../.venv gateway-gen/.venv; \
->   ln -sfn ../.venv integration-test/.venv; \
-> elif command -v nix >/dev/null 2>&1; then \
->   echo "Configure Python virtual environment with uv2nix"; \
->   nix build .\#python-workspace --out-link .venv --option warn-dirty false ; \
->   ln -sfn ../.venv caddy-gen/.venv; \
->   ln -sfn ../.venv gateway-gen/.venv; \
->   ln -sfn ../.venv integration-test/.venv; \
-> else \
->   echo "ERROR: uv or nix not found"; \
-> fi
+# Python environment provided by the flake (uv2nix): .#virtualenv-dev
+PYTHON_ENV = nix build $(NIX_FLAGS) .\#virtualenv-dev --print-out-paths --no-link
 
-caddy-gen: configure-venv
-> cd caddy-gen && .venv/bin/python src/caddy-gen.py -i ../ -o ../caddy --site siyuan,zhiyuan || cd -
+caddy-gen:
+> REPO_ROOT=$$PWD $$($(PYTHON_ENV))/bin/python3 caddy-gen/src/caddy-gen.py -i ./ -o ./caddy --site siyuan,zhiyuan
 
 caddy-hash-password:
 > docker compose run --rm caddy caddy hash-password
 
-caddy-gen-local: configure-venv
-> cd caddy-gen && .venv/bin/python src/caddy-gen.py -i ../lug -o ../caddy --site local || cd -
+caddy-gen-local:
+> REPO_ROOT=$$PWD $$($(PYTHON_ENV))/bin/python3 caddy-gen/src/caddy-gen.py -i ./lug -o ./caddy --site local
 
 caddy-reload:
 > docker compose exec -w /etc/caddy caddy caddy reload
 
-format-config: # You need to install prettier to use this functionality
-> prettier -c *.yml
+format:
+> nix fmt
 
-integration-test: configure-venv
-> cd integration-test && .venv/bin/pytest || cd -
+integration-test:
+> venv=$$($(PYTHON_ENV)); REPO_ROOT=$$PWD; export REPO_ROOT; cd integration-test && $$venv/bin/pytest
 
-gateway-gen: configure-venv
-> cd gateway-gen && .venv/bin/python src/gateway-gen.py -i ../ -o ../rsync-gateway --site siyuan,zhiyuan || cd -
+gateway-gen:
+> REPO_ROOT=$$PWD $$($(PYTHON_ENV))/bin/python3 gateway-gen/src/gateway-gen.py -i ./ -o ./rsync-gateway --site siyuan,zhiyuan
 
-up: $(COMPOSE_TASK_DEPS)
-> docker compose up -d --build
+up: $(COMPOSE_TASK_DEPS) nix-images
+> docker compose up -d
 
-up-siyuan: $(COMPOSE_TASK_DEPS)
-> docker compose -f docker-compose.yml -f docker-compose.siyuan.yml up -d --build
+up-siyuan: $(COMPOSE_TASK_DEPS) nix-images nix-image-frontend-siyuan
+> docker compose -f docker-compose.yml -f docker-compose.siyuan.yml up -d
 
-up-zhiyuan: $(COMPOSE_TASK_DEPS)
-> docker compose -f docker-compose.yml -f docker-compose.zhiyuan.yml up -d --build
+up-zhiyuan: $(COMPOSE_TASK_DEPS) nix-images nix-image-frontend-zhiyuan
+> docker compose -f docker-compose.yml -f docker-compose.zhiyuan.yml up -d
 
-build: $(COMPOSE_TASK_DEPS)
-> docker compose build
 
-build-siyuan: $(COMPOSE_TASK_DEPS)
-> docker compose -f docker-compose.yml -f docker-compose.siyuan.yml build
 
-build-zhiyuan: $(COMPOSE_TASK_DEPS)
-> docker compose -f docker-compose.yml -f docker-compose.zhiyuan.yml build
 
 
 g-storage-secrets:
 > # Use the deployment host's SSH host key explicitly; never rely on the
 > # invoking user's default age identity path.
-> test -r "$(G_STORAGE_SOPS_SSH_KEY_FILE)" || {
+> export SOPS_AGE_SSH_PRIVATE_KEY_FILE=/etc/ssh/ssh_host_ed25519_key
+> test -r /etc/ssh/ssh_host_ed25519_key || {
 >   echo "SOPS SSH identity is not readable: $(G_STORAGE_SOPS_SSH_KEY_FILE)" >&2
 >   exit 1
 > }
 > if [ -f $(G_STORAGE_DIR)/g-storage.sops.env ]; then
->   SOPS_AGE_SSH_PRIVATE_KEY_FILE="$(G_STORAGE_SOPS_SSH_KEY_FILE)" \
->     sops -d --output $(G_STORAGE_DIR)/.env $(G_STORAGE_DIR)/g-storage.sops.env
+>   sops -d --output $(G_STORAGE_DIR)/.env $(G_STORAGE_DIR)/g-storage.sops.env
 >   chmod 600 $(G_STORAGE_DIR)/.env
 > fi
 > if [ -f $(G_STORAGE_DIR)/bot.sops.env ]; then
->   SOPS_AGE_SSH_PRIVATE_KEY_FILE="$(G_STORAGE_SOPS_SSH_KEY_FILE)" \
->     sops -d --output $(G_STORAGE_DIR)/bot.env $(G_STORAGE_DIR)/bot.sops.env
+>   sops -d --output $(G_STORAGE_DIR)/bot.env $(G_STORAGE_DIR)/bot.sops.env
 >   chmod 600 $(G_STORAGE_DIR)/bot.env
 > fi
 > if [ -f $(G_STORAGE_DIR)/xray/config.sops.json ]; then
->   SOPS_AGE_SSH_PRIVATE_KEY_FILE="$(G_STORAGE_SOPS_SSH_KEY_FILE)" \
->     sops -d --output $(G_STORAGE_DIR)/xray/config.json $(G_STORAGE_DIR)/xray/config.sops.json
+>   sops -d --output $(G_STORAGE_DIR)/xray/config.json $(G_STORAGE_DIR)/xray/config.sops.json
 >   chmod 600 $(G_STORAGE_DIR)/xray/config.json
 > fi
 
@@ -242,7 +229,7 @@ mirror-install-repo-size-collector: mirror-install-collectors
 mirror-enable-repo-size-collector: mirror-enable-collectors
 
 
-.PHONY: caddy-gen caddy-verify-config vector-check gateway-gen integration-test \
+.PHONY: nix-images nix-image-frontend-siyuan nix-image-frontend-zhiyuan caddy-gen caddy-verify-config vector-check gateway-gen integration-test \
   g-storage-secrets g-storage-source-preflight g-storage-render g-storage-config \
   g-storage-check g-storage-preflight g-storage-build g-storage-up g-storage-ps \
   g-storage-logs g-storage-reload g-storage-collector-status \

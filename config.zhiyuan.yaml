@@ -228,7 +228,7 @@ repos:
   # --- other shell scripts | serve_mode: default  (apt.sh, debian.sh, ...) ---
 
   - type: shell_script
-    script: /worker-script/zhiyuan/worker-script/rsync_ssh.sh
+    script: /worker-script/rsync-ssh.sh
     source: "cran-rsync@cran.r-project.org:"
     interval: 43200
     path: /mnt/cran
@@ -362,34 +362,8 @@ repos:
   #   <<:
   #     - *oneshot_common
 
-  # - type: shell_script
-  #   script: /worker-script/zhiyuan/worker-script/crates-io.sh
-  #   name: git/crates.io-index
-  #   interval: 3601
-  #   path: /mnt/git/crates.io-index
-  #   origin: https://github.com/rust-lang/crates.io-index.git
-  #   target: https://git.sjtu.edu.cn/sjtug/crates.io-index.git
-  #   serve_mode: git
-  #   <<:
-  #     - *oneshot_common
-
-  # - type: shell_script
-  #   script: /worker-script/zhiyuan/worker-script/packagist.sh
-  #   interval: 4800
-  #   path: /mnt/packagist
-  #   name: packagist
-  #   subdomain: packagist.mirrors.sjtug.sjtu.edu.cn
-  #   upstream: https://repo.packagist.org
-  #   extra_directives:
-  #     - precompressed gzip
-  #   <<:
-  #     - *oneshot_common
-
-  # - type: shell_script
-  #   script: julia -t auto /worker-script/zhiyuan/worker-script/julia.jl
-  #   interval: 8000
-  #   path: /mnt/julia
-  #   name: julia
+  # (retired crates.io-index / packagist / julia workers removed —
+  #  their scripts no longer exist in lug/worker-script)
 
   # - type: shell_script
   #   name: download.flutter.io

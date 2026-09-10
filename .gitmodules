@@ -1,6 +1,3 @@
-[submodule "frontend"]
-	path = frontend
-	url = https://github.com/sjtug/sjtug-mirror-frontend
 [submodule "caddy/waf/blacklist"]
 	path = caddy/waf/blacklist
 	url = https://github.com/sjtug/blacklist.git

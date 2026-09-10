@@ -33,9 +33,18 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix2container = {
+      url = "github:nlewo/nix2container";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    frontend = {
+      url = "github:sjtug/sjtug-mirror-frontend";
+      inputs.nix2container.follows = "nix2container";
     };
   };
 
@@ -271,21 +280,71 @@
             '';
           };
 
-          packages = {
-            inherit virtualenv-dev;
-            caddy = pkgs.caddy.withPlugins {
-              plugins = [
-                "github.com/sjtug/cerberus@v0.4.9"
-                "github.com/fabriziosalmi/caddy-waf=github.com/sjtug/caddy-waf@v0.4.1-sjtug.2"
-              ];
-              hash = "sha256-0P5KXDrGBZR+M/JMDJyBopVGJHrk5uLRB17ZOFEI1VU=";
-            };
-            go-queue = pkgs.callPackage ./git-backend/go-queue.nix { };
-            git-backend-runtime = pkgs.callPackage ./git-backend/runtime.nix {
-              goQueue = config.packages.go-queue;
-              multiwatch = pkgs.callPackage ./git-backend/multiwatch.nix { };
-            };
-          };
+          packages =
+            let
+              mirrorPkgs = pkgs.callPackage ./nix/packages.nix { };
+              containers = import ./nix/containers.nix {
+                inherit pkgs lib;
+                nix2container = inputs.nix2container.packages.${system}.nix2container;
+                caddy = config.packages.caddy;
+                inherit mirrorPkgs;
+              };
+            in
+            {
+              inherit virtualenv-dev;
+              caddy = pkgs.caddy.withPlugins {
+                plugins = [
+                  "github.com/sjtug/cerberus@v0.4.9"
+                  "github.com/fabriziosalmi/caddy-waf=github.com/sjtug/caddy-waf@v0.4.1-sjtug.2"
+                ];
+                hash = "sha256-0P5KXDrGBZR+M/JMDJyBopVGJHrk5uLRB17ZOFEI1VU=";
+              };
+
+              inherit (mirrorPkgs)
+                go-queue
+                multiwatch
+                lug
+                mirror-clone
+                mirror-intel
+                rsync-sjtug
+                archvsync
+                apt-mirror
+                ;
+
+              image-caddy = containers.caddyImage;
+              image-git-backend = containers.gitBackendImage;
+              image-rsyncd = containers.rsyncdImage;
+              image-rsync-gateway = containers.rsyncGatewayImage;
+              image-mirror-intel = containers.mirrorIntelImage;
+              image-lug = containers.lugImage;
+              image-clash = containers.clashImage;
+            }
+            // (
+              # Built by the frontend flake's own docker.nix (nix2container).
+              # PUBLIC_SITE_NAME is inlined by Astro/Vite at build time, so
+              # each site needs its own frontend build; both images share the
+              # name mirror-frontend:latest and only one is loaded per host.
+              let
+                frontendPackages = inputs.frontend.packages.${system};
+                frontendFor =
+                  site:
+                  frontendPackages.frontend.overrideAttrs (old: {
+                    env = (old.env or { }) // {
+                      PUBLIC_SITE_NAME = site;
+                    };
+                  });
+                frontendImageFor =
+                  site:
+                  frontendPackages.docker-image.override {
+                    frontend = frontendFor site;
+                    inherit site;
+                  };
+              in
+              {
+                image-frontend-siyuan = frontendImageFor "Siyuan";
+                image-frontend-zhiyuan = frontendImageFor "Zhiyuan";
+              }
+            );
         };
     };
 }
