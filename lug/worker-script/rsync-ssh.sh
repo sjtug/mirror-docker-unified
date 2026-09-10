@@ -4,6 +4,14 @@ set -e
 export RSYNC_SSH=1
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+# OpenSSH resolves ~/.ssh from the passwd database rather than $HOME.  The
+# Nix container's root entry uses /var/empty, while the runtime SSH files are
+# intentionally installed under /root.  Tell rsync's SSH transport exactly
+# where to find them instead of relying on that passwd entry.
+ssh_config=/root/.ssh/config
+known_hosts=/root/.ssh/known_hosts
+export RSYNC_RSH="ssh -F $ssh_config -o UserKnownHostsFile=$known_hosts -o BatchMode=yes"
+
 # Refresh the upstream's SSH host keys before rsync. Host keys rotate over
 # time, so a known_hosts baked into the image would eventually go stale.
 # Extract the host from LUG_source ("user@host:path" or "host:path").
@@ -16,7 +24,6 @@ host="${host##*@}"
 if [[ -n "$host" ]]; then
 	mkdir -p /root/.ssh
 	chmod 700 /root/.ssh
-	known_hosts=/root/.ssh/known_hosts
 	if scanned=$(ssh-keyscan -t rsa,ecdsa,ed25519 -- "$host" 2>/dev/null) && [[ -n "$scanned" ]]; then
 		# Replace any existing entries for this host with the fresh scan.
 		touch "$known_hosts"
