@@ -120,7 +120,7 @@ repos:
 
   - type: shell_script
     script: /worker-script/rsync.sh
-    source: rsync://mirrors.tuna.tsinghua.edu.cn/cygwin/
+    source: cygwin.com::cygwin-ftp
     interval: 3600
     path: /mnt/cygwin
     name: cygwin
