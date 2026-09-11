@@ -15,12 +15,9 @@ services:
       - CADDY_WAF_DNS_BLACKLIST_FILE=/etc/caddy/waf/blacklist/dns-blacklist.txt
       - CADDY_BANDWIDTH_QUOTA_DB=/data/bandwidth-quota.db
       - CADDY_BANDWIDTH_QUOTA_WHITELIST_FILE=/etc/caddy/waf/blacklist/bandwidth-quota-whitelist.txt
-    build:
-      context: ./caddy
-      additional_contexts:
-        flake: .
-      args:
-        - USE_GOPROXY=true
+    # Built by nix2container: `make nix-images` (nix run .#image-caddy.copyToDockerDaemon)
+    image: sjtug/caddy:latest
+    pull_policy: never
     volumes:
       - "./data/caddy/data:/data"
       - "./data/caddy/config:/config"
@@ -50,8 +47,12 @@ services:
 
   frontend:
     restart: unless-stopped
-    build:
-      context: ./frontend
+    # Built by nix2container: `make nix-images MIRROR_SITE=<site>`
+    # (nix run .#image-frontend-<site>.copyToDockerDaemon).
+    # PUBLIC_SITE_NAME is inlined at build time; the site-specific build is
+    # tagged mirror-frontend:latest on each host.
+    image: mirror-frontend:latest
+    pull_policy: never
     networks:
       - ipv6-service-net
     expose:
@@ -74,13 +75,9 @@ services:
       - proxy-net
       - redis-net
       - postgres-net
-    build:
-      context: ./lug
-      args:
-        - USE_SJTUG=true
-        - CLONE_V2_VERSION=v0.2.46-2
-        - RSYNC_SJTUG_VERSION=v0.4.19
-        - LUG_VERSION=v0.12.11
+    # Built by nix2container: `make nix-images` (nix run .#image-lug.copyToDockerDaemon)
+    image: sjtug/lug:latest
+    pull_policy: never
     expose:
       - 8081
       - 7001
@@ -118,11 +115,9 @@ services:
         hard: 120000
 
   rsync-gateway:
-    build:
-      context: ./rsync-gateway
-      args:
-        - USE_SJTUG=true
-        - RSYNC_SJTUG_VERSION=v0.4.19
+    # Built by nix2container: `make nix-images` (nix run .#image-rsync-gateway.copyToDockerDaemon)
+    image: sjtug/rsync-gateway:latest
+    pull_policy: never
     networks:
       - ipv6-service-net
       - postgres-net
@@ -243,8 +238,9 @@ services:
     memswap_limit: 2G
 
   clash:
-    build:
-      context: ./clash
+    # Built by nix2container: `make nix-images` (nix run .#image-clash.copyToDockerDaemon)
+    image: sjtug/clash:latest
+    pull_policy: never
     command: -d /etc/clash
     volumes:
       - ./secrets/clash_config.yaml:/etc/clash/config.yaml:z,ro
@@ -266,11 +262,9 @@ services:
     memswap_limit: 5G
 
   mirror-intel:
-    build:
-      context: ./mirror-intel
-      args:
-        - USE_SJTUG=true
-        - INTEL_VERSION=v0.1.46
+    # Built by nix2container: `make nix-images` (nix run .#image-mirror-intel.copyToDockerDaemon)
+    image: sjtug/mirror-intel:latest
+    pull_policy: never
     networks:
       - ipv6-service-net
     expose:
@@ -292,10 +286,9 @@ services:
       - "./common/gai.conf:/etc/gai.conf:ro"
 
   rsyncd:
-    build:
-      context: ./rsyncd
-      args:
-        - USE_SJTUG=true
+    # Built by nix2container: `make nix-images` (nix run .#image-rsyncd.copyToDockerDaemon)
+    image: sjtug/rsyncd:latest
+    pull_policy: never
     logging:
       options:
         max-size: "2M"
@@ -305,12 +298,9 @@ services:
     restart: unless-stopped
 
   git-backend:
-    build:
-      context: ./git-backend
-      additional_contexts:
-        flake: .
-      args:
-        - USE_GOPROXY=true
+    # Built by nix2container: `make nix-images` (nix run .#image-git-backend.copyToDockerDaemon)
+    image: sjtug/git-backend:latest
+    pull_policy: never
     logging:
       options:
         max-size: "2M"

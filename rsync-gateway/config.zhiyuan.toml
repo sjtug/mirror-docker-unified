@@ -12,10 +12,10 @@ namespace = "kali-images"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
 s3_prefix = "rsync/kali-images"
 
-[endpoints.raspbian]
-namespace = "raspbian"
+[endpoints.msys2]
+namespace = "msys2"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
-s3_prefix = "rsync/raspbian"
+s3_prefix = "rsync/msys2"
 
 [endpoints.parrot]
 namespace = "parrot"
@@ -27,7 +27,7 @@ namespace = "raspberrypi"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
 s3_prefix = "rsync/raspberrypi"
 
-[endpoints.msys2]
-namespace = "msys2"
+[endpoints.raspbian]
+namespace = "raspbian"
 s3_bucket = "899a892efef34b1b944a19981040f55b-oss01"
-s3_prefix = "rsync/msys2"
+s3_prefix = "rsync/raspbian"

@@ -24,38 +24,45 @@ jobs:
             experimental-features = nix-command flakes recursive-nix ca-derivations dynamic-derivations
             extra-substituters = https://sjtug.cachix.org
             extra-trusted-public-keys = sjtug.cachix.org-1:0bD3nO47HROvtvVfkodDpE7AUwjFxQ/6l4fCbcC+7bc=
+      - name: Setup Cachix (push to sjtug.cachix.org)
+        uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+        with:
+          name: sjtug
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix flake check
-  test-vector:
-    name: Vector edge configuration
+
+  build-images:
+    name: Build container images
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          persist-credentials: false
-      - run: make vector-check
-  test-docker-build:
-    name: docker build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write # Required to save to GitHub Actions Cache
     concurrency:
-      # Lint and Validation-test-docker-build-{siyuan,zhiyuan}
-      group: ${{ github.workflow }}-test-docker-build-${{ matrix.mirror }}
+      group: ${{ github.workflow }}-build-nix-images-${{ github.ref_name }}
       cancel-in-progress: true
-    strategy:
-      matrix:
-        mirror: ["siyuan", "zhiyuan"]
     steps:
       - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      # The blacklist submodule is private and CI uses public empty fixtures.
-      - name: Initialize public frontend submodule
-        run: git submodule update --init frontend
-      - uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3
+      - name: Install Nix
+        uses: cachix/install-nix-action@630ae543ea3a38a9a4166f03376c02c50f408342 # v31.11.0
+        with:
+          install_url: https://releases.nixos.org/nix/nix-2.35.1/install
+          extra_nix_config: |
+            experimental-features = nix-command flakes recursive-nix ca-derivations dynamic-derivations
+            extra-substituters = https://sjtug.cachix.org
+            extra-trusted-public-keys = sjtug.cachix.org-1:0bD3nO47HROvtvVfkodDpE7AUwjFxQ/6l4fCbcC+7bc=
+      - name: Setup Cachix (push to sjtug.cachix.org)
+        uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+        with:
+          name: sjtug
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - name: Build and load nix2container images
+        run: |
+          for img in caddy git-backend lug rsyncd rsync-gateway mirror-intel clash frontend-siyuan frontend-zhiyuan; do
+            echo "::group::$img"
+            nix run .#image-$img.copyToDockerDaemon --accept-flake-config --print-build-logs
+            echo "::endgroup::"
+          done
       - name: use CI config for docker-compose
         run: |
           cp docker-compose.ci.yml docker-compose.override.yml
@@ -66,17 +73,17 @@ jobs:
           cp ./secrets/docker-registry.ci.yml ./secrets/docker-registry.yml
           cp ./secrets/pg.env.example ./secrets/pg.env
           touch ./secrets/lug-secrets.sh
-      - name: verify config
-        run: docker compose -f docker-compose.yml -f docker-compose.${{ matrix.mirror }}.yml config
-      - name: docker compose build
-        uses: docker/bake-action@3acf805d94d93a86cce4ca44798a76464a75b88c # v6
+      - name: verify config (siyuan)
+        run: docker compose -f docker-compose.yml -f docker-compose.siyuan.yml config --quiet
+      - name: verify config (zhiyuan)
+        run: docker compose -f docker-compose.yml -f docker-compose.zhiyuan.yml config --quiet
+  test-vector:
+    name: Vector edge configuration
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
         with:
-          source: .
-          files: |
-            docker-compose.yml
-            docker-compose.${{ matrix.mirror }}.yml
-            docker-compose.ci.yml
-          set: |
-            *.cache-from=type=gha,scope=${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.mirror }}
-            *.cache-to=type=gha,mode=max,scope=${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.mirror }}
-          load: true
+          persist-credentials: false
+      - run: make vector-check
