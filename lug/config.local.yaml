@@ -10,6 +10,10 @@ checkpoint: /data/checkpoint.json
 json_api:
   address: :7001
 
+# Elastic admission (disabled for local dev; only concurrent_limit applies)
+admission:
+  enabled: false
+
 dummy:
   oneshot_common: &oneshot_common
     retry: 5

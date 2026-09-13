@@ -14,6 +14,7 @@
   nix2container,
   # flake packages
   caddy,
+  lug,
   mirrorPkgs ? pkgs.callPackage ./packages.nix { },
 }:
 
@@ -341,7 +342,7 @@ in
       ];
       app = pkgs.runCommand "lug-app" { } ''
         mkdir -p $out/app/v2 $out/app/rsync_sjtug $out/root/.ssh
-        ln -s ${lib.getExe mirrorPkgs.lug} $out/app/lug
+        ln -s ${lib.getExe lug} $out/app/lug
         ln -s ${mirrorPkgs.mirror-clone}/mirror-clone $out/app/v2/mirror-clone
         for f in ${mirrorPkgs.rsync-sjtug}/*; do
           ln -s "$f" $out/app/rsync_sjtug/
@@ -396,7 +397,7 @@ in
         { deps = workerTools; }
         {
           deps = [
-            mirrorPkgs.lug
+            lug
             mirrorPkgs.mirror-clone
             mirrorPkgs.rsync-sjtug
             mirrorPkgs.archvsync

@@ -78,6 +78,10 @@ services:
     # Built by nix2container: `make nix-images` (nix run .#image-lug.copyToDockerDaemon)
     image: sjtug/lug:latest
     pull_policy: never
+    # cgroup v2 delegation: gives lug a private, writable cgroup namespace so
+    # it can create per-job cgroups for memory enforcement, OOM-kill isolation,
+    # and whole-tree cancellation. No --privileged or extra capabilities needed.
+    cgroupns: private
     expose:
       - 8081
       - 7001
