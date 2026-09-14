@@ -356,6 +356,7 @@ in
         # keys with ssh-keyscan before each sync (keys rotate over time).
         cp ${../lug/known_hosts} $out/root/.ssh/known_hosts
         cp ${../lug/ssh_config} $out/root/.ssh/config
+        install -m 0755 ${../lug/entrypoint.sh} $out/app/entrypoint.sh
 
         # `git config --global credential.helper ...` from the old Dockerfile.
         cat > $out/root/.gitconfig <<'EOF'
@@ -416,7 +417,7 @@ in
           "GIT_SSL_CAINFO=/etc/ssl/certs/ca-bundle.crt"
         ];
         WorkingDir = "/app";
-        Entrypoint = [ "/app/lug" ];
+        Entrypoint = [ "/app/entrypoint.sh" ];
         ExposedPorts = {
           "8081/tcp" = { };
           "7001/tcp" = { };

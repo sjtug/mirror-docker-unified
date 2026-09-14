@@ -79,6 +79,10 @@ services:
     image: sjtug/lug:latest
     pull_policy: never
     cgroup: private
+    # The entrypoint uses SYS_ADMIN only to remount and delegate this private
+    # cgroup namespace, then drops it before executing lug or worker scripts.
+    cap_add:
+      - SYS_ADMIN
     expose:
       - 8081
       - 7001
