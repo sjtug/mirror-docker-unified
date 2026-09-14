@@ -23,7 +23,7 @@
 
 let
   versions = {
-    mirror-clone = "v0.2.46-2";
+    mirror-clone = "v0.2.46-3";
     rsync-sjtug = "v0.4.19";
     mirror-intel = "v0.1.46";
 
@@ -130,7 +130,7 @@ in
     tar -xzf ${
       fetchurl {
         url = "https://github.com/sjtug/mirror-clone/releases/download/${versions.mirror-clone}/mirror-clone.tar.gz";
-        hash = "sha256-LgpkYnKeBLZNLaZ/Nd2kHmGj6ZiGXvUpXsb6etHbxtk=";
+        hash = "sha256-BDuIx4tvnRJCyaRKKhdKpimS6NLLFXJdTZnCr/0u9eM=";
       }
     } -C $out
   '';
