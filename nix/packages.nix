@@ -18,18 +18,27 @@
   meson,
   ninja,
   pkg-config,
+  caddy,
 }:
 
 let
   versions = {
-    lug = "v0.12.11";
-    mirror-clone = "v0.2.46-2";
+    mirror-clone = "v0.2.46-3";
     rsync-sjtug = "v0.4.19";
     mirror-intel = "v0.1.46";
+
+    cerberus = "v0.4.9";
+    caddy-waf = "v0.4.1-sjtug.3";
   };
 in
-rec {
-  inherit versions;
+{
+  caddy = caddy.withPlugins {
+    plugins = [
+      "github.com/sjtug/cerberus@${versions.cerberus}"
+      "github.com/fabriziosalmi/caddy-waf=github.com/sjtug/caddy-waf@${versions.caddy-waf}"
+    ];
+    hash = "sha256-v/QGLYCSVR2A5IoLnwLOyGVPZj2RuW1ZUp0+wcxZSbQ=";
+  };
 
   ### go-queue (admission controller for Git pack generation) ###
   go-queue = buildGoModule {
@@ -121,26 +130,10 @@ rec {
     tar -xzf ${
       fetchurl {
         url = "https://github.com/sjtug/mirror-clone/releases/download/${versions.mirror-clone}/mirror-clone.tar.gz";
-        hash = "sha256-LgpkYnKeBLZNLaZ/Nd2kHmGj6ZiGXvUpXsb6etHbxtk=";
+        hash = "sha256-BDuIx4tvnRJCyaRKKhdKpimS6NLLFXJdTZnCr/0u9eM=";
       }
     } -C $out
   '';
-
-  ### lug (dynamically linked Go binary, patchelf'ed against nix glibc) ###
-  lug = stdenv.mkDerivation {
-    pname = "lug";
-    version = versions.lug;
-    src = fetchurl {
-      url = "https://github.com/sjtug/lug/releases/download/${versions.lug}/lug.tar.gz";
-      hash = "sha256-ZkIiA61UAKjTYRDasWvKS7R2qlXAD9drY1dyQF40Xrc=";
-    };
-    sourceRoot = ".";
-    nativeBuildInputs = [ autoPatchelfHook ];
-    installPhase = ''
-      install -Dm755 lug $out/bin/lug
-    '';
-    meta.mainProgram = "lug";
-  };
 
   ### ftpsync (Debian archvsync, patched) ###
   archvsync = stdenv.mkDerivation {

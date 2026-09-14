@@ -70,10 +70,16 @@ up: $(COMPOSE_TASK_DEPS) nix-images
 > docker compose up -d
 
 up-siyuan: $(COMPOSE_TASK_DEPS) nix-images nix-image-frontend-siyuan
-> docker compose -f docker-compose.yml -f docker-compose.siyuan.yml up -d
+> override=$$(mktemp)
+> trap 'rm -f "$$override"' EXIT
+> $$($(PYTHON_ENV))/bin/python3 scripts/compose-config-fingerprint.py --site siyuan > "$$override"
+> docker compose -f docker-compose.yml -f docker-compose.siyuan.yml -f "$$override" up -d --remove-orphans
 
 up-zhiyuan: $(COMPOSE_TASK_DEPS) nix-images nix-image-frontend-zhiyuan
-> docker compose -f docker-compose.yml -f docker-compose.zhiyuan.yml up -d
+> override=$$(mktemp)
+> trap 'rm -f "$$override"' EXIT
+> $$($(PYTHON_ENV))/bin/python3 scripts/compose-config-fingerprint.py --site zhiyuan > "$$override"
+> docker compose -f docker-compose.yml -f docker-compose.zhiyuan.yml -f "$$override" up -d --remove-orphans
 
 
 
@@ -229,7 +235,7 @@ mirror-install-repo-size-collector: mirror-install-collectors
 mirror-enable-repo-size-collector: mirror-enable-collectors
 
 
-.PHONY: nix-images nix-image-frontend-siyuan nix-image-frontend-zhiyuan caddy-gen caddy-verify-config vector-check gateway-gen integration-test \
+.PHONY: up up-siyuan up-zhiyuan nix-images nix-image-frontend-siyuan nix-image-frontend-zhiyuan caddy-gen caddy-verify-config vector-check gateway-gen integration-test \
   g-storage-secrets g-storage-source-preflight g-storage-render g-storage-config \
   g-storage-check g-storage-preflight g-storage-build g-storage-up g-storage-ps \
   g-storage-logs g-storage-reload g-storage-collector-status \

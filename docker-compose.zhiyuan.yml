@@ -30,8 +30,9 @@ services:
       - "./config.zhiyuan.yaml:/config.yaml:ro"
     environment:
       MIRROR_CLONE_SITE: "mirrors.sjtug.sjtu.edu.cn"
-    mem_limit: 10G
-    memswap_limit: 10G
+    # Container-level mem_limit removed: per-job memory enforcement is now
+    # handled by cgroup isolation (rlimit_mem per repo) and the admission
+    # controller keeps total usage within host capacity.
 
   rsync-gateway:
     container_name: zhiyuan-rsync-gateway

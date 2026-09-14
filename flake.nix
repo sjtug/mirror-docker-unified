@@ -46,6 +46,14 @@
       url = "github:sjtug/sjtug-mirror-frontend";
       inputs.nix2container.follows = "nix2container";
     };
+    lug = {
+      # TODO: switch back to master
+      url = "github:sjtug/lug/next-gen";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
   };
 
   outputs =
@@ -274,7 +282,7 @@
               UV_PYTHON_DOWNLOADS = "never";
             };
 
-            shellHook = ''
+            shellHook = /* Bash */ ''
               unset PYTHONPATH
               export REPO_ROOT=$(git rev-parse --show-toplevel)
             '';
@@ -282,28 +290,23 @@
 
           packages =
             let
+              lug = inputs.lug.packages.${system}.default;
               mirrorPkgs = pkgs.callPackage ./nix/packages.nix { };
               containers = import ./nix/containers.nix {
                 inherit pkgs lib;
-                nix2container = inputs.nix2container.packages.${system}.nix2container;
-                caddy = config.packages.caddy;
+                inherit (inputs.nix2container.packages.${system}) nix2container;
+                inherit (config.packages) caddy;
+                inherit lug;
                 inherit mirrorPkgs;
               };
             in
             {
               inherit virtualenv-dev;
-              caddy = pkgs.caddy.withPlugins {
-                plugins = [
-                  "github.com/sjtug/cerberus@v0.4.9"
-                  "github.com/fabriziosalmi/caddy-waf=github.com/sjtug/caddy-waf@v0.4.1-sjtug.2"
-                ];
-                hash = "sha256-0P5KXDrGBZR+M/JMDJyBopVGJHrk5uLRB17ZOFEI1VU=";
-              };
 
               inherit (mirrorPkgs)
+                caddy
                 go-queue
                 multiwatch
-                lug
                 mirror-clone
                 mirror-intel
                 rsync-sjtug
@@ -316,7 +319,6 @@
               image-rsyncd = containers.rsyncdImage;
               image-rsync-gateway = containers.rsyncGatewayImage;
               image-mirror-intel = containers.mirrorIntelImage;
-              image-lug = containers.lugImage;
               image-clash = containers.clashImage;
             }
             // (
@@ -325,26 +327,28 @@
               # each site needs its own frontend build; both images share the
               # name mirror-frontend:latest and only one is loaded per host.
               let
-                frontendPackages = inputs.frontend.packages.${system};
-                frontendFor =
-                  site:
-                  frontendPackages.frontend.overrideAttrs (old: {
-                    env = (old.env or { }) // {
-                      PUBLIC_SITE_NAME = site;
-                    };
-                  });
+                inherit (inputs.frontend.packages.${system}) docker-image frontend;
                 frontendImageFor =
                   site:
-                  frontendPackages.docker-image.override {
-                    frontend = frontendFor site;
+                  docker-image.override {
+                    frontend = frontend.overrideAttrs (oldAttrs: {
+                      env = (oldAttrs.env or { }) // {
+                        PUBLIC_SITE_NAME = site;
+                      };
+                    });
                     inherit site;
                   };
               in
               {
+                inherit frontend;
                 image-frontend-siyuan = frontendImageFor "Siyuan";
                 image-frontend-zhiyuan = frontendImageFor "Zhiyuan";
               }
-            );
+            )
+            // {
+              inherit lug;
+              image-lug = containers.lugImage;
+            };
         };
     };
 }

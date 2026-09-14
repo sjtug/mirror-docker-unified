@@ -10,11 +10,20 @@ json_api:
 
 checkpoint: /data/checkpoint.json
 
+# Elastic admission: gates launches on host memory pressure and learned
+# per-repo peak-memory EWMAs.  concurrent_limit above still applies as hard cap.
+admission:
+  enabled: true
+  mem_reserve_fraction: 0.2
+  mem_psi_threshold: 15
+
 dummy:
   oneshot_common: &oneshot_common
     retry: 5
     retry_interval: 60
+    timeout: 43200 # 12 h default wall-clock budget per attempt
   rsync_fetcher_common: &rsync_fetcher_common
+    rlimit_mem: 16G # cgroup memory.max for rsync-fetcher jobs
     s3_api: "https://s3.jcloud.sjtu.edu.cn"
     s3_region: "jCloud S3"
     s3_bucket: "899a892efef34b1b944a19981040f55b-oss01"
