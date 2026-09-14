@@ -446,6 +446,11 @@ repos:
     interval: 7200
     name: anaconda
     unified: disable
+    # pkgs and cloud retry independently so one successful phase is not replayed.
+    # jCloud rejects overwrites of recently written metadata with HTTP 423.
+    retry: 1
+    anaconda_phase_retry: 3
+    anaconda_phase_retry_interval: 3600
     <<:
       - *oneshot_common
 
@@ -590,6 +595,9 @@ repos:
     serve_mode: mirror_intel
     interval: 4900
     name: pytorch-wheels
+    # Generated indexes can remain temporarily locked after a partial update.
+    retry: 3
+    retry_interval: 3600
     <<:
       - *oneshot_common
 
